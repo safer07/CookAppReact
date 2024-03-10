@@ -5,6 +5,7 @@
 
 @import url(assets/css/components/layout.css) layer(components);
 @import url(assets/css/components/surface.css) layer(components);
+@import url(assets/css/components/buttons.css) layer(components);
 
 @tailwind base;
 @tailwind components;

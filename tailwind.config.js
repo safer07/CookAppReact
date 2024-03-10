@@ -130,6 +130,17 @@ export default {
       screens: {
         "hover-hover": { raw: "(hover: hover)" },
       },
+
+      keyframes: {
+        blink: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.25)" },
+        },
+      },
+
+      animation: {
+        blink: "blink 300ms ease-in-out forwards",
+      },
     },
   },
   plugins: ["prettier-plugin-tailwindcss"],

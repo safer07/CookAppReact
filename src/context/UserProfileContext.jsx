@@ -11,7 +11,15 @@ export default UserProfileContext;
 export function UserProfileContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const [likedRecipes, setLikedRecipes] = useState([]);
+  const [likedRecipes, setLikedRecipes] = useState(["r2"]);
+
+  function handleLike(id) {
+    setLikedRecipes((prev) => {
+      return prev.includes(id)
+        ? [...prev.filter((item) => item !== id)]
+        : [...prev, id];
+    });
+  }
 
   //   useEffect(() => {
   //     async function preload() {
@@ -27,7 +35,9 @@ export function UserProfileContextProvider({ children }) {
   //   }, []);
 
   return (
-    <UserProfileContext.Provider value={{ loading, isAuth, likedRecipes }}>
+    <UserProfileContext.Provider
+      value={{ loading, isAuth, likedRecipes, handleLike }}
+    >
       {children}
     </UserProfileContext.Provider>
   );

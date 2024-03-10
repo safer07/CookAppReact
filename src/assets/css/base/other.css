@@ -1,3 +1,7 @@
 img {
   @apply pointer-events-none;
 }
+
+svg {
+  @apply fill-current;
+}
