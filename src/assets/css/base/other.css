@@ -1,0 +1,3 @@
+img {
+  @apply pointer-events-none;
+}
