@@ -1,3 +1,3 @@
 .surface-accent {
-  @apply bg-gradient-to-b from-[#90DC7B] to-[#38BDA1] text-white;
+  @apply to-primary-highGradient from-primary-lowGradient bg-gradient-to-b text-white;
 }
