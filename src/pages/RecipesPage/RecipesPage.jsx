@@ -3,12 +3,15 @@ import { fetchCategories, fetchRecipes } from "../../api";
 import RecipeCategoryCard from "../../components/RecipeCategoryCard";
 import RecipeCard from "../../components/RecipeCard";
 import Favourites from "./Favourites";
+import SegmentedButton from "../../ui/SegmentedButton";
 
 export default function RecipesPage() {
   const [loading, setLoading] = useState(false);
   const [recipeСategories, setRecipeСategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [activeTab, setActiveTab] = useState("catalog");
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+
+  const tabs = ["Каталог", "Мои рецепты", "Избранное"];
 
   useEffect(() => {
     async function preload() {
@@ -29,29 +32,14 @@ export default function RecipesPage() {
         <h1 className="headline-large">Рецепты</h1>
       </div>
       <div className="py-1">
-        <div className="segmented-button grid-cols-3">
-          <button
-            className={`segment ${activeTab === "catalog" ? "active" : ""}`}
-            onClick={() => setActiveTab("catalog")}
-          >
-            Каталог
-          </button>
-          <button
-            className={`segment ${activeTab === "myRecipes" ? "active" : ""}`}
-            onClick={() => setActiveTab("myRecipes")}
-          >
-            Мои рецепты
-          </button>
-          <button
-            className={`segment ${activeTab === "favourites" ? "active" : ""}`}
-            onClick={() => setActiveTab("favourites")}
-          >
-            Избранное
-          </button>
-        </div>
+        <SegmentedButton
+          buttons={tabs}
+          handleClick={setActiveTabIndex}
+          activeTabIndex={activeTabIndex}
+        />
       </div>
 
-      {activeTab === "catalog" && (
+      {activeTabIndex === 0 && (
         <div className="py-2">
           <div>
             <h2 className="headline-medium">Категории</h2>
@@ -80,7 +68,7 @@ export default function RecipesPage() {
         </div>
       )}
 
-      {activeTab === "myRecipes" && (
+      {activeTabIndex === 1 && (
         <div className="py-2">
           <div>
             <h2 className="headline-medium">Мои рецепты</h2>
@@ -88,7 +76,7 @@ export default function RecipesPage() {
         </div>
       )}
 
-      {activeTab === "favourites" && <Favourites />}
+      {activeTabIndex === 2 && <Favourites />}
     </div>
   );
 }
