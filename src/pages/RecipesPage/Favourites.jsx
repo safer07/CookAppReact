@@ -11,9 +11,11 @@ export default function Favourites() {
   useEffect(() => {
     async function preload() {
       setLoading(true);
-      const recipes = await fetchRecipes();
-
-      setRecipes(recipes);
+      const fetchedRecipes = await fetchRecipes();
+      const filteredRecipes = fetchedRecipes.filter((recipe) =>
+        likedRecipes.includes(recipe.id),
+      );
+      setRecipes(filteredRecipes);
       setLoading(false);
     }
     preload();
@@ -27,9 +29,9 @@ export default function Favourites() {
       <div className="mt-2 grid gap-2">
         {loading && <div>Загрузка...</div>}
         {!loading &&
-          recipes
-            .filter((recipe) => likedRecipes.includes(recipe.id))
-            .map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
+          recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
       </div>
     </div>
   );
