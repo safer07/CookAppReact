@@ -1,3 +1,15 @@
 .surface-accent {
-  @apply to-primary-highGradient from-primary-lowGradient bg-gradient-to-b text-white;
+  @apply bg-gradient-to-b from-primary-lowGradient to-primary-highGradient text-white;
+}
+
+.surface-green {
+  @apply from-green-lowGradient to-green-highGradient bg-gradient-to-b text-white;
+}
+
+.surface-yellow {
+  @apply from-yellow-lowGradient to-yellow-highGradient bg-gradient-to-b text-white;
+}
+
+.surface-red {
+  @apply from-red-lowGradient to-red-highGradient bg-gradient-to-b text-white;
 }

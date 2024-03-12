@@ -93,6 +93,18 @@ export default {
         system: {
           error: "#DE1B1B",
         },
+        green: {
+          highGradient: "#38BDA1",
+          lowGradient: "#90DC7B",
+        },
+        yellow: {
+          highGradient: "#F59D22",
+          lowGradient: "#FAD843",
+        },
+        red: {
+          highGradient: "#F53422",
+          lowGradient: "#FA7D43",
+        },
         surface: "var(--surface-bg)",
         // "button-primary-color": "var(--button-primary-color)",
       },

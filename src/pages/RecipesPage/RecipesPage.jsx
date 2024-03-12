@@ -1,30 +1,11 @@
-import { useEffect, useState } from "react";
-import { fetchCategories, fetchRecipes } from "../../api";
-import RecipeCategoryCard from "../../components/RecipeCategoryCard";
-import RecipeCard from "../../components/RecipeCard";
-import Favourites from "./Favourites";
+import { useState } from "react";
 import SegmentedButton from "../../ui/SegmentedButton";
+import Catalog from "./Catalog";
+import Favourites from "./Favourites";
 
 export default function RecipesPage() {
-  const [loading, setLoading] = useState(false);
-  const [recipeСategories, setRecipeСategories] = useState([]);
-  const [recipes, setRecipes] = useState([]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-
   const tabs = ["Каталог", "Мои рецепты", "Избранное"];
-
-  useEffect(() => {
-    async function preload() {
-      setLoading(true);
-      const categories = await fetchCategories();
-      const recipes = await fetchRecipes();
-
-      setRecipeСategories(categories);
-      setRecipes(recipes);
-      setLoading(false);
-    }
-    preload();
-  }, []);
 
   return (
     <div className="container">
@@ -39,34 +20,7 @@ export default function RecipesPage() {
         />
       </div>
 
-      {activeTabIndex === 0 && (
-        <div className="py-2">
-          <div>
-            <h2 className="headline-medium">Категории</h2>
-            {loading && <div>Загрузка...</div>}
-            {!loading && (
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {recipeСategories.map((category) => (
-                  <RecipeCategoryCard key={category.id} category={category} />
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="mt-3">
-            <div className="flex items-baseline justify-between">
-              <h2 className="headline-medium">Горячие блюда</h2>
-              <div className="text-primary">Смотреть все</div>
-            </div>
-            <div className="mt-2 grid gap-2">
-              {loading && <div>Загрузка...</div>}
-              {!loading &&
-                recipes.map((recipe) => (
-                  <RecipeCard key={recipe.id} recipe={recipe} />
-                ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {activeTabIndex === 0 && <Catalog />}
 
       {activeTabIndex === 1 && (
         <div className="py-2">

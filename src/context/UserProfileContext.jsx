@@ -11,7 +11,7 @@ export default UserProfileContext;
 export function UserProfileContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const [likedRecipes, setLikedRecipes] = useState(["r2"]);
+  const [likedRecipes, setLikedRecipes] = useState(["r1", "r5", "r7", "r9"]);
 
   function handleLike(id) {
     setLikedRecipes((prev) => {

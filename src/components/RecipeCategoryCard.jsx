@@ -1,6 +1,9 @@
-export default function RecipeCategoryCard({ category }) {
+export default function RecipeCategoryCard({ category, onClick }) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <div
+      className="overflow-hidden rounded-2xl bg-white shadow"
+      onClick={onClick}
+    >
       <img
         className="aspect-[3/2] w-full"
         src={category.img}
