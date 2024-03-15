@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 const UserProfileContext = createContext({
-  loading: false,
+  isLoading: false,
   isAuth: false,
   likedRecipes: [],
 });
@@ -9,7 +9,7 @@ const UserProfileContext = createContext({
 export default UserProfileContext;
 
 export function UserProfileContextProvider({ children }) {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [likedRecipes, setLikedRecipes] = useState(["r1", "r5", "r7", "r9"]);
 
@@ -23,20 +23,20 @@ export function UserProfileContextProvider({ children }) {
 
   //   useEffect(() => {
   //     async function preload() {
-  //       setLoading(true);
+  //       setIsLoading(true);
   //       const { result } = await fakeFetchCrypto();
   //       const assets = await fetchAssets();
 
   //       setAssets(mapAssets(assets, result));
   //       setCrypto(result);
-  //       setLoading(false);
+  //       setIsLoading(false);
   //     }
   //     preload();
   //   }, []);
 
   return (
     <UserProfileContext.Provider
-      value={{ loading, isAuth, likedRecipes, handleLike }}
+      value={{ isLoading, isAuth, likedRecipes, handleLike }}
     >
       {children}
     </UserProfileContext.Provider>

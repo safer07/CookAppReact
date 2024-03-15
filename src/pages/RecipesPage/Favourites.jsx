@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { useProfile } from "../../context/UserProfileContext";
 import { fetchRecipes } from "../../api";
 import RecipeCard from "../../components/RecipeCard";
+import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 
 export default function Favourites() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const { likedRecipes } = useProfile();
 
   useEffect(() => {
     async function preload() {
-      setLoading(true);
+      setIsLoading(true);
       const fetchedRecipes = await fetchRecipes();
       const filteredRecipes = fetchedRecipes.filter((recipe) =>
         likedRecipes.includes(recipe.id),
       );
       setRecipes(filteredRecipes);
-      setLoading(false);
+      setIsLoading(false);
     }
     preload();
   }, []);
@@ -27,11 +28,11 @@ export default function Favourites() {
         <h2 className="headline-medium">Рецепты в избранном</h2>
       </div>
       <div className="mt-2 grid gap-2">
-        {loading && <div>Загрузка...</div>}
-        {!loading &&
-          recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+        {isLoading
+          ? [...new Array(5)].map((_, i) => <RecipeCardSkeleton key={i} />)
+          : recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
       </div>
     </div>
   );

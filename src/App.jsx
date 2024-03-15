@@ -1,10 +1,13 @@
+import { BrowserRouter } from "react-router-dom";
 import { UserProfileContextProvider } from "./context/UserProfileContext";
-import RecipesPage from "./pages/RecipesPage/RecipesPage";
+import AppRouter from "./AppRouter";
 
 export default function App() {
   return (
     <UserProfileContextProvider>
-      <RecipesPage />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </UserProfileContextProvider>
   );
 }

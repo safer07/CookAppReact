@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { fetchCategories, fetchRecipes } from "../../api";
 import RecipeCategoryCard from "../../components/RecipeCategoryCard";
 import RecipeCard from "../../components/RecipeCard";
+import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
+import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 
 export default function Catalog() {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [recipeСategories, setRecipeСategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -15,13 +17,13 @@ export default function Catalog() {
 
   useEffect(() => {
     async function preload() {
-      setLoading(true);
+      setIsLoading(true);
       const categories = await fetchCategories();
       const recipes = await fetchRecipes();
 
       setRecipeСategories(categories);
       setRecipes(recipes);
-      setLoading(false);
+      setIsLoading(false);
     }
     preload();
   }, []);
@@ -32,20 +34,21 @@ export default function Catalog() {
         <>
           <div>
             <h2 className="headline-medium">Категории</h2>
-            {loading && <div>Загрузка...</div>}
-            {!loading && (
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {recipeСategories.map((category) => (
-                  <RecipeCategoryCard
-                    key={category.id}
-                    category={category}
-                    onClick={() =>
-                      setActiveCategory(findCategoryById(category.id))
-                    }
-                  />
-                ))}
-              </div>
-            )}
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {isLoading
+                ? [...new Array(9)].map((_, i) => (
+                    <RecipeCategoryCardSkeleton key={i} />
+                  ))
+                : recipeСategories.map((category) => (
+                    <RecipeCategoryCard
+                      key={category.id}
+                      category={category}
+                      onClick={() =>
+                        setActiveCategory(findCategoryById(category.id))
+                      }
+                    />
+                  ))}
+            </div>
           </div>
           {recipeСategories.map((category) => (
             <div className="mt-3" key={category.id}>
@@ -59,13 +62,15 @@ export default function Catalog() {
                 </button>
               </div>
               <div className="mt-2 grid gap-2">
-                {loading && <div>Загрузка...</div>}
-                {!loading &&
-                  recipes
-                    .filter((recipe) => recipe.category === category.id)
-                    .map((recipe) => (
-                      <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))}
+                {isLoading
+                  ? [...new Array(4)].map((_, i) => (
+                      <RecipeCardSkeleton key={i} />
+                    ))
+                  : recipes
+                      .filter((recipe) => recipe.category === category.id)
+                      .map((recipe) => (
+                        <RecipeCard key={recipe.id} recipe={recipe} />
+                      ))}
               </div>
             </div>
           ))}
@@ -80,8 +85,8 @@ export default function Catalog() {
                 <h2 className="headline-medium">{activeCategory.fullName}</h2>
               </div>
               <div className="mt-2 grid gap-2">
-                {loading && <div>Загрузка...</div>}
-                {!loading &&
+                {isLoading && <div>Загрузка...</div>}
+                {!isLoading &&
                   recipes
                     .filter((recipe) => recipe.category === activeCategory.id)
                     .map((recipe) => (

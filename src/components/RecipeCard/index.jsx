@@ -1,7 +1,7 @@
-import { useProfile } from "../context/UserProfileContext";
-import LikeButton from "../ui/LikeButton";
-import Tag from "../ui/Tag";
-import { categories } from "../data";
+import { useProfile } from "../../context/UserProfileContext";
+import LikeButton from "../../ui/LikeButton";
+import Tag from "../../ui/Tag";
+import { categories } from "../../data";
 
 export default function RecipeCard({ recipe }) {
   const { likedRecipes } = useProfile();
