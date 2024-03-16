@@ -1,0 +1,14 @@
+.input {
+  @apply flex h-6 w-full items-center gap-1 rounded-lg border border-base-borders bg-white px-2 py-1.5 text-base text-primary-color transition-colors duration-300 focus-within:border-primary focus-within:shadow-md focus-within:shadow-primary/50 has-[.clear-button]:pr-1.5 has-[.icon-left]:pl-1.5 has-[.icon-right]:pr-1.5;
+  & .textfield {
+    @apply grow truncate outline-none placeholder:text-tertiary-color focus-visible:outline-none;
+  }
+}
+
+.input :is(.icon-left, .icon-right, .clear-button svg) {
+  @apply size-3 text-tertiary-color;
+}
+
+.input .clear-button {
+  @apply size-3;
+}

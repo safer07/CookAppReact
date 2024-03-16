@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useProfile } from "../context/UserProfileContext";
 
 export default function LikeButton({ active, recipeId }) {
@@ -27,10 +28,6 @@ export default function LikeButton({ active, recipeId }) {
           src="./images/icons/heart_filled.svg"
         />
       )}
-      {/* <svg>
-        {!isActive && <use href="./images/icons.svg#heart" />}
-        {isActive && <use href="./images/icons.svg#heart_filled" />}
-      </svg> */}
     </div>
   );
 }

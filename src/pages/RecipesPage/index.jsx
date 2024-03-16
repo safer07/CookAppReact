@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import SegmentedButton from "../../ui/SegmentedButton";
 import Catalog from "./Catalog";
 import Favourites from "./Favourites";

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { useProfile } from "../../context/UserProfileContext";
 import { fetchRecipes } from "../../api";
 import RecipeCard from "../../components/RecipeCard";
@@ -10,7 +11,7 @@ export default function Favourites() {
   const { likedRecipes } = useProfile();
 
   useEffect(() => {
-    async function preload() {
+    async function loadRecipes() {
       setIsLoading(true);
       const fetchedRecipes = await fetchRecipes();
       const filteredRecipes = fetchedRecipes.filter((recipe) =>
@@ -19,7 +20,7 @@ export default function Favourites() {
       setRecipes(filteredRecipes);
       setIsLoading(false);
     }
-    preload();
+    loadRecipes();
   }, []);
 
   return (

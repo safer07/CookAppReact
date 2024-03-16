@@ -1,5 +1,3 @@
-import Tag from "../../ui/Tag";
-
 export default function RecipeCardSkeleton() {
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow">
