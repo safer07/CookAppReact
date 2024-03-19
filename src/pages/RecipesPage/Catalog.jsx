@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { fetchCategories, fetchRecipes } from "../../api";
 import RecipeCategoryCard from "../../components/RecipeCategoryCard";
@@ -6,13 +7,19 @@ import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 import Input from "../../ui/Input";
+import {
+  setCategoryId,
+  resetFilters,
+} from "../../redux/slices/filterRecipesSlice";
+import Tag from "../../ui/Tag";
 
 export default function Catalog() {
+  const dispatch = useDispatch();
+  const categoryId = useSelector((state) => state.filterRecipes.categoryId);
   const [isLoading, setIsLoading] = useState(false);
   const [recipeСategories, setRecipeСategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState(null);
 
   const skeletonRecipes = [...new Array(4)].map((_, i) => (
     <RecipeCardSkeleton key={i} />
@@ -37,14 +44,14 @@ export default function Catalog() {
     async function loadRecipes() {
       setIsLoading(true);
       const recipes = await fetchRecipes({
-        categoryId: activeCategory?.id,
+        categoryId,
         searchQuery,
       });
       setRecipes(recipes);
       setIsLoading(false);
     }
     loadRecipes();
-  }, [recipeСategories, activeCategory, searchQuery]);
+  }, [recipeСategories, categoryId, searchQuery]);
 
   return (
     <>
@@ -57,7 +64,7 @@ export default function Catalog() {
         />
       </div>
       <div className="py-2">
-        {activeCategory === null && !searchQuery && (
+        {categoryId === null && !searchQuery && (
           <>
             <div>
               <h2 className="headline-medium">Категории</h2>
@@ -70,9 +77,7 @@ export default function Catalog() {
                       <RecipeCategoryCard
                         key={category.id}
                         category={category}
-                        onClick={() =>
-                          setActiveCategory(findCategoryById(category.id))
-                        }
+                        onClick={() => dispatch(setCategoryId(category.id))}
                       />
                     ))}
               </div>
@@ -83,7 +88,7 @@ export default function Catalog() {
                   <h2 className="headline-medium">{category.fullName}</h2>
                   <button
                     className="text-primary"
-                    onClick={() => setActiveCategory(category)}
+                    onClick={() => dispatch(setCategoryId(category.id))}
                   >
                     Смотреть все
                   </button>
@@ -102,10 +107,18 @@ export default function Catalog() {
           </>
         )}
 
-        {activeCategory && !searchQuery && (
-          <div>
+        {categoryId && !searchQuery && (
+          <>
+            <div className="mb-2">
+              <Tag
+                text="Сбросить фильтры"
+                onClick={() => dispatch(resetFilters())}
+              />
+            </div>
             <div className="flex items-baseline justify-between">
-              <h2 className="headline-medium">{activeCategory.fullName}</h2>
+              <h2 className="headline-medium">
+                {findCategoryById(categoryId)?.fullName}
+              </h2>
             </div>
             <div className="mt-2 grid gap-2">
               {isLoading
@@ -120,11 +133,11 @@ export default function Catalog() {
                       <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
             </div>
-          </div>
+          </>
         )}
 
-        {!activeCategory && searchQuery && (
-          <div>
+        {!categoryId && searchQuery && (
+          <>
             <div className="flex items-baseline justify-between">
               <h2 className="headline-medium">Найдены рецепты:</h2>
             </div>
@@ -141,7 +154,7 @@ export default function Catalog() {
                       <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
             </div>
-          </div>
+          </>
         )}
       </div>
     </>

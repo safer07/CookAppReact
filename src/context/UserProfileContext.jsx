@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
 const UserProfileContext = createContext({
-  isLoading: false,
   isAuth: false,
   likedRecipes: [],
 });
@@ -9,7 +8,6 @@ const UserProfileContext = createContext({
 export default UserProfileContext;
 
 export function UserProfileContextProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [likedRecipes, setLikedRecipes] = useState(["r1", "r5", "r7", "r9"]);
 
@@ -35,9 +33,7 @@ export function UserProfileContextProvider({ children }) {
   //   }, []);
 
   return (
-    <UserProfileContext.Provider
-      value={{ isLoading, isAuth, likedRecipes, handleLike }}
-    >
+    <UserProfileContext.Provider value={{ isAuth, likedRecipes, handleLike }}>
       {children}
     </UserProfileContext.Provider>
   );
