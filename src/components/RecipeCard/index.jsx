@@ -37,12 +37,11 @@ export default function RecipeCard({ recipe }) {
           src={recipe.img}
           alt={recipe.name}
         />
-        <div className="absolute right-1.5 top-1.5">
-          <LikeButton
-            active={likedRecipes.includes(recipe.id)}
-            recipeId={recipe.id}
-          />
-        </div>
+        <LikeButton
+          className="absolute right-1.5 top-1.5"
+          active={likedRecipes.includes(recipe.id)}
+          recipeId={recipe.id}
+        />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)]">

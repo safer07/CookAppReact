@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import SegmentedButton from "../../ui/SegmentedButton";
 import Catalog from "./Catalog";
 import Favourites from "./Favourites";
 
 export default function RecipesPage() {
+  const navigate = useNavigate();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const tabs = ["Каталог", "Мои рецепты", "Избранное"];
+
+  useEffect(() => {
+    if (window.location.search) {
+      switch (window.location.search) {
+        case "?my-recipes":
+          setActiveTabIndex(1);
+          break;
+        case "?favourites":
+          setActiveTabIndex(2);
+          break;
+        default:
+          break;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    switch (activeTabIndex) {
+      case 1:
+        navigate("?my-recipes");
+        break;
+      case 2:
+        navigate("?favourites");
+        break;
+      default:
+        navigate("");
+        break;
+    }
+  }, [activeTabIndex]);
 
   return (
     <div className="container">

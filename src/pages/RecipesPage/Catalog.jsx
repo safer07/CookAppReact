@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchCategories, fetchRecipes } from "../../api";
+import debounce from "../../utils/debounce";
 import RecipeCategoryCard from "../../components/RecipeCategoryCard";
+import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
-import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 import Input from "../../ui/Input";
 import {
   setCategoryId,
@@ -19,11 +20,26 @@ export default function Catalog() {
   const [isLoading, setIsLoading] = useState(false);
   const [recipeСategories, setRecipeСategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  const [inputSearchValue, setInputSearchValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const skeletonRecipes = [...new Array(4)].map((_, i) => (
     <RecipeCardSkeleton key={i} />
   ));
+
+  const updateSearchQuery = useCallback(
+    debounce((value) => setSearchQuery(value), 1000),
+    [],
+  );
+
+  function onChangeSearchInput(value) {
+    setInputSearchValue(value);
+    updateSearchQuery(value);
+  }
+
+  function onInputSearchClear() {
+    setSearchQuery("");
+  }
 
   function findCategoryById(id) {
     return recipeСategories.find((category) => category.id === id);
@@ -47,7 +63,8 @@ export default function Catalog() {
         categoryId,
         searchQuery,
       });
-      setRecipes(recipes);
+      if (!recipes) setRecipes([]);
+      else setRecipes(recipes);
       setIsLoading(false);
     }
     loadRecipes();
@@ -57,13 +74,15 @@ export default function Catalog() {
     <>
       <div className="pb-1 pt-2">
         <Input
-          value={searchQuery}
+          value={inputSearchValue}
           placeholder="Поиск..."
           iconLeft="search"
-          onChange={setSearchQuery}
+          onChange={onChangeSearchInput}
+          onClear={onInputSearchClear}
         />
       </div>
       <div className="py-2">
+        {/* Каталог по умолчанию - категории + каждая отдельно */}
         {categoryId === null && !searchQuery && (
           <>
             <div>
@@ -107,6 +126,7 @@ export default function Catalog() {
           </>
         )}
 
+        {/* Все рецепты в одной категории */}
         {categoryId && !searchQuery && (
           <>
             <div className="mb-2">
@@ -115,7 +135,7 @@ export default function Catalog() {
                 onClick={() => dispatch(resetFilters())}
               />
             </div>
-            <div className="flex items-baseline justify-between">
+            <div className="flex justify-between">
               <h2 className="headline-medium">
                 {findCategoryById(categoryId)?.fullName}
               </h2>
@@ -136,9 +156,10 @@ export default function Catalog() {
           </>
         )}
 
-        {!categoryId && searchQuery && (
+        {/* Результаты поиска */}
+        {!categoryId && searchQuery && recipes.length > 0 && (
           <>
-            <div className="flex items-baseline justify-between">
+            <div className="flex justify-between">
               <h2 className="headline-medium">Найдены рецепты:</h2>
             </div>
             <div className="mt-2 grid gap-2">
@@ -155,6 +176,11 @@ export default function Catalog() {
                     ))}
             </div>
           </>
+        )}
+        {!categoryId && searchQuery && recipes.length === 0 && (
+          <div className="flex justify-between">
+            <h2 className="headline-medium">Рецепты не найдены</h2>
+          </div>
         )}
       </div>
     </>

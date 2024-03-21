@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useProfile } from "../context/UserProfileContext";
 
-export default function LikeButton({ active, recipeId }) {
+export default function LikeButton({ active, recipeId, className }) {
   const [isActive, setIsActive] = useState(active);
   const [animation, setAnimation] = useState(false);
   const { handleLike } = useProfile();
@@ -14,8 +14,8 @@ export default function LikeButton({ active, recipeId }) {
   }
 
   return (
-    <div
-      className={`like-button ${isActive ? "active" : ""}`}
+    <button
+      className={`like-button ${className} ${isActive ? "active" : ""}`}
       onClick={onClick}
     >
       {!isActive ? (
@@ -28,6 +28,6 @@ export default function LikeButton({ active, recipeId }) {
           src="./images/icons/heart_filled.svg"
         />
       )}
-    </div>
+    </button>
   );
 }

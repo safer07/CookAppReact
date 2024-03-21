@@ -1,3 +1,4 @@
+import axios from "axios";
 import { categories, recipes } from "./data";
 
 export function fetchCategories() {
@@ -21,9 +22,11 @@ export async function fetchRecipes(props) {
     const category = props?.categoryId ? `category=${props.categoryId}` : "";
     const search = props?.searchQuery ? `&search=${props.searchQuery}` : "";
     const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/recipes?${category}${search}`;
-    const response = await fetch(url);
-    const data = response.json();
-    return data;
+    // const response = await fetch(url);
+    // const data = response.json();
+    // return data;
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
     console.error(error);
   }
