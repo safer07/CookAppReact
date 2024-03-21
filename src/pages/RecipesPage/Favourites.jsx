@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { useProfile } from "../../context/UserProfileContext";
 import { fetchRecipes } from "../../api";
 import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
@@ -8,7 +8,7 @@ import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 export default function Favourites() {
   const [isLoading, setIsLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
-  const { likedRecipes } = useProfile();
+  const likedRecipes = useSelector((state) => state.likedRecipes.items);
 
   useEffect(() => {
     async function loadRecipes() {

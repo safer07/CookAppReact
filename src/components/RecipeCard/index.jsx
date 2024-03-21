@@ -1,10 +1,13 @@
-import { useProfile } from "../../context/UserProfileContext";
+import { useDispatch, useSelector } from "react-redux";
+
 import LikeButton from "../../ui/LikeButton";
 import Tag from "../../ui/Tag";
 import { categories } from "../../data";
+import { addRecipe, removeRecipe } from "../../redux/slices/likedRecipesSlice";
 
 export default function RecipeCard({ recipe }) {
-  const { likedRecipes } = useProfile();
+  const dispatch = useDispatch();
+  const likedRecipes = useSelector((state) => state.likedRecipes.items);
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe.category,
@@ -29,6 +32,11 @@ export default function RecipeCard({ recipe }) {
       difficultyText = "???";
   }
 
+  function handleLike(id) {
+    if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
+    else dispatch(addRecipe(id));
+  }
+
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow">
       <div className="relative">
@@ -40,7 +48,8 @@ export default function RecipeCard({ recipe }) {
         <LikeButton
           className="absolute right-1.5 top-1.5"
           active={likedRecipes.includes(recipe.id)}
-          recipeId={recipe.id}
+          itemId={recipe.id}
+          handleLike={handleLike}
         />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">

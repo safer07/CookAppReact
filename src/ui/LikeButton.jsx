@@ -1,14 +1,11 @@
 import { useState } from "react";
 
-import { useProfile } from "../context/UserProfileContext";
-
-export default function LikeButton({ active, recipeId, className }) {
+export default function LikeButton({ active, itemId, handleLike, className }) {
   const [isActive, setIsActive] = useState(active);
   const [animation, setAnimation] = useState(false);
-  const { handleLike } = useProfile();
 
   function onClick() {
-    handleLike(recipeId);
+    handleLike(itemId);
     setIsActive((prev) => !prev);
     setAnimation(true);
   }

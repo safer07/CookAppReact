@@ -19,19 +19,6 @@ export function UserProfileContextProvider({ children }) {
     });
   }
 
-  //   useEffect(() => {
-  //     async function preload() {
-  //       setIsLoading(true);
-  //       const { result } = await fakeFetchCrypto();
-  //       const assets = await fetchAssets();
-
-  //       setAssets(mapAssets(assets, result));
-  //       setCrypto(result);
-  //       setIsLoading(false);
-  //     }
-  //     preload();
-  //   }, []);
-
   return (
     <UserProfileContext.Provider value={{ isAuth, likedRecipes, handleLike }}>
       {children}
