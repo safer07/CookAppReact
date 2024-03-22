@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   categoryId: null,
+  searchQuery: "",
 };
 
 const filterRecipesSlice = createSlice({
@@ -11,10 +12,14 @@ const filterRecipesSlice = createSlice({
     setCategoryId(state, action) {
       state.categoryId = action.payload;
     },
+    setSearchQuery(state, action) {
+      state.searchQuery = action.payload;
+    },
     resetFilters: () => initialState,
   },
 });
 
-export const { setCategoryId, resetFilters } = filterRecipesSlice.actions;
+export const { setCategoryId, setSearchQuery, resetFilters } =
+  filterRecipesSlice.actions;
 
 export default filterRecipesSlice.reducer;

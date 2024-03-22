@@ -1,19 +1,25 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Input({
-  value,
   onChange,
   onClear,
   placeholder,
   iconLeft,
   iconRight,
 }) {
+  const [value, setValue] = useState("");
   const inputRef = useRef();
 
   function onClickClear() {
+    setValue("");
     onChange("");
-    onClear();
+    onClear("");
     inputRef.current.focus();
+  }
+
+  function onChangeInput(value) {
+    setValue(value);
+    onChange(value);
   }
 
   return (
@@ -29,7 +35,7 @@ export default function Input({
         type="text"
         value={value}
         placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChangeInput(event.target.value)}
       />
       {value && (
         <button className="clear-button" onClick={onClickClear}>

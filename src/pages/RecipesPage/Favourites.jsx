@@ -1,40 +1,43 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { fetchRecipes } from "../../api";
+import { fetchRecipes } from "../../redux/slices/recipesSlice";
 import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 
 export default function Favourites() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [recipes, setRecipes] = useState([]);
+  const dispatch = useDispatch();
+  const { items: recipes, status } = useSelector((state) => state.recipes);
   const likedRecipes = useSelector((state) => state.likedRecipes.items);
+  const [tempRecipes, setTempRecipes] = useState([]);
 
+  // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с likedRecipes, или подгружать их с бэкенда запросом
   useEffect(() => {
-    async function loadRecipes() {
-      setIsLoading(true);
-      const fetchedRecipes = await fetchRecipes();
-      const filteredRecipes = fetchedRecipes.filter((recipe) =>
-        likedRecipes.includes(recipe.id),
-      );
-      setRecipes(filteredRecipes);
-      setIsLoading(false);
-    }
-    loadRecipes();
+    dispatch(fetchRecipes());
+    const filteredRecipes = recipes.filter((recipe) =>
+      likedRecipes.includes(recipe.id),
+    );
+    setTempRecipes(filteredRecipes);
   }, []);
 
   return (
     <div className="py-2">
       <div>
-        <h2 className="headline-medium">Рецепты в избранном</h2>
+        <h2 className="headline-medium">
+          {status === "error"
+            ? "Не удалось загрузить рецепты"
+            : "Рецепты в избранном"}
+        </h2>
       </div>
-      <div className="mt-2 grid gap-2">
-        {isLoading
-          ? [...new Array(5)].map((_, i) => <RecipeCardSkeleton key={i} />)
-          : recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
-      </div>
+      {status !== "error" && (
+        <div className="mt-2 grid gap-2">
+          {status === "loading"
+            ? [...new Array(5)].map((_, i) => <RecipeCardSkeleton key={i} />)
+            : tempRecipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+        </div>
+      )}
     </div>
   );
 }

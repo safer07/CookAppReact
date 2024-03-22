@@ -1,26 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchCategories, fetchRecipes } from "../../api";
+import { fetchCategories } from "../../api";
 import debounce from "../../utils/debounce";
-import RecipeCategoryCard from "../../components/RecipeCategoryCard";
-import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 import Input from "../../ui/Input";
 import {
   setCategoryId,
+  // setSearchQuery,
   resetFilters,
 } from "../../redux/slices/filterRecipesSlice";
+import { fetchRecipes } from "../../redux/slices/recipesSlice";
 import Tag from "../../ui/Tag";
+import Categories from "./Categories";
 
 export default function Catalog() {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filterRecipes.categoryId);
-  const [isLoading, setIsLoading] = useState(false);
+  const { items: recipes, status } = useSelector((state) => state.recipes);
+  const { categoryId } = useSelector((state) => state.filterRecipes);
+  // searchQuery
   const [recipeСategories, setRecipeСategories] = useState([]);
-  const [recipes, setRecipes] = useState([]);
-  const [inputSearchValue, setInputSearchValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const skeletonRecipes = [...new Array(4)].map((_, i) => (
@@ -33,12 +33,7 @@ export default function Catalog() {
   );
 
   function onChangeSearchInput(value) {
-    setInputSearchValue(value);
     updateSearchQuery(value);
-  }
-
-  function onInputSearchClear() {
-    setSearchQuery("");
   }
 
   function findCategoryById(id) {
@@ -46,88 +41,67 @@ export default function Catalog() {
   }
 
   useEffect(() => {
+    // TODO каждый раз загружаются категории, сохранить в redux
     async function loadCategories() {
-      setIsLoading(true);
       const categories = await fetchCategories();
       setRecipeСategories(categories);
-      setIsLoading(false);
     }
     loadCategories();
   }, []);
 
   useEffect(() => {
-    if (!recipeСategories.length) return;
-    async function loadRecipes() {
-      setIsLoading(true);
-      const recipes = await fetchRecipes({
-        categoryId,
-        searchQuery,
-      });
-      if (!recipes) setRecipes([]);
-      else setRecipes(recipes);
-      setIsLoading(false);
-    }
-    loadRecipes();
-  }, [recipeСategories, categoryId, searchQuery]);
+    dispatch(fetchRecipes({ categoryId, searchQuery }));
+  }, [categoryId, searchQuery]);
 
   return (
     <>
       <div className="pb-1 pt-2">
         <Input
-          value={inputSearchValue}
           placeholder="Поиск..."
           iconLeft="search"
           onChange={onChangeSearchInput}
-          onClear={onInputSearchClear}
+          onClear={setSearchQuery}
         />
       </div>
       <div className="py-2">
         {/* Каталог по умолчанию - категории + каждая отдельно */}
         {categoryId === null && !searchQuery && (
           <>
-            <div>
-              <h2 className="headline-medium">Категории</h2>
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {!recipeСategories.length
-                  ? [...new Array(9)].map((_, i) => (
-                      <RecipeCategoryCardSkeleton key={i} />
-                    ))
-                  : recipeСategories.map((category) => (
-                      <RecipeCategoryCard
-                        key={category.id}
-                        category={category}
-                        onClick={() => dispatch(setCategoryId(category.id))}
-                      />
-                    ))}
-              </div>
-            </div>
-            {recipeСategories.map((category) => (
-              <div className="mt-3" key={category.id}>
-                <div className="flex items-baseline justify-between">
-                  <h2 className="headline-medium">{category.fullName}</h2>
-                  <button
-                    className="text-primary"
-                    onClick={() => dispatch(setCategoryId(category.id))}
-                  >
-                    Смотреть все
-                  </button>
+            <Categories categories={recipeСategories} />
+
+            {status === "error" ? (
+              <h2 className="headline-medium mt-3">
+                Не удалось загрузить рецепты
+              </h2>
+            ) : (
+              recipeСategories.map((category) => (
+                <div className="mt-3" key={category.id}>
+                  <div className="flex items-baseline justify-between">
+                    <h2 className="headline-medium">{category.fullName}</h2>
+                    <button
+                      className="text-primary"
+                      onClick={() => dispatch(setCategoryId(category.id))}
+                    >
+                      Смотреть все
+                    </button>
+                  </div>
+                  <div className="mt-2 grid gap-2">
+                    {status === "loading"
+                      ? skeletonRecipes
+                      : recipes
+                          .filter((recipe) => recipe.category === category.id)
+                          .map((recipe) => (
+                            <RecipeCard key={recipe.id} recipe={recipe} />
+                          ))}
+                  </div>
                 </div>
-                <div className="mt-2 grid gap-2">
-                  {isLoading
-                    ? skeletonRecipes
-                    : recipes
-                        .filter((recipe) => recipe.category === category.id)
-                        .map((recipe) => (
-                          <RecipeCard key={recipe.id} recipe={recipe} />
-                        ))}
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </>
         )}
 
-        {/* Все рецепты в одной категории */}
-        {categoryId && !searchQuery && (
+        {/* Показ результатов поиска или выбранной категории */}
+        {(categoryId !== null || searchQuery) && (
           <>
             <div className="mb-2">
               <Tag
@@ -135,52 +109,28 @@ export default function Catalog() {
                 onClick={() => dispatch(resetFilters())}
               />
             </div>
-            <div className="flex justify-between">
-              <h2 className="headline-medium">
-                {findCategoryById(categoryId)?.fullName}
-              </h2>
-            </div>
-            <div className="mt-2 grid gap-2">
-              {isLoading
-                ? skeletonRecipes
-                : recipes
-                    .filter((recipe) =>
-                      recipe.name
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase()),
-                    )
-                    .map((recipe) => (
-                      <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))}
-            </div>
+            <h2 className="headline-medium">
+              {status === "error" && "Не удалось загрузить рецепты"}
+              {searchQuery
+                ? "Найдены рецепты:"
+                : findCategoryById(categoryId)?.fullName}
+            </h2>
+            {status !== "error" && (
+              <div className="mt-2 grid gap-2">
+                {status === "loading"
+                  ? skeletonRecipes
+                  : recipes
+                      .filter((recipe) =>
+                        recipe.name
+                          .toLowerCase()
+                          .includes(searchQuery.toLowerCase()),
+                      )
+                      .map((recipe) => (
+                        <RecipeCard key={recipe.id} recipe={recipe} />
+                      ))}
+              </div>
+            )}
           </>
-        )}
-
-        {/* Результаты поиска */}
-        {!categoryId && searchQuery && recipes.length > 0 && (
-          <>
-            <div className="flex justify-between">
-              <h2 className="headline-medium">Найдены рецепты:</h2>
-            </div>
-            <div className="mt-2 grid gap-2">
-              {isLoading
-                ? skeletonRecipes
-                : recipes
-                    .filter((recipe) =>
-                      recipe.name
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase()),
-                    )
-                    .map((recipe) => (
-                      <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))}
-            </div>
-          </>
-        )}
-        {!categoryId && searchQuery && recipes.length === 0 && (
-          <div className="flex justify-between">
-            <h2 className="headline-medium">Рецепты не найдены</h2>
-          </div>
         )}
       </div>
     </>
