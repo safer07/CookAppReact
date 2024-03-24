@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import LikeButton from "../../ui/LikeButton";
 import Tag from "../../ui/Tag";
@@ -38,7 +39,10 @@ export default function RecipeCard({ recipe }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <Link
+      to={`/recipe/${recipe.id}`}
+      className="overflow-hidden rounded-2xl bg-white shadow"
+    >
       <div className="relative">
         <img
           className="aspect-video w-full object-cover"
@@ -69,6 +73,6 @@ export default function RecipeCard({ recipe }) {
           <Tag text={difficultyText} surface={tagDifficultySurface} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

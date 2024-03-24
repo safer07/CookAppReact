@@ -19,7 +19,7 @@ const filterRecipesSlice = createSlice({
   },
 });
 
+export const selectFilterRecipes = (state) => state.filterRecipes;
 export const { setCategoryId, setSearchQuery, resetFilters } =
   filterRecipesSlice.actions;
-
 export default filterRecipesSlice.reducer;

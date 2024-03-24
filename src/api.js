@@ -31,3 +31,13 @@ export async function fetchRecipes(props) {
     console.error(error);
   }
 }
+
+export async function fetchRecipe(id) {
+  try {
+    const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/recipes/${id}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}

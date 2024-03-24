@@ -17,6 +17,6 @@ const likedRecipesSlice = createSlice({
   },
 });
 
+export const selectLikedRecipes = (state) => state.likedRecipes.items;
 export const { addRecipe, removeRecipe } = likedRecipesSlice.actions;
-
 export default likedRecipesSlice.reducer;

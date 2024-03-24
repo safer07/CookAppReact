@@ -40,7 +40,7 @@ export default function RecipesPage() {
   }, [activeTabIndex]);
 
   return (
-    <div className="container">
+    <>
       <div className="py-1.5">
         <h1 className="headline-large">Рецепты</h1>
       </div>
@@ -63,6 +63,6 @@ export default function RecipesPage() {
       )}
 
       {activeTabIndex === 2 && <Favourites />}
-    </div>
+    </>
   );
 }

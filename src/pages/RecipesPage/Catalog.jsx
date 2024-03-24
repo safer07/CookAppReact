@@ -10,15 +10,16 @@ import {
   setCategoryId,
   // setSearchQuery,
   resetFilters,
+  selectFilterRecipes,
 } from "../../redux/slices/filterRecipesSlice";
-import { fetchRecipes } from "../../redux/slices/recipesSlice";
+import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
 import Tag from "../../ui/Tag";
 import Categories from "./Categories";
 
 export default function Catalog() {
   const dispatch = useDispatch();
-  const { items: recipes, status } = useSelector((state) => state.recipes);
-  const { categoryId } = useSelector((state) => state.filterRecipes);
+  const { items: recipes, status } = useSelector(selectRecipes);
+  const { categoryId } = useSelector(selectFilterRecipes);
   // searchQuery
   const [recipeСategories, setRecipeСategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");

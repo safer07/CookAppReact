@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchRecipes } from "../../redux/slices/recipesSlice";
+import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
+import { selectLikedRecipes } from "../../redux/slices/likedRecipesSlice";
 import RecipeCard from "../../components/RecipeCard";
 import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
 
 export default function Favourites() {
   const dispatch = useDispatch();
-  const { items: recipes, status } = useSelector((state) => state.recipes);
-  const likedRecipes = useSelector((state) => state.likedRecipes.items);
+  const { items: recipes, status } = useSelector(selectRecipes);
+  const likedRecipes = useSelector(selectLikedRecipes);
   const [tempRecipes, setTempRecipes] = useState([]);
 
   // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с likedRecipes, или подгружать их с бэкенда запросом
   useEffect(() => {
     dispatch(fetchRecipes());
+  }, []);
+
+  useEffect(() => {
     const filteredRecipes = recipes.filter((recipe) =>
       likedRecipes.includes(recipe.id),
     );
     setTempRecipes(filteredRecipes);
-  }, []);
+  }, [recipes]);
 
   return (
     <div className="py-2">

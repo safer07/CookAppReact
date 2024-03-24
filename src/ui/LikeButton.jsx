@@ -4,7 +4,8 @@ export default function LikeButton({ active, itemId, handleLike, className }) {
   const [isActive, setIsActive] = useState(active);
   const [animation, setAnimation] = useState(false);
 
-  function onClick() {
+  function onClick(event) {
+    event.preventDefault();
     handleLike(itemId);
     setIsActive((prev) => !prev);
     setAnimation(true);
