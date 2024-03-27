@@ -1,4 +1,25 @@
-.container {
+/* .container {
   width: min(100% - var(--body-padding-inline) * 2, var(--container-max-width));
   @apply mx-auto;
+} */
+
+.layout-grid {
+  @apply mx-auto grid w-full items-start;
+  max-width: var(--container-max-width);
+  grid-template-columns:
+    [fullwidth-start] minmax(var(--body-padding-inline), 1fr)
+    [content-start] min(
+      100% - (var(--body-padding-inline) * 2),
+      var(--container-max-width)
+    )
+    [content-end] minmax(var(--body-padding-inline), 1fr)
+    [fullwidth-end];
+}
+
+:where(.layout-grid, .layout-fullwidth) > :not(.layout-fullwidth, .no-grid) {
+  @apply col-[content];
+}
+
+.layout-fullwidth {
+  @apply col-[fullwidth];
 }

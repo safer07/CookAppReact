@@ -1,8 +1,12 @@
-.like-button {
+.button-icon {
   @apply grid size-5 place-content-center rounded-full bg-white;
   & :is(svg, img) {
     @apply size-3;
   }
+}
+
+.like-button {
+  @apply button-icon;
   &.active :is(svg, img) {
     @apply drop-shadow-[0_2px_6px_rgb(255_107_161_/_0.5)];
   }

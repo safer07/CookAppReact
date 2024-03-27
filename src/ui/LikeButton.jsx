@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LikeButton({ active, itemId, handleLike, className }) {
   const [isActive, setIsActive] = useState(active);
@@ -11,6 +11,11 @@ export default function LikeButton({ active, itemId, handleLike, className }) {
     setAnimation(true);
   }
 
+  // TODO: или добавить принудительную перерисовку извне
+  useEffect(() => {
+    setIsActive(active);
+  }, [active]);
+
   return (
     <button
       className={`like-button ${className} ${isActive ? "active" : ""}`}
@@ -18,12 +23,12 @@ export default function LikeButton({ active, itemId, handleLike, className }) {
     >
       {!isActive ? (
         <svg>
-          <use href="./images/icons.svg#heart" />
+          <use href="/images/icons.svg#heart" />
         </svg>
       ) : (
         <img
           className={`${animation ? "animate-blink" : ""}`}
-          src="./images/icons/heart_filled.svg"
+          src="/images/icons/heart_filled.svg"
         />
       )}
     </button>
