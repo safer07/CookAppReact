@@ -33,8 +33,8 @@ const recipesSlice = createSlice({
         state.items = [];
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.items = action.payload;
         state.status = "success";
+        state.items = action.payload;
       })
       .addCase(fetchRecipes.rejected, (state) => {
         state.status = "error";

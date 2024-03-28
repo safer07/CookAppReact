@@ -34,7 +34,7 @@ export async function fetchRecipes(props) {
 
 export async function fetchRecipe(id) {
   try {
-    const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/recipes/${id}`;
+    const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/fullRecipes/${id}`;
     const response = await axios.get(url);
     return response.data;
   } catch (error) {

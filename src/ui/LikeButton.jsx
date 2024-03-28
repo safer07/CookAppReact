@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function LikeButton({ active, itemId, handleLike, className }) {
   const [isActive, setIsActive] = useState(active);
@@ -10,11 +10,6 @@ export default function LikeButton({ active, itemId, handleLike, className }) {
     setIsActive((prev) => !prev);
     setAnimation(true);
   }
-
-  // TODO: или добавить принудительную перерисовку извне
-  useEffect(() => {
-    setIsActive(active);
-  }, [active]);
 
   return (
     <button

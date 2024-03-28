@@ -8,21 +8,27 @@ import {
   removeRecipe,
   selectLikedRecipes,
 } from "../../redux/slices/likedRecipesSlice";
-import { fetchRecipe } from "../../api";
+import {
+  fetchFullRecipe,
+  selectFullRecipe,
+} from "../../redux/slices/fullRecipeSlice";
 import LikeButton from "../../ui/LikeButton";
 import ButtonIcon from "../../ui/ButtonIcon";
 import Tag from "../../ui/Tag";
 import FeaturedRecipes from "./FeaturedRecipes";
-import scrollNoSmooth from "../../utils/scrollNoSmooth";
+// import scrollNoSmooth from "../../utils/scrollNoSmooth";
 import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
+import SegmentedButton from "../../ui/SegmentedButton";
+import ListItem from "../../ui/ListItem";
 
 export default function RecipePage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [recipe, setRecipe] = useState();
-  const [loading, setLoading] = useState(true);
+  const { recipe, status } = useSelector(selectFullRecipe);
   const likedRecipes = useSelector(selectLikedRecipes);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const tabs = ["Ингредиенты", "Рецепт"];
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe?.category,
@@ -48,18 +54,13 @@ export default function RecipePage() {
   }
 
   useEffect(() => {
-    async function loadRecipe() {
-      setLoading(true);
-      const response = await fetchRecipe(id);
-      setRecipe(response);
-      setLoading(false);
-    }
-    loadRecipe();
+    dispatch(fetchFullRecipe(id));
+    setActiveTabIndex(0);
   }, [id]);
 
-  useLayoutEffect(() => {
-    scrollNoSmooth();
-  }, [id]);
+  // useLayoutEffect(() => {
+  //   scrollNoSmooth();
+  // }, [id]);
 
   function handleLike(id) {
     if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
@@ -68,8 +69,11 @@ export default function RecipePage() {
 
   return (
     <>
-      {loading && <RecipeInfoSkeleton />}
-      {recipe && (
+      {status === "loading" && <RecipeInfoSkeleton />}
+      {status === "error" && (
+        <h1 className="headline-large">Не удалось загрузить рецепт</h1>
+      )}
+      {status === "success" && (
         <>
           <div className="layout-fullwidth relative">
             <img
@@ -96,12 +100,7 @@ export default function RecipePage() {
                 {recipeCategory.fullName}
               </p>
             </div>
-            <p className="text-secondary-color">
-              Омлет - это нежное яичное блюдо, которое прекрасно подходит на
-              завтрак. Добавлять в него можно по желанию бекон, ветчину, сладкий
-              перец, кукурузу, зелень, помидоры. Но сейчас мы приготовим базовый
-              рецепт - классический омлет.
-            </p>
+            <p className="text-secondary-color">{recipe.description}</p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <svg className="size-2 fill-primary">
@@ -114,6 +113,52 @@ export default function RecipePage() {
               <Tag text={difficultyText} surface={tagDifficultySurface} />
             </div>
           </div>
+          <SegmentedButton
+            buttons={tabs}
+            handleClick={setActiveTabIndex}
+            activeTabIndex={activeTabIndex}
+          />
+          {activeTabIndex === 0 && (
+            <ul className="layout-fullwidth mt-1">
+              {recipe.totalIngredients.map((item, index) => (
+                <ListItem
+                  key={index}
+                  size="tiny"
+                  text={item.name}
+                  secondaryText={`${item.amount} ${item.unit}`}
+                />
+              ))}
+            </ul>
+          )}
+          {activeTabIndex === 1 && recipe.steps && (
+            <ol className="mt-2 grid gap-2">
+              {recipe.steps.map((step, index) => (
+                <li key={index} className="grid gap-1">
+                  <div className="headline-medium">Шаг {index + 1}</div>
+                  {step.ingredients.length > 0 && (
+                    <ul className="layout-fullwidth">
+                      {step.ingredients.map((item, index) => (
+                        <ListItem
+                          key={index}
+                          size="tiny"
+                          text={item.name}
+                          secondaryText={`${item.amount} ${item.unit}`}
+                        />
+                      ))}
+                    </ul>
+                  )}
+                  <p className="text-secondary-color">{step.description}</p>
+                  {step.img && (
+                    <img
+                      className="w-full"
+                      src={step.img}
+                      alt={`Шаг ${index + 1}`}
+                    />
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
           <FeaturedRecipes excludeId={recipe.id} />
         </>
       )}
