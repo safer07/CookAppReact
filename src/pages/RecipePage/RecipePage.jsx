@@ -12,14 +12,16 @@ import {
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../redux/slices/fullRecipeSlice";
+import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
+import CookingMode from "./CookingMode";
+import FeaturedRecipes from "./FeaturedRecipes";
 import LikeButton from "../../ui/LikeButton";
 import ButtonIcon from "../../ui/ButtonIcon";
 import Tag from "../../ui/Tag";
-import FeaturedRecipes from "./FeaturedRecipes";
 // import scrollNoSmooth from "../../utils/scrollNoSmooth";
-import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
 import SegmentedButton from "../../ui/SegmentedButton";
 import ListItem from "../../ui/ListItem";
+import Button from "../../ui/Button";
 
 export default function RecipePage() {
   const { id } = useParams();
@@ -28,6 +30,7 @@ export default function RecipePage() {
   const { recipe, status } = useSelector(selectFullRecipe);
   const likedRecipes = useSelector(selectLikedRecipes);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [cookingMode, setCookingMode] = useState(false);
   const tabs = ["Ингредиенты", "Рецепт"];
 
   const recipeCategory = categories.find(
@@ -54,6 +57,7 @@ export default function RecipePage() {
   }
 
   useEffect(() => {
+    setCookingMode(false);
     dispatch(fetchFullRecipe(id));
     setActiveTabIndex(0);
   }, [id]);
@@ -65,6 +69,10 @@ export default function RecipePage() {
   function handleLike(id) {
     if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
     else dispatch(addRecipe(id));
+  }
+
+  if (cookingMode) {
+    return <CookingMode recipe={recipe} setCookingMode={setCookingMode} />;
   }
 
   return (
@@ -159,6 +167,15 @@ export default function RecipePage() {
               ))}
             </ol>
           )}
+          <div className="my-2">
+            <Button
+              text="Начать готовить"
+              onClick={() => setCookingMode(true)}
+              type="primary"
+              block
+            />
+          </div>
+
           <FeaturedRecipes excludeId={recipe.id} />
         </>
       )}

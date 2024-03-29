@@ -14,6 +14,20 @@
   @apply text-h3;
 }
 
+.label-large,
+.label-medium,
 .label-small {
-  @apply font-title text-sm font-bold text-title-color;
+  @apply font-title font-bold text-title-color;
+}
+
+.label-large {
+  @apply text-lg;
+}
+
+.label-medium {
+  @apply text-base;
+}
+
+.label-small {
+  @apply text-sm;
 }
