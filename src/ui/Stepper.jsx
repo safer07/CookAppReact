@@ -4,12 +4,12 @@ export default function Stepper({ stepsCount, currentIndex, setStep }) {
       {[...new Array(stepsCount)].map((_, index) => (
         <li key={index}>
           {currentIndex === index ? (
-            <div className="headline-small grid size-4 place-content-center rounded-full bg-primary text-white">
+            <div className="headline-small surface-accent-secondary grid size-4 place-content-center rounded-full">
               {index + 1}
             </div>
           ) : (
             <button
-              className="headline-small grid size-4 place-content-center rounded-full border-2 border-current text-primary"
+              className="headline-small surface-default text-accent-color grid size-4 place-content-center rounded-full border-2 border-current"
               onClick={() => setStep(index)}
             >
               {index + 1}

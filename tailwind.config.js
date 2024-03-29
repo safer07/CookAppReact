@@ -45,6 +45,7 @@ export default {
       6: "3rem",
       7: "3.5rem",
       8: "4rem",
+      9: "4.5rem",
       10: "5rem",
       12: "6rem",
       14: "7rem",
@@ -105,7 +106,7 @@ export default {
           highGradient: "#F53422",
           lowGradient: "#FA7D43",
         },
-        surface: "var(--surface-bg)",
+        // surface: "var(--surface-bg)",
         // "button-primary-color": "var(--button-primary-color)",
       },
 
@@ -124,6 +125,7 @@ export default {
         "primary-color": "var(--text-primary-color)",
         "secondary-color": "var(--text-secondary-color)",
         "tertiary-color": "var(--text-tertiary-color)",
+        "accent-color": "var(--text-accent-color)",
       },
 
       fontSize: {

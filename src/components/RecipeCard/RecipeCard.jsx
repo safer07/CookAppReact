@@ -45,7 +45,7 @@ export default function RecipeCard({ recipe }) {
   return (
     <Link
       to={`/recipe/${recipe.id}`}
-      className="overflow-hidden rounded-2xl bg-white shadow"
+      className="surface-default overflow-hidden rounded-2xl shadow"
     >
       <div className="relative">
         <img

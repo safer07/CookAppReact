@@ -1,9 +1,9 @@
 export default function RecipeCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <div className="surface-default overflow-hidden rounded-2xl shadow">
       <div className="relative">
         <div className="skeleton aspect-video w-full" />
-        <div className="absolute right-1.5 top-1.5 size-5 rounded-full bg-white" />
+        <div className="surface-default absolute right-1.5 top-1.5 size-5 rounded-full" />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <div className="h-[calc(var(--h3-line-height)*2)]">

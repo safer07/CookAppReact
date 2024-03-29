@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
-import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
-import RecipeCard from "../../components/RecipeCard";
+import RecipesList from "../RecipesPage/RecipesList";
 
 export default function FeaturedRecipes({ excludeId }) {
   const dispatch = useDispatch();
@@ -23,18 +22,11 @@ export default function FeaturedRecipes({ excludeId }) {
 
   return (
     <div className="py-2">
-      <h2 className="headline-medium">
-        {status === "error" ? "Не удалось загрузить рецепты" : "Другие рецепты"}
-      </h2>
-      {status !== "error" && (
-        <div className="mt-2 grid gap-2">
-          {status === "loading"
-            ? [...new Array(5)].map((_, i) => <RecipeCardSkeleton key={i} />)
-            : tempRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-        </div>
-      )}
+      <RecipesList
+        title="Другие рецепты"
+        recipes={tempRecipes}
+        status={status}
+      />
     </div>
   );
 }

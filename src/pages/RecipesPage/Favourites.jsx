@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
 import { selectLikedRecipes } from "../../redux/slices/likedRecipesSlice";
-import RecipeCard from "../../components/RecipeCard";
-import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
+import RecipesList from "./RecipesList";
 
 export default function Favourites() {
   const dispatch = useDispatch();
@@ -26,20 +25,11 @@ export default function Favourites() {
 
   return (
     <div className="py-2">
-      <h2 className="headline-medium">
-        {status === "error"
-          ? "Не удалось загрузить рецепты"
-          : "Рецепты в избранном"}
-      </h2>
-      {status !== "error" && (
-        <div className="mt-2 grid gap-2">
-          {status === "loading"
-            ? [...new Array(5)].map((_, i) => <RecipeCardSkeleton key={i} />)
-            : tempRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-        </div>
-      )}
+      <RecipesList
+        title="Рецепты в избранном"
+        recipes={tempRecipes}
+        status={status}
+      />
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function RecipeInfoSkeleton() {
           icon="/images/icons.svg#arrow_left"
           onClick={() => navigate(-1)}
         />
-        <div className="absolute right-2 top-2 size-5 rounded-full bg-white" />
+        <div className="surface-default absolute right-2 top-2 size-5 rounded-full" />
       </div>
       <div className="grid gap-1 pb-2 pt-1">
         <div>
