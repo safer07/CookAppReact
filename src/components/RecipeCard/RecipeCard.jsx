@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LikeButton from "../../ui/LikeButton";
 import Tag from "../../ui/Tag";
-import { categories } from "../../data";
+import { categories } from "../../data/data";
 import {
   addRecipe,
   removeRecipe,

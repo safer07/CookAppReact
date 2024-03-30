@@ -1,0 +1,23 @@
+@import url(base/fonts.css) layer(base);
+@import url(base/root.css) layer(base);
+@import url(base/headings.css) layer(base);
+@import url(base/other.css) layer(base);
+
+@import url(components/layout.css) layer(components);
+@import url(components/surface.css) layer(components);
+@import url(components/buttons.css) layer(components);
+@import url(components/inputs.css) layer(components);
+@import url(components/skeleton.css) layer(components);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+
+@layer components {
+}
+
+@layer utilities {
+}

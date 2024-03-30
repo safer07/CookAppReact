@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchCategories } from "../../api";
+import { fetchCategories } from "../../app/api";
 import debounce from "../../utils/debounce";
 import {
   setCategoryId,
@@ -11,7 +11,7 @@ import {
 } from "../../redux/slices/filterRecipesSlice";
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
 import Categories from "./Categories";
-import RecipesList from "./RecipesList";
+import RecipesList from "../../components/RecipesList";
 import Input from "../../ui/Input";
 import Tag from "../../ui/Tag";
 

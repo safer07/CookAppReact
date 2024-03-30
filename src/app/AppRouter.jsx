@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import RecipesPage from "./pages/RecipesPage";
-import RecipePage from "./pages/RecipePage";
-import MainLayout from "./layouts/MainLayout";
+import RecipesPage from "../pages/RecipesPage";
+import RecipePage from "../pages/RecipePage";
+import MainLayout from "../layouts/MainLayout";
 
 export default function AppRouter() {
   return (

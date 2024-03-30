@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
-import RecipesList from "../RecipesPage/RecipesList";
+import RecipesList from "../../components/RecipesList";
 
 export default function FeaturedRecipes({ excludeId }) {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
 import { selectLikedRecipes } from "../../redux/slices/likedRecipesSlice";
-import RecipesList from "./RecipesList";
+import RecipesList from "../../components/RecipesList";
 
 export default function Favourites() {
   const dispatch = useDispatch();

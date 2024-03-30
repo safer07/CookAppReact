@@ -1,5 +1,5 @@
 import axios from "axios";
-import { categories, recipes } from "./data";
+import { categories, recipes } from "../data/data";
 
 export function fetchCategories() {
   return new Promise((resolve) => {

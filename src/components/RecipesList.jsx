@@ -1,5 +1,5 @@
-import RecipeCard from "../../components/RecipeCard";
-import RecipeCardSkeleton from "../../components/RecipeCard/RecipeCardSkeleton";
+import RecipeCard from "./RecipeCard";
+import RecipeCardSkeleton from "./RecipeCard/RecipeCardSkeleton";
 
 export default function RecipesList({ title, recipes, status, button }) {
   const skeletonRecipes = [...new Array(4)].map((_, i) => (

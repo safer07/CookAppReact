@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { categories } from "../../data";
+import { categories } from "../../data/data";
 import {
   addRecipe,
   removeRecipe,
