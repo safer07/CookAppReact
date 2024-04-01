@@ -1,5 +1,8 @@
 .button {
-  @apply label-medium flex h-6 items-center justify-center rounded-lg px-3 py-1;
+  @apply label-medium flex h-6 items-center justify-center gap-1 rounded-lg px-3 py-1;
+  & svg {
+    @apply size-3;
+  }
 }
 
 .button-primary {
@@ -7,7 +10,7 @@
 }
 
 .button-secondary {
-  @apply surface-default text-accent-color border-2 border-current;
+  @apply surface-default border-2 border-current text-accent-color;
 }
 
 .button-icon {

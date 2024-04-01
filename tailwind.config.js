@@ -90,6 +90,7 @@ export default {
           // 300: "#c8d1e0",
           // 100: "#f5f7fa",
           borders: "#C8D1E0",
+          bg: "#F5F7FA",
         },
         system: {
           error: "#DE1B1B",

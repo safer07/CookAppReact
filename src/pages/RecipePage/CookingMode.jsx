@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { setShowNavBar } from "../../redux/slices/navBarSlice";
 import Button from "../../ui/Button";
 import ButtonIcon from "../../ui/ButtonIcon";
 import ListItem from "../../ui/ListItem";
 import Stepper from "../../ui/Stepper";
 
 export default function CookingMode({ recipe, setCookingMode }) {
+  const dispatch = useDispatch();
   const [stepIndex, setStepIndex] = useState(0);
   const stepsCount = recipe.steps.length;
   const step = recipe.steps[stepIndex];
@@ -19,6 +22,11 @@ export default function CookingMode({ recipe, setCookingMode }) {
     if (stepIndex === stepsCount - 1) setCookingMode(false);
     else setStepIndex((prev) => prev + 1);
   }
+
+  useEffect(() => {
+    dispatch(setShowNavBar(false));
+    return () => dispatch(setShowNavBar(true));
+  }, []);
 
   return (
     <div className="layout-fullwidth flex h-svh flex-col">

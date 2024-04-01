@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import SegmentedButton from "../../ui/SegmentedButton";
+import { setActiveTab } from "../../redux/slices/navBarSlice";
 import Catalog from "./Catalog";
 import Favourites from "./Favourites";
+import SegmentedButton from "../../ui/SegmentedButton";
 
 export default function RecipesPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const tabs = ["Каталог", "Мои рецепты", "Избранное"];
 
   useEffect(() => {
+    dispatch(setActiveTab(0));
     if (window.location.search) {
       switch (window.location.search) {
         case "?my-recipes":

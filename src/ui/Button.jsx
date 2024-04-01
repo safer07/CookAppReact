@@ -1,4 +1,11 @@
-export default function Button({ text, onClick, className, type, block }) {
+export default function Button({
+  text,
+  icon,
+  onClick,
+  className,
+  type,
+  block,
+}) {
   let typeSlyle;
 
   switch (type) {
@@ -14,6 +21,11 @@ export default function Button({ text, onClick, className, type, block }) {
       className={`button ${typeSlyle} ${className} ${block ? "w-full" : ""}`}
       onClick={onClick}
     >
+      {icon && (
+        <svg>
+          <use href={icon} />
+        </svg>
+      )}
       {text}
     </button>
   );
