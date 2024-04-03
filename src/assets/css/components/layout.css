@@ -4,7 +4,7 @@
 } */
 
 .layout-grid {
-  @apply mx-auto grid w-full items-start;
+  @apply mx-auto grid w-full auto-rows-max items-start;
   max-width: var(--container-max-width);
   /* grid-template-columns:
     [fullwidth-start] minmax(var(--body-padding-inline), 1fr)

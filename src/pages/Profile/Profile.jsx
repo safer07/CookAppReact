@@ -14,32 +14,30 @@ export default function Profile() {
 
   return (
     <>
-      <div>
-        <div className="flex items-center gap-2 py-2">
-          <div className="bg-base-bg grid size-10 shrink-0 place-content-center rounded-full">
-            <svg className="size-5">
-              <use href="/images/icons.svg#user" />
-            </svg>
-          </div>
-          <Button text="Войти" icon="/images/icons.svg#login" block />
+      <div className="flex items-center gap-2 py-2">
+        <div className="grid size-10 shrink-0 place-content-center rounded-full bg-base-bg">
+          <svg className="size-5">
+            <use href="/images/icons.svg#user" />
+          </svg>
         </div>
-        <ul className="layout-fullwidth py-1">
-          <ListItem
-            text="Пользовательское соглашение"
-            rightElement={{
-              element: "icon",
-              icon: "/images/icons.svg#chevron_right",
-            }}
-          />
-          <ListItem
-            text="Политика конфиденциальности"
-            rightElement={{
-              element: "icon",
-              icon: "/images/icons.svg#chevron_right",
-            }}
-          />
-        </ul>
+        <Button text="Войти" icon="/images/icons.svg#login" block />
       </div>
+      <ul className="layout-fullwidth py-1">
+        <ListItem
+          text="Пользовательское соглашение"
+          rightElement={{
+            element: "icon",
+            icon: "/images/icons.svg#chevron_right",
+          }}
+        />
+        <ListItem
+          text="Политика конфиденциальности"
+          rightElement={{
+            element: "icon",
+            icon: "/images/icons.svg#chevron_right",
+          }}
+        />
+      </ul>
     </>
   );
 }
