@@ -2,12 +2,33 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setShowNavBar } from "../../redux/slices/navBarSlice";
+// import { useAppDispatch } from "../../redux/store";
 import Button from "../../ui/Button";
 import ButtonIcon from "../../ui/ButtonIcon";
 import ListItem from "../../ui/ListItem";
 import Stepper from "../../ui/Stepper";
 
-export default function CookingMode({ recipe, setCookingMode }) {
+type Ingredient = { name: string; amount: number; unit: string };
+
+type CookingModeProps = {
+  recipe: {
+    id: string;
+    name: string;
+    category: string;
+    img: string;
+    time: number;
+    difficulty: number;
+    description: string;
+    totalIngredients: Ingredient[];
+    steps: { description: string; ingredients: Ingredient[]; img: string }[];
+  };
+  setCookingMode: (state: boolean) => void;
+};
+
+export default function CookingMode({
+  recipe,
+  setCookingMode,
+}: CookingModeProps) {
   const dispatch = useDispatch();
   const [stepIndex, setStepIndex] = useState(0);
   const stepsCount = recipe.steps.length;
@@ -23,6 +44,7 @@ export default function CookingMode({ recipe, setCookingMode }) {
     else setStepIndex((prev) => prev + 1);
   }
 
+  // TODO этот костыль надо фиксить когда будет нормальный layout
   useEffect(() => {
     dispatch(setShowNavBar(false));
     return () => dispatch(setShowNavBar(true));
@@ -35,11 +57,11 @@ export default function CookingMode({ recipe, setCookingMode }) {
           <img
             className="aspect-[9/7] w-full object-cover"
             src={step.img}
-            alt={stepIndex + 1}
+            alt={`Шаг ${stepIndex + 1}`}
           />
           <ButtonIcon
             className="absolute left-2 top-2"
-            icon="/images/icons.svg#cross"
+            icon="cross"
             onClick={() => setCookingMode(false)}
           />
         </div>

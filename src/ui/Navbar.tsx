@@ -5,8 +5,8 @@ import { selectNavBar } from "../redux/slices/navBarSlice";
 export default function NavBar() {
   const { activeTab, show } = useSelector(selectNavBar);
   const tabs = [
-    { name: "Рецепты", link: "/", icon: "/images/icons.svg#fork" },
-    { name: "Профиль", link: "/profile", icon: "/images/icons.svg#user" },
+    { name: "Рецепты", link: "/", icon: "fork" },
+    { name: "Профиль", link: "/profile", icon: "user" },
   ];
 
   if (!show) return;
@@ -21,7 +21,7 @@ export default function NavBar() {
             className={`flex flex-col items-center py-1 ${activeTab === index ? "text-primary" : "text-secondary-color"}`}
           >
             <svg className="size-3">
-              <use href={tab.icon} />
+              <use href={`/images/icons.svg#${tab.icon}`} />
             </svg>
             {tab.name}
           </Link>

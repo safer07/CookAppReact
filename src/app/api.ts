@@ -1,8 +1,20 @@
 import axios from "axios";
 import { categories, recipes } from "../data/data";
 
+type fetchRecipesProps = {
+  categoryId: string;
+  searchQuery: string;
+};
+
+type CategoryItem = {
+  id: string;
+  name: string;
+  fullName: string;
+  img: string;
+};
+
 export function fetchCategories() {
-  return new Promise((resolve) => {
+  return new Promise<CategoryItem[]>((resolve) => {
     setTimeout(() => {
       resolve(categories);
     }, 100);
@@ -17,7 +29,7 @@ export function fetchCategories() {
 //   });
 // }
 
-export async function fetchRecipes(props) {
+export async function fetchRecipes(props: fetchRecipesProps) {
   try {
     const category = props?.categoryId ? `category=${props.categoryId}` : "";
     const search = props?.searchQuery ? `&search=${props.searchQuery}` : "";
@@ -32,7 +44,7 @@ export async function fetchRecipes(props) {
   }
 }
 
-export async function fetchRecipe(id) {
+export async function fetchRecipe(id: string) {
   try {
     const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/fullRecipes/${id}`;
     const response = await axios.get(url);

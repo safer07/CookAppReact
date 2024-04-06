@@ -4,7 +4,18 @@ import { setCategoryId } from "../../redux/slices/filterRecipesSlice";
 import RecipeCategoryCard from "../../components/RecipeCategoryCard";
 import RecipeCategoryCardSkeleton from "../../components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
 
-export default function Categories({ categories }) {
+type CategoryItem = {
+  id: string;
+  name: string;
+  fullName: string;
+  img: string;
+};
+
+type CategoryProps = {
+  categories: CategoryItem[];
+};
+
+export default function Categories({ categories }: CategoryProps) {
   const dispatch = useDispatch();
 
   return (

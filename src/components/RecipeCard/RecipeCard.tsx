@@ -10,7 +10,18 @@ import {
   selectLikedRecipes,
 } from "../../redux/slices/likedRecipesSlice";
 
-export default function RecipeCard({ recipe }) {
+type RecipeCardProps = {
+  recipe: {
+    id: string;
+    name: string;
+    category: string;
+    img: string;
+    time: number;
+    difficulty: number;
+  };
+};
+
+export default function RecipeCard({ recipe }: RecipeCardProps) {
   const dispatch = useDispatch();
   const likedRecipes = useSelector(selectLikedRecipes);
 
@@ -35,9 +46,10 @@ export default function RecipeCard({ recipe }) {
       break;
     default:
       difficultyText = "???";
+      tagDifficultySurface = "surface-accent";
   }
 
-  function handleLike(id) {
+  function handleLike(id: string) {
     if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
     else dispatch(addRecipe(id));
   }
@@ -64,7 +76,7 @@ export default function RecipeCard({ recipe }) {
         <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)]">
           {recipe.name}
         </h3>
-        <p className="text-secondary-color">{recipeCategory.fullName}</p>
+        <p className="text-secondary-color">{recipeCategory?.fullName}</p>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="size-2 fill-primary">

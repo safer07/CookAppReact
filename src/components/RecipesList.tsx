@@ -1,7 +1,26 @@
 import RecipeCard from "./RecipeCard";
 import RecipeCardSkeleton from "./RecipeCard/RecipeCardSkeleton";
 
-export default function RecipesList({ title, recipes, status, button }) {
+type RecipesListProps = {
+  title: string;
+  recipes: {
+    id: string;
+    name: string;
+    category: string;
+    img: string;
+    time: number;
+    difficulty: number;
+  }[];
+  status: string;
+  button?: { name: string; onClick: () => void };
+};
+
+export default function RecipesList({
+  title,
+  recipes,
+  status,
+  button,
+}: RecipesListProps) {
   const skeletonRecipes = [...new Array(4)].map((_, i) => (
     <RecipeCardSkeleton key={i} />
   ));

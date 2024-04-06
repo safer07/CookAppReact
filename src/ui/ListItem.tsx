@@ -1,4 +1,16 @@
-export default function ListItem({ size, text, secondaryText, rightElement }) {
+type ListItemProps = {
+  size?: string;
+  text: string;
+  secondaryText?: string;
+  rightElement?: { element: string; icon: string };
+};
+
+export default function ListItem({
+  size,
+  text,
+  secondaryText,
+  rightElement,
+}: ListItemProps) {
   return (
     <li className="flex items-center gap-2 px-[--body-padding-inline]">
       <span className={`${size === "tiny" ? "my-1" : "my-2"} flex grow`}>
@@ -11,7 +23,7 @@ export default function ListItem({ size, text, secondaryText, rightElement }) {
       )}
       {rightElement?.element === "icon" && (
         <svg className="size-3">
-          <use href={rightElement?.icon} />
+          <use href={`/images/icons.svg#${rightElement?.icon}`} />
         </svg>
       )}
     </li>

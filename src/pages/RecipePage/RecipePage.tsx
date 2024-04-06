@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { categories } from "../../data/data";
+import { useAppDispatch } from "../../redux/store";
 import {
   addRecipe,
   removeRecipe,
@@ -24,8 +25,8 @@ import ListItem from "../../ui/ListItem";
 import Button from "../../ui/Button";
 
 export default function RecipePage() {
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { recipe, status } = useSelector(selectFullRecipe);
   const likedRecipes = useSelector(selectLikedRecipes);
@@ -54,9 +55,11 @@ export default function RecipePage() {
       break;
     default:
       difficultyText = "???";
+      tagDifficultySurface = "surface-accent";
   }
 
   useEffect(() => {
+    if (!id) return;
     setCookingMode(false);
     dispatch(fetchFullRecipe(id));
     setActiveTabIndex(0);
@@ -66,12 +69,12 @@ export default function RecipePage() {
   //   scrollNoSmooth();
   // }, [id]);
 
-  function handleLike(id) {
+  function handleLike(id: string) {
     if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
     else dispatch(addRecipe(id));
   }
 
-  if (cookingMode) {
+  if (cookingMode && recipe) {
     return <CookingMode recipe={recipe} setCookingMode={setCookingMode} />;
   }
 
@@ -81,7 +84,7 @@ export default function RecipePage() {
       {status === "error" && (
         <h1 className="headline-large">Не удалось загрузить рецепт</h1>
       )}
-      {status === "success" && (
+      {status === "success" && recipe && (
         <>
           <div className="layout-fullwidth relative">
             <img
@@ -91,7 +94,7 @@ export default function RecipePage() {
             />
             <ButtonIcon
               className="absolute left-2 top-2"
-              icon="/images/icons.svg#arrow_left"
+              icon="arrow_left"
               onClick={() => navigate(-1)}
             />
             <LikeButton
@@ -105,7 +108,7 @@ export default function RecipePage() {
             <div>
               <h1 className="headline-large">{recipe?.name}</h1>
               <p className="pt-0.5 text-secondary-color">
-                {recipeCategory.fullName}
+                {recipeCategory?.fullName}
               </p>
             </div>
             <p className="text-secondary-color">{recipe.description}</p>

@@ -1,4 +1,14 @@
-export default function Stepper({ stepsCount, currentIndex, setStep }) {
+type StepperProps = {
+  stepsCount: number;
+  currentIndex: number;
+  setStep: (index: number) => void;
+};
+
+export default function Stepper({
+  stepsCount,
+  currentIndex,
+  setStep,
+}: StepperProps) {
   return (
     <ol className="flex flex-wrap justify-center gap-2">
       {[...new Array(stepsCount)].map((_, index) => (
@@ -9,7 +19,7 @@ export default function Stepper({ stepsCount, currentIndex, setStep }) {
             </div>
           ) : (
             <button
-              className="headline-small surface-default text-accent-color grid size-4 place-content-center rounded-full border-2 border-current"
+              className="headline-small surface-default grid size-4 place-content-center rounded-full border-2 border-current text-accent-color"
               onClick={() => setStep(index)}
             >
               {index + 1}

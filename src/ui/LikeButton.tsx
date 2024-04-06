@@ -1,10 +1,22 @@
 import { useState } from "react";
 
-export default function LikeButton({ active, itemId, handleLike, className }) {
+type LikeButtonProps = {
+  active: boolean;
+  itemId: string;
+  handleLike: (itemId: string) => void;
+  className: string;
+};
+
+export default function LikeButton({
+  active,
+  itemId,
+  handleLike,
+  className,
+}: LikeButtonProps) {
   const [isActive, setIsActive] = useState(active);
   const [animation, setAnimation] = useState(false);
 
-  function onClick(event) {
+  function onClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     handleLike(itemId);
     setIsActive((prev) => !prev);

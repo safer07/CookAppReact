@@ -1,13 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
 import ButtonIcon from "../../ui/ButtonIcon";
 
 export default function RecipeInfoSkeleton() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="layout-fullwidth relative ">
         <div className="skeleton aspect-[9/7]"></div>
         <ButtonIcon
           className="absolute left-2 top-2"
-          icon="/images/icons.svg#arrow_left"
+          icon="arrow_left"
           onClick={() => navigate(-1)}
         />
         <div className="surface-default absolute right-2 top-2 size-5 rounded-full" />

@@ -1,3 +1,12 @@
+type ButtonProps = {
+  text: string;
+  icon?: string;
+  onClick: () => void;
+  className?: string;
+  type?: string;
+  block?: boolean;
+};
+
 export default function Button({
   text,
   icon,
@@ -5,7 +14,7 @@ export default function Button({
   className,
   type,
   block,
-}) {
+}: ButtonProps) {
   let typeSlyle;
 
   switch (type) {
@@ -23,7 +32,7 @@ export default function Button({
     >
       {icon && (
         <svg>
-          <use href={icon} />
+          <use href={`/images/icons.svg#${icon}`} />
         </svg>
       )}
       {text}

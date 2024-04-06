@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { fetchCategories } from "../../app/api";
-import debounce from "../../utils/debounce";
+import { useAppDispatch } from "../../redux/store";
 import {
   setCategoryId,
   // setSearchQuery,
@@ -10,36 +10,44 @@ import {
   selectFilterRecipes,
 } from "../../redux/slices/filterRecipesSlice";
 import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
+import debounce from "../../utils/debounce";
 import Categories from "./Categories";
 import RecipesList from "../../components/RecipesList";
 import Input from "../../ui/Input";
 import Tag from "../../ui/Tag";
 
+type CategoryItem = {
+  id: string;
+  name: string;
+  fullName: string;
+  img: string;
+};
+
 export default function Catalog() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
   const { categoryId } = useSelector(selectFilterRecipes);
   // searchQuery
-  const [recipeСategories, setRecipeСategories] = useState([]);
+  const [recipeСategories, setRecipeСategories] = useState<CategoryItem[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const updateSearchQuery = useCallback(
-    debounce((value) => setSearchQuery(value), 1000),
+  const updateSearchQuery: (value: string) => void = useCallback(
+    debounce((value: string) => setSearchQuery(value), 1000),
     [],
   );
 
-  function onChangeSearchInput(value) {
+  function onChangeSearchInput(value: string) {
     updateSearchQuery(value);
   }
 
-  function findCategoryById(id) {
+  function findCategoryById(id: string) {
     return recipeСategories.find((category) => category.id === id);
   }
 
   useEffect(() => {
     // TODO каждый раз загружаются категории, сохранить в redux
     async function loadCategories() {
-      const categories = await fetchCategories();
+      const categories: CategoryItem[] = await fetchCategories();
       setRecipeСategories(categories);
     }
     loadCategories();
@@ -90,26 +98,47 @@ export default function Catalog() {
         )}
 
         {/* Показ результатов поиска или выбранной категории */}
-        {(categoryId !== null || searchQuery) && (
-          <>
-            <div className="mb-2">
-              <Tag
-                text="Сбросить фильтры"
-                onClick={() => dispatch(resetFilters())}
-              />
-            </div>
+        {categoryId !== null ||
+          (searchQuery && (
+            <>
+              <div className="mb-2">
+                <Tag
+                  text="Сбросить фильтры"
+                  onClick={() => dispatch(resetFilters())}
+                />
+              </div>
 
-            <RecipesList
-              title={
-                searchQuery
-                  ? "Найдены рецепты:"
-                  : findCategoryById(categoryId)?.fullName
-              }
-              recipes={recipes}
-              status={status}
-            />
-          </>
-        )}
+              {/* <RecipesList
+                title={
+                  searchQuery
+                    ? "Найдены рецепты:"
+                    : findCategoryById(categoryId)?.fullName
+                }
+                recipes={recipes}
+                status={status}
+              /> */}
+
+              {/* TODO Тупой костыль от TypeScript  */}
+              {searchQuery && (
+                <RecipesList
+                  title={"Найдены рецепты:"}
+                  recipes={recipes}
+                  status={status}
+                />
+              )}
+              {categoryId &&
+                !searchQuery(
+                  <RecipesList
+                    title={
+                      findCategoryById(categoryId)?.fullName ||
+                      "Заголовок не найден"
+                    }
+                    recipes={recipes}
+                    status={status}
+                  />,
+                )}
+            </>
+          ))}
       </div>
     </>
   );

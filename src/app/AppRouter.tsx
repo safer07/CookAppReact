@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+
 import MainLayout from "../layouts/MainLayout";
 // import FullScreenLayout from "../layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";

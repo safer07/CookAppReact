@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
+import { useAppDispatch } from "../../redux/store";
+import {
+  RecipeItem,
+  fetchRecipes,
+  selectRecipes,
+} from "../../redux/slices/recipesSlice";
 import RecipesList from "../../components/RecipesList";
 
-export default function FeaturedRecipes({ excludeId }) {
-  const dispatch = useDispatch();
+type FeaturedRecipesProps = {
+  excludeId: string;
+};
+
+export default function FeaturedRecipes({ excludeId }: FeaturedRecipesProps) {
+  const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
-  const [tempRecipes, setTempRecipes] = useState([]);
+  const [tempRecipes, setTempRecipes] = useState<RecipeItem[]>([]);
 
   // TODO: пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с likedRecipes, или подгружать их с бэкенда запросом
   useEffect(() => {

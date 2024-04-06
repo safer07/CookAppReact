@@ -20,21 +20,21 @@ export default function Profile() {
             <use href="/images/icons.svg#user" />
           </svg>
         </div>
-        <Button text="Войти" icon="/images/icons.svg#login" block />
+        <Button text="Войти" icon="login" onClick={() => {}} block />
       </div>
       <ul className="layout-fullwidth py-1">
         <ListItem
           text="Пользовательское соглашение"
           rightElement={{
             element: "icon",
-            icon: "/images/icons.svg#chevron_right",
+            icon: "chevron_right",
           }}
         />
         <ListItem
           text="Политика конфиденциальности"
           rightElement={{
             element: "icon",
-            icon: "/images/icons.svg#chevron_right",
+            icon: "chevron_right",
           }}
         />
       </ul>

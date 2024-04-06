@@ -1,4 +1,12 @@
-export default function RecipeCategoryCard({ category, onClick }) {
+type RecipeCategoryCardProps = {
+  category: { name: string; img: string };
+  onClick: () => void;
+};
+
+export default function RecipeCategoryCard({
+  category,
+  onClick,
+}: RecipeCategoryCardProps) {
   return (
     <div
       className="overflow-hidden rounded-2xl bg-white shadow"
