@@ -98,17 +98,16 @@ export default function Catalog() {
         )}
 
         {/* Показ результатов поиска или выбранной категории */}
-        {categoryId !== null ||
-          (searchQuery && (
-            <>
-              <div className="mb-2">
-                <Tag
-                  text="Сбросить фильтры"
-                  onClick={() => dispatch(resetFilters())}
-                />
-              </div>
+        {(categoryId !== null || searchQuery) && (
+          <>
+            <div className="mb-2">
+              <Tag
+                text="Сбросить фильтры"
+                onClick={() => dispatch(resetFilters())}
+              />
+            </div>
 
-              {/* <RecipesList
+            {/* <RecipesList
                 title={
                   searchQuery
                     ? "Найдены рецепты:"
@@ -118,27 +117,26 @@ export default function Catalog() {
                 status={status}
               /> */}
 
-              {/* TODO Тупой костыль от TypeScript  */}
-              {searchQuery && (
-                <RecipesList
-                  title={"Найдены рецепты:"}
-                  recipes={recipes}
-                  status={status}
-                />
-              )}
-              {categoryId &&
-                !searchQuery(
-                  <RecipesList
-                    title={
-                      findCategoryById(categoryId)?.fullName ||
-                      "Заголовок не найден"
-                    }
-                    recipes={recipes}
-                    status={status}
-                  />,
-                )}
-            </>
-          ))}
+            {/* TODO Тупой костыль от TypeScript  */}
+            {searchQuery && (
+              <RecipesList
+                title={"Найдены рецепты:"}
+                recipes={recipes}
+                status={status}
+              />
+            )}
+            {categoryId && !searchQuery && (
+              <RecipesList
+                title={
+                  findCategoryById(categoryId)?.fullName ||
+                  "Заголовок не найден"
+                }
+                recipes={recipes}
+                status={status}
+              />
+            )}
+          </>
+        )}
       </div>
     </>
   );
