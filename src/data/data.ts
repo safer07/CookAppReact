@@ -1,34 +1,4 @@
-type Ingredient = { name: string; amount: number; unit: string };
-
-type CategoryItem = {
-  id: string;
-  name: string;
-  fullName: string;
-  img: string;
-};
-
-type RecipeItem = {
-  id: string;
-  name: string;
-  category: string;
-  img: string;
-  time: number;
-  difficulty: number;
-};
-
-type FullRecipeItem = {
-  id: string;
-  name: string;
-  category: string;
-  img: string;
-  time: number;
-  difficulty: number;
-  description: string;
-  totalIngredients: Ingredient[];
-  steps: { description: string; ingredients: Ingredient[]; img: string }[];
-};
-
-export const categories: CategoryItem[] = [
+export const categories: IRecipeCategoryItem[] = [
   {
     id: "rc1",
     name: "Горячее",
@@ -85,7 +55,7 @@ export const categories: CategoryItem[] = [
   },
 ];
 
-export const recipes: RecipeItem[] = [
+export const recipes: IRecipeItem[] = [
   {
     id: "r1",
     name: "Омлет классический с сыром и ветчиной",
@@ -168,7 +138,7 @@ export const recipes: RecipeItem[] = [
   },
 ];
 
-export const fullRecipes: FullRecipeItem[] = [
+export const fullRecipes: IFullRecipeItem[] = [
   {
     id: "r1",
     name: "Омлет классический с сыром и ветчиной",

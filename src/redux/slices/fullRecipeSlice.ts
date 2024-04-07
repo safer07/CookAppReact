@@ -3,30 +3,16 @@ import axios from "axios";
 
 import { RootState } from "../store";
 
-type Ingredient = { name: string; amount: number; unit: string };
-
-type FullRecipeItem = {
-  id: string;
-  name: string;
-  category: string;
-  img: string;
-  time: number;
-  difficulty: number;
-  description: string;
-  totalIngredients: Ingredient[];
-  steps: { description: string; ingredients: Ingredient[]; img: string }[];
-};
-
 interface FullRecipeSliceState {
-  recipe: FullRecipeItem | null;
+  recipe: IFullRecipeItem | null;
   status: "loading" | "success" | "error" | "";
 }
 
-export const fetchFullRecipe = createAsyncThunk<FullRecipeItem, string>(
+export const fetchFullRecipe = createAsyncThunk<IFullRecipeItem, string>(
   "fullRecipe/fetchFullRecipe",
   async (id) => {
     const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/fullRecipes/${id}`;
-    const response = await axios.get<FullRecipeItem>(url);
+    const response = await axios.get<IFullRecipeItem>(url);
     return response.data;
   },
 );
@@ -49,7 +35,7 @@ const fullRecipeSlice = createSlice({
       })
       .addCase(
         fetchFullRecipe.fulfilled,
-        (state, action: PayloadAction<FullRecipeItem>) => {
+        (state, action: PayloadAction<IFullRecipeItem>) => {
           state.status = "success";
           state.recipe = action.payload;
         },

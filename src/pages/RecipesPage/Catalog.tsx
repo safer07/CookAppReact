@@ -16,19 +16,14 @@ import RecipesList from "../../components/RecipesList";
 import Input from "../../ui/Input";
 import Tag from "../../ui/Tag";
 
-type CategoryItem = {
-  id: string;
-  name: string;
-  fullName: string;
-  img: string;
-};
-
 export default function Catalog() {
   const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
   const { categoryId } = useSelector(selectFilterRecipes);
   // searchQuery
-  const [recipeСategories, setRecipeСategories] = useState<CategoryItem[]>([]);
+  const [recipeСategories, setRecipeСategories] = useState<
+    IRecipeCategoryItem[]
+  >([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const updateSearchQuery: (value: string) => void = useCallback(
@@ -47,7 +42,7 @@ export default function Catalog() {
   useEffect(() => {
     // TODO каждый раз загружаются категории, сохранить в redux
     async function loadCategories() {
-      const categories: CategoryItem[] = await fetchCategories();
+      const categories: IRecipeCategoryItem[] = await fetchCategories();
       setRecipeСategories(categories);
     }
     loadCategories();
@@ -107,34 +102,15 @@ export default function Catalog() {
               />
             </div>
 
-            {/* <RecipesList
-                title={
-                  searchQuery
-                    ? "Найдены рецепты:"
-                    : findCategoryById(categoryId)?.fullName
-                }
-                recipes={recipes}
-                status={status}
-              /> */}
-
-            {/* TODO Тупой костыль от TypeScript  */}
-            {searchQuery && (
-              <RecipesList
-                title={"Найдены рецепты:"}
-                recipes={recipes}
-                status={status}
-              />
-            )}
-            {categoryId && !searchQuery && (
-              <RecipesList
-                title={
-                  findCategoryById(categoryId)?.fullName ||
-                  "Заголовок не найден"
-                }
-                recipes={recipes}
-                status={status}
-              />
-            )}
+            <RecipesList
+              title={
+                searchQuery
+                  ? "Найдены рецепты:"
+                  : findCategoryById(categoryId!)?.fullName!
+              }
+              recipes={recipes}
+              status={status}
+            />
           </>
         )}
       </div>

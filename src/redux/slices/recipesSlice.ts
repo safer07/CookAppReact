@@ -9,33 +9,24 @@ enum RecipeStatus {
   ERROR = "error",
 }
 
-export type RecipeItem = {
-  id: string;
-  name: string;
-  category: string;
-  img: string;
-  time: number;
-  difficulty: number;
-};
-
 type RecipesFilters = {
   categoryId?: string | null;
   searchQuery?: string | null;
 };
 
 interface RecipesSliceState {
-  items: RecipeItem[];
+  items: IRecipeItem[];
   status: RecipeStatus | "";
 }
 
 export const fetchRecipes = createAsyncThunk<
-  RecipeItem[],
+  IRecipeItem[],
   RecipesFilters | undefined
 >("recipes/fetchRecipes", async (props) => {
   const category = props?.categoryId ? `category=${props.categoryId}` : "";
   const search = props?.searchQuery ? `&search=${props.searchQuery}` : "";
   const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/recipes?${category}${search}`;
-  const response = await axios.get<RecipeItem[]>(url);
+  const response = await axios.get<IRecipeItem[]>(url);
   return response.data;
 });
 
@@ -61,7 +52,7 @@ const recipesSlice = createSlice({
       })
       .addCase(
         fetchRecipes.fulfilled,
-        (state, action: PayloadAction<RecipeItem[]>) => {
+        (state, action: PayloadAction<IRecipeItem[]>) => {
           state.status = RecipeStatus.SUCCESS;
           state.items = action.payload;
         },

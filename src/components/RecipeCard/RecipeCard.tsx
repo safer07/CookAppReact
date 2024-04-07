@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import LikeButton from "../../ui/LikeButton";
-import Tag from "../../ui/Tag";
 import { categories } from "../../data/data";
 import {
   addRecipe,
   removeRecipe,
   selectLikedRecipes,
 } from "../../redux/slices/likedRecipesSlice";
+import getRecipeDifficultyTextAndSurface from "../../utils/getRecipeDifficultyTextAndSurface";
+import LikeButton from "../../ui/LikeButton";
+import Tag from "../../ui/Tag";
 
 type RecipeCardProps = {
   recipe: {
@@ -24,30 +25,12 @@ type RecipeCardProps = {
 export default function RecipeCard({ recipe }: RecipeCardProps) {
   const dispatch = useDispatch();
   const likedRecipes = useSelector(selectLikedRecipes);
+  const [difficultyText, tagDifficultySurface] =
+    getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe.category,
   );
-
-  let difficultyText, tagDifficultySurface;
-
-  switch (recipe.difficulty) {
-    case 1:
-      difficultyText = "Легко";
-      tagDifficultySurface = "surface-green";
-      break;
-    case 2:
-      difficultyText = "Средне";
-      tagDifficultySurface = "surface-yellow";
-      break;
-    case 3:
-      difficultyText = "Трудно";
-      tagDifficultySurface = "surface-red";
-      break;
-    default:
-      difficultyText = "???";
-      tagDifficultySurface = "surface-accent";
-  }
 
   function handleLike(id: string) {
     if (likedRecipes.includes(id)) dispatch(removeRecipe(id));

@@ -2,26 +2,13 @@ import { EffectCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setShowNavBar } from "../../redux/slices/navBarSlice";
-// import { useAppDispatch } from "../../redux/store";
 import Button from "../../ui/Button";
 import ButtonIcon from "../../ui/ButtonIcon";
 import ListItem from "../../ui/ListItem";
 import Stepper from "../../ui/Stepper";
 
-type Ingredient = { name: string; amount: number; unit: string };
-
 type CookingModeProps = {
-  recipe: {
-    id: string;
-    name: string;
-    category: string;
-    img: string;
-    time: number;
-    difficulty: number;
-    description: string;
-    totalIngredients: Ingredient[];
-    steps: { description: string; ingredients: Ingredient[]; img: string }[];
-  };
+  recipe: IFullRecipeItem;
   setCookingMode: (state: boolean) => void;
 };
 
