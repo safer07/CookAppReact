@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../redux/slices/navBarSlice";
 import Catalog from "./Catalog";
 import Favourites from "./Favourites";
-import SegmentedButton from "../../ui/SegmentedButton";
+import SegmentedButton from "../../components/ui/SegmentedButton";
 
 export default function RecipesPage() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectNavBar } from "../redux/slices/navBarSlice";
+import { selectNavBar } from "../../redux/slices/navBarSlice";
 
 export default function NavBar() {
   const { activeTab, show } = useSelector(selectNavBar);

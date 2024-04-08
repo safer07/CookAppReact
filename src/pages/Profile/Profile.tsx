@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { setActiveTab } from "../../redux/slices/navBarSlice";
-import Button from "../../ui/Button";
-import ListItem from "../../ui/ListItem";
+import Button from "../../components/ui/Button";
+import ListItem from "../../components/ui/ListItem";
 
 export default function Profile() {
   const dispatch = useDispatch();

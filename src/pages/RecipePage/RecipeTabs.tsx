@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import SegmentedButton from "../../ui/SegmentedButton";
-import ListItem from "../../ui/ListItem";
+import SegmentedButton from "../../components/ui/SegmentedButton";
+import ListItem from "../../components/ui/ListItem";
 
 type IRecipeTabs = { recipe: IFullRecipeItem };
 

@@ -2,10 +2,10 @@ import { EffectCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setShowNavBar } from "../../redux/slices/navBarSlice";
-import Button, { ButtonType } from "../../ui/Button";
-import ButtonIcon from "../../ui/ButtonIcon";
-import ListItem from "../../ui/ListItem";
-import Stepper from "../../ui/Stepper";
+import Button, { ButtonType } from "../../components/ui/Button";
+import ButtonIcon from "../../components/ui/ButtonIcon";
+import ListItem from "../../components/ui/ListItem";
+import Stepper from "../../components/ui/Stepper";
 
 type CookingModeProps = {
   recipe: IFullRecipeItem;

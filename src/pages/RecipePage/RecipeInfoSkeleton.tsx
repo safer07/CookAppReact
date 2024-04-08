@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import ButtonIcon from "../../ui/ButtonIcon";
+import ButtonIcon from "../../components/ui/ButtonIcon";
 
 export default function RecipeInfoSkeleton() {
   const navigate = useNavigate();

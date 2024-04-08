@@ -13,8 +13,8 @@ import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
 import debounce from "../../utils/debounce";
 import Categories from "./Categories";
 import RecipesList from "../../components/RecipesList";
-import Input from "../../ui/Input";
-import Tag from "../../ui/Tag";
+import Input from "../../components/ui/Input";
+import Tag from "../../components/ui/Tag";
 
 export default function Catalog() {
   const dispatch = useAppDispatch();

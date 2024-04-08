@@ -11,7 +11,7 @@ import RecipeInfo from "./RecipeInfo";
 import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
 import CookingMode from "./CookingMode";
 import FeaturedRecipes from "./FeaturedRecipes";
-import Button, { ButtonType } from "../../ui/Button";
+import Button, { ButtonType } from "../../components/ui/Button";
 import RecipeTabs from "./RecipeTabs";
 
 export default function RecipePage() {

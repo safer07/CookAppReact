@@ -9,9 +9,9 @@ import {
   removeRecipe,
   selectLikedRecipes,
 } from "../../redux/slices/likedRecipesSlice";
-import ButtonIcon from "../../ui/ButtonIcon";
-import LikeButton from "../../ui/LikeButton";
-import Tag from "../../ui/Tag";
+import ButtonIcon from "../../components/ui/ButtonIcon";
+import LikeButton from "../../components/ui/LikeButton";
+import Tag from "../../components/ui/Tag";
 import getRecipeDifficultyTextAndSurface from "../../utils/getRecipeDifficultyTextAndSurface";
 
 export default function RecipeInfo() {
