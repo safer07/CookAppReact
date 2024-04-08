@@ -1,10 +1,12 @@
+import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 // import FullScreenLayout from "../layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";
-import RecipePage from "../pages/RecipePage";
-import Profile from "../pages/Profile";
+
+const RecipePage = lazy(() => import("../pages/RecipePage"));
+const Profile = lazy(() => import("../pages/Profile"));
 
 export default function AppRouter() {
   return (

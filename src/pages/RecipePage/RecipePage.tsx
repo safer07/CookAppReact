@@ -11,7 +11,7 @@ import RecipeInfo from "./RecipeInfo";
 import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
 import CookingMode from "./CookingMode";
 import FeaturedRecipes from "./FeaturedRecipes";
-import Button from "../../ui/Button";
+import Button, { ButtonType } from "../../ui/Button";
 import RecipeTabs from "./RecipeTabs";
 
 export default function RecipePage() {
@@ -45,7 +45,7 @@ export default function RecipePage() {
             <Button
               text="Начать готовить"
               onClick={() => setCookingMode(true)}
-              type="primary"
+              type={ButtonType.PRIMARY}
               block
             />
           </div>

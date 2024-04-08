@@ -1,9 +1,14 @@
+export enum ButtonType {
+  PRIMARY = "button-primary",
+  SECONDARY = "button-secondary",
+}
+
 type ButtonProps = {
   text: string;
   icon?: string;
   onClick: () => void;
   className?: string;
-  type?: string;
+  type?: ButtonType;
   block?: boolean;
 };
 
@@ -15,19 +20,9 @@ export default function Button({
   type,
   block,
 }: ButtonProps) {
-  let typeSlyle;
-
-  switch (type) {
-    case "primary":
-      typeSlyle = "button-primary";
-      break;
-    default:
-      typeSlyle = "button-secondary";
-  }
-
   return (
     <button
-      className={`button ${typeSlyle} ${className} ${block ? "w-full" : ""}`}
+      className={`button ${type || "button-secondary"} ${className} ${block ? "w-full" : ""}`}
       onClick={onClick}
     >
       {icon && (

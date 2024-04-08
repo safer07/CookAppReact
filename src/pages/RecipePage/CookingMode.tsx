@@ -2,7 +2,7 @@ import { EffectCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setShowNavBar } from "../../redux/slices/navBarSlice";
-import Button from "../../ui/Button";
+import Button, { ButtonType } from "../../ui/Button";
 import ButtonIcon from "../../ui/ButtonIcon";
 import ListItem from "../../ui/ListItem";
 import Stepper from "../../ui/Stepper";
@@ -84,7 +84,7 @@ export default function CookingMode({
           <Button
             text={stepIndex !== stepsCount - 1 ? "Далее" : "Готово"}
             onClick={onClickNext}
-            type="primary"
+            type={ButtonType.PRIMARY}
             block
           />
         </div>
