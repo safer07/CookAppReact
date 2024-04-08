@@ -12,14 +12,7 @@ import LikeButton from "../../ui/LikeButton";
 import Tag from "../../ui/Tag";
 
 type RecipeCardProps = {
-  recipe: {
-    id: string;
-    name: string;
-    category: string;
-    img: string;
-    time: number;
-    difficulty: number;
-  };
+  recipe: IRecipeItem;
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {

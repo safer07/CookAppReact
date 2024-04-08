@@ -6,15 +6,8 @@ type fetchRecipesProps = {
   searchQuery: string;
 };
 
-type CategoryItem = {
-  id: string;
-  name: string;
-  fullName: string;
-  img: string;
-};
-
 export function fetchCategories() {
-  return new Promise<CategoryItem[]>((resolve) => {
+  return new Promise<IRecipeCategoryItem[]>((resolve) => {
     setTimeout(() => {
       resolve(categories);
     }, 100);

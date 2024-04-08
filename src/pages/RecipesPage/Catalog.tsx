@@ -106,7 +106,8 @@ export default function Catalog() {
               title={
                 searchQuery
                   ? "Найдены рецепты:"
-                  : findCategoryById(categoryId!)?.fullName!
+                  : findCategoryById(categoryId!)?.fullName ||
+                    "Заголовок категории не найден"
               }
               recipes={recipes}
               status={status}
