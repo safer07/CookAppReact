@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../redux/store";
 import {
+  FullRecipeStatus,
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../redux/slices/fullRecipeSlice";
@@ -32,11 +33,11 @@ export default function RecipePage() {
 
   return (
     <>
-      {status === "loading" && <RecipeInfoSkeleton />}
-      {status === "error" && (
+      {status === FullRecipeStatus.LOADING && <RecipeInfoSkeleton />}
+      {status === FullRecipeStatus.ERROR && (
         <h1 className="headline-large">Не удалось загрузить рецепт</h1>
       )}
-      {status === "success" && recipe && (
+      {status === FullRecipeStatus.SUCCESS && recipe && (
         <>
           <RecipeInfo />
           <RecipeTabs recipe={recipe} />

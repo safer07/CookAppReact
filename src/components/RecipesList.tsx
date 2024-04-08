@@ -1,16 +1,10 @@
+import { RecipesStatus } from "../redux/slices/recipesSlice";
 import RecipeCard from "./RecipeCard";
 import RecipeCardSkeleton from "./RecipeCard/RecipeCardSkeleton";
 
 type RecipesListProps = {
   title: string;
-  recipes: {
-    id: string;
-    name: string;
-    category: string;
-    img: string;
-    time: number;
-    difficulty: number;
-  }[];
+  recipes: IRecipeItem[];
   status: string;
   button?: { name: string; onClick: () => void };
 };
@@ -29,7 +23,9 @@ export default function RecipesList({
     <>
       {!button && (
         <h2 className="headline-medium">
-          {status === "error" ? "Не удалось загрузить рецепты" : title}
+          {status === RecipesStatus.ERROR
+            ? "Не удалось загрузить рецепты"
+            : title}
         </h2>
       )}
 
@@ -42,9 +38,9 @@ export default function RecipesList({
         </div>
       )}
 
-      {status !== "error" && (
+      {status !== RecipesStatus.ERROR && (
         <div className="mt-2 grid gap-2">
-          {status === "loading"
+          {status === RecipesStatus.LOADING
             ? skeletonRecipes
             : recipes.map((recipe) => (
                 <RecipeCard key={recipe.id} recipe={recipe} />

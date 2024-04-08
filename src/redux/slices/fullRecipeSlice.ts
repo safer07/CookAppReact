@@ -3,9 +3,15 @@ import axios from "axios";
 
 import { RootState } from "../store";
 
+export enum FullRecipeStatus {
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
+}
+
 interface FullRecipeSliceState {
   recipe: IFullRecipeItem | null;
-  status: "loading" | "success" | "error" | "";
+  status: FullRecipeStatus | "";
 }
 
 export const fetchFullRecipe = createAsyncThunk<IFullRecipeItem, string>(
@@ -30,18 +36,18 @@ const fullRecipeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchFullRecipe.pending, (state) => {
-        state.status = "loading";
+        state.status = FullRecipeStatus.LOADING;
         state.recipe = null;
       })
       .addCase(
         fetchFullRecipe.fulfilled,
         (state, action: PayloadAction<IFullRecipeItem>) => {
-          state.status = "success";
+          state.status = FullRecipeStatus.SUCCESS;
           state.recipe = action.payload;
         },
       )
       .addCase(fetchFullRecipe.rejected, (state) => {
-        state.status = "error";
+        state.status = FullRecipeStatus.ERROR;
         state.recipe = null;
       });
   },
