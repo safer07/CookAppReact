@@ -1,16 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { fetchCategories } from "../../app/api";
 import { useAppDispatch } from "../../redux/store";
 import {
   setCategoryId,
-  // setSearchQuery,
+  setSearchQuery,
   resetFilters,
   selectFilterRecipes,
 } from "../../redux/slices/filterRecipesSlice";
-import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
-import debounce from "../../utils/debounce";
+import {
+  RecipesStatus,
+  fetchRecipes,
+  selectRecipes,
+} from "../../redux/slices/recipesSlice";
+import useDebounce from "../../hooks/debounce";
 import Categories from "./Categories";
 import RecipesList from "../../components/RecipesList";
 import Input from "../../components/ui/Input";
@@ -19,20 +23,19 @@ import Tag from "../../components/ui/Tag";
 export default function Catalog() {
   const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
-  const { categoryId } = useSelector(selectFilterRecipes);
-  // searchQuery
+  const { categoryId, searchQuery } = useSelector(selectFilterRecipes);
   const [recipeСategories, setRecipeСategories] = useState<
     IRecipeCategoryItem[]
   >([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [tempSearchQuery, setTempSearchQuery] = useState("");
+  const debouncedSearchQuery =
+    tempSearchQuery === ""
+      ? useDebounce(tempSearchQuery, 0)
+      : useDebounce(tempSearchQuery, 1000);
 
-  const updateSearchQuery: (value: string) => void = useCallback(
-    debounce((value: string) => setSearchQuery(value), 1000),
-    [],
-  );
-
-  function onChangeSearchInput(value: string) {
-    updateSearchQuery(value);
+  function resetHandle() {
+    dispatch(resetFilters());
+    setTempSearchQuery("");
   }
 
   function findCategoryById(id: string) {
@@ -52,14 +55,18 @@ export default function Catalog() {
     dispatch(fetchRecipes({ categoryId, searchQuery }));
   }, [categoryId, searchQuery]);
 
+  useEffect(() => {
+    dispatch(setSearchQuery(debouncedSearchQuery));
+  }, [debouncedSearchQuery]);
+
   return (
     <>
       <div className="pb-1 pt-2">
         <Input
+          value={tempSearchQuery}
           placeholder="Поиск..."
           iconLeft="search"
-          onChange={onChangeSearchInput}
-          onClear={setSearchQuery}
+          onChange={setTempSearchQuery}
         />
       </div>
       <div className="py-2">
@@ -68,7 +75,7 @@ export default function Catalog() {
           <>
             <Categories categories={recipeСategories} />
 
-            {status === "error" ? (
+            {status === RecipesStatus.ERROR ? (
               <h2 className="headline-medium mt-3">
                 Не удалось загрузить рецепты
               </h2>
@@ -96,10 +103,7 @@ export default function Catalog() {
         {(categoryId !== null || searchQuery) && (
           <>
             <div className="mb-2">
-              <Tag
-                text="Сбросить фильтры"
-                onClick={() => dispatch(resetFilters())}
-              />
+              <Tag text="Сбросить фильтры" onClick={resetHandle} />
             </div>
 
             <RecipesList

@@ -13,7 +13,7 @@ const initialState: filterRecipesSliceState = {
 };
 
 const filterRecipesSlice = createSlice({
-  name: "filters",
+  name: "filterRecipes",
   initialState,
   reducers: {
     setCategoryId(state, action: PayloadAction<string>) {
