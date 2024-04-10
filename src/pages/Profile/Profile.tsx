@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { setActiveTab } from "../../redux/slices/navBarSlice";
+import { NavBarTabs, setActiveNavBarTab } from "../../redux/slices/navBarSlice";
 import Button from "../../components/ui/Button";
 import ListItem from "../../components/ui/ListItem";
 
@@ -9,7 +9,7 @@ export default function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setActiveTab(1));
+    dispatch(setActiveNavBarTab(NavBarTabs.PROFILE));
   }, []);
 
   return (

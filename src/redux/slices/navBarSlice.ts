@@ -2,29 +2,29 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
+export enum NavBarTabs {
+  RECIPES = "recipes",
+  PROFILE = "profile",
+}
+
 interface NavBarSliceState {
-  activeTab: number;
-  show: boolean;
+  activeTab: NavBarTabs;
 }
 
 const initialState: NavBarSliceState = {
-  activeTab: 0,
-  show: true,
+  activeTab: NavBarTabs.RECIPES,
 };
 
 const navBarSlice = createSlice({
   name: "navBar",
   initialState,
   reducers: {
-    setActiveTab(state, action: PayloadAction<number>) {
+    setActiveNavBarTab(state, action: PayloadAction<NavBarTabs>) {
       state.activeTab = action.payload;
-    },
-    setShowNavBar(state, action: PayloadAction<boolean>) {
-      state.show = action.payload;
     },
   },
 });
 
 export const selectNavBar = (state: RootState) => state.navBar;
-export const { setActiveTab, setShowNavBar } = navBarSlice.actions;
+export const { setActiveNavBarTab } = navBarSlice.actions;
 export default navBarSlice.reducer;

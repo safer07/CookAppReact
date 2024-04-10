@@ -27,8 +27,8 @@ export default function Catalog() {
   const [recipeСategories, setRecipeСategories] = useState<
     IRecipeCategoryItem[]
   >([]);
-  const [tempSearchQuery, setTempSearchQuery] = useState("");
-  const debouncedSearchQuery =
+  const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
+  const debouncedSearchQuery: string =
     tempSearchQuery === ""
       ? useDebounce(tempSearchQuery, 0)
       : useDebounce(tempSearchQuery, 1000);

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../redux/store";
 import {
@@ -10,7 +10,6 @@ import {
 } from "../../redux/slices/fullRecipeSlice";
 import RecipeInfo from "./RecipeInfo";
 import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
-import CookingMode from "./CookingMode";
 import FeaturedRecipes from "./FeaturedRecipes";
 import Button, { ButtonType } from "../../components/ui/Button";
 import RecipeTabs from "./RecipeTabs";
@@ -18,18 +17,13 @@ import RecipeTabs from "./RecipeTabs";
 export default function RecipePage() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { recipe, status } = useSelector(selectFullRecipe);
-  const [cookingMode, setCookingMode] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
-    setCookingMode(false);
+    if (!id || recipe?.id === id) return;
     dispatch(fetchFullRecipe(id));
   }, [id]);
-
-  if (cookingMode && recipe) {
-    return <CookingMode recipe={recipe} setCookingMode={setCookingMode} />;
-  }
 
   return (
     <>
@@ -45,7 +39,7 @@ export default function RecipePage() {
           <div className="py-2">
             <Button
               text="Начать готовить"
-              onClick={() => setCookingMode(true)}
+              onClick={() => navigate(`/recipe/${id}/cooking-mode`)}
               type={ButtonType.PRIMARY}
               block
             />

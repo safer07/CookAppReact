@@ -2,46 +2,58 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { setActiveTab } from "../../redux/slices/navBarSlice";
+import { NavBarTabs, setActiveNavBarTab } from "../../redux/slices/navBarSlice";
 import Catalog from "./Catalog";
 import Favourites from "./Favourites";
 import SegmentedButton from "../../components/ui/SegmentedButton";
 
+export enum RecipesPageTabs {
+  CATALOG = "catalog",
+  MYRECIPES = "myrecipes",
+  FAVOURITES = "profile",
+}
+
+interface IRecipesPageTab {
+  name: string;
+  link: string;
+  id: RecipesPageTabs;
+}
+
 export default function RecipesPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const tabs = ["Каталог", "Мои рецепты", "Избранное"];
+  const [activeTab, setActiveTab] = useState<RecipesPageTabs>(
+    RecipesPageTabs.CATALOG,
+  );
+  const tabs: IRecipesPageTab[] = [
+    { name: "Каталог", link: "", id: RecipesPageTabs.CATALOG },
+    {
+      name: "Мои рецепты",
+      link: "?my-recipes",
+      id: RecipesPageTabs.MYRECIPES,
+    },
+    {
+      name: "Избранное",
+      link: "?favourites",
+      id: RecipesPageTabs.FAVOURITES,
+    },
+  ];
+  const activeTabIndex: number = tabs.findIndex(
+    (item) => item.id === activeTab,
+  );
 
   useEffect(() => {
-    dispatch(setActiveTab(0));
+    dispatch(setActiveNavBarTab(NavBarTabs.RECIPES));
     if (window.location.search) {
-      switch (window.location.search) {
-        case "?my-recipes":
-          setActiveTabIndex(1);
-          break;
-        case "?favourites":
-          setActiveTabIndex(2);
-          break;
-        default:
-          break;
-      }
+      tabs.forEach((tab) => {
+        if (window.location.search === tab.link) setActiveTab(tab.id);
+      });
     }
   }, []);
 
   useEffect(() => {
-    switch (activeTabIndex) {
-      case 1:
-        navigate("?my-recipes");
-        break;
-      case 2:
-        navigate("?favourites");
-        break;
-      default:
-        navigate("");
-        break;
-    }
-  }, [activeTabIndex]);
+    navigate(tabs[activeTabIndex].link);
+  }, [activeTab]);
 
   return (
     <>
@@ -50,15 +62,15 @@ export default function RecipesPage() {
       </div>
       <div className="py-1">
         <SegmentedButton
-          buttons={tabs}
-          handleClick={setActiveTabIndex}
+          buttons={tabs.map((tab) => tab.name)}
+          handleClick={(index) => setActiveTab(tabs[index].id)}
           activeTabIndex={activeTabIndex}
         />
       </div>
 
-      {activeTabIndex === 0 && <Catalog />}
+      {activeTab === RecipesPageTabs.CATALOG && <Catalog />}
 
-      {activeTabIndex === 1 && (
+      {activeTab === RecipesPageTabs.MYRECIPES && (
         <div className="py-2">
           <div>
             <h2 className="headline-medium">Мои рецепты</h2>
@@ -66,7 +78,7 @@ export default function RecipesPage() {
         </div>
       )}
 
-      {activeTabIndex === 2 && <Favourites />}
+      {activeTab === RecipesPageTabs.FAVOURITES && <Favourites />}
     </>
   );
 }

@@ -1,15 +1,25 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectNavBar } from "../../redux/slices/navBarSlice";
+import { NavBarTabs, selectNavBar } from "../../redux/slices/navBarSlice";
+
+type NavBarTab = {
+  name: string;
+  id: NavBarTabs;
+  link: string;
+  icon: string;
+};
 
 export default function NavBar() {
-  const { activeTab, show } = useSelector(selectNavBar);
-  const tabs = [
-    { name: "Рецепты", link: "/", icon: "fork" },
-    { name: "Профиль", link: "/profile", icon: "user" },
+  const { activeTab } = useSelector(selectNavBar);
+  const tabs: NavBarTab[] = [
+    { name: "Рецепты", id: NavBarTabs.RECIPES, link: "/", icon: "fork" },
+    {
+      name: "Профиль",
+      id: NavBarTabs.PROFILE,
+      link: "/profile",
+      icon: "user",
+    },
   ];
-
-  if (!show) return;
 
   return (
     <div className="layout-grid">
@@ -18,7 +28,7 @@ export default function NavBar() {
           <Link
             key={index}
             to={tab.link}
-            className={`flex flex-col items-center py-1 ${activeTab === index ? "text-primary" : "text-secondary-color"}`}
+            className={`flex flex-col items-center py-1 ${activeTab === tab.id ? "text-primary" : "text-secondary-color"}`}
           >
             <svg className="size-3">
               <use href={`/images/icons.svg#${tab.icon}`} />
