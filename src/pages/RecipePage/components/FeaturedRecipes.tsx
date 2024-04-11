@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "../../redux/store";
-import { fetchRecipes, selectRecipes } from "../../redux/slices/recipesSlice";
-import RecipesList from "../../components/RecipesList";
+import { useAppDispatch } from "../../../store/store";
+import {
+  fetchRecipes,
+  selectRecipes,
+} from "../../../store/slices/recipesSlice";
+import RecipesList from "../../../widgets/RecipesList";
 
 type FeaturedRecipesProps = {
   excludeId: string;

@@ -1,10 +1,10 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import MainLayout from "../layouts/MainLayout";
-import FullScreenLayout from "../layouts/FullScreenLayout";
+import MainLayout from "./layouts/MainLayout";
+import FullScreenLayout from "./layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";
-import CookingMode from "../pages/RecipePage/CookingMode";
+import CookingMode from "../pages/RecipePage/components/CookingMode";
 
 const RecipePage = lazy(() => import("../pages/RecipePage"));
 const Profile = lazy(() => import("../pages/Profile"));

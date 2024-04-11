@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 
 // import { UserProfileContextProvider } from "./context/UserProfileContext";
 import AppRouter from "./AppRouter";
-import { store } from "../redux/store";
+import { store } from "../store/store";
 
 export default function App() {
   return (

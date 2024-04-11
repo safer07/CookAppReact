@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../../store/store";
 import {
   FullRecipeStatus,
   fetchFullRecipe,
   selectFullRecipe,
-} from "../../redux/slices/fullRecipeSlice";
-import Button, { ButtonType } from "../../components/ui/Button";
-import ButtonIcon from "../../components/ui/ButtonIcon";
-import ListItem from "../../components/ui/ListItem";
-import Stepper from "../../components/ui/Stepper";
+} from "../../../store/slices/fullRecipeSlice";
+import Button, { ButtonType } from "../../../shared/ui/Button";
+import ButtonIcon from "../../../shared/ui/ButtonIcon";
+import ListItem from "../../../shared/ui/ListItem";
+import Stepper from "../../../shared/ui/Stepper";
 
 export default function CookingMode() {
   const { id } = useParams<{ id: string }>();

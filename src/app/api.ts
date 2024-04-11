@@ -1,5 +1,5 @@
 import axios from "axios";
-import { categories, recipes } from "../data/data";
+import { categories } from "../entities/recipeCategory/const/categories";
 
 type fetchRecipesProps = {
   categoryId: string;
@@ -13,14 +13,6 @@ export function fetchCategories() {
     }, 100);
   });
 }
-
-// export function fetchRecipes() {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(recipes);
-//     }, 100);
-//   });
-// }
 
 export async function fetchRecipes(props: fetchRecipesProps) {
   try {

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { NavBarTabs, setActiveNavBarTab } from "../../redux/slices/navBarSlice";
-import Catalog from "./Catalog";
-import Favourites from "./Favourites";
-import SegmentedButton from "../../components/ui/SegmentedButton";
+import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
+import Catalog from "./components/Catalog";
+import Favourites from "./components/Favourites";
+import SegmentedButton from "../../shared/ui/SegmentedButton";
 
 export enum RecipesPageTabs {
   CATALOG = "catalog",

@@ -1,4 +1,4 @@
-import recipeDifficulties from "../data/recipeDifficulties";
+import recipeDifficulties from "../../entities/recipe/const/recipeDifficulties";
 
 export default function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,

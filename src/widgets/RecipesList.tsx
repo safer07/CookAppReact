@@ -1,6 +1,6 @@
-import { RecipesStatus } from "../redux/slices/recipesSlice";
-import RecipeCard from "./RecipeCard";
-import RecipeCardSkeleton from "./RecipeCard/RecipeCardSkeleton";
+import { RecipesStatus } from "../store/slices/recipesSlice";
+import RecipeCard from "../entities/recipe/components/RecipeCard";
+import RecipeCardSkeleton from "../entities/recipe/components/RecipeCard/RecipeCardSkeleton";
 
 type RecipesListProps = {
   title: string;

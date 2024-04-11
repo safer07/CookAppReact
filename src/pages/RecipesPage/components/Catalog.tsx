@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { fetchCategories } from "../../app/api";
-import { useAppDispatch } from "../../redux/store";
+import { fetchCategories } from "../../../app/api";
+import { useAppDispatch } from "../../../store/store";
 import {
   setCategoryId,
   setSearchQuery,
   resetFilters,
   selectFilterRecipes,
-} from "../../redux/slices/filterRecipesSlice";
+} from "../../../store/slices/filterRecipesSlice";
 import {
   RecipesStatus,
   fetchRecipes,
   selectRecipes,
-} from "../../redux/slices/recipesSlice";
-import useDebounce from "../../hooks/debounce";
+} from "../../../store/slices/recipesSlice";
+import useDebounce from "../../../shared/hooks/debounce";
 import Categories from "./Categories";
-import RecipesList from "../../components/RecipesList";
-import Input from "../../components/ui/Input";
-import Tag from "../../components/ui/Tag";
+import RecipesList from "../../../widgets/RecipesList";
+import Input from "../../../shared/ui/Input";
+import Tag from "../../../shared/ui/Tag";
 
 export default function Catalog() {
   const dispatch = useAppDispatch();

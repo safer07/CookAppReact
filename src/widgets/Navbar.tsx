@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { NavBarTabs, selectNavBar } from "../../redux/slices/navBarSlice";
+import { NavBarTabs, selectNavBar } from "../store/slices/navBarSlice";
 
 type NavBarTab = {
   name: string;

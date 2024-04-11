@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { NavBarTabs, setActiveNavBarTab } from "../../redux/slices/navBarSlice";
-import Button from "../../components/ui/Button";
-import ListItem from "../../components/ui/ListItem";
+import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
+import Button from "../../shared/ui/Button";
+import ListItem from "../../shared/ui/ListItem";
 
 export default function Profile() {
   const dispatch = useDispatch();

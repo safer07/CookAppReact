@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { categories } from "../../data/data";
+import { categories } from "../../../recipeCategory/const/categories";
 import {
   addRecipe,
   removeRecipe,
   selectLikedRecipes,
-} from "../../redux/slices/likedRecipesSlice";
-import getRecipeDifficultyTextAndSurface from "../../utils/getRecipeDifficultyTextAndSurface";
-import LikeButton from "../ui/LikeButton";
-import Tag from "../ui/Tag";
+} from "../../../../store/slices/likedRecipesSlice";
+import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
+import LikeButton from "../../../../shared/ui/LikeButton";
+import Tag from "../../../../shared/ui/Tag";
 
 type RecipeCardProps = {
   recipe: IRecipeItem;

@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../store/store";
 import {
   FullRecipeStatus,
   fetchFullRecipe,
   selectFullRecipe,
-} from "../../redux/slices/fullRecipeSlice";
-import RecipeInfo from "./RecipeInfo";
-import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
-import FeaturedRecipes from "./FeaturedRecipes";
-import Button, { ButtonType } from "../../components/ui/Button";
-import RecipeTabs from "./RecipeTabs";
+} from "../../store/slices/fullRecipeSlice";
+import RecipeInfo from "./components/RecipeInfo";
+import RecipeInfoSkeleton from "./components/RecipeInfoSkeleton";
+import FeaturedRecipes from "./components/FeaturedRecipes";
+import Button, { ButtonType } from "../../shared/ui/Button";
+import RecipeTabs from "./components/RecipeTabs";
 
 export default function RecipePage() {
   const { id } = useParams<{ id: string }>();
