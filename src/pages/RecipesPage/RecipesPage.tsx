@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Catalog from "./components/Catalog";
+import MyRecipes from "./components/MyRecipes";
 import Favourites from "./components/Favourites";
 import SegmentedButton from "../../shared/ui/SegmentedButton";
 
@@ -69,15 +70,7 @@ export default function RecipesPage() {
       </div>
 
       {activeTab === RecipesPageTabs.CATALOG && <Catalog />}
-
-      {activeTab === RecipesPageTabs.MYRECIPES && (
-        <div className="py-2">
-          <div>
-            <h2 className="headline-medium">Мои рецепты</h2>
-          </div>
-        </div>
-      )}
-
+      {activeTab === RecipesPageTabs.MYRECIPES && <MyRecipes />}
       {activeTab === RecipesPageTabs.FAVOURITES && <Favourites />}
     </>
   );

@@ -3,5 +3,5 @@ img {
 }
 
 svg {
-  @apply fill-current;
+  @apply shrink-0 fill-current;
 }

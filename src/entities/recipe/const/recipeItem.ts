@@ -1,5 +1,11 @@
 type Ingredient = { name: string; amount: number; unit: string };
 
+type RecipeStep = {
+  description: string;
+  ingredients: Ingredient[];
+  img: string;
+};
+
 type IRecipeItem = {
   id: string;
   name: string;
@@ -12,5 +18,7 @@ type IRecipeItem = {
 interface IFullRecipeItem extends IRecipeItem {
   description: string;
   totalIngredients: Ingredient[];
-  steps: { description: string; ingredients: Ingredient[]; img: string }[];
+  steps: RecipeStep[];
 }
+
+interface INewFullRecipeItem extends Omit<IFullRecipeItem, "id"> {}

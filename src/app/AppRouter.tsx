@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import FullScreenLayout from "./layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";
 import CookingMode from "../pages/RecipePage/components/CookingMode";
+import CreateRecipePage from "../pages/CreateRecipePage";
 
 const RecipePage = lazy(() => import("../pages/RecipePage"));
 const Profile = lazy(() => import("../pages/Profile"));
@@ -21,6 +22,7 @@ export default function AppRouter() {
       </Route>
       <Route path="/" element={<FullScreenLayout />}>
         <Route path="recipe/:id/cooking-mode" element={<CookingMode />} />
+        <Route path="create-recipe" element={<CreateRecipePage />} />
       </Route>
     </Routes>
   );
