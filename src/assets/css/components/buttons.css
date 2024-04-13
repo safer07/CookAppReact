@@ -13,6 +13,14 @@
   @apply surface-default border-2 border-current text-accent-color;
 }
 
+.button-tertiary {
+  @apply surface-default border-2 border-base-borders text-secondary-color;
+}
+
+.button-warning {
+  @apply surface-red shadow-md shadow-red-highGradient;
+}
+
 .button-icon {
   @apply surface-default grid size-5 place-content-center rounded-full;
   & :is(svg, img) {
@@ -26,13 +34,6 @@
     @apply drop-shadow-[0_2px_6px_rgb(255_107_161_/_0.5)];
   }
 }
-/* text-[#FF6BA2] */
-/* drop-shadow-[0_2px_8px_-2px_rgb(255_107_161_/_0.99)] */
-/* drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] */
-
-/* .like-button.active :is(svg, img) {
-  @apply animate-blink;
-} */
 
 .segmented-button {
   @apply flex;
@@ -44,7 +45,3 @@
     @apply surface-accent z-10 border-none shadow-md shadow-primary-highGradient;
   }
 }
-/* 
-.segmented-button .segment.active {
-  @apply surface-accent shadow-md shadow-primary-highGradient z-10 border-none;
-} */

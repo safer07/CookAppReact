@@ -79,9 +79,11 @@ export default {
           // 800: "#405d8d",
           // 300: "#7086a9",
           // 100: "#f0f5fc",
+          active: "#2E7349",
           DEFAULT: "#42A66A",
           highGradient: "#38BDA1",
           lowGradient: "#90DC7B",
+          bg: "#EDFAF2",
         },
         base: {
           800: "#333840",

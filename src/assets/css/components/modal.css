@@ -1,0 +1,18 @@
+.modal {
+  @apply pointer-events-none fixed inset-0 grid h-screen w-screen place-content-center p-3;
+  & .modal-backdrop {
+    @apply pointer-events-auto absolute inset-0 -z-10 bg-black/60 transition-opacity duration-500;
+  }
+  & .modal-content {
+    @apply pointer-events-auto max-w-md overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-3 text-center transition-all duration-500;
+  }
+}
+
+.modal[data-open="false"] .modal-backdrop {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal[data-open="false"] .modal-content {
+  scale: 0;
+}

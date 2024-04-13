@@ -67,6 +67,7 @@ export default function Catalog() {
           placeholder="Поиск..."
           iconLeft="search"
           onChange={setTempSearchQuery}
+          clearButton
         />
       </div>
       <div className="py-2">

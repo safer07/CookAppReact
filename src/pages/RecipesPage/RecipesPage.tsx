@@ -6,6 +6,7 @@ import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Catalog from "./components/Catalog";
 import MyRecipes from "./components/MyRecipes";
 import Favourites from "./components/Favourites";
+import TopAppBar from "../../widgets/TopAppBar";
 import SegmentedButton from "../../shared/ui/SegmentedButton";
 
 export enum RecipesPageTabs {
@@ -58,9 +59,7 @@ export default function RecipesPage() {
 
   return (
     <>
-      <div className="py-1.5">
-        <h1 className="headline-large">Рецепты</h1>
-      </div>
+      <TopAppBar title="Рецепты" />
       <div className="py-1">
         <SegmentedButton
           buttons={tabs.map((tab) => tab.name)}

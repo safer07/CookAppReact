@@ -5,3 +5,22 @@ img {
 svg {
   @apply shrink-0 fill-current;
 }
+
+/* Scroll */
+::-webkit-scrollbar {
+  @apply size-[1.125rem];
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-track {
+  border: solid 6px transparent;
+  @apply shadow-primary-bg rounded-full shadow-[inset_0_0_10px_10px];
+}
+
+::-webkit-scrollbar-thumb {
+  border: solid 6px transparent;
+  @apply hover-hover:hover:shadow-primary-active rounded-full shadow-[inset_0_0_10px_10px] shadow-primary;
+}

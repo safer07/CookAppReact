@@ -11,8 +11,9 @@ import {
 import RecipeInfo from "./components/RecipeInfo";
 import RecipeInfoSkeleton from "./components/RecipeInfoSkeleton";
 import FeaturedRecipes from "./components/FeaturedRecipes";
-import Button, { ButtonType } from "../../shared/ui/Button";
 import RecipeTabs from "./components/RecipeTabs";
+import TopAppBar from "../../widgets/TopAppBar";
+import Button, { ButtonType } from "../../shared/ui/Button";
 
 export default function RecipePage() {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +30,7 @@ export default function RecipePage() {
     <>
       {status === FullRecipeStatus.LOADING && <RecipeInfoSkeleton />}
       {status === FullRecipeStatus.ERROR && (
-        <h1 className="headline-large">Не удалось загрузить рецепт</h1>
+        <TopAppBar title="Не удалось загрузить рецепт" back />
       )}
       {status === FullRecipeStatus.SUCCESS && recipe && (
         <>
