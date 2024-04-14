@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 type InputProps = {
   value: string;
   onChange: (value: string) => void;
+  type?: "text" | "number";
   placeholder?: string;
   iconLeft?: string;
   iconRight?: string;
@@ -11,11 +12,13 @@ type InputProps = {
   showCount?: boolean;
   maxLength?: number;
   clearButton?: boolean;
+  min?: string;
 };
 
 export default function Input({
   value,
   onChange,
+  type = "text",
   placeholder,
   iconLeft,
   iconRight,
@@ -24,6 +27,7 @@ export default function Input({
   showCount,
   maxLength,
   clearButton,
+  min,
 }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,11 +48,12 @@ export default function Input({
         <input
           ref={inputRef}
           className="textfield"
-          type="text"
+          type={type}
           value={value}
           placeholder={placeholder}
           onChange={(event) => onChange(event.target.value)}
           maxLength={maxLength}
+          min={min}
         />
         {value && clearButton && (
           <button className="clear-button" onClick={onClickClear}>

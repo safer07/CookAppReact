@@ -9,7 +9,7 @@ import {
 import RecipesList from "../../../widgets/RecipesList";
 
 type FeaturedRecipesProps = {
-  excludeId: string;
+  excludeId?: string;
 };
 
 export default function FeaturedRecipes({ excludeId }: FeaturedRecipesProps) {

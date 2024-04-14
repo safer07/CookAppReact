@@ -26,6 +26,7 @@ export default function RecipeInfo() {
     (category) => category.id === recipe?.category,
   );
 
+  // TODO: вынести это отдельно
   // function handleLike(id: string) {
   //   if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
   //   else dispatch(addRecipe(id));
@@ -39,6 +40,7 @@ export default function RecipeInfo() {
     [recipe],
   );
 
+  // Этот вариант не должен появляться. Создан только для TypeScript. При ошибке загрузки recipe, этот компонент вообще не должен рендериться
   if (!recipe) return <>'Не удалось загрузить рецепт'</>;
 
   return (

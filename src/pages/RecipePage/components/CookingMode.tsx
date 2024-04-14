@@ -28,7 +28,7 @@ export default function CookingMode() {
   }, [id]);
 
   function navigateToRecipe() {
-    navigate(`/recipe/${id}`);
+    navigate(`/recipe/${id}`, { replace: true });
   }
 
   function onClickBack() {

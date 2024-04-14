@@ -6,12 +6,20 @@ const initialState: INewFullRecipeItem = {
   name: "",
   category: "",
   img: "",
-  time: NaN,
-  difficulty: NaN,
+  time: 0,
+  timeHours: null,
+  timeMinutes: null,
+  difficulty: 0,
   description: "",
   totalIngredients: [],
   steps: [],
 };
+
+function calcTime(hours: number | null, minutes: number | null): number {
+  let h = hours || 0;
+  let m = minutes || 0;
+  return h * 60 + m;
+}
 
 const createRecipeSlice = createSlice({
   name: "createRecipe",
@@ -26,8 +34,16 @@ const createRecipeSlice = createSlice({
     setImg(state, action: PayloadAction<string>) {
       state.img = action.payload;
     },
-    setTime(state, action: PayloadAction<number>) {
-      state.time = action.payload;
+    // setTime(state, action: PayloadAction<number>) {
+    //   state.time = action.payload;
+    // },
+    setTimeHours(state, action: PayloadAction<number>) {
+      state.timeHours = action.payload;
+      state.time = calcTime(state.timeHours, state.timeMinutes);
+    },
+    setTimeMinutes(state, action: PayloadAction<number>) {
+      state.timeMinutes = action.payload;
+      state.time = calcTime(state.timeHours, state.timeMinutes);
     },
     setDifficulty(state, action: PayloadAction<number>) {
       state.difficulty = action.payload;
@@ -48,7 +64,8 @@ export const {
   setName,
   setCategory,
   setImg,
-  setTime,
+  setTimeHours,
+  setTimeMinutes,
   setDifficulty,
   setDescription,
   setSteps,

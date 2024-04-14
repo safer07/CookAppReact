@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Button from "../../shared/ui/Button";
-import ListItem from "../../shared/ui/ListItem";
+import ListItem, { ListItemElement } from "../../shared/ui/ListItem";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -26,14 +26,14 @@ export default function Profile() {
         <ListItem
           text="Пользовательское соглашение"
           rightElement={{
-            element: "icon",
+            element: ListItemElement.ICON,
             icon: "chevron_right",
           }}
         />
         <ListItem
           text="Политика конфиденциальности"
           rightElement={{
-            element: "icon",
+            element: ListItemElement.ICON,
             icon: "chevron_right",
           }}
         />

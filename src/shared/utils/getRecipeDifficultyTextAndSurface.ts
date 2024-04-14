@@ -1,15 +1,23 @@
-import recipeDifficulties from "../../entities/recipe/const/recipeDifficulties";
+import recipeDifficulties, {
+  errorRecipeDifficulty,
+} from "../../entities/recipe/const/recipeDifficulties";
 
 export default function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,
 ) {
-  const difficultyText = recipeDifficulty
-    ? recipeDifficulties[recipeDifficulty].difficultyText
-    : recipeDifficulties.error.difficultyText;
+  const difficultyItem = recipeDifficulties.find(
+    (item) => item.value === recipeDifficulty,
+  );
 
-  const tagDifficultySurface = recipeDifficulty
-    ? recipeDifficulties[recipeDifficulty].tagDifficultySurface
-    : recipeDifficulties.error.tagDifficultySurface;
+  let difficultyText, tagDifficultySurface;
+
+  if (difficultyItem) {
+    difficultyText = difficultyItem.difficultyText;
+    tagDifficultySurface = difficultyItem.tagDifficultySurface;
+  } else {
+    difficultyText = errorRecipeDifficulty.difficultyText;
+    tagDifficultySurface = errorRecipeDifficulty.tagDifficultySurface;
+  }
 
   return [difficultyText, tagDifficultySurface];
 }

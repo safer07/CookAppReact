@@ -1,17 +1,36 @@
 type RecipeDifficultyItem = {
+  value: number;
   difficultyText: string;
+  description: string;
   tagDifficultySurface: string;
 };
 
-type IRecipeDifficulties = {
-  [key: number | string]: RecipeDifficultyItem;
+export const errorRecipeDifficulty: RecipeDifficultyItem = {
+  value: 0,
+  difficultyText: "???",
+  description: "???",
+  tagDifficultySurface: "surface-red",
 };
 
-const recipeDifficulties: IRecipeDifficulties = {
-  1: { difficultyText: "Легко", tagDifficultySurface: "surface-green" },
-  2: { difficultyText: "Средне", tagDifficultySurface: "surface-yellow" },
-  3: { difficultyText: "Трудно", tagDifficultySurface: "surface-red" },
-  error: { difficultyText: "???", tagDifficultySurface: "surface-red" },
-};
+const recipeDifficulties: RecipeDifficultyItem[] = [
+  {
+    value: 1,
+    difficultyText: "Легко",
+    description: "Справится даже ребёнок",
+    tagDifficultySurface: "surface-green",
+  },
+  {
+    value: 2,
+    difficultyText: "Средне",
+    description: "Может не получиться с первого раза",
+    tagDifficultySurface: "surface-yellow",
+  },
+  {
+    value: 3,
+    difficultyText: "Трудно",
+    description: "Требуется большой кулинарный опыт",
+    tagDifficultySurface: "surface-red",
+  },
+];
 
 export default recipeDifficulties;

@@ -1,0 +1,30 @@
+.radio {
+  @apply relative grid size-3 cursor-pointer appearance-none place-content-center;
+}
+
+.radio::before {
+  transition: border-color 300ms;
+  @apply surface-default block size-[1.125rem] rounded-full border border-base-400 content-[''];
+}
+
+.radio::after {
+  transition: background-color 300ms;
+  @apply absolute left-1 top-1 z-[2] hidden h-1 w-1 rounded-full bg-primary content-[''];
+}
+
+.radio:checked::before {
+  @apply border-primary;
+}
+
+.radio:checked::after {
+  @apply block;
+}
+
+@media (hover: hover) {
+  .radio:hover::before {
+    @apply border-primary-active shadow-glow shadow-primary-active;
+  }
+  .radio:checked:hover::after {
+    @apply bg-primary-active;
+  }
+}

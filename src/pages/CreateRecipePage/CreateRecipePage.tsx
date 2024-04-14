@@ -58,23 +58,21 @@ export default function CreateRecipePage() {
         type={StepperType.SIMPLE}
       />
 
-      <div className="my-2 flex grow flex-col gap-3 overflow-y-auto">
+      <div className="layout-fullwidth mt-3 grow basis-0 overflow-y-auto pb-2">
         {step === 1 && <Step1 />}
         {step === 2 && <Step2 />}
         {step === 3 && <Step3 />}
         {step === 4 && <Step4 />}
       </div>
 
-      <div className="layout-grid">
-        <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
-          <Button text="Назад" onClick={onClickBack} block />
-          <Button
-            text={step !== stepsCount ? "Далее" : "Готово"}
-            onClick={onClickNext}
-            type={ButtonType.PRIMARY}
-            block
-          />
-        </div>
+      <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
+        <Button text="Назад" onClick={onClickBack} block />
+        <Button
+          text={step !== stepsCount ? "Далее" : "Готово"}
+          onClick={onClickNext}
+          type={ButtonType.PRIMARY}
+          block
+        />
       </div>
 
       <Modal

@@ -30,7 +30,10 @@ export default function RecipePage() {
     <>
       {status === FullRecipeStatus.LOADING && <RecipeInfoSkeleton />}
       {status === FullRecipeStatus.ERROR && (
-        <TopAppBar title="Не удалось загрузить рецепт" back />
+        <>
+          <TopAppBar title="Не удалось загрузить рецепт" back />
+          <FeaturedRecipes excludeId={id} />
+        </>
       )}
       {status === FullRecipeStatus.SUCCESS && recipe && (
         <>
@@ -40,13 +43,15 @@ export default function RecipePage() {
           <div className="py-2">
             <Button
               text="Начать готовить"
-              onClick={() => navigate(`/recipe/${id}/cooking-mode`)}
+              onClick={() =>
+                navigate(`/recipe/${id}/cooking-mode`, { replace: true })
+              }
               type={ButtonType.PRIMARY}
               block
             />
           </div>
 
-          <FeaturedRecipes excludeId={recipe.id} />
+          <FeaturedRecipes excludeId={id} />
         </>
       )}
     </>

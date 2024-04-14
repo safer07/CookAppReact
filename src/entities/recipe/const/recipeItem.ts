@@ -21,4 +21,7 @@ interface IFullRecipeItem extends IRecipeItem {
   steps: RecipeStep[];
 }
 
-interface INewFullRecipeItem extends Omit<IFullRecipeItem, "id"> {}
+interface INewFullRecipeItem extends Omit<IFullRecipeItem, "id"> {
+  timeHours: number | null;
+  timeMinutes: number | null;
+}
