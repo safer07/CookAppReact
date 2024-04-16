@@ -3,13 +3,51 @@
 }
 
 .input,
-.textarea {
-  @apply surface-default focus-within:shadow-glow flex w-full items-center gap-1 overflow-hidden rounded-lg border border-base-borders text-base transition-colors duration-300 focus-within:border-primary focus-within:shadow-primary/50;
+.textarea,
+.select {
+  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base transition-colors duration-300 focus-within:border-primary focus-within:shadow-glow focus-within:shadow-primary/50;
 }
-.input {
+.input,
+.select {
   @apply h-6 px-2 py-1.5 has-[.clear-button]:pr-1.5 has-[.icon-left]:pl-1.5 has-[.icon-right]:pr-1.5;
   & .textfield {
     @apply truncate;
+  }
+  & .input-right-icons {
+    @apply flex gap-1;
+    & .input-icons-divider {
+      @apply -my-0.25 w-px rounded-full bg-base-borders;
+    }
+  }
+}
+.select {
+  @apply relative z-0 cursor-pointer outline-none;
+  & .textfield {
+    @apply grow;
+    &.placeholder {
+      @apply text-tertiary-color;
+    }
+  }
+  /* -mx-px -mt-px */
+  & .select-options {
+    width: calc(100% + 2px);
+    top: 46px;
+    @apply surface-default absolute -inset-x-px -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
+    & .option {
+      @apply flex items-center gap-2 px-[--body-padding-inline] py-1;
+      &.selected {
+        @apply bg-primary-bg;
+      }
+    }
+  }
+  &.open {
+    @apply rounded-b-none;
+    & .select-options {
+      @apply block;
+    }
+    & .icon-right {
+      @apply rotate-180;
+    }
   }
 }
 .input .textfield,
@@ -20,11 +58,11 @@
   @apply min-h-[6rem] px-2 py-1.5;
 }
 
-.input :is(.icon-left, .icon-right, .clear-button svg) {
+:is(.input, .select) :is(.icon-left, .icon-right, .clear-button svg) {
   @apply size-3 text-tertiary-color;
 }
 
-.input .clear-button {
+:is(.input, .select) .clear-button {
   @apply size-3;
 }
 

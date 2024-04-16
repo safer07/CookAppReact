@@ -1,5 +1,8 @@
 .radio {
-  @apply relative grid size-3 cursor-pointer appearance-none place-content-center;
+  @apply relative grid size-3 appearance-none place-content-center;
+  &:not(:checked) {
+    @apply cursor-pointer;
+  }
 }
 
 .radio::before {
@@ -21,10 +24,7 @@
 }
 
 @media (hover: hover) {
-  .radio:hover::before {
+  .radio:not(:checked):hover::before {
     @apply border-primary-active shadow-glow shadow-primary-active;
-  }
-  .radio:checked:hover::after {
-    @apply bg-primary-active;
   }
 }

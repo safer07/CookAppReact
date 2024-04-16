@@ -11,6 +11,7 @@ import { categories } from "../../../entities/recipeCategory/const/categories";
 import Input from "../../../shared/ui/Input";
 import TextArea from "../../../shared/ui/TextArea";
 import PhotoUpload from "../../../shared/ui/PhotoUpload";
+import Select from "../../../shared/ui/Select";
 
 export default function Step1() {
   const dispatch = useDispatch();
@@ -19,7 +20,9 @@ export default function Step1() {
   const maxName = 60;
   const maxDescription = 200;
 
-  // console.log(categories);
+  const categoriesOptions = categories.map((category) => {
+    return { value: category.id, label: category.fullName };
+  });
 
   return (
     <div className="layout-grid flex flex-col gap-3">
@@ -32,9 +35,9 @@ export default function Step1() {
         maxLength={maxName}
       />
 
-      {/* мапать тут категории в селект */}
-      <Input
+      <Select
         value={category}
+        options={categoriesOptions}
         onChange={(value) => dispatch(setCategory(value))}
         placeholder="Выберите категорию"
         label="Категория"

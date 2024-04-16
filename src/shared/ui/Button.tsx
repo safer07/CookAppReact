@@ -2,7 +2,7 @@ export enum ButtonType {
   PRIMARY = "button-primary",
   SECONDARY = "button-secondary",
   TERTIARY = "button-tertiary",
-  WARNING = "button-warning",
+  NEGATIVE = "button-negative",
 }
 
 type ButtonProps = {

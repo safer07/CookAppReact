@@ -1,19 +1,29 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+
+type InputTextProps = {
+  type?: "text";
+  showCount?: boolean;
+  maxLength?: number;
+  min?: never;
+};
+
+type InputNumberProps = {
+  type: "number";
+  showCount?: never;
+  maxLength?: never;
+  min: string;
+};
 
 type InputProps = {
   value: string;
   onChange: (value: string) => void;
-  type?: "text" | "number";
   placeholder?: string;
   iconLeft?: string;
   iconRight?: string;
   label?: string;
   helper?: string;
-  showCount?: boolean;
-  maxLength?: number;
   clearButton?: boolean;
-  min?: string;
-};
+} & (InputTextProps | InputNumberProps);
 
 export default function Input({
   value,
@@ -39,12 +49,14 @@ export default function Input({
   return (
     <div>
       {label && <div className="input-label">{label}</div>}
+
       <div className="input">
         {iconLeft && (
           <svg className="icon-left">
             <use href={`/images/icons.svg#${iconLeft}`} />
           </svg>
         )}
+
         <input
           ref={inputRef}
           className="textfield"
@@ -55,19 +67,32 @@ export default function Input({
           maxLength={maxLength}
           min={min}
         />
-        {value && clearButton && (
-          <button className="clear-button" onClick={onClickClear}>
-            <svg>
-              <use href={`/images/icons.svg#cross`} />
-            </svg>
-          </button>
-        )}
-        {iconRight && (
-          <svg className="icon-right">
-            <use href={`/images/icons.svg#${iconRight}`} />
-          </svg>
+
+        {(clearButton || iconRight) && (
+          <div className="input-right-icons">
+            {value && clearButton && (
+              <>
+                {value && clearButton && (
+                  <button className="clear-button" onClick={onClickClear}>
+                    <svg>
+                      <use href={`/images/icons.svg#cross`} />
+                    </svg>
+                  </button>
+                )}
+                {clearButton && iconRight && (
+                  <span className="input-icons-divider"></span>
+                )}
+              </>
+            )}
+            {iconRight && (
+              <svg className="icon-right">
+                <use href={`/images/icons.svg#${iconRight}`} />
+              </svg>
+            )}
+          </div>
         )}
       </div>
+
       {(helper || showCount) && (
         <div className="input-helper-block">
           {helper && <div className="input-helper">{helper}</div>}

@@ -1,7 +1,7 @@
 import Button, { ButtonType } from "./Button";
 
 export enum ModalType {
-  WARNING = "warning",
+  NEGATIVE = "negative",
 }
 
 type ModalProps = {
@@ -43,8 +43,8 @@ export default function Modal({
             text="Удалить"
             onClick={onClickOk}
             type={
-              type === ModalType.WARNING
-                ? ButtonType.WARNING
+              type === ModalType.NEGATIVE
+                ? ButtonType.NEGATIVE
                 : ButtonType.PRIMARY
             }
             block

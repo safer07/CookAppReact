@@ -81,7 +81,7 @@ export default function CreateRecipePage() {
         onOk={onDelete}
         title="Удалить рецепт?"
         text="Очистить поля рецепта? Все внесённые данные будут утеряны."
-        type={ModalType.WARNING}
+        type={ModalType.NEGATIVE}
       />
     </div>
   );
