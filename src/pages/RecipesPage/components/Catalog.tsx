@@ -10,7 +10,6 @@ import {
   selectFilterRecipes,
 } from "../../../store/slices/filterRecipesSlice";
 import {
-  RecipesStatus,
   fetchRecipes,
   selectRecipes,
 } from "../../../store/slices/recipesSlice";
@@ -76,7 +75,7 @@ export default function Catalog() {
           <>
             <Categories categories={recipeСategories} />
 
-            {status === RecipesStatus.ERROR ? (
+            {status === "error" ? (
               <h2 className="headline-medium mt-3">
                 Не удалось загрузить рецепты
               </h2>

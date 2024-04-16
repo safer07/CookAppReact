@@ -1,23 +1,17 @@
-export enum StepperType {
-  SIMPLE = "simple",
-  MEDIUM = "medium",
-  BIG = "big",
-}
-
 type StepperProps = {
   stepsCount: number;
   currentIndex: number;
   setStep?: (index: number) => void;
-  type?: StepperType;
+  type?: "simple" | "medium" | "big";
 };
 
 export default function Stepper({
   stepsCount,
   currentIndex,
   setStep = () => {},
-  type,
+  type = "simple",
 }: StepperProps) {
-  if (type === StepperType.SIMPLE)
+  if (type === "simple")
     return (
       <ol className="flex gap-1">
         {[...new Array(stepsCount)].map((_, index) => (

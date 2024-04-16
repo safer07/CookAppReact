@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../store/store";
 import {
-  FullRecipeStatus,
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../store/slices/fullRecipeSlice";
@@ -28,14 +27,14 @@ export default function RecipePage() {
 
   return (
     <>
-      {status === FullRecipeStatus.LOADING && <RecipeInfoSkeleton />}
-      {status === FullRecipeStatus.ERROR && (
+      {status === "loading" && <RecipeInfoSkeleton />}
+      {status === "error" && (
         <>
           <TopAppBar title="Не удалось загрузить рецепт" back />
           <FeaturedRecipes excludeId={id} />
         </>
       )}
-      {status === FullRecipeStatus.SUCCESS && recipe && (
+      {status === "success" && recipe && (
         <>
           <RecipeInfo />
           <RecipeTabs recipe={recipe} />

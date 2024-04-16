@@ -8,7 +8,7 @@ import {
 } from "../../../store/slices/createRecipeSlice";
 import recipeDifficulties from "../../../entities/recipe/const/recipeDifficulties";
 import Input from "../../../shared/ui/Input";
-import ListItem, { ListItemElement } from "../../../shared/ui/ListItem";
+import ListItem from "../../../shared/ui/ListItem";
 
 export default function Step2() {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ export default function Step2() {
   return (
     <div className="layout-grid flex flex-col gap-3">
       <h2 className="headline-medium">Параметры рецепта</h2>
+
       <div>
         <h3 className="headline-small">Время приготовления</h3>
         <div className="mt-2 grid grid-cols-2 gap-2">
@@ -37,8 +38,8 @@ export default function Step2() {
           />
         </div>
       </div>
-      {/* TODO: почему возникает scroll без overflow-x-hidden? */}
-      <div className="">
+
+      <div>
         <h3 className="headline-small">Сложность</h3>
         <ul className="layout-fullwidth mt-2 grid gap-1">
           {recipeDifficulties.map((item) => (
@@ -47,7 +48,7 @@ export default function Step2() {
               text={item.difficultyText}
               description={item.description}
               leftElement={{
-                element: ListItemElement.RADIO,
+                element: "radio",
                 checked: difficulty === item.value,
               }}
               onClick={() => dispatch(setDifficulty(item.value))}

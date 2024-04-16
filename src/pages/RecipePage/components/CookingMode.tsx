@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import { useAppDispatch } from "../../../store/store";
 import {
-  FullRecipeStatus,
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../../store/slices/fullRecipeSlice";
@@ -45,7 +44,7 @@ export default function CookingMode() {
 
   return (
     <>
-      {status === FullRecipeStatus.SUCCESS && step && (
+      {status === "success" && step && (
         <div className="layout-fullwidth flex h-svh flex-col">
           <div className="grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
@@ -69,13 +68,14 @@ export default function CookingMode() {
                   stepsCount={stepsCount}
                   currentIndex={stepIndex}
                   setStep={setStepIndex}
+                  type="medium"
                 />
                 {step.ingredients.length > 0 && (
                   <ul className="layout-fullwidth">
                     {step.ingredients.map((item, index) => (
                       <ListItem
                         key={index}
-                        size="tiny"
+                        size="small"
                         text={item.name}
                         secondaryText={`${item.amount} ${item.unit}`}
                       />

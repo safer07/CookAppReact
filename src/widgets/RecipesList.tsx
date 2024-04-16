@@ -1,11 +1,11 @@
-import { RecipesStatus } from "../store/slices/recipesSlice";
+import { TypeRecipesStatus } from "../store/slices/recipesSlice";
 import RecipeCard from "../entities/recipe/components/RecipeCard";
 import RecipeCardSkeleton from "../entities/recipe/components/RecipeCard/RecipeCardSkeleton";
 
 type RecipesListProps = {
   title: string;
   recipes: IRecipeItem[];
-  status: string;
+  status: TypeRecipesStatus;
   button?: { name: string; onClick: () => void };
 };
 
@@ -23,9 +23,7 @@ export default function RecipesList({
     <>
       {!button && (
         <h2 className="headline-medium">
-          {status === RecipesStatus.ERROR
-            ? "Не удалось загрузить рецепты"
-            : title}
+          {status === "error" ? "Не удалось загрузить рецепты" : title}
         </h2>
       )}
 
@@ -38,9 +36,9 @@ export default function RecipesList({
         </div>
       )}
 
-      {status !== RecipesStatus.ERROR && (
+      {status !== "error" && (
         <div className="mt-2 grid gap-2">
-          {status === RecipesStatus.LOADING
+          {status === "loading"
             ? skeletonRecipes
             : recipes.map((recipe) => (
                 <RecipeCard key={recipe.id} recipe={recipe} />

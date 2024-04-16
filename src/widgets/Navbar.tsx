@@ -12,10 +12,10 @@ type NavBarTab = {
 export default function NavBar() {
   const { activeTab } = useSelector(selectNavBar);
   const tabs: NavBarTab[] = [
-    { name: "Рецепты", id: NavBarTabs.RECIPES, link: "/", icon: "fork" },
+    { name: "Рецепты", id: "recipes", link: "/", icon: "fork" },
     {
       name: "Профиль",
-      id: NavBarTabs.PROFILE,
+      id: "profile",
       link: "/profile",
       icon: "user",
     },

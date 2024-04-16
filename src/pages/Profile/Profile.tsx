@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { NavBarTabs, setActiveNavBarTab } from "../../store/slices/navBarSlice";
+import { setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Button from "../../shared/ui/Button";
-import ListItem, { ListItemElement } from "../../shared/ui/ListItem";
+import ListItem from "../../shared/ui/ListItem";
 
 export default function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setActiveNavBarTab(NavBarTabs.PROFILE));
+    dispatch(setActiveNavBarTab("profile"));
   }, []);
 
   return (
@@ -26,14 +26,14 @@ export default function Profile() {
         <ListItem
           text="Пользовательское соглашение"
           rightElement={{
-            element: ListItemElement.ICON,
+            element: "icon",
             icon: "chevron_right",
           }}
         />
         <ListItem
           text="Политика конфиденциальности"
           rightElement={{
-            element: ListItemElement.ICON,
+            element: "icon",
             icon: "chevron_right",
           }}
         />

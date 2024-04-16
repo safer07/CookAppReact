@@ -3,6 +3,9 @@
   & svg {
     @apply size-3;
   }
+  & span {
+    @apply truncate;
+  }
 }
 
 .button-primary {

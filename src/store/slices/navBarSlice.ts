@@ -2,17 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
-export enum NavBarTabs {
-  RECIPES = "recipes",
-  PROFILE = "profile",
-}
+export type NavBarTabs = "recipes" | "profile";
 
 interface NavBarSliceState {
   activeTab: NavBarTabs;
 }
 
 const initialState: NavBarSliceState = {
-  activeTab: NavBarTabs.RECIPES,
+  activeTab: "recipes",
 };
 
 const navBarSlice = createSlice({

@@ -8,9 +8,9 @@ import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
 import Step4 from "./components/Step4";
 import TopAppBar from "../../widgets/TopAppBar";
-import Stepper, { StepperType } from "../../shared/ui/Stepper";
+import Stepper from "../../shared/ui/Stepper";
 import Button, { ButtonType } from "../../shared/ui/Button";
-import Modal, { ModalType } from "../../shared/ui/Modal";
+import Modal from "../../shared/ui/Modal";
 
 export default function CreateRecipePage() {
   const navigate = useNavigate();
@@ -52,11 +52,7 @@ export default function CreateRecipePage() {
         }}
       />
 
-      <Stepper
-        stepsCount={stepsCount}
-        currentIndex={step - 1}
-        type={StepperType.SIMPLE}
-      />
+      <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
 
       <div className="layout-fullwidth mt-3 grow basis-0 overflow-y-auto pb-2">
         {step === 1 && <Step1 />}
@@ -79,9 +75,10 @@ export default function CreateRecipePage() {
         open={modalIsOpen}
         setOpen={setModalIsOpen}
         onOk={onDelete}
+        okText="Удалить"
         title="Удалить рецепт?"
         text="Очистить поля рецепта? Все внесённые данные будут утеряны."
-        type={ModalType.NEGATIVE}
+        type="negative"
       />
     </div>
   );

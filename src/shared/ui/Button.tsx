@@ -32,7 +32,7 @@ export default function Button({
           <use href={`/images/icons.svg#${icon}`} />
         </svg>
       )}
-      {text}
+      <span>{text}</span>
     </button>
   );
 }

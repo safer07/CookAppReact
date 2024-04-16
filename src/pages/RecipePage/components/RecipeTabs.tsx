@@ -22,7 +22,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs) {
           {recipe.totalIngredients.map((item, index) => (
             <ListItem
               key={index}
-              size="tiny"
+              size="small"
               text={item.name}
               secondaryText={`${item.amount} ${item.unit}`}
             />
@@ -40,7 +40,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs) {
                   {step.ingredients.map((item, index) => (
                     <ListItem
                       key={index}
-                      size="tiny"
+                      size="small"
                       text={item.name}
                       secondaryText={`${item.amount} ${item.unit}`}
                     />

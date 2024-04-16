@@ -51,6 +51,9 @@ const createRecipeSlice = createSlice({
     setDescription(state, action: PayloadAction<string>) {
       state.description = action.payload;
     },
+    setTotalIngredients(state, action: PayloadAction<Ingredient[]>) {
+      state.totalIngredients = action.payload;
+    },
     setSteps(state, action: PayloadAction<RecipeStep[]>) {
       // TODO: здесь надо автоматом считать totalIngredients
       state.steps = action.payload;
@@ -68,6 +71,7 @@ export const {
   setTimeMinutes,
   setDifficulty,
   setDescription,
+  setTotalIngredients,
   setSteps,
   resetCreateRecipe,
 } = createRecipeSlice.actions;

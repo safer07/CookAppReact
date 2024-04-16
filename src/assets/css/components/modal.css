@@ -4,16 +4,14 @@
     @apply pointer-events-auto absolute inset-0 -z-10 bg-black/60 transition-opacity duration-300;
   }
   & .modal-content {
-    @apply pointer-events-auto max-w-md overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-3 text-center transition-all duration-300;
+    @apply pointer-events-auto max-w-md overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-3 transition-all duration-300;
   }
 }
 
 .modal[data-open="false"] .modal-backdrop {
-  opacity: 0;
-  pointer-events: none;
+  @apply pointer-events-none opacity-0;
 }
 
 .modal[data-open="false"] .modal-content {
-  opacity: 0;
-  scale: 0.4;
+  @apply pointer-events-none scale-50 opacity-0;
 }

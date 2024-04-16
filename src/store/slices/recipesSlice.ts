@@ -3,11 +3,7 @@ import axios from "axios";
 
 import { RootState } from "../store";
 
-export enum RecipesStatus {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
+export type TypeRecipesStatus = "loading" | "success" | "error" | "";
 
 type RecipesFilters = {
   categoryId?: string | null;
@@ -16,7 +12,7 @@ type RecipesFilters = {
 
 interface RecipesSliceState {
   items: IRecipeItem[];
-  status: RecipesStatus | "";
+  status: TypeRecipesStatus;
 }
 
 export const fetchRecipes = createAsyncThunk<
@@ -47,18 +43,18 @@ const recipesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipes.pending, (state) => {
-        state.status = RecipesStatus.LOADING;
+        state.status = "loading";
         state.items = [];
       })
       .addCase(
         fetchRecipes.fulfilled,
         (state, action: PayloadAction<IRecipeItem[]>) => {
-          state.status = RecipesStatus.SUCCESS;
+          state.status = "success";
           state.items = action.payload;
         },
       )
       .addCase(fetchRecipes.rejected, (state) => {
-        state.status = RecipesStatus.ERROR;
+        state.status = "error";
         state.items = [];
       });
   },

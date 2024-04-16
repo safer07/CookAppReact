@@ -1,5 +1,5 @@
 .input-label {
-  @apply label-small mb-0.5 block text-secondary-color;
+  @apply label-small mb-0.5 block text-left text-secondary-color;
 }
 
 .input,
@@ -28,7 +28,6 @@
       @apply text-tertiary-color;
     }
   }
-  /* -mx-px -mt-px */
   & .select-options {
     width: calc(100% + 2px);
     top: 46px;

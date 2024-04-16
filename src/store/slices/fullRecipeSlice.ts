@@ -3,11 +3,7 @@ import axios from "axios";
 
 import { RootState } from "../store";
 
-export enum FullRecipeStatus {
-  LOADING = "loading",
-  SUCCESS = "success",
-  ERROR = "error",
-}
+type FullRecipeStatus = "loading" | "success" | "error";
 
 interface FullRecipeSliceState {
   recipe: IFullRecipeItem | null;
@@ -36,18 +32,18 @@ const fullRecipeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchFullRecipe.pending, (state) => {
-        state.status = FullRecipeStatus.LOADING;
+        state.status = "loading";
         state.recipe = null;
       })
       .addCase(
         fetchFullRecipe.fulfilled,
         (state, action: PayloadAction<IFullRecipeItem>) => {
-          state.status = FullRecipeStatus.SUCCESS;
+          state.status = "success";
           state.recipe = action.payload;
         },
       )
       .addCase(fetchFullRecipe.rejected, (state) => {
-        state.status = FullRecipeStatus.ERROR;
+        state.status = "error";
         state.recipe = null;
       });
   },

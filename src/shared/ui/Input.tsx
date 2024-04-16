@@ -11,13 +11,14 @@ type InputNumberProps = {
   type: "number";
   showCount?: never;
   maxLength?: never;
-  min: string;
+  min?: string;
 };
 
 type InputProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  className?: string;
   iconLeft?: string;
   iconRight?: string;
   label?: string;
@@ -30,6 +31,7 @@ export default function Input({
   onChange,
   type = "text",
   placeholder,
+  className,
   iconLeft,
   iconRight,
   label,
@@ -47,7 +49,7 @@ export default function Input({
   }
 
   return (
-    <div>
+    <div className={className}>
       {label && <div className="input-label">{label}</div>}
 
       <div className="input">
