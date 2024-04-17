@@ -8,17 +8,26 @@ type Icon = {
 type TopAppBarProps = {
   title: string;
   back?: boolean;
+  backOnClick?: () => void;
   rightIcon?: Icon;
 };
 
-export default function TopAppBar({ title, back, rightIcon }: TopAppBarProps) {
+export default function TopAppBar({
+  title,
+  back,
+  backOnClick,
+  rightIcon,
+}: TopAppBarProps) {
   const navigate = useNavigate();
 
   return (
     <div className="py-1.5">
       <div className="flex items-center gap-2">
         {back && (
-          <svg onClick={() => navigate(-1)} className="size-3 cursor-pointer">
+          <svg
+            onClick={backOnClick ? backOnClick : () => navigate(-1)}
+            className="size-3 cursor-pointer"
+          >
             <use href="/images/icons.svg#arrow_left" />
           </svg>
         )}

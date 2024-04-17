@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
-import { setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Catalog from "./components/Catalog";
 import MyRecipes from "./components/MyRecipes";
 import Favourites from "./components/Favourites";
@@ -18,7 +16,6 @@ interface IRecipesPageTab {
 }
 
 export default function RecipesPage() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<RecipesPageTabId>("catalog");
   const tabs: IRecipesPageTab[] = [
@@ -37,15 +34,6 @@ export default function RecipesPage() {
   const activeTabIndex: number = tabs.findIndex(
     (item) => item.id === activeTab,
   );
-
-  useEffect(() => {
-    dispatch(setActiveNavBarTab("recipes"));
-    if (window.location.search) {
-      tabs.forEach((tab) => {
-        if (window.location.search === tab.link) setActiveTab(tab.id);
-      });
-    }
-  }, []);
 
   useEffect(() => {
     navigate(tabs[activeTabIndex].link);

@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { NavBarTabs, selectNavBar } from "../store/slices/navBarSlice";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+type NavBarTabs = "recipes" | "profile";
 
 type NavBarTab = {
   name: string;
@@ -10,7 +11,8 @@ type NavBarTab = {
 };
 
 export default function NavBar() {
-  const { activeTab } = useSelector(selectNavBar);
+  const pathname = useLocation().pathname;
+  const [activeTab, setActiveTab] = useState("");
   const tabs: NavBarTab[] = [
     { name: "Рецепты", id: "recipes", link: "/", icon: "fork" },
     {
@@ -20,6 +22,12 @@ export default function NavBar() {
       icon: "user",
     },
   ];
+
+  useEffect(() => {
+    if (pathname === "/" || pathname.startsWith("/recipe"))
+      setActiveTab("recipes");
+    else if (pathname.startsWith("/profile")) setActiveTab("profile");
+  }, [pathname]);
 
   return (
     <div className="layout-grid">

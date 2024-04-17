@@ -1,17 +1,7 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { setActiveNavBarTab } from "../../store/slices/navBarSlice";
 import Button from "../../shared/ui/Button";
 import ListItem from "../../shared/ui/ListItem";
 
 export default function Profile() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setActiveNavBarTab("profile"));
-  }, []);
-
   return (
     <>
       <div className="flex items-center gap-2 py-2">

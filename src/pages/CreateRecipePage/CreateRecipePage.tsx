@@ -46,6 +46,7 @@ export default function CreateRecipePage() {
       <TopAppBar
         title="Создать рецепт"
         back
+        backOnClick={onClickBack}
         rightIcon={{
           icon: "delete",
           onClick: () => setModalIsOpen(true),
