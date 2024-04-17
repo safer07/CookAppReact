@@ -1,3 +1,5 @@
+import ReactDOM from "react-dom";
+
 import Button, { ButtonType } from "./Button";
 
 type ModalProps = {
@@ -39,7 +41,7 @@ export default function Modal({
     onOk();
   }
 
-  return (
+  return ReactDOM.createPortal(
     <div className={`modal`} data-open={open}>
       <div className="modal-backdrop" onClick={() => setOpen(false)}></div>
       <div className={`modal-content ${textAlignClass}`}>
@@ -65,6 +67,7 @@ export default function Modal({
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal-portal")!,
   );
 }
