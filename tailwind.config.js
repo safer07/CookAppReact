@@ -65,7 +65,6 @@ export default {
 
     boxShadow: {
       // sm: "0 0 2px 0 rgba(0, 0, 0, 1)",
-      // sm2x: "0 0 4px 0 rgba(0, 0, 0, 1)",
       DEFAULT: "0 2px 6px -2px rgb(0 0 0 / 0.2)",
       md: "0 2px 8px -2px rgb(0 0 0 / 0.2)",
       glow: "0 0 8px -2px rgb(0 0 0 / 0.2)",
@@ -110,21 +109,9 @@ export default {
           highGradient: "#F53422",
           lowGradient: "#FA7D43",
         },
-        // surface: "var(--surface-bg)",
-        // "button-primary-color": "var(--button-primary-color)",
       },
 
-      // backgroundImage: (theme) => ({
-      // "button-primary-gradient": "var(--button-primary-gradient)",
-      // "gradient-primary": `linear-gradient(to bottom, ${theme(
-      //   "colors.blue.400",
-      // )}, var(--color-primary))`,
-      // }),
-
       textColor: {
-        // "primary-text": "rgb(var(--text-primary-color) / <alpha-value>)",
-        // "secondary-text": "rgb(var(--text-secondary-color) / <alpha-value>)",
-        // "tertiary-text": "rgb(var(--text-tertiary-color) / <alpha-value>)",
         "title-color": "var(--text-title-color)",
         "primary-color": "var(--text-primary-color)",
         "secondary-color": "var(--text-secondary-color)",
@@ -157,10 +144,30 @@ export default {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.25)" },
         },
+        showModal: {
+          "0%": { opacity: 0, transform: "scale(0.5)" },
+          "100%": { opacity: 1, transform: "scale(1)" },
+        },
+        hideModal: {
+          "0%": { opacity: 1, transform: "scale(1)" },
+          "100%": { opacity: 0, transform: "scale(0.5)" },
+        },
+        showBackdrop: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        hideBackdrop: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
       },
 
       animation: {
         blink: "blink 300ms ease-in-out forwards",
+        showModal: "showModal 300ms ease-in-out forwards",
+        hideModal: "hideModal 300ms ease-in-out forwards",
+        showBackdrop: "showBackdrop 300ms ease-in-out forwards",
+        hideBackdrop: "hideBackdrop 300ms ease-in-out forwards",
       },
     },
   },

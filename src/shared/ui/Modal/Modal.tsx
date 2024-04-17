@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 
-import Button, { ButtonType } from "./Button";
+import useMount from "./hooks/useMount";
+import Button, { ButtonType } from "../Button";
 
 type ModalProps = {
   title: string;
@@ -25,6 +26,7 @@ export default function Modal({
   children,
   textAlign = "center",
 }: ModalProps) {
+  const mounted = useMount(open);
   const textAlignClass = () => {
     switch (textAlign) {
       case "left":
@@ -41,9 +43,16 @@ export default function Modal({
     onOk();
   }
 
+  if (!mounted) return null;
+
   return ReactDOM.createPortal(
-    <div className={`modal`} data-open={open}>
-      <div className="modal-backdrop" onClick={() => setOpen(false)}></div>
+    <div className="modal" data-open={open} role="dialog">
+      <div
+        className="modal-backdrop"
+        onClick={() => setOpen(false)}
+        tabIndex={0}
+        role="button"
+      ></div>
       <div className={`modal-content ${textAlignClass}`}>
         <p className="headline-medium">{title}</p>
         {text && <p className="mt-2 text-secondary-color">{text}</p>}
