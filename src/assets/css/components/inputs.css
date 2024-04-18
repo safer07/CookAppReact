@@ -48,6 +48,9 @@
       @apply rotate-180;
     }
   }
+  &[data-disabled="true"] {
+    @apply cursor-default bg-base-bg focus-within:border-base-borders focus-within:shadow-none;
+  }
 }
 .input .textfield,
 .textarea {

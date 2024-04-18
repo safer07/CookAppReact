@@ -13,6 +13,7 @@ type IRecipeItem = {
   img: string;
   time: number;
   difficulty: number;
+  hidden: boolean;
 };
 
 interface IFullRecipeItem extends IRecipeItem {

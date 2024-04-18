@@ -65,7 +65,7 @@ export default function CreateRecipePage() {
       <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
         <Button text="Назад" onClick={onClickBack} block />
         <Button
-          text={step !== stepsCount ? "Далее" : "Готово"}
+          text={step !== stepsCount ? "Далее" : "Сохранить"}
           onClick={onClickNext}
           type={ButtonType.PRIMARY}
           block

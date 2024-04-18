@@ -9,6 +9,7 @@ type ButtonProps = {
   text: string;
   icon?: string;
   onClick?: () => void;
+  disabled?: boolean;
   className?: string;
   type?: ButtonType;
   block?: boolean;
@@ -18,7 +19,8 @@ export default function Button({
   text,
   icon,
   onClick,
-  className,
+  disabled,
+  className = "",
   type,
   block,
 }: ButtonProps) {
@@ -26,6 +28,7 @@ export default function Button({
     <button
       className={`button ${type || "button-secondary"} ${className} ${block ? "w-full" : ""}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {icon && (
         <svg>

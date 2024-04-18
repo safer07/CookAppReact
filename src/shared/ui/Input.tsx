@@ -31,7 +31,7 @@ export default function Input({
   onChange,
   type = "text",
   placeholder,
-  className,
+  className = "",
   iconLeft,
   iconRight,
   label,
@@ -77,7 +77,7 @@ export default function Input({
                 {value && clearButton && (
                   <button className="clear-button" onClick={onClickClear}>
                     <svg>
-                      <use href={`/images/icons.svg#cross`} />
+                      <use href="/images/icons.svg#cross" />
                     </svg>
                   </button>
                 )}

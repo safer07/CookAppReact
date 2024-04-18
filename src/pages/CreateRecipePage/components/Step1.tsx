@@ -8,6 +8,7 @@ import {
   setImg,
 } from "../../../store/slices/createRecipeSlice";
 import { categories } from "../../../entities/recipeCategory/const/categories";
+import RecipeLimits from "../../../entities/recipe/const/limits";
 import Input from "../../../shared/ui/Input";
 import TextArea from "../../../shared/ui/TextArea";
 import PhotoUpload from "../../../shared/ui/PhotoUpload";
@@ -16,9 +17,6 @@ import Select from "../../../shared/ui/Select";
 export default function Step1() {
   const dispatch = useDispatch();
   const { name, category, description, img } = useSelector(selectCreateRecipe);
-
-  const maxName = 60;
-  const maxDescription = 200;
 
   const categoriesOptions = categories.map((category) => {
     return { value: category.id, label: category.fullName };
@@ -32,7 +30,7 @@ export default function Step1() {
         placeholder="Введите название блюда"
         label="Название"
         showCount
-        maxLength={maxName}
+        maxLength={RecipeLimits.name.max}
       />
 
       <Select
@@ -48,7 +46,7 @@ export default function Step1() {
         onChange={(value) => dispatch(setDescription(value))}
         label="Описание"
         showCount
-        maxLength={maxDescription}
+        maxLength={RecipeLimits.description.max}
       />
 
       <PhotoUpload

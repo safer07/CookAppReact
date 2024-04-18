@@ -1,8 +1,15 @@
 import Radio from "./Radio";
+import Switch from "./Switch";
 
 type RadioElem = {
   element: "radio";
   checked: boolean;
+};
+
+type SwitchElem = {
+  element: "switch";
+  checked: boolean;
+  onClick: () => void;
 };
 
 type IconElem = {
@@ -20,7 +27,7 @@ type ListItemProps = {
   text: string;
   description?: string;
   secondaryText?: string;
-  leftElement?: RadioElem;
+  leftElement?: RadioElem | SwitchElem;
   rightElement?: IconElem | DeleteElem;
   onClick?: () => void;
 };
@@ -52,15 +59,21 @@ export default function ListItem({
       {leftElement?.element === "radio" && (
         <Radio checked={leftElement.checked} />
       )}
+      {leftElement?.element === "switch" && (
+        <Switch checked={leftElement.checked} onClick={leftElement.onClick} />
+      )}
+
       <div className={`grow`}>
         <span className="line-clamp-2">{text}</span>
         <span className="block text-secondary-color">{description}</span>
       </div>
+
       {secondaryText && (
         <span className="w-[4.5rem] shrink-0 text-right text-secondary-color">
           {secondaryText}
         </span>
       )}
+
       {rightElement?.element === "icon" && (
         <svg className="size-3">
           <use href={`/images/icons.svg#${rightElement.icon}`} />

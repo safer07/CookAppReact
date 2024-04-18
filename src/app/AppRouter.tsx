@@ -5,9 +5,9 @@ import MainLayout from "./layouts/MainLayout";
 import FullScreenLayout from "./layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";
 import CookingMode from "../pages/RecipePage/components/CookingMode";
-import CreateRecipePage from "../pages/CreateRecipePage";
 
 const RecipePage = lazy(() => import("../pages/RecipePage"));
+const CreateRecipePage = lazy(() => import("../pages/CreateRecipePage"));
 const Profile = lazy(() => import("../pages/Profile"));
 
 export default function AppRouter() {

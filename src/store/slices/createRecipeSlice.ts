@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
+export const emptyStep = { description: "", ingredients: [], img: "" };
+
 const initialState: INewFullRecipeItem = {
   name: "",
   category: "",
@@ -12,7 +14,8 @@ const initialState: INewFullRecipeItem = {
   difficulty: 0,
   description: "",
   totalIngredients: [],
-  steps: [],
+  steps: [emptyStep],
+  hidden: false,
 };
 
 function calcTime(hours: number | null, minutes: number | null): number {
@@ -34,9 +37,6 @@ const createRecipeSlice = createSlice({
     setImg(state, action: PayloadAction<string>) {
       state.img = action.payload;
     },
-    // setTime(state, action: PayloadAction<number>) {
-    //   state.time = action.payload;
-    // },
     setTimeHours(state, action: PayloadAction<number>) {
       state.timeHours = action.payload;
       state.time = calcTime(state.timeHours, state.timeMinutes);
@@ -55,8 +55,10 @@ const createRecipeSlice = createSlice({
       state.totalIngredients = action.payload;
     },
     setSteps(state, action: PayloadAction<RecipeStep[]>) {
-      // TODO: здесь надо автоматом считать totalIngredients
       state.steps = action.payload;
+    },
+    setHidden(state, action: PayloadAction<boolean>) {
+      state.hidden = action.payload;
     },
     resetCreateRecipe: () => initialState,
   },
@@ -73,6 +75,7 @@ export const {
   setDescription,
   setTotalIngredients,
   setSteps,
+  setHidden,
   resetCreateRecipe,
 } = createRecipeSlice.actions;
 export default createRecipeSlice.reducer;

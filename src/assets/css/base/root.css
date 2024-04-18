@@ -20,8 +20,6 @@
   --text-secondary-color: theme("colors.base.600");
   --text-tertiary-color: theme("colors.base.400");
   --text-accent-color: theme("colors.primary.DEFAULT");
-
-  /* --surface-bg: theme("colors.white"); */
 }
 
 @media screen and (prefers-reduced-motion: reduce), (update: slow) {

@@ -27,7 +27,7 @@ export default function Modal({
   textAlign = "center",
 }: ModalProps) {
   const mounted = useMount(open);
-  const textAlignClass = () => {
+  const textAlignClass = (() => {
     switch (textAlign) {
       case "left":
         return "text-left";
@@ -36,7 +36,7 @@ export default function Modal({
       default:
         return;
     }
-  };
+  })();
 
   function onClickOk() {
     setOpen(false);

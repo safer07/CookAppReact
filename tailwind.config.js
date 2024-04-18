@@ -109,6 +109,10 @@ export default {
           highGradient: "#F53422",
           lowGradient: "#FA7D43",
         },
+        pink: {
+          highGradient: "#FF6BA2",
+          lowGradient: "#FFA1A1",
+        },
       },
 
       textColor: {

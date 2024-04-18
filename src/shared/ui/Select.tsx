@@ -10,6 +10,7 @@ type SelectProps = {
   options: SelectOption[];
   onChange: (value: string) => void;
   placeholder?: string;
+  disabled?: boolean;
   label?: string;
   clearButton?: boolean;
 };
@@ -19,6 +20,7 @@ export default function Select({
   options,
   onChange,
   placeholder,
+  disabled,
   label,
   clearButton = true,
 }: SelectProps) {
@@ -28,6 +30,12 @@ export default function Select({
   const valueLabel = value
     ? options.find((option) => option.value === value)?.label
     : null;
+
+  if (!options.length) disabled = true;
+
+  function onClick() {
+    if (!disabled) setIsOpen((prev) => !prev);
+  }
 
   function onClickClear() {
     onChange("");
@@ -48,10 +56,11 @@ export default function Select({
       {label && <div className="input-label">{label}</div>}
       <div
         ref={containerRef}
-        tabIndex={0}
+        tabIndex={disabled ? -1 : 0}
         className={`select ${isOpen ? "open" : ""}`}
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={onClick}
         onBlur={() => setIsOpen(false)}
+        data-disabled={disabled}
       >
         <span className={`textfield ${value ? "" : "placeholder"}`}>
           {value ? valueLabel : placeholder}

@@ -11,7 +11,7 @@ export default function LikeButton({
   active,
   itemId,
   handleLike,
-  className,
+  className = "",
 }: LikeButtonProps) {
   const [isActive, setIsActive] = useState(active);
   const [animation, setAnimation] = useState(false);

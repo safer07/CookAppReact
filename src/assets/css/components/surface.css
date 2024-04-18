@@ -15,6 +15,7 @@
 .surface-red {
   --text-title-color: theme("colors.white");
   --text-primary-color: theme("colors.white");
+  @apply text-primary-color;
 }
 
 .surface-accent {

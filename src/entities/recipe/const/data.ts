@@ -6,6 +6,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-1.jpg",
     time: 30,
     difficulty: 2,
+    hidden: false,
   },
   {
     id: "r2",
@@ -14,6 +15,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-2.jpg",
     time: 10,
     difficulty: 1,
+    hidden: false,
   },
   {
     id: "r3",
@@ -22,6 +24,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-3.jpg",
     time: 60,
     difficulty: 2,
+    hidden: false,
   },
   {
     id: "r4",
@@ -30,6 +33,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-4.jpg",
     time: 15,
     difficulty: 1,
+    hidden: false,
   },
   {
     id: "r5",
@@ -38,6 +42,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-5.jpg",
     time: 40,
     difficulty: 2,
+    hidden: false,
   },
   {
     id: "r6",
@@ -46,6 +51,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-6.jpg",
     time: 30,
     difficulty: 1,
+    hidden: false,
   },
   {
     id: "r7",
@@ -54,6 +60,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-7.jpg",
     time: 90,
     difficulty: 3,
+    hidden: false,
   },
   {
     id: "r8",
@@ -62,6 +69,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-8.jpg",
     time: 45,
     difficulty: 1,
+    hidden: false,
   },
   {
     id: "r9",
@@ -70,6 +78,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-9.jpg",
     time: 10,
     difficulty: 1,
+    hidden: false,
   },
   {
     id: "r10",
@@ -78,6 +87,7 @@ export const recipes: IRecipeItem[] = [
     img: "/images/recipes/recipe-10.jpg",
     time: 20,
     difficulty: 2,
+    hidden: false,
   },
 ];
 
@@ -121,6 +131,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r2",
@@ -161,6 +172,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r3",
@@ -201,6 +213,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r4",
@@ -241,6 +254,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r5",
@@ -281,6 +295,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r6",
@@ -321,6 +336,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r7",
@@ -361,6 +377,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r8",
@@ -401,6 +418,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r9",
@@ -441,6 +459,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
   {
     id: "r10",
@@ -481,5 +500,6 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: "/images/recipes/recipe-1/step-3.jpg",
       },
     ],
+    hidden: false,
   },
 ];
