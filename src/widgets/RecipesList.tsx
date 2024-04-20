@@ -30,7 +30,10 @@ export default function RecipesList({
       {button && (
         <div className="flex items-baseline justify-between">
           <h2 className="headline-medium">{title}</h2>
-          <button className="text-accent-color" onClick={button?.onClick}>
+          <button
+            className="text-accent-color hover-hover:hover:text-primary-active"
+            onClick={button?.onClick}
+          >
             {button?.name}
           </button>
         </div>

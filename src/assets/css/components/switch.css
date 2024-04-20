@@ -23,7 +23,7 @@ input[type="checkbox"].switch:checked::after {
 
 @media (hover: hover) {
   input[type="checkbox"].switch:hover::before {
-    @apply border-primary-active shadow-glow shadow-primary-active;
+    @apply border-primary shadow-glow shadow-primary-active;
   }
   input[type="checkbox"].switch:checked:hover::after {
     @apply bg-primary-active shadow-md shadow-primary-highGradient;

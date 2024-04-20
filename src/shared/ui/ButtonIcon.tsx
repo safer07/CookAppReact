@@ -28,7 +28,7 @@ export default function ButtonIcon({
 
   return (
     <button
-      className={`button-icon ${className} ${variantClass} ${size === "medium" && "button-icon-medium"}`}
+      className={`button-icon ${className} ${variantClass} ${size === "medium" ? "button-icon-medium" : "button-icon-small"}`}
       onClick={onClick}
     >
       <svg>

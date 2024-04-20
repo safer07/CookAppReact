@@ -36,5 +36,5 @@ html {
 }
 
 body {
-  @apply surface-default min-h-dvh max-w-full font-body text-base font-[--font-weight-default] text-primary-color;
+  @apply surface-default min-h-dvh max-w-full font-body text-base font-[--font-weight-default];
 }

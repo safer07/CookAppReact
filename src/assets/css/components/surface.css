@@ -1,11 +1,19 @@
-.surface-default {
+.surface-default,
+.surface-accent-light {
   --text-title-color: theme("colors.base.800");
   --text-primary-color: theme("colors.base.800");
   --text-secondary-color: theme("colors.base.600");
   --text-tertiary-color: theme("colors.base.400");
   --text-accent-color: theme("colors.primary.DEFAULT");
+  @apply text-primary-color;
+}
+
+.surface-default {
   @apply bg-white;
-  /* text-primary-color */
+}
+
+.surface-accent-light {
+  @apply bg-primary-bg;
 }
 
 .surface-accent,

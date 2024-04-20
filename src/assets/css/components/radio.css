@@ -25,6 +25,6 @@
 
 @media (hover: hover) {
   .radio:not(:checked):hover::before {
-    @apply border-primary-active shadow-glow shadow-primary-active;
+    @apply border-primary shadow-glow shadow-primary-active;
   }
 }

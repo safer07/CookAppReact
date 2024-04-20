@@ -13,6 +13,7 @@ export default function RecipeInfoSkeleton() {
           className="absolute left-2 top-2"
           icon="arrow_left"
           onClick={() => navigate(-1)}
+          size="small"
         />
         <div className="surface-default absolute right-2 top-2 size-5 rounded-full" />
       </div>

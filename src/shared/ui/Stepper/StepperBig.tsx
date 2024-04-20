@@ -16,7 +16,7 @@ export default function StepperBig({
             </div>
           ) : (
             <button
-              className="surface-default grid size-full place-content-center rounded-lg border-2 border-current text-4xl text-accent-color"
+              className="surface-default grid size-full place-content-center rounded-lg border-2 border-current text-4xl text-accent-color transition-colors duration-300 hover-hover:hover:text-primary-active"
               onClick={() => setStep(index)}
             >
               {index + 1}
@@ -26,7 +26,7 @@ export default function StepperBig({
       ))}
       <li className="grid aspect-[3/4] w-full place-content-center">
         <button onClick={createStep}>
-          <svg className="size-4 text-primary">
+          <svg className="size-4 text-primary hover-hover:hover:text-primary-active">
             <use href="/images/icons.svg#plus_circle" />
           </svg>
         </button>

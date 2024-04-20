@@ -5,7 +5,12 @@
 .input,
 .textarea,
 .select {
-  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base transition-colors duration-300 focus-within:border-primary focus-within:shadow-glow focus-within:shadow-primary/50;
+  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base transition-colors duration-300;
+}
+.input:not(:disabled),
+.textarea:not(:disabled),
+.select:not([data-disabled="true"]) {
+  @apply focus-within:border-primary focus-within:shadow-glow focus-within:shadow-primary/50 hover-hover:hover:border-primary hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary/50;
 }
 .input,
 .select {
@@ -35,7 +40,7 @@
     & .option {
       @apply flex items-center gap-2 px-[--body-padding-inline] py-1;
       &.selected {
-        @apply bg-primary-bg;
+        @apply surface-accent-light;
       }
     }
   }
@@ -49,7 +54,7 @@
     }
   }
   &[data-disabled="true"] {
-    @apply cursor-default bg-base-bg focus-within:border-base-borders focus-within:shadow-none;
+    @apply cursor-default bg-base-bg;
   }
 }
 .input .textfield,

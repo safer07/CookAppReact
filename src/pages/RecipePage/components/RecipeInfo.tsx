@@ -55,6 +55,7 @@ export default function RecipeInfo() {
           className="absolute left-2 top-2"
           icon="arrow_left"
           onClick={() => navigate(-1)}
+          size="small"
         />
         <LikeButton
           className="absolute right-2 top-2"

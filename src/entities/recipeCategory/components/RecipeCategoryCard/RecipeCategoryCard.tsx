@@ -8,18 +8,20 @@ export default function RecipeCategoryCard({
   onClick,
 }: RecipeCategoryCardProps) {
   return (
-    <div
-      className="overflow-hidden rounded-2xl bg-white shadow"
+    <button
+      className="surface-default group overflow-hidden rounded-2xl shadow transition-all duration-300 hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-active"
       onClick={onClick}
     >
-      <img
-        className="aspect-[3/2] w-full"
-        src={category.img}
-        alt={category.name}
-      />
-      <h3 className="label-small mb-0.75 mt-0.5 text-center">
+      <div className="aspect-[3/2] overflow-hidden">
+        <img
+          className="w-full object-cover transition-transform duration-300 hover-hover:group-hover:scale-110"
+          src={category.img}
+          alt={category.name}
+        />
+      </div>
+      <h3 className="label-small mb-0.75 mt-0.5 text-center transition-colors duration-300 hover-hover:group-hover:text-primary">
         {category.name}
       </h3>
-    </div>
+    </button>
   );
 }

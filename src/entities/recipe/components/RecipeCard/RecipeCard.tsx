@@ -33,7 +33,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <Link
       to={`/recipe/${recipe.id}`}
-      className="surface-default overflow-hidden rounded-2xl shadow"
+      className="surface-default group overflow-hidden rounded-2xl shadow transition-all duration-300 hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary"
     >
       <div className="relative">
         <img
@@ -49,7 +49,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
         />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
-        <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)]">
+        <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300 hover-hover:group-hover:text-primary">
           {recipe.name}
         </h3>
         <p className="text-secondary-color">{recipeCategory?.fullName}</p>
