@@ -2,16 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
-interface LikedRecipesSliceState {
+interface FavouriteRecipesSliceState {
   items: string[];
 }
 
-const initialState: LikedRecipesSliceState = {
+const initialState: FavouriteRecipesSliceState = {
   items: ["r1", "r5", "r7", "r9"],
 };
 
-const likedRecipesSlice = createSlice({
-  name: "likedRecipes",
+const FavouriteRecipesSlice = createSlice({
+  name: "favouriteRecipes",
   initialState,
   reducers: {
     addRecipe(state, action: PayloadAction<string>) {
@@ -23,7 +23,7 @@ const likedRecipesSlice = createSlice({
   },
 });
 
-export const selectLikedRecipes = (state: RootState) =>
-  state.likedRecipes.items;
-export const { addRecipe, removeRecipe } = likedRecipesSlice.actions;
-export default likedRecipesSlice.reducer;
+export const selectFavouriteRecipes = (state: RootState) =>
+  state.favouriteRecipes.items;
+export const { addRecipe, removeRecipe } = FavouriteRecipesSlice.actions;
+export default FavouriteRecipesSlice.reducer;

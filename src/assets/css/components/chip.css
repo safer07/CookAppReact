@@ -1,0 +1,15 @@
+.chip {
+  @apply label-small flex cursor-pointer items-center gap-0.75 rounded-lg px-1.5 py-0.75 transition-all duration-300;
+  &:not(.active) {
+    @apply surface-default border border-base-borders hover-hover:hover:border-primary hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-highGradient;
+  }
+  &.active {
+    @apply surface-accent shadow-md shadow-primary-highGradient hover-hover:hover:shadow-md-active hover-hover:hover:shadow-primary-highGradient;
+  }
+  &.chip-delete {
+    @apply pr-1;
+  }
+  & svg {
+    @apply size-2 fill-current;
+  }
+}

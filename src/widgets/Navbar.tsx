@@ -36,7 +36,7 @@ export default function NavBar() {
           <Link
             key={index}
             to={tab.link}
-            className={`flex flex-col items-center py-1 ${activeTab === tab.id ? "text-primary" : "text-secondary-color"}`}
+            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? "cursor-default text-primary" : "text-secondary-color hover-hover:hover:text-primary"}`}
           >
             <svg className="size-3">
               <use href={`/images/icons.svg#${tab.icon}`} />

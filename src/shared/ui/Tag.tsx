@@ -1,7 +1,13 @@
+export type TypeTagSurface =
+  | "surface-accent"
+  | "surface-green"
+  | "surface-yellow"
+  | "surface-red";
+
 type TagProps = {
   text: string;
   onClick?: () => void;
-  surface?: string;
+  surface?: TypeTagSurface;
 };
 
 export default function Tag({

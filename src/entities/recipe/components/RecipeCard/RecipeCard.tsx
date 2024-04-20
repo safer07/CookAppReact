@@ -5,8 +5,8 @@ import { categories } from "../../../recipeCategory/const/categories";
 import {
   addRecipe,
   removeRecipe,
-  selectLikedRecipes,
-} from "../../../../store/slices/likedRecipesSlice";
+  selectFavouriteRecipes,
+} from "../../../../store/slices/favouriveRecipesSlice";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 import LikeButton from "../../../../shared/ui/LikeButton";
 import Tag from "../../../../shared/ui/Tag";
@@ -17,7 +17,7 @@ type RecipeCardProps = {
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
   const dispatch = useDispatch();
-  const likedRecipes = useSelector(selectLikedRecipes);
+  const favouriteRecipes = useSelector(selectFavouriteRecipes);
   const [difficultyText, tagDifficultySurface] =
     getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
@@ -26,7 +26,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
   );
 
   function handleLike(id: string) {
-    if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
+    if (favouriteRecipes.includes(id)) dispatch(removeRecipe(id));
     else dispatch(addRecipe(id));
   }
 
@@ -36,14 +36,16 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
       className="surface-default group overflow-hidden rounded-2xl shadow transition-all duration-300 hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary"
     >
       <div className="relative">
-        <img
-          className="aspect-video w-full object-cover"
-          src={recipe.img}
-          alt={recipe.name}
-        />
+        <div className="aspect-video overflow-hidden">
+          <img
+            className="size-full object-cover transition-transform duration-300 hover-hover:group-hover:scale-105"
+            src={recipe.img}
+            alt={recipe.name}
+          />
+        </div>
         <LikeButton
           className="absolute right-1.5 top-1.5"
-          active={likedRecipes.includes(recipe.id)}
+          active={favouriteRecipes.includes(recipe.id)}
           itemId={recipe.id}
           handleLike={handleLike}
         />

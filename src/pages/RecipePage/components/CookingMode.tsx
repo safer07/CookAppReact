@@ -57,6 +57,7 @@ export default function CookingMode() {
                 className="absolute left-2 top-2"
                 icon="cross"
                 onClick={() => navigateToRecipe()}
+                size="small"
               />
             </div>
             <div className="layout-grid">

@@ -48,7 +48,7 @@
 }
 
 .button-icon-ghost {
-  @apply surface-default hover-hover:hover:surface-accent-light;
+  @apply surface-default hover-hover:hover:text-primary-active;
 }
 
 .button-icon-medium {

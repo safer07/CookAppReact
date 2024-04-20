@@ -1,8 +1,10 @@
+import { TypeTagSurface } from "../../../shared/ui/Tag";
+
 type RecipeDifficultyItem = {
   value: number;
   difficultyText: string;
   description: string;
-  tagDifficultySurface: string;
+  tagDifficultySurface: TypeTagSurface;
 };
 
 export const errorRecipeDifficulty: RecipeDifficultyItem = {

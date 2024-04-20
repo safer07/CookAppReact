@@ -17,7 +17,7 @@ import useDebounce from "../../../shared/hooks/debounce";
 import Categories from "./Categories";
 import RecipesList from "../../../widgets/RecipesList";
 import Input from "../../../shared/ui/Input";
-import Tag from "../../../shared/ui/Tag";
+import Chip from "../../../shared/ui/Chip";
 
 export default function Catalog() {
   const dispatch = useAppDispatch();
@@ -102,8 +102,27 @@ export default function Catalog() {
         {/* Показ результатов поиска или выбранной категории */}
         {(categoryId !== null || searchQuery) && (
           <>
-            <div className="mb-2">
-              <Tag text="Сбросить фильтры" onClick={resetHandle} />
+            <div className="mb-2 flex flex-wrap gap-1">
+              {searchQuery && (
+                <Chip
+                  text={`Поиск: ${searchQuery}`}
+                  onClick={() => dispatch(setSearchQuery(""))}
+                  del
+                />
+              )}
+              {categoryId && (
+                <Chip
+                  text={`Категория: ${findCategoryById(categoryId!)?.name}`}
+                  onClick={() => dispatch(setCategoryId(""))}
+                  del
+                />
+              )}
+              <Chip
+                text="Сбросить фильтры"
+                onClick={resetHandle}
+                variant="active"
+                del
+              />
             </div>
 
             <RecipesList

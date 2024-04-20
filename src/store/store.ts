@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import createRecipe from "./slices/createRecipeSlice";
 import filterRecipes from "./slices/filterRecipesSlice";
-import likedRecipes from "./slices/likedRecipesSlice";
+import favouriteRecipes from "./slices/favouriveRecipesSlice";
 import recipes from "./slices/recipesSlice";
 import fullRecipe from "./slices/fullRecipeSlice";
 
@@ -11,7 +11,7 @@ export const store = configureStore({
   reducer: {
     createRecipe,
     filterRecipes,
-    likedRecipes,
+    favouriteRecipes,
     recipes,
     fullRecipe,
   },

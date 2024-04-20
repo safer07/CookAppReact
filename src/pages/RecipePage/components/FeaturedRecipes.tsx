@@ -17,7 +17,7 @@ export default function FeaturedRecipes({ excludeId }: FeaturedRecipesProps) {
   const { items: recipes, status } = useSelector(selectRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
-  // TODO: пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с likedRecipes, или подгружать их с бэкенда запросом
+  // TODO: пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с favouriteRecipes, или подгружать их с бэкенда запросом
   useEffect(() => {
     dispatch(fetchRecipes());
   }, []);

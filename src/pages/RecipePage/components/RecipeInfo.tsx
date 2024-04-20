@@ -7,8 +7,8 @@ import { selectFullRecipe } from "../../../store/slices/fullRecipeSlice";
 import {
   addRecipe,
   removeRecipe,
-  selectLikedRecipes,
-} from "../../../store/slices/likedRecipesSlice";
+  selectFavouriteRecipes,
+} from "../../../store/slices/favouriveRecipesSlice";
 import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import LikeButton from "../../../shared/ui/LikeButton";
 import Tag from "../../../shared/ui/Tag";
@@ -18,7 +18,7 @@ export default function RecipeInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { recipe } = useSelector(selectFullRecipe);
-  const likedRecipes = useSelector(selectLikedRecipes);
+  const favouriteRecipes = useSelector(selectFavouriteRecipes);
   const [difficultyText, tagDifficultySurface] =
     getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
@@ -28,13 +28,13 @@ export default function RecipeInfo() {
 
   // TODO: вынести это отдельно
   // function handleLike(id: string) {
-  //   if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
+  //   if (favouriteRecipes.includes(id)) dispatch(removeRecipe(id));
   //   else dispatch(addRecipe(id));
   // }
 
   const handleLike = useCallback(
     (id: string) => {
-      if (likedRecipes.includes(id)) dispatch(removeRecipe(id));
+      if (favouriteRecipes.includes(id)) dispatch(removeRecipe(id));
       else dispatch(addRecipe(id));
     },
     [recipe],
@@ -59,7 +59,7 @@ export default function RecipeInfo() {
         />
         <LikeButton
           className="absolute right-2 top-2"
-          active={likedRecipes.includes(recipe.id)}
+          active={favouriteRecipes.includes(recipe.id)}
           itemId={recipe.id}
           handleLike={handleLike}
         />

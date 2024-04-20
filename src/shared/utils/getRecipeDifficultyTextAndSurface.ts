@@ -1,10 +1,11 @@
 import recipeDifficulties, {
   errorRecipeDifficulty,
 } from "../../entities/recipe/const/recipeDifficulties";
+import { TypeTagSurface } from "../ui/Tag";
 
 export default function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,
-) {
+): [string, TypeTagSurface] {
   const difficultyItem = recipeDifficulties.find(
     (item) => item.value === recipeDifficulty,
   );

@@ -10,6 +10,7 @@
 @import url(components/radio.css) layer(components);
 @import url(components/switch.css) layer(components);
 @import url(components/modal.css) layer(components);
+@import url(components/chip.css) layer(components);
 @import url(components/skeleton.css) layer(components);
 
 @tailwind base;

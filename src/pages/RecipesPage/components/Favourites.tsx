@@ -6,23 +6,23 @@ import {
   fetchRecipes,
   selectRecipes,
 } from "../../../store/slices/recipesSlice";
-import { selectLikedRecipes } from "../../../store/slices/likedRecipesSlice";
+import { selectFavouriteRecipes } from "../../../store/slices/favouriveRecipesSlice";
 import RecipesList from "../../../widgets/RecipesList";
 
 export default function Favourites() {
   const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
-  const likedRecipes = useSelector(selectLikedRecipes);
+  const favouriteRecipes = useSelector(selectFavouriteRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
-  // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с likedRecipes, или подгружать их с бэкенда запросом
+  // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с favouriteRecipes, или подгружать их с бэкенда запросом
   useEffect(() => {
     dispatch(fetchRecipes());
   }, []);
 
   useEffect(() => {
     const filteredRecipes = recipes.filter((recipe) =>
-      likedRecipes.includes(recipe.id),
+      favouriteRecipes.includes(recipe.id),
     );
     setTempRecipes(filteredRecipes);
   }, [recipes]);

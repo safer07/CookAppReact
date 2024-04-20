@@ -35,13 +35,13 @@
 }
 
 .surface-green {
-  @apply bg-gradient-to-b from-green-lowGradient to-green-highGradient text-white;
+  @apply bg-gradient-to-b from-green-lowGradient to-green-highGradient;
 }
 
 .surface-yellow {
-  @apply bg-gradient-to-b from-yellow-lowGradient to-yellow-highGradient text-white;
+  @apply bg-gradient-to-b from-yellow-lowGradient to-yellow-highGradient;
 }
 
 .surface-red {
-  @apply bg-gradient-to-b from-red-lowGradient to-red-highGradient text-white;
+  @apply bg-gradient-to-b from-red-lowGradient to-red-highGradient;
 }
