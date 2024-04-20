@@ -1,4 +1,4 @@
-import Button, { ButtonType } from "./Button";
+import Button from "./Button";
 import ButtonIcon from "./ButtonIcon";
 
 type PhotoUploadProps = {
@@ -26,11 +26,7 @@ export default function PhotoUpload({
           <svg className="size-5">
             <use href="/images/icons.svg#camera" />
           </svg>
-          <Button
-            text="Загрузить фото"
-            onClick={setImage}
-            type={ButtonType.PRIMARY}
-          />
+          <Button text="Загрузить фото" onClick={setImage} variant="primary" />
           <p>
             Пожалуйста используйте только свои уникальные фотографии. Формат:
             JPEG, JPG, PNG. Размер: до&nbsp;10&nbsp;Mb.

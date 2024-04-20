@@ -12,7 +12,7 @@ import RecipeInfoSkeleton from "./components/RecipeInfoSkeleton";
 import FeaturedRecipes from "./components/FeaturedRecipes";
 import RecipeTabs from "./components/RecipeTabs";
 import TopAppBar from "../../widgets/TopAppBar";
-import Button, { ButtonType } from "../../shared/ui/Button";
+import Button from "../../shared/ui/Button";
 
 export default function RecipePage() {
   const { id } = useParams<{ id: string }>();
@@ -45,7 +45,7 @@ export default function RecipePage() {
               onClick={() =>
                 navigate(`/recipe/${id}/cooking-mode`, { replace: true })
               }
-              type={ButtonType.PRIMARY}
+              variant="primary"
               block
             />
           </div>

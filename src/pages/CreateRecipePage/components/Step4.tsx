@@ -31,9 +31,27 @@ export default function Step4() {
   );
 
   const currentStepIngredients = steps[currentStepIndex].ingredients;
-  const ingredientsOptions = totalIngredients.map((ingredient) => {
-    return { value: ingredient.name, label: ingredient.name };
-  });
+
+  // Вообще все
+  // const ingredientsOptions = totalIngredients.map((ingredient) => {
+  //   return { value: ingredient.name, label: ingredient.name };
+  // });
+
+  // С флагом disabled
+  // const ingredientsOptions = totalIngredients.map((ingredient) => {
+  //   return {
+  //     value: ingredient.name,
+  //     label: ingredient.name,
+  //     disabled: stepsHasIngredient(ingredient.name),
+  //   };
+  // });
+
+  // Без disabled
+  const unusedIngredientsOptions = totalIngredients
+    .filter((i) => !stepsHasIngredient(i.name))
+    .map((ingredient) => {
+      return { value: ingredient.name, label: ingredient.name };
+    });
 
   function setStepValue(value: string, field: "img" | "description"): void {
     const newSteps = steps.map((step) => ({ ...step }));
@@ -41,22 +59,20 @@ export default function Step4() {
     dispatch(setSteps(newSteps));
   }
 
-  function deleteStep() {
+  function deleteStep(): void {
     const newSteps = steps.filter((_, index) => index !== currentStepIndex);
     dispatch(setSteps(newSteps));
     if (currentStepIndex !== 0) setCurrentStepIndex((prev) => prev - 1);
   }
 
-  function stepsHasIngredient(): boolean {
+  function stepsHasIngredient(ingredientName: string): boolean {
     return steps.some((step) =>
-      step.ingredients.some(
-        (ingredient) => ingredient.name === selectedIngredient,
-      ),
+      step.ingredients.some((i) => i.name === ingredientName),
     );
   }
 
   function addIngredient(): void {
-    if (!selectedIngredient || stepsHasIngredient()) return;
+    if (!selectedIngredient || stepsHasIngredient(selectedIngredient)) return;
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
     const newSteps = steps.map((step) => ({ ...step }));
     const copyTotalIngredients: Ingredient[] = totalIngredients.map((step) => ({
@@ -86,7 +102,7 @@ export default function Step4() {
     else return false;
   }
 
-  function onClickDeleteStep() {
+  function onClickDeleteStep(): void {
     if (stepIsEmpty()) deleteStep();
     else setModalIsOpen(true);
   }
@@ -138,7 +154,7 @@ export default function Step4() {
 
           <Select
             value={selectedIngredient}
-            options={ingredientsOptions}
+            options={unusedIngredientsOptions}
             onChange={(value) => setSelectedIngredient(value)}
             placeholder="Выберите ингредиенты"
           />
@@ -146,7 +162,9 @@ export default function Step4() {
           <Button
             text="Добавить ингредиент к шагу"
             onClick={addIngredient}
-            disabled={!selectedIngredient || stepsHasIngredient()}
+            disabled={
+              !selectedIngredient || stepsHasIngredient(selectedIngredient)
+            }
           />
 
           {currentStepIngredients.length > 0 && (

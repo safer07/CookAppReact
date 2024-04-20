@@ -23,7 +23,7 @@ export default function Select({
   disabled,
   label,
   clearButton = true,
-}: SelectProps) {
+}: SelectProps): JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 
 import useMount from "./hooks/useMount";
-import Button, { ButtonType } from "../Button";
+import Button from "../Button";
 
 type ModalProps = {
   title: string;
@@ -63,15 +63,13 @@ export default function Modal({
           <Button
             text="Отмена"
             onClick={() => setOpen(false)}
-            type={ButtonType.TERTIARY}
+            variant="tertiary"
             block
           />
           <Button
             text={okText}
             onClick={onClickOk}
-            type={
-              type === "negative" ? ButtonType.NEGATIVE : ButtonType.PRIMARY
-            }
+            variant={type === "negative" ? "negative" : "primary"}
             block
           />
         </div>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const ANIMATION_TIME = 300;
 
 export default function useMount(open: boolean) {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
     if (open && !mounted) setMounted(true);

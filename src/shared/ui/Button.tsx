@@ -1,17 +1,10 @@
-export enum ButtonType {
-  PRIMARY = "button-primary",
-  SECONDARY = "button-secondary",
-  TERTIARY = "button-tertiary",
-  NEGATIVE = "button-negative",
-}
-
 type ButtonProps = {
   text: string;
   icon?: string;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
-  type?: ButtonType;
+  variant?: "primary" | "secondary" | "tertiary" | "negative";
   block?: boolean;
 };
 
@@ -21,12 +14,26 @@ export default function Button({
   onClick,
   disabled,
   className = "",
-  type,
+  variant,
   block,
 }: ButtonProps) {
+  const variantClass = (() => {
+    switch (variant) {
+      case "primary":
+        return "button-primary";
+      case "tertiary":
+        return "button-tertiary";
+      case "negative":
+        return "button-negative";
+      case "secondary":
+      default:
+        return "button-secondary";
+    }
+  })();
+
   return (
     <button
-      className={`button ${type || "button-secondary"} ${className} ${block ? "w-full" : ""}`}
+      className={`button ${className} ${variantClass} ${block ? "w-full" : ""}`}
       onClick={onClick}
       disabled={disabled}
     >

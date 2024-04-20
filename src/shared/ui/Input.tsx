@@ -1,20 +1,6 @@
 import { useRef } from "react";
 
-type InputTextProps = {
-  type?: "text";
-  showCount?: boolean;
-  maxLength?: number;
-  min?: never;
-};
-
-type InputNumberProps = {
-  type: "number";
-  showCount?: never;
-  maxLength?: never;
-  min?: string;
-};
-
-type InputProps = {
+type BaseProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -24,7 +10,23 @@ type InputProps = {
   label?: string;
   helper?: string;
   clearButton?: boolean;
-} & (InputTextProps | InputNumberProps);
+};
+
+type InputTextProps = {
+  type?: "text";
+  showCount?: boolean;
+  maxLength?: number;
+  min?: never;
+} & BaseProps;
+
+type InputNumberProps = {
+  type: "number";
+  showCount?: never;
+  maxLength?: never;
+  min?: string;
+} & BaseProps;
+
+type InputProps = InputTextProps | InputNumberProps;
 
 export default function Input({
   value,
@@ -40,7 +42,7 @@ export default function Input({
   maxLength,
   clearButton,
   min,
-}: InputProps) {
+}: InputProps): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function onClickClear() {
@@ -98,11 +100,9 @@ export default function Input({
       {(helper || showCount) && (
         <div className="input-helper-block">
           {helper && <div className="input-helper">{helper}</div>}
-          {showCount && (
-            <div className="input-right-helper">
-              {value.length} / {maxLength}
-            </div>
-          )}
+          <div className="input-right-helper">
+            {value.length} / {maxLength}
+          </div>
         </div>
       )}
     </div>

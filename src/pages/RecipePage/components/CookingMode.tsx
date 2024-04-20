@@ -7,7 +7,7 @@ import {
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../../store/slices/fullRecipeSlice";
-import Button, { ButtonType } from "../../../shared/ui/Button";
+import Button from "../../../shared/ui/Button";
 import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import ListItem from "../../../shared/ui/ListItem";
 import Stepper from "../../../shared/ui/Stepper";
@@ -92,7 +92,7 @@ export default function CookingMode() {
               <Button
                 text={stepIndex !== stepsCount - 1 ? "Далее" : "Готово"}
                 onClick={onClickNext}
-                type={ButtonType.PRIMARY}
+                variant="primary"
                 block
               />
             </div>

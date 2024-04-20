@@ -9,7 +9,7 @@ import Step3 from "./components/Step3";
 import Step4 from "./components/Step4";
 import TopAppBar from "../../widgets/TopAppBar";
 import Stepper from "../../shared/ui/Stepper";
-import Button, { ButtonType } from "../../shared/ui/Button";
+import Button from "../../shared/ui/Button";
 import Modal from "../../shared/ui/Modal";
 
 export default function CreateRecipePage() {
@@ -67,7 +67,7 @@ export default function CreateRecipePage() {
         <Button
           text={step !== stepsCount ? "Далее" : "Сохранить"}
           onClick={onClickNext}
-          type={ButtonType.PRIMARY}
+          variant="primary"
           block
         />
       </div>
