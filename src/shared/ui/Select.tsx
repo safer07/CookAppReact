@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
 
-type SelectOption = {
+import ListItem from "./ListItem";
+
+export type SelectOption = {
   label: string;
   value: string;
+  secondaryText?: string;
 };
 
 type SelectProps = {
@@ -27,28 +30,33 @@ export default function Select({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const valueLabel = value
-    ? options.find((option) => option.value === value)?.label
+  const valueLabel: string | null = value
+    ? options.find((option) => option.value === value)?.label || null
     : null;
 
   if (!options.length) disabled = true;
 
-  function onClick() {
+  function onClick(): void {
     if (!disabled) setIsOpen((prev) => !prev);
   }
 
-  function onClickClear() {
+  function onClickClear(): void {
     onChange("");
     setIsOpen(false);
   }
 
-  function selectOption(optionValue: string) {
+  function selectOption(optionValue: string): void {
     containerRef.current!.blur();
     if (optionValue !== value) onChange(optionValue);
   }
 
-  function isSelectedOption(optionValue: string) {
+  function isSelectedOption(optionValue: string): boolean {
     return optionValue === value;
+  }
+
+  function onOptionClick(value: string): void {
+    selectOption(value);
+    setIsOpen(false);
   }
 
   return (
@@ -84,23 +92,19 @@ export default function Select({
             </>
           )}
           <svg className="icon-right">
-            <use href={`/images/icons.svg#chevron_down`} />
+            <use href="/images/icons.svg#chevron_down" />
           </svg>
         </div>
 
         <ul className="select-options">
           {options.map((option) => (
-            <li
-              onClick={(event) => {
-                event.stopPropagation();
-                selectOption(option.value);
-                setIsOpen(false);
-              }}
+            <ListItem
               key={option.value}
-              className={`option ${isSelectedOption(option.value) ? "selected" : ""}`}
-            >
-              {option.label}
-            </li>
+              text={option.label}
+              secondaryText={option.secondaryText}
+              onClick={() => onOptionClick(option.value)}
+              active={isSelectedOption(option.value)}
+            />
           ))}
         </ul>
       </div>

@@ -37,17 +37,11 @@
     width: calc(100% + 2px);
     top: 46px;
     @apply surface-default absolute -inset-x-px -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
-    & .option {
-      @apply flex items-center gap-2 px-[--body-padding-inline] py-1;
-      &.selected {
-        @apply surface-accent-light;
-      }
-    }
   }
   &.open {
     @apply rounded-b-none;
     & .select-options {
-      @apply block;
+      @apply surface-default block;
     }
     & .icon-right {
       @apply rotate-180;

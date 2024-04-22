@@ -11,10 +11,10 @@ export default function PhotoUpload({
   image,
   onChange,
   label,
-}: PhotoUploadProps) {
+}: PhotoUploadProps): JSX.Element {
   const url = "/images/recipes/recipe-1.jpg";
 
-  function setImage() {
+  function setImage(): void {
     onChange(url);
   }
 

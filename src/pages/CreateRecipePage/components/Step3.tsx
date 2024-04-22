@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   selectCreateRecipe,
+  setSteps,
   setTotalIngredients,
 } from "../../../store/slices/createRecipeSlice";
 import ListItem from "../../../shared/ui/ListItem";
@@ -10,9 +11,9 @@ import Button from "../../../shared/ui/Button";
 import Modal from "../../../shared/ui/Modal";
 import Input from "../../../shared/ui/Input";
 
-export default function Step3() {
+export default function Step3(): JSX.Element {
   const dispatch = useDispatch();
-  const { totalIngredients } = useSelector(selectCreateRecipe);
+  const { steps, totalIngredients } = useSelector(selectCreateRecipe);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [newIngredientName, setNewIngredientName] = useState<string>("");
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
@@ -24,7 +25,7 @@ export default function Step3() {
     unit: newIngredientUnit,
   };
 
-  function onAddIngredient() {
+  function onAddIngredient(): void {
     if (
       !newIngredientName ||
       !newIngredientAmount ||
@@ -42,14 +43,19 @@ export default function Step3() {
     setNewIngredientUnit("");
   }
 
-  function deleteIngredient(deletedIngredient: Ingredient) {
-    dispatch(
-      setTotalIngredients(
-        totalIngredients.filter(
-          (ingredient) => ingredient !== deletedIngredient,
-        ),
-      ),
+  function deleteIngredient(deletedIngredient: Ingredient): void {
+    const newTotalIngredients = totalIngredients.filter(
+      (ingredient) => ingredient !== deletedIngredient,
     );
+    const newSteps: RecipeStep[] = structuredClone(steps);
+    newSteps.forEach((step) => {
+      step.ingredients = step.ingredients.filter(
+        (ingredient) => ingredient.name !== deletedIngredient.name,
+      );
+    });
+
+    dispatch(setSteps(newSteps));
+    dispatch(setTotalIngredients(newTotalIngredients));
   }
 
   return (

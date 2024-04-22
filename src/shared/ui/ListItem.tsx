@@ -30,6 +30,7 @@ type ListItemProps = {
   leftElement?: RadioElem | SwitchElem;
   rightElement?: IconElem | DeleteElem;
   onClick?: () => void;
+  active?: boolean;
 };
 
 export default function ListItem({
@@ -39,7 +40,8 @@ export default function ListItem({
   secondaryText,
   leftElement,
   rightElement,
-  onClick,
+  onClick = () => {},
+  active = false,
 }: ListItemProps) {
   let contentMarginY;
   if (size === "tiny") contentMarginY = "my-1";
@@ -51,10 +53,15 @@ export default function ListItem({
   else if (size === "small") minHeight = "min-h-5";
   else minHeight = "min-h-7";
 
+  function onItemClick(event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation();
+    onClick();
+  }
+
   return (
     <li
-      className={`flex items-center gap-2 px-[--body-padding-inline] ${minHeight}`}
-      onClick={onClick}
+      className={`flex items-center gap-2 px-[--body-padding-inline] ${minHeight} ${active ? "surface-accent-light" : "surface-default"}`}
+      onClick={(event) => onItemClick(event)}
     >
       {leftElement?.element === "radio" && (
         <Radio checked={leftElement.checked} />

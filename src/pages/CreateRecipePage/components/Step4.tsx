@@ -9,7 +9,7 @@ import {
 } from "../../../store/slices/createRecipeSlice";
 import RecipeLimits from "../../../entities/recipe/const/limits";
 import Stepper from "../../../shared/ui/Stepper";
-import Select from "../../../shared/ui/Select";
+import Select, { SelectOption } from "../../../shared/ui/Select";
 import TextArea from "../../../shared/ui/TextArea";
 import PhotoUpload from "../../../shared/ui/PhotoUpload";
 import ListItem from "../../../shared/ui/ListItem";
@@ -18,7 +18,7 @@ import useDebounce from "../../../shared/hooks/debounce";
 import Button from "../../../shared/ui/Button";
 import Modal from "../../../shared/ui/Modal";
 
-export default function Step4() {
+export default function Step4(): JSX.Element {
   const dispatch = useDispatch();
   const { totalIngredients, steps, hidden } = useSelector(selectCreateRecipe);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -30,7 +30,8 @@ export default function Step4() {
     300,
   );
 
-  const currentStepIngredients = steps[currentStepIndex].ingredients;
+  const currentStepIngredients: Ingredient[] =
+    steps[currentStepIndex].ingredients;
 
   // Вообще все
   // const ingredientsOptions = totalIngredients.map((ingredient) => {
@@ -47,14 +48,18 @@ export default function Step4() {
   // });
 
   // Без disabled
-  const unusedIngredientsOptions = totalIngredients
+  const unusedIngredientsOptions: SelectOption[] = totalIngredients
     .filter((i) => !stepsHasIngredient(i.name))
-    .map((ingredient) => {
-      return { value: ingredient.name, label: ingredient.name };
+    .map((i) => {
+      return {
+        value: i.name,
+        label: i.name,
+        secondaryText: `${i.amount} ${i.unit}`,
+      };
     });
 
   function setStepValue(value: string, field: "img" | "description"): void {
-    const newSteps = steps.map((step) => ({ ...step }));
+    const newSteps = structuredClone(steps);
     newSteps[currentStepIndex][field] = value;
     dispatch(setSteps(newSteps));
   }
@@ -74,15 +79,14 @@ export default function Step4() {
   function addIngredient(): void {
     if (!selectedIngredient || stepsHasIngredient(selectedIngredient)) return;
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
-    const newSteps = steps.map((step) => ({ ...step }));
-    const copyTotalIngredients: Ingredient[] = totalIngredients.map((step) => ({
-      ...step,
-    }));
+    const newSteps = structuredClone(steps);
+    const copyTotalIngredients = structuredClone(totalIngredients);
+
     newSteps[currentStepIndex].ingredients = [
       ...newSteps[currentStepIndex].ingredients,
     ];
     const addedIngredient: Ingredient = {
-      ...copyTotalIngredients.find((i) => (i.name = selectedIngredient))!,
+      ...copyTotalIngredients.find((i) => i.name === selectedIngredient)!,
     };
 
     if (addedIngredient) {
