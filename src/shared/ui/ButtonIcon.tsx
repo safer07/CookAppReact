@@ -22,7 +22,7 @@ export default function ButtonIcon({
       case "ghost":
         return "button-icon-ghost";
       default:
-        return;
+        return "";
     }
   })();
 

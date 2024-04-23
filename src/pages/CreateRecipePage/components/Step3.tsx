@@ -93,6 +93,7 @@ export default function Step3(): JSX.Element {
         onOk={onAddIngredient}
         okText="Добавить"
         title="Добавить ингредиент"
+        cancellable
       >
         <div className="mt-2">
           <Input

@@ -9,7 +9,7 @@ import {
 } from "../../../store/slices/createRecipeSlice";
 import RecipeLimits from "../../../entities/recipe/const/limits";
 import Stepper from "../../../shared/ui/Stepper";
-import Select, { SelectOption } from "../../../shared/ui/Select";
+import Select from "../../../shared/ui/Select";
 import TextArea from "../../../shared/ui/TextArea";
 import PhotoUpload from "../../../shared/ui/PhotoUpload";
 import ListItem from "../../../shared/ui/ListItem";
@@ -33,30 +33,21 @@ export default function Step4(): JSX.Element {
   const currentStepIngredients: Ingredient[] =
     steps[currentStepIndex].ingredients;
 
-  // Вообще все
-  // const ingredientsOptions = totalIngredients.map((ingredient) => {
-  //   return { value: ingredient.name, label: ingredient.name };
-  // });
+  const ingredientsOptions: SelectOption[] = totalIngredients.map(
+    (ingredient): SelectOption => {
+      const usedIngredient: boolean = stepsHasIngredient(ingredient.name);
 
-  // С флагом disabled
-  // const ingredientsOptions = totalIngredients.map((ingredient) => {
-  //   return {
-  //     value: ingredient.name,
-  //     label: ingredient.name,
-  //     disabled: stepsHasIngredient(ingredient.name),
-  //   };
-  // });
-
-  // Без disabled
-  const unusedIngredientsOptions: SelectOption[] = totalIngredients
-    .filter((i) => !stepsHasIngredient(i.name))
-    .map((i) => {
       return {
-        value: i.name,
-        label: i.name,
-        secondaryText: `${i.amount} ${i.unit}`,
+        value: ingredient.name,
+        label: ingredient.name,
+        secondaryText: `${ingredient.amount} ${ingredient.unit}`,
+        status: usedIngredient ? "disabled" : "",
+        description: usedIngredient
+          ? `Шаг ${findStepWithIngredient(ingredient.name)}`
+          : "",
       };
-    });
+    },
+  );
 
   function setStepValue(value: string, field: "img" | "description"): void {
     const newSteps = structuredClone(steps);
@@ -71,8 +62,16 @@ export default function Step4(): JSX.Element {
   }
 
   function stepsHasIngredient(ingredientName: string): boolean {
-    return steps.some((step) =>
+    return steps.some((step): boolean =>
       step.ingredients.some((i) => i.name === ingredientName),
+    );
+  }
+
+  function findStepWithIngredient(ingredientName: string): number {
+    return (
+      steps.findIndex((step) =>
+        step.ingredients.some((i) => i.name === ingredientName),
+      ) + 1
     );
   }
 
@@ -158,7 +157,7 @@ export default function Step4(): JSX.Element {
 
           <Select
             value={selectedIngredient}
-            options={unusedIngredientsOptions}
+            options={ingredientsOptions}
             onChange={(value) => setSelectedIngredient(value)}
             placeholder="Выберите ингредиенты"
           />
@@ -224,6 +223,7 @@ export default function Step4(): JSX.Element {
         title="Удалить шаг рецепта?"
         text="В удаляемом шаге рецепта есть заполненные поля. Удалить этот рецепта? Все внесённые данные будут утеряны."
         type="negative"
+        cancellable
       />
     </>
   );

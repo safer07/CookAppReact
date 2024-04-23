@@ -1,22 +1,6 @@
 import { useRef, useState } from "react";
 
-import ListItem from "./ListItem";
-
-export type SelectOption = {
-  label: string;
-  value: string;
-  secondaryText?: string;
-};
-
-type SelectProps = {
-  value: string;
-  options: SelectOption[];
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  label?: string;
-  clearButton?: boolean;
-};
+import ListItem from "../ListItem";
 
 export default function Select({
   value,
@@ -34,7 +18,11 @@ export default function Select({
     ? options.find((option) => option.value === value)?.label || null
     : null;
 
-  if (!options.length) disabled = true;
+  const hasAvailableOptions = options.some(
+    (option): boolean => option.status !== "disabled",
+  );
+
+  if (!hasAvailableOptions) disabled = true;
 
   function onClick(): void {
     if (!disabled) setIsOpen((prev) => !prev);
@@ -97,15 +85,42 @@ export default function Select({
         </div>
 
         <ul className="select-options">
-          {options.map((option) => (
-            <ListItem
-              key={option.value}
-              text={option.label}
-              secondaryText={option.secondaryText}
-              onClick={() => onOptionClick(option.value)}
-              active={isSelectedOption(option.value)}
-            />
-          ))}
+          {options.map((option) => {
+            let optionStatus: ListItemStatus = "";
+
+            if (option.status === "disabled") optionStatus = "disabled";
+            else if (isSelectedOption(option.value)) optionStatus = "selected";
+
+            const rightElement =
+              optionStatus === "disabled" || optionStatus === "selected"
+                ? "icon"
+                : "emptyIcon";
+
+            const rightElementIcon = (() => {
+              switch (optionStatus) {
+                case "disabled":
+                  return "cross_small";
+                case "selected":
+                  return "check";
+                case "":
+                default:
+                  return "dash";
+              }
+            })();
+
+            return (
+              <ListItem
+                key={option.value}
+                text={option.label}
+                description={option.description}
+                secondaryText={option.secondaryText}
+                size="medium"
+                onClick={() => onOptionClick(option.value)}
+                status={optionStatus}
+                rightElement={{ element: rightElement, icon: rightElementIcon }}
+              />
+            );
+          })}
         </ul>
       </div>
     </div>

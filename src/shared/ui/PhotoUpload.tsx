@@ -22,7 +22,7 @@ export default function PhotoUpload({
     return (
       <div>
         {label && <div className="input-label">{label}</div>}
-        <div className="flex flex-col items-center gap-3 rounded-lg border border-base-borders bg-base-bg px-2 pb-3 pt-5 text-center">
+        <div className="surface-low flex flex-col items-center gap-3 rounded-lg border border-base-borders px-2 pb-3 pt-5 text-center">
           <svg className="size-5">
             <use href="/images/icons.svg#camera" />
           </svg>

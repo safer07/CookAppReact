@@ -5,7 +5,7 @@
 .input,
 .textarea,
 .select {
-  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base transition-colors duration-300;
+  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base caret-primary transition-colors duration-300;
 }
 .input:not(:disabled),
 .textarea:not(:disabled),
@@ -37,6 +37,18 @@
     width: calc(100% + 2px);
     top: 46px;
     @apply surface-default absolute -inset-x-px -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
+    & .selected {
+      @apply surface-accent-light;
+      & .right-icon {
+        @apply text-primary;
+      }
+    }
+    & .disabled {
+      @apply surface-low cursor-default text-tertiary-color;
+      & :is(.list-item-secondary-text, .list-item-description, .right-icon) {
+        @apply text-tertiary-color;
+      }
+    }
   }
   &.open {
     @apply rounded-b-none;
@@ -48,7 +60,7 @@
     }
   }
   &[data-disabled="true"] {
-    @apply cursor-default bg-base-bg;
+    @apply surface-low cursor-default;
   }
 }
 .input .textfield,
@@ -59,12 +71,12 @@
   @apply min-h-[6rem] px-2 py-1.5;
 }
 
-:is(.input, .select) :is(.icon-left, .icon-right, .clear-button svg) {
-  @apply size-3 text-tertiary-color;
+:is(.input, .select) :where(.icon-left, .icon-right, .clear-button svg) {
+  @apply size-3 text-tertiary-color transition-colors duration-300;
 }
 
-:is(.input, .select) .clear-button {
-  @apply size-3;
+:is(.input, .select) .clear-button svg {
+  @apply hover-hover:hover:text-primary-color;
 }
 
 .input-helper-block {

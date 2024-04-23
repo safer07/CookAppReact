@@ -15,7 +15,7 @@ type RecipeCardProps = {
   recipe: IRecipeItem;
 };
 
-export default function RecipeCard({ recipe }: RecipeCardProps) {
+export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   const dispatch = useDispatch();
   const favouriteRecipes = useSelector(selectFavouriteRecipes);
   const [difficultyText, tagDifficultySurface] =

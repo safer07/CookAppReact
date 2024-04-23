@@ -13,6 +13,7 @@ type ModalProps = {
   type?: "negative";
   children?: React.ReactNode;
   textAlign?: "left" | "center";
+  cancellable?: boolean;
 };
 
 export default function Modal({
@@ -24,23 +25,28 @@ export default function Modal({
   okText = "ОК",
   type,
   children,
-  textAlign = "center",
-}: ModalProps) {
+  textAlign,
+  cancellable,
+}: ModalProps): JSX.Element | null {
   const mounted = useMount(open);
   const textAlignClass = (() => {
     switch (textAlign) {
       case "left":
         return "text-left";
       case "center":
-        return "text-center";
       default:
-        return;
+        return "text-center";
     }
   })();
 
-  function onClickOk() {
+  function onClickOk(): void {
     setOpen(false);
     onOk();
+  }
+
+  function onBackDropClick(): void {
+    if (cancellable) setOpen(false);
+    else onOk();
   }
 
   if (!mounted) return null;
@@ -49,7 +55,7 @@ export default function Modal({
     <div className="modal" data-open={open} role="dialog">
       <div
         className="modal-backdrop"
-        onClick={() => setOpen(false)}
+        onClick={onBackDropClick}
         tabIndex={0}
         role="button"
       ></div>
@@ -59,13 +65,15 @@ export default function Modal({
 
         {children}
 
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          <Button
-            text="Отмена"
-            onClick={() => setOpen(false)}
-            variant="tertiary"
-            block
-          />
+        <div className={`mt-3 grid ${cancellable ? "grid-cols-2" : ""}  gap-2`}>
+          {cancellable && (
+            <Button
+              text="Отмена"
+              onClick={() => setOpen(false)}
+              variant="tertiary"
+              block
+            />
+          )}
           <Button
             text={okText}
             onClick={onClickOk}

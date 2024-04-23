@@ -12,33 +12,35 @@ import Stepper from "../../shared/ui/Stepper";
 import Button from "../../shared/ui/Button";
 import Modal from "../../shared/ui/Modal";
 
-export default function CreateRecipePage() {
+export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [step, setStep] = useState<number>(1);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false);
+  const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false);
 
   const stepsCount = 4;
 
-  function onClickBack() {
+  function onClickBack(): void {
     if (step === 1) navigate(-1);
     else setStep((prev) => prev - 1);
   }
 
-  function onClickNext() {
+  function onClickNext(): void {
     if (step === stepsCount) onRecipeComplete();
     else setStep((prev) => prev + 1);
   }
 
   // TODO: сохранять в redux и в localStorage
 
-  function onDelete() {
+  function onDelete(): void {
     dispatch(resetCreateRecipe());
     navigate("/");
   }
 
-  function onRecipeComplete() {
+  function onRecipeComplete(): void {
     // TODO: Загружать на сервер (при успехе обнулить redux и открыть popup - успешно)
+    setModalFinishIsOpen(true);
   }
 
   return (
@@ -49,7 +51,7 @@ export default function CreateRecipePage() {
         backOnClick={onClickBack}
         rightIcon={{
           icon: "delete",
-          onClick: () => setModalIsOpen(true),
+          onClick: () => setModalDeleteIsOpen(true),
         }}
       />
 
@@ -73,13 +75,23 @@ export default function CreateRecipePage() {
       </div>
 
       <Modal
-        open={modalIsOpen}
-        setOpen={setModalIsOpen}
+        open={modalDeleteIsOpen}
+        setOpen={setModalDeleteIsOpen}
         onOk={onDelete}
         okText="Удалить"
         title="Удалить рецепт?"
         text="Очистить поля рецепта? Все внесённые данные будут утеряны."
         type="negative"
+        cancellable
+      />
+
+      <Modal
+        open={modalFinishIsOpen}
+        setOpen={setModalFinishIsOpen}
+        onOk={() => navigate("/")}
+        okText="Готово"
+        title="Рецепт создан"
+        text="Рецепт сохранён в базе данных"
       />
     </div>
   );

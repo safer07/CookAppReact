@@ -5,7 +5,7 @@ export default function Profile() {
   return (
     <>
       <div className="flex items-center gap-2 py-2">
-        <div className="grid size-10 shrink-0 place-content-center rounded-full bg-base-bg">
+        <div className="surface-low grid size-10 shrink-0 place-content-center rounded-full">
           <svg className="size-5">
             <use href="/images/icons.svg#user" />
           </svg>

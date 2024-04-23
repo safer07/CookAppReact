@@ -1,5 +1,5 @@
 .button {
-  @apply label-medium flex h-6 items-center justify-center gap-1 rounded-lg px-3 py-1 transition-all duration-300 disabled:bg-base-bg disabled:text-tertiary-color;
+  @apply label-medium disabled:surface-low flex h-6 items-center justify-center gap-1 rounded-lg px-3 py-1 transition-all duration-300 disabled:text-tertiary-color;
   & svg {
     @apply size-3;
   }
