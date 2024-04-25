@@ -1,6 +1,7 @@
 import { TypeRecipesStatus } from "../store/slices/recipesSlice";
-import RecipeCard from "../entities/recipe/components/RecipeCard";
-import RecipeCardSkeleton from "../entities/recipe/components/RecipeCard/RecipeCardSkeleton";
+import RecipeCard, {
+  RecipeCardSkeleton,
+} from "../entities/recipe/components/RecipeCard";
 
 type RecipesListProps = {
   title: string;

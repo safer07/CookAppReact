@@ -2,17 +2,17 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { categories } from "../../../entities/recipeCategory/const/categories";
-import { selectFullRecipe } from "../../../store/slices/fullRecipeSlice";
+import { categories } from "../../../../entities/recipeCategory/const/categories";
+import { selectFullRecipe } from "../../../../store/slices/fullRecipeSlice";
 import {
   addRecipe,
   removeRecipe,
   selectFavouriteRecipes,
-} from "../../../store/slices/favouriveRecipesSlice";
-import ButtonIcon from "../../../shared/ui/ButtonIcon";
-import LikeButton from "../../../shared/ui/LikeButton";
-import Tag from "../../../shared/ui/Tag";
-import getRecipeDifficultyTextAndSurface from "../../../shared/utils/getRecipeDifficultyTextAndSurface";
+} from "../../../../store/slices/favouriveRecipesSlice";
+import ButtonIcon from "../../../../shared/ui/ButtonIcon";
+import LikeButton from "../../../../shared/ui/LikeButton";
+import Tag from "../../../../shared/ui/Tag";
+import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 
 export default function RecipeInfo() {
   const dispatch = useDispatch();

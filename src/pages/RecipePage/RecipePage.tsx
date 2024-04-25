@@ -7,8 +7,7 @@ import {
   fetchFullRecipe,
   selectFullRecipe,
 } from "../../store/slices/fullRecipeSlice";
-import RecipeInfo from "./components/RecipeInfo";
-import RecipeInfoSkeleton from "./components/RecipeInfoSkeleton";
+import RecipeInfo, { RecipeInfoSkeleton } from "./components/RecipeInfo";
 import FeaturedRecipes from "./components/FeaturedRecipes";
 import RecipeTabs from "./components/RecipeTabs";
 import TopAppBar from "../../widgets/TopAppBar";

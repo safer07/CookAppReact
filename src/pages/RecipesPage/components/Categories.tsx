@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 
 import { setCategoryId } from "../../../store/slices/filterRecipesSlice";
-import RecipeCategoryCard from "../../../entities/recipeCategory/components/RecipeCategoryCard";
-import RecipeCategoryCardSkeleton from "../../../entities/recipeCategory/components/RecipeCategoryCard/RecipeCategoryCardSkeleton";
+import RecipeCategoryCard, {
+  RecipeCategoryCardSkeleton,
+} from "../../../entities/recipeCategory/components/RecipeCategoryCard";
 
 type CategoryProps = {
   categories: IRecipeCategoryItem[];
