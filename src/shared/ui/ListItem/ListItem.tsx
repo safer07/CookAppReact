@@ -19,6 +19,18 @@ export default function ListItem({
     onClick();
   }
 
+  const sizeClass = (() => {
+    switch (size) {
+      case "tiny":
+        return "list-item-tiny";
+      case "small":
+        return "list-item-small";
+      case "medium":
+      default:
+        return "";
+    }
+  })();
+
   const statusClass: ListItemStatus = (() => {
     switch (status) {
       case "selected":
@@ -32,7 +44,7 @@ export default function ListItem({
 
   return (
     <li
-      className={`listItem ${size} ${statusClass}`}
+      className={`listItem ${sizeClass} ${statusClass}`}
       onClick={(event) => onItemClick(event)}
     >
       {leftElement?.element === "radio" && (

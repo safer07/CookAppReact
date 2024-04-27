@@ -6,12 +6,25 @@ type SelectOption = {
   description?: string;
 };
 
-type SelectProps = {
-  value: string;
+type SelectBaseProps = {
   options: SelectOption[];
-  onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
   label?: string;
   clearButton?: boolean;
+  optionSize?: ListItemSize;
 };
+
+type SelectSingleProps = {
+  multiple?: false;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+type SelectMultipleProps = {
+  multiple: true;
+  value: string[];
+  onChange: (value: string[]) => void;
+};
+
+type SelectProps = SelectBaseProps & (SelectSingleProps | SelectMultipleProps);

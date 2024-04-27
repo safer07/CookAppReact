@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-type BaseProps = {
+type InputProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -10,23 +10,21 @@ type BaseProps = {
   label?: string;
   helper?: string;
   clearButton?: boolean;
-};
+} & (InputTextProps | InputNumberProps);
 
 type InputTextProps = {
   type?: "text";
   showCount?: boolean;
   maxLength?: number;
   min?: never;
-} & BaseProps;
+};
 
 type InputNumberProps = {
   type: "number";
   showCount?: never;
   maxLength?: never;
   min?: string;
-} & BaseProps;
-
-type InputProps = InputTextProps | InputNumberProps;
+};
 
 export default function Input({
   value,

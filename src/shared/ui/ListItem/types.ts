@@ -23,15 +23,17 @@ type DeleteElem = {
   onClick?: () => void;
 };
 
+type ListItemSize = "tiny" | "small" | "medium";
 type ListItemStatus = "disabled" | "selected" | "";
+type ListItemRightElem = IconElem | DeleteElem | EmptyIconElem;
 
 type ListItemProps = {
-  size?: "tiny" | "small" | "medium";
+  size?: ListItemSize;
   text: string;
   description?: string;
   secondaryText?: string;
   leftElement?: RadioElem | SwitchElem;
-  rightElement?: IconElem | DeleteElem | EmptyIconElem;
+  rightElement?: ListItemRightElem;
   onClick?: () => void;
   status?: ListItemStatus;
 };
