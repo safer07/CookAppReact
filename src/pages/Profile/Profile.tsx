@@ -1,7 +1,7 @@
 import Button from "../../shared/ui/Button";
 import ListItem from "../../shared/ui/ListItem";
 
-export default function Profile() {
+export default function Profile(): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-2 py-2">

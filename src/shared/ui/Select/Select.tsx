@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 
 import Chip from "../Chip";
-import ListItem from "../ListItem";
+import RightIcons from "./RightIcons";
+import Options from "./Options";
 
 // {
 //   value,
@@ -32,16 +33,7 @@ export default function Select(props: SelectProps): JSX.Element {
   //   optionSize = "small",
   // } = props
 
-  const {
-    value,
-    options,
-    onChange,
-    placeholder,
-    label,
-    clearButton = true,
-    multiple,
-    optionSize = "small",
-  } = props;
+  const { value, options, onChange, placeholder, label, multiple } = props;
 
   let { disabled } = props;
   // const {multiple = false} = props;
@@ -79,34 +71,6 @@ export default function Select(props: SelectProps): JSX.Element {
     }
   }
 
-  function selectOption(optionValue: string): void {
-    if (multiple) {
-      if (!value.includes(optionValue)) {
-        onChange([...value, optionValue]);
-      } else {
-        onChange(value.filter((o) => o !== optionValue));
-      }
-    } else {
-      containerRef.current!.blur();
-      if (optionValue !== value) onChange(optionValue);
-    }
-  }
-
-  function isSelectedOption(optionValue: string): boolean {
-    if (multiple) return value.includes(optionValue);
-    else return optionValue === value;
-  }
-
-  function onClickClear(): void {
-    multiple ? onChange([]) : onChange("");
-    setIsOpen(false);
-  }
-
-  function onOptionClick(value: string): void {
-    selectOption(value);
-    if (!multiple) setIsOpen(false);
-  }
-
   return (
     <div>
       {label && <div className="input-label">{label}</div>}
@@ -138,92 +102,24 @@ export default function Select(props: SelectProps): JSX.Element {
           </span>
         )}
 
-        <div className="input-right-icons">
-          <>
-            {clearButton && value.length > 0 && (
-              <button
-                className="clear-button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onClickClear();
-                }}
-              >
-                <svg>
-                  <use href="/images/icons.svg#cross" />
-                </svg>
-              </button>
-            )}
-            {(multiple || clearButton) && (
-              <span className="input-icons-divider"></span>
-            )}
-          </>
-          <svg className="icon-right">
-            <use href="/images/icons.svg#chevron_down" />
-          </svg>
-        </div>
-
-        {/* <RightIcons
-          value={value}
-          onChange={onChange}
-          clearButton={props.clearButton}
-          multiple={multiple}
+        <RightIcons
+          // value={props.value}
+          // onChange={props.onChange}
+          // clearButton={props.clearButton}
+          // multiple={props.multiple}
           setIsOpen={setIsOpen}
-        /> */}
+          {...props}
+        />
 
-        {/* <Options
-          value={props.value}
-          options={props.options}
-          multiple={props.multiple}
-          optionSize={props.optionSize}
-          onOptionClick={onOptionClick}
-        /> */}
-
-        <ul className="select-options">
-          {options.map((option) => {
-            let optionStatus: ListItemStatus = "";
-            let rightElement: ListItemRightElem | undefined;
-
-            if (option.status === "disabled") optionStatus = "disabled";
-            else if (isSelectedOption(option.value)) optionStatus = "selected";
-
-            if (multiple) {
-              const rightElementType =
-                optionStatus === "disabled" || optionStatus === "selected"
-                  ? "icon"
-                  : "emptyIcon";
-
-              const rightElementIcon = (() => {
-                switch (optionStatus) {
-                  case "disabled":
-                    return "cross_small";
-                  case "selected":
-                    return "check";
-                  case "":
-                  default:
-                    return "dash";
-                }
-              })();
-
-              rightElement = {
-                element: rightElementType,
-                icon: rightElementIcon,
-              };
-            }
-
-            return (
-              <ListItem
-                key={option.value}
-                text={option.label}
-                description={option.description}
-                secondaryText={option.secondaryText}
-                size={`${option.description ? "medium" : optionSize}`}
-                onClick={() => onOptionClick(option.value)}
-                status={optionStatus}
-                rightElement={rightElement}
-              />
-            );
-          })}
-        </ul>
+        <Options
+          // value={props.value}
+          // options={props.options}
+          // multiple={props.multiple}
+          // optionSize={props.optionSize}
+          setIsOpen={setIsOpen}
+          containerRef={containerRef}
+          {...props}
+        />
       </div>
     </div>
   );

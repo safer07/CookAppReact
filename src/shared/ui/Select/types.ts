@@ -28,3 +28,15 @@ type SelectMultipleProps = {
 };
 
 type SelectProps = SelectBaseProps & (SelectSingleProps | SelectMultipleProps);
+
+type SelectRightIconsProps = {
+  clearButton?: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+} & (SelectSingleProps | SelectMultipleProps);
+
+type SelectOptionProps = {
+  options: SelectOption[];
+  optionSize?: ListItemSize;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  containerRef: React.RefObject<HTMLDivElement>;
+} & (SelectSingleProps | SelectMultipleProps);
