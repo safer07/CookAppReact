@@ -40,6 +40,7 @@ export default function CreateRecipePage(): JSX.Element {
 
   function onRecipeComplete(): void {
     // TODO: Загружать на сервер (при успехе обнулить redux и открыть popup - успешно)
+    dispatch(resetCreateRecipe());
     setModalFinishIsOpen(true);
   }
 

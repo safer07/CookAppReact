@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { categories } from "../entities/recipeCategory/const/categories";
 
 type fetchRecipesProps = {
