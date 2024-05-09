@@ -1,19 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { observer } from "mobx-react-lite";
 
-import {
-  selectCreateRecipe,
-  setDifficulty,
-  setTimeHours,
-  setTimeMinutes,
-} from "../../../store/slices/createRecipeSlice";
+import createRecipeStore from "../store/createRecipeStore";
 import recipeDifficulties from "../../../entities/recipe/const/recipeDifficulties";
 import Input from "../../../shared/ui/Input";
 import ListItem from "../../../shared/ui/ListItem";
 
-export default function Step2() {
-  const dispatch = useDispatch();
-  const { timeHours, timeMinutes, difficulty } =
-    useSelector(selectCreateRecipe);
+export default observer(function Step2(): JSX.Element {
+  const {
+    timeHours,
+    timeMinutes,
+    difficulty,
+    setDifficulty,
+    setTimeHours,
+    setTimeMinutes,
+  } = createRecipeStore;
 
   return (
     <div className="layout-grid flex flex-col gap-3">
@@ -24,14 +24,14 @@ export default function Step2() {
         <div className="mt-2 grid grid-cols-2 gap-2">
           <Input
             value={timeHours ? String(timeHours) : ""}
-            onChange={(value) => dispatch(setTimeHours(+value))}
+            onChange={(value) => setTimeHours(+value)}
             type="number"
             label="Часы"
             min="0"
           />
           <Input
             value={timeMinutes ? String(timeMinutes) : ""}
-            onChange={(value) => dispatch(setTimeMinutes(+value))}
+            onChange={(value) => setTimeMinutes(+value)}
             type="number"
             label="Минуты"
             min="0"
@@ -51,11 +51,11 @@ export default function Step2() {
                 element: "radio",
                 checked: difficulty === item.value,
               }}
-              onClick={() => dispatch(setDifficulty(item.value))}
+              onClick={() => setDifficulty(item.value)}
             />
           ))}
         </ul>
       </div>
     </div>
   );
-}
+});

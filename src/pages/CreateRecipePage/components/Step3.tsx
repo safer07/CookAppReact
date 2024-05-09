@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { observer } from "mobx-react-lite";
 
-import {
-  selectCreateRecipe,
-  setSteps,
-  setTotalIngredients,
-} from "../../../store/slices/createRecipeSlice";
+import createRecipeStore from "../store/createRecipeStore";
 import ListItem from "../../../shared/ui/ListItem";
 import Button from "../../../shared/ui/Button";
 import Modal from "../../../shared/ui/Modal";
 import Input from "../../../shared/ui/Input";
 
-export default function Step3(): JSX.Element {
-  const dispatch = useDispatch();
-  const { steps, totalIngredients } = useSelector(selectCreateRecipe);
+export default observer(function Step3(): JSX.Element {
+  const { steps, totalIngredients, setSteps, setTotalIngredients } =
+    createRecipeStore;
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [newIngredientName, setNewIngredientName] = useState<string>("");
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
@@ -37,25 +33,24 @@ export default function Step3(): JSX.Element {
       return;
     }
 
-    dispatch(setTotalIngredients([...totalIngredients, newIngredient]));
+    setTotalIngredients([...totalIngredients, newIngredient]);
     setNewIngredientName("");
     setNewIngredientAmount(0);
     setNewIngredientUnit("");
   }
 
   function deleteIngredient(deletedIngredient: Ingredient): void {
-    const newTotalIngredients = totalIngredients.filter(
+    const newTotalIngredients: Ingredient[] = totalIngredients.filter(
       (ingredient) => ingredient !== deletedIngredient,
     );
-    const newSteps: RecipeStep[] = structuredClone(steps);
-    newSteps.forEach((step) => {
+    steps.forEach((step) => {
       step.ingredients = step.ingredients.filter(
         (ingredient) => ingredient.name !== deletedIngredient.name,
       );
     });
 
-    dispatch(setSteps(newSteps));
-    dispatch(setTotalIngredients(newTotalIngredients));
+    setSteps(steps);
+    setTotalIngredients(newTotalIngredients);
   }
 
   return (
@@ -121,4 +116,4 @@ export default function Step3(): JSX.Element {
       </Modal>
     </>
   );
-}
+});

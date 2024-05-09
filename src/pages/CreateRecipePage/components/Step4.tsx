@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
 
-import {
-  selectCreateRecipe,
-  setSteps,
-  setHidden,
-  emptyStep,
-} from "../../../store/slices/createRecipeSlice";
+import createRecipeStore, { emptyStep } from "../store/createRecipeStore";
 import RecipeLimits from "../../../entities/recipe/const/limits";
 import Stepper from "../../../shared/ui/Stepper";
 import Select from "../../../shared/ui/Select";
@@ -17,9 +13,9 @@ import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import Modal from "../../../shared/ui/Modal";
 import useDebounce from "../../../shared/hooks/debounce";
 
-export default function Step4(): JSX.Element {
-  const dispatch = useDispatch();
-  const { totalIngredients, steps, hidden } = useSelector(selectCreateRecipe);
+export default observer(function Step4(): JSX.Element {
+  const { totalIngredients, steps, hidden, setSteps, setHidden } =
+    createRecipeStore;
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] =
@@ -54,14 +50,14 @@ export default function Step4(): JSX.Element {
   );
 
   function setStepValue(value: string, field: "img" | "description"): void {
-    const newSteps = structuredClone(steps);
+    const newSteps = toJS(steps);
     newSteps[currentStepIndex][field] = value;
-    dispatch(setSteps(newSteps));
+    setSteps(newSteps);
   }
 
   function deleteStep(): void {
     const newSteps = steps.filter((_, index) => index !== currentStepIndex);
-    dispatch(setSteps(newSteps));
+    setSteps(newSteps);
     if (currentStepIndex !== 0) setCurrentStepIndex((prev) => prev - 1);
   }
 
@@ -118,12 +114,12 @@ export default function Step4(): JSX.Element {
 
   useEffect(() => {
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
-    const newSteps = structuredClone(steps);
+    const newSteps = toJS(steps);
     const filteredIngredients = totalIngredients.filter((i) =>
       currentStepIngredientsNames.includes(i.name),
     );
     newSteps[currentStepIndex].ingredients = filteredIngredients;
-    dispatch(setSteps(newSteps));
+    setSteps(newSteps);
   }, [currentStepIngredientsNames]);
 
   return (
@@ -136,7 +132,7 @@ export default function Step4(): JSX.Element {
             stepsCount={steps.length}
             type="big"
             setStep={setCurrentStepIndex}
-            createStep={() => dispatch(setSteps([...steps, emptyStep]))}
+            createStep={() => setSteps([...steps, emptyStep])}
           />
         </div>
 
@@ -203,7 +199,7 @@ export default function Step4(): JSX.Element {
           leftElement={{
             element: "switch",
             checked: !hidden,
-            onClick: () => dispatch(setHidden(!hidden)),
+            onClick: () => setHidden(!hidden),
           }}
         />
       </ul>
@@ -220,4 +216,4 @@ export default function Step4(): JSX.Element {
       />
     </>
   );
-}
+});
