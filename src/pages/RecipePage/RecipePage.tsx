@@ -1,27 +1,21 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useAppDispatch } from "../../store/store";
-import {
-  fetchFullRecipe,
-  selectFullRecipe,
-} from "../../store/slices/fullRecipeSlice";
+import useFullRecipe from "./store/store";
 import RecipeInfo, { RecipeInfoSkeleton } from "./components/RecipeInfo";
 import FeaturedRecipes from "./components/FeaturedRecipes";
 import RecipeTabs from "./components/RecipeTabs";
 import TopAppBar from "../../widgets/TopAppBar";
 import Button from "../../shared/ui/Button";
 
-export default function RecipePage() {
+export default function RecipePage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { recipe, status } = useSelector(selectFullRecipe);
+  const { recipe, status, fetchFullRecipe } = useFullRecipe();
 
   useEffect(() => {
     if (!id || recipe?.id === id) return;
-    dispatch(fetchFullRecipe(id));
+    fetchFullRecipe(id);
   }, [id]);
 
   return (
@@ -35,7 +29,7 @@ export default function RecipePage() {
       )}
       {status === "success" && recipe && (
         <>
-          <RecipeInfo />
+          <RecipeInfo recipe={recipe} />
           <RecipeTabs recipe={recipe} />
 
           <div className="py-2">

@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "../../../store/store";
-import {
-  fetchFullRecipe,
-  selectFullRecipe,
-} from "../../../store/slices/fullRecipeSlice";
+import useFullRecipe from "../store/store";
 import Button from "../../../shared/ui/Button";
 import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import ListItem from "../../../shared/ui/ListItem";
@@ -14,16 +9,15 @@ import Stepper from "../../../shared/ui/Stepper";
 
 export default function CookingMode() {
   const { id } = useParams<{ id: string }>();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { recipe, status } = useSelector(selectFullRecipe);
+  const { recipe, status, fetchFullRecipe } = useFullRecipe();
   const [stepIndex, setStepIndex] = useState<number>(0);
   const stepsCount = recipe?.steps.length || 1;
   const step = recipe?.steps[stepIndex];
 
   useEffect(() => {
     if (!id || recipe?.id === id) return;
-    dispatch(fetchFullRecipe(id));
+    fetchFullRecipe(id);
   }, [id]);
 
   function navigateToRecipe() {

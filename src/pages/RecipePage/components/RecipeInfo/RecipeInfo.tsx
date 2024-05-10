@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { categories } from "../../../../entities/recipeCategory/const/categories";
-import { selectFullRecipe } from "../../../../store/slices/fullRecipeSlice";
 import useUser from "../../../../entities/user/store/store";
 import ButtonIcon from "../../../../shared/ui/ButtonIcon";
 import LikeButton from "../../../../shared/ui/LikeButton";
 import Tag from "../../../../shared/ui/Tag";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 
-export default function RecipeInfo() {
+type RecipeInfoProps = {
+  recipe: IFullRecipeItem;
+};
+
+export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
   const navigate = useNavigate();
-  const { recipe } = useSelector(selectFullRecipe);
   const favouriteRecipes = useUser((state) => state.favouriteRecipes);
   const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe);
   const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe);
@@ -35,9 +36,6 @@ export default function RecipeInfo() {
   //   },
   //   [recipe],
   // );
-
-  // Этот вариант не должен появляться. Создан только для TypeScript. При ошибке загрузки recipe, этот компонент вообще не должен рендериться
-  if (!recipe) return <>'Не удалось загрузить рецепт'</>;
 
   return (
     <>

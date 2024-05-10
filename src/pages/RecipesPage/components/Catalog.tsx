@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { fetchCategories } from "../../../app/api";
-import { useAppDispatch } from "../../../store/store";
-import {
-  setCategoryId,
-  setSearchQuery,
-  resetFilters,
-  selectFilterRecipes,
-} from "../../../store/slices/filterRecipesSlice";
-import {
-  fetchRecipes,
-  selectRecipes,
-} from "../../../store/slices/recipesSlice";
+import useRecipes from "../store/store";
 import useDebounce from "../../../shared/hooks/debounce";
 import Categories from "./Categories";
 import RecipesList from "../../../widgets/RecipesList";
 import Input from "../../../shared/ui/Input";
 import Chip from "../../../shared/ui/Chip";
 
-export default function Catalog() {
-  const dispatch = useAppDispatch();
-  const { items: recipes, status } = useSelector(selectRecipes);
-  const { categoryId, searchQuery } = useSelector(selectFilterRecipes);
+export default function Catalog(): JSX.Element {
+  const recipes = useRecipes((state) => state.items);
+  const status = useRecipes((state) => state.status);
+  const { categoryId, searchQuery } = useRecipes((state) => state.filters);
+  const fetchRecipes = useRecipes((state) => state.fetchRecipes);
+  const setCategoryId = useRecipes((state) => state.setCategoryId);
+  const setSearchQuery = useRecipes((state) => state.setSearchQuery);
+  const resetFilters = useRecipes((state) => state.resetFilters);
   const [recipeСategories, setRecipeСategories] = useState<
     IRecipeCategoryItem[]
   >([]);
@@ -33,7 +26,7 @@ export default function Catalog() {
       : useDebounce(tempSearchQuery, 1000);
 
   function resetHandle() {
-    dispatch(resetFilters());
+    resetFilters();
     setTempSearchQuery("");
   }
 
@@ -42,7 +35,7 @@ export default function Catalog() {
   }
 
   useEffect(() => {
-    // TODO каждый раз загружаются категории, сохранить в redux
+    // TODO каждый раз загружаются категории, сохранить в store
     async function loadCategories() {
       const categories: IRecipeCategoryItem[] = await fetchCategories();
       setRecipeСategories(categories);
@@ -51,11 +44,11 @@ export default function Catalog() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchRecipes({ categoryId, searchQuery }));
+    fetchRecipes({ categoryId, searchQuery });
   }, [categoryId, searchQuery]);
 
   useEffect(() => {
-    dispatch(setSearchQuery(debouncedSearchQuery));
+    setSearchQuery(debouncedSearchQuery);
   }, [debouncedSearchQuery]);
 
   return (
@@ -90,7 +83,7 @@ export default function Catalog() {
                     status={status}
                     button={{
                       name: "Смотреть все",
-                      onClick: () => dispatch(setCategoryId(category.id)),
+                      onClick: () => setCategoryId(category.id),
                     }}
                   />
                 </div>
@@ -106,14 +99,17 @@ export default function Catalog() {
               {searchQuery && (
                 <Chip
                   text={`Поиск: ${searchQuery}`}
-                  onClick={() => dispatch(setSearchQuery(""))}
+                  onClick={() => {
+                    setSearchQuery("");
+                    setTempSearchQuery("");
+                  }}
                   del
                 />
               )}
               {categoryId && (
                 <Chip
                   text={`Категория: ${findCategoryById(categoryId!)?.name}`}
-                  onClick={() => dispatch(setCategoryId(""))}
+                  onClick={() => setCategoryId(null)}
                   del
                 />
               )}

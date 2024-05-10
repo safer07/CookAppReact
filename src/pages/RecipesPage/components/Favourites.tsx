@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "../../../store/store";
-import {
-  fetchRecipes,
-  selectRecipes,
-} from "../../../store/slices/recipesSlice";
+import useRecipes from "../store/store";
 import useUser from "../../../entities/user/store/store";
 import RecipesList from "../../../widgets/RecipesList";
 
-export default function Favourites() {
-  const dispatch = useAppDispatch();
-  const { items: recipes, status } = useSelector(selectRecipes);
+export default function Favourites(): JSX.Element {
+  const recipes = useRecipes((state) => state.items);
+  const status = useRecipes((state) => state.status);
+  const fetchRecipes = useRecipes((state) => state.fetchRecipes);
   const favouriteRecipes = useUser((state) => state.favouriteRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
-  // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с favouriteRecipes, или подгружать их с бэкенда запросом
+  // TODO пока загружаются все рецепты, затем фильтруются. Нужно подгружать их с бэкенда запросом
   useEffect(() => {
-    dispatch(fetchRecipes());
+    fetchRecipes();
   }, []);
 
   useEffect(() => {

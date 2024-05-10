@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "../../../store/store";
-import {
-  fetchRecipes,
-  selectRecipes,
-} from "../../../store/slices/recipesSlice";
+import useRecipes from "../../RecipesPage/store/store";
 import RecipesList from "../../../widgets/RecipesList";
 
 type FeaturedRecipesProps = {
   excludeId?: string;
 };
 
-export default function FeaturedRecipes({ excludeId }: FeaturedRecipesProps) {
-  const dispatch = useAppDispatch();
-  const { items: recipes, status } = useSelector(selectRecipes);
+export default function FeaturedRecipes({
+  excludeId,
+}: FeaturedRecipesProps): JSX.Element {
+  const recipes = useRecipes((state) => state.items);
+  const status = useRecipes((state) => state.status);
+  const fetchRecipes = useRecipes((state) => state.fetchRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
-  // TODO: пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с favouriteRecipes, или подгружать их с бэкенда запросом
+  // TODO: пока загружаются все рецепты, затем фильтруются. Нужно подгружать их с бэкенда запросом
   useEffect(() => {
-    dispatch(fetchRecipes());
+    fetchRecipes();
   }, []);
 
   // TODO: костыльно фильтруем рецепты, чтобы не отображался в предложенных такой же рецепт

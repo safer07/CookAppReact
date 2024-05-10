@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux";
-
-import { setCategoryId } from "../../../store/slices/filterRecipesSlice";
+import useRecipes from "../store/store";
 import RecipeCategoryCard, {
   RecipeCategoryCardSkeleton,
 } from "../../../entities/recipeCategory/components/RecipeCategoryCard";
@@ -9,8 +7,8 @@ type CategoryProps = {
   categories: IRecipeCategoryItem[];
 };
 
-export default function Categories({ categories }: CategoryProps) {
-  const dispatch = useDispatch();
+export default function Categories({ categories }: CategoryProps): JSX.Element {
+  const setCategoryId = useRecipes((state) => state.setCategoryId);
 
   return (
     <>
@@ -24,7 +22,7 @@ export default function Categories({ categories }: CategoryProps) {
               <RecipeCategoryCard
                 key={category.id}
                 category={category}
-                onClick={() => dispatch(setCategoryId(category.id))}
+                onClick={() => setCategoryId(category.id)}
               />
             ))}
       </div>
