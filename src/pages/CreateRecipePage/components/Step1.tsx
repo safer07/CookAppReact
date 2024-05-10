@@ -1,6 +1,4 @@
-import { observer } from "mobx-react-lite";
-
-import createRecipeStore from "../store/createRecipeStore";
+import useCreateRecipe from "../store/store";
 import { categories } from "../../../entities/recipeCategory/const/categories";
 import RecipeLimits from "../../../entities/recipe/const/limits";
 import Input from "../../../shared/ui/Input";
@@ -8,7 +6,7 @@ import TextArea from "../../../shared/ui/TextArea";
 import PhotoUpload from "../../../shared/ui/PhotoUpload";
 import Select from "../../../shared/ui/Select";
 
-export default observer(function Step1(): JSX.Element {
+export default function Step1(): JSX.Element {
   const {
     name,
     category,
@@ -18,7 +16,7 @@ export default observer(function Step1(): JSX.Element {
     setCategory,
     setDescription,
     setImg,
-  } = createRecipeStore;
+  } = useCreateRecipe();
 
   const categoriesOptions = categories.map((category) => {
     return { value: category.id, label: category.fullName };
@@ -58,4 +56,4 @@ export default observer(function Step1(): JSX.Element {
       />
     </div>
   );
-});
+}

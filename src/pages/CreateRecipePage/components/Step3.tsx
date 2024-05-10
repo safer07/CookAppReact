@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { observer } from "mobx-react-lite";
 
-import createRecipeStore from "../store/createRecipeStore";
+import useCreateRecipe from "../store/store";
 import ListItem from "../../../shared/ui/ListItem";
 import Button from "../../../shared/ui/Button";
 import Modal from "../../../shared/ui/Modal";
 import Input from "../../../shared/ui/Input";
 
-export default observer(function Step3(): JSX.Element {
+export default function Step3(): JSX.Element {
   const { steps, totalIngredients, setSteps, setTotalIngredients } =
-    createRecipeStore;
+    useCreateRecipe();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [newIngredientName, setNewIngredientName] = useState<string>("");
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
@@ -116,4 +115,4 @@ export default observer(function Step3(): JSX.Element {
       </Modal>
     </>
   );
-});
+}

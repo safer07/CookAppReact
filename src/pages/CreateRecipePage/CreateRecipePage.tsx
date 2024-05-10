@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import createRecipeStore from "./store/createRecipeStore";
+import useCreateRecipe from "./store/store";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
@@ -13,7 +13,7 @@ import Modal from "../../shared/ui/Modal";
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate();
-  const { resetCreateRecipe } = createRecipeStore;
+  const resetCreateRecipe = useCreateRecipe((state) => state.resetCreateRecipe);
   const [step, setStep] = useState<number>(1);
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false);
   const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false);
@@ -30,15 +30,13 @@ export default function CreateRecipePage(): JSX.Element {
     else setStep((prev) => prev + 1);
   }
 
-  // TODO: сохранять state и в localStorage
-
   function onDelete(): void {
     resetCreateRecipe();
     navigate("/");
   }
 
   function onRecipeComplete(): void {
-    // TODO: Загружать на сервер (при успехе обнулить redux и открыть popup - успешно)
+    // TODO: Загружать на сервер (при успехе обнулить store и открыть popup - успешно)
     resetCreateRecipe();
     setModalFinishIsOpen(true);
   }

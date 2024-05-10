@@ -1,11 +1,9 @@
-import { observer } from "mobx-react-lite";
-
-import createRecipeStore from "../store/createRecipeStore";
+import useCreateRecipe from "../store/store";
 import recipeDifficulties from "../../../entities/recipe/const/recipeDifficulties";
 import Input from "../../../shared/ui/Input";
 import ListItem from "../../../shared/ui/ListItem";
 
-export default observer(function Step2(): JSX.Element {
+export default function Step2(): JSX.Element {
   const {
     timeHours,
     timeMinutes,
@@ -13,7 +11,7 @@ export default observer(function Step2(): JSX.Element {
     setDifficulty,
     setTimeHours,
     setTimeMinutes,
-  } = createRecipeStore;
+  } = useCreateRecipe();
 
   return (
     <div className="layout-grid flex flex-col gap-3">
@@ -58,4 +56,4 @@ export default observer(function Step2(): JSX.Element {
       </div>
     </div>
   );
-});
+}

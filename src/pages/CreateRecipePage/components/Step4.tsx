@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { toJS } from "mobx";
-import { observer } from "mobx-react-lite";
 
-import createRecipeStore, { emptyStep } from "../store/createRecipeStore";
+import useCreateRecipe, { emptyStep } from "../store/store";
 import RecipeLimits from "../../../entities/recipe/const/limits";
 import Stepper from "../../../shared/ui/Stepper";
 import Select from "../../../shared/ui/Select";
@@ -13,9 +11,9 @@ import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import Modal from "../../../shared/ui/Modal";
 import useDebounce from "../../../shared/hooks/debounce";
 
-export default observer(function Step4(): JSX.Element {
+export default function Step4(): JSX.Element {
   const { totalIngredients, steps, hidden, setSteps, setHidden } =
-    createRecipeStore;
+    useCreateRecipe();
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] =
@@ -50,7 +48,7 @@ export default observer(function Step4(): JSX.Element {
   );
 
   function setStepValue(value: string, field: "img" | "description"): void {
-    const newSteps = toJS(steps);
+    const newSteps = structuredClone(steps);
     newSteps[currentStepIndex][field] = value;
     setSteps(newSteps);
   }
@@ -114,7 +112,7 @@ export default observer(function Step4(): JSX.Element {
 
   useEffect(() => {
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
-    const newSteps = toJS(steps);
+    const newSteps = structuredClone(steps);
     const filteredIngredients = totalIngredients.filter((i) =>
       currentStepIngredientsNames.includes(i.name),
     );
@@ -216,4 +214,4 @@ export default observer(function Step4(): JSX.Element {
       />
     </>
   );
-});
+}
