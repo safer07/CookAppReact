@@ -108,7 +108,7 @@ export default function Step4(): JSX.Element {
     ].ingredients.map((i) => i.name);
 
     setCurrentStepIngredientsNames(stepIngredientsNames);
-  }, [currentStepIndex]);
+  }, [currentStepIndex, steps.length]);
 
   useEffect(() => {
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения

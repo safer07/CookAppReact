@@ -1,12 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { categories } from "../../../recipeCategory/const/categories";
-import {
-  addRecipe,
-  removeRecipe,
-  selectFavouriteRecipes,
-} from "../../../../store/slices/favouriveRecipesSlice";
+import useUser from "../../../user/store/store";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 import LikeButton from "../../../../shared/ui/LikeButton";
 import Tag from "../../../../shared/ui/Tag";
@@ -16,8 +11,9 @@ type RecipeCardProps = {
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const dispatch = useDispatch();
-  const favouriteRecipes = useSelector(selectFavouriteRecipes);
+  const favouriteRecipes = useUser((state) => state.favouriteRecipes);
+  const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe);
+  const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe);
   const [difficultyText, tagDifficultySurface] =
     getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
@@ -26,8 +22,8 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   );
 
   function handleLike(id: string) {
-    if (favouriteRecipes.includes(id)) dispatch(removeRecipe(id));
-    else dispatch(addRecipe(id));
+    if (favouriteRecipes.includes(id)) removeFavouriteRecipe(id);
+    else addFavouriteRecipe(id);
   }
 
   return (

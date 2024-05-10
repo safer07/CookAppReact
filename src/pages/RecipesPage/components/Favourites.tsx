@@ -6,13 +6,13 @@ import {
   fetchRecipes,
   selectRecipes,
 } from "../../../store/slices/recipesSlice";
-import { selectFavouriteRecipes } from "../../../store/slices/favouriveRecipesSlice";
+import useUser from "../../../entities/user/store/store";
 import RecipesList from "../../../widgets/RecipesList";
 
 export default function Favourites() {
   const dispatch = useAppDispatch();
   const { items: recipes, status } = useSelector(selectRecipes);
-  const favouriteRecipes = useSelector(selectFavouriteRecipes);
+  const favouriteRecipes = useUser((state) => state.favouriteRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
   // TODO пока загружаются все рецепты, затем фильтруются. Нужно создать в redux массив с favouriteRecipes, или подгружать их с бэкенда запросом
