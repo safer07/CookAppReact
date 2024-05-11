@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 
 import { categories } from "../../../recipeCategory/const/categories";
-import useUser from "../../../user/store/store";
+import LikeButton from "../../../user/components/LikeButton";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
-import LikeButton from "../../../../shared/ui/LikeButton";
 import Tag from "../../../../shared/ui/Tag";
 
 type RecipeCardProps = {
@@ -11,20 +10,12 @@ type RecipeCardProps = {
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const favouriteRecipes = useUser((state) => state.favouriteRecipes);
-  const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe);
-  const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe);
   const [difficultyText, tagDifficultySurface] =
     getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe.category,
   );
-
-  function handleLike(id: string) {
-    if (favouriteRecipes.includes(id)) removeFavouriteRecipe(id);
-    else addFavouriteRecipe(id);
-  }
 
   return (
     <Link
@@ -39,12 +30,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
             alt={recipe.name}
           />
         </div>
-        <LikeButton
-          className="absolute right-1.5 top-1.5"
-          active={favouriteRecipes.includes(recipe.id)}
-          itemId={recipe.id}
-          handleLike={handleLike}
-        />
+        <LikeButton itemId={recipe.id} className="absolute right-1.5 top-1.5" />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300 hover-hover:group-hover:text-primary">

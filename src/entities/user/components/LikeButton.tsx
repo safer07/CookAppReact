@@ -1,25 +1,26 @@
 import { useState } from "react";
 
+import useUser from "../store/store";
+
 type LikeButtonProps = {
-  active: boolean;
   itemId: string;
-  handleLike: (itemId: string) => void;
-  className: string;
+  className?: string;
 };
 
 export default function LikeButton({
-  active,
   itemId,
-  handleLike,
   className = "",
-}: LikeButtonProps) {
-  const [isActive, setIsActive] = useState(active);
-  const [animation, setAnimation] = useState(false);
+}: LikeButtonProps): JSX.Element {
+  const favouriteRecipes = useUser((state) => state.favouriteRecipes);
+  const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe);
+  const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe);
+  const [animation, setAnimation] = useState<boolean>(false);
+  const isActive: boolean = favouriteRecipes.includes(itemId);
 
   function onClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    handleLike(itemId);
-    setIsActive((prev) => !prev);
+    if (favouriteRecipes.includes(itemId)) removeFavouriteRecipe(itemId);
+    else addFavouriteRecipe(itemId);
     setAnimation(true);
   }
 

@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { categories } from "../../../../entities/recipeCategory/const/categories";
-import useUser from "../../../../entities/user/store/store";
+import LikeButton from "../../../../entities/user/components/LikeButton";
 import ButtonIcon from "../../../../shared/ui/ButtonIcon";
-import LikeButton from "../../../../shared/ui/LikeButton";
 import Tag from "../../../../shared/ui/Tag";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 
@@ -13,29 +12,12 @@ type RecipeInfoProps = {
 
 export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
   const navigate = useNavigate();
-  const favouriteRecipes = useUser((state) => state.favouriteRecipes);
-  const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe);
-  const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe);
   const [difficultyText, tagDifficultySurface] =
     getRecipeDifficultyTextAndSurface(recipe?.difficulty);
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe?.category,
   );
-
-  // TODO: вынести это отдельно
-  function handleLike(id: string) {
-    if (favouriteRecipes.includes(id)) removeFavouriteRecipe(id);
-    else addFavouriteRecipe(id);
-  }
-
-  // const handleLike = useCallback(
-  //   (id: string) => {
-  //     if (favouriteRecipes.includes(id)) removeFavouriteRecipe(id);
-  //     else addFavouriteRecipe(id);
-  //   },
-  //   [recipe],
-  // );
 
   return (
     <>
@@ -51,12 +33,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
           onClick={() => navigate(-1)}
           size="small"
         />
-        <LikeButton
-          className="absolute right-2 top-2"
-          active={favouriteRecipes.includes(recipe.id)}
-          itemId={recipe.id}
-          handleLike={handleLike}
-        />
+        <LikeButton itemId={recipe.id} className="absolute right-2 top-2" />
       </div>
       <div className="grid gap-1 pb-2 pt-1">
         <div>
