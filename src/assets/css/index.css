@@ -13,6 +13,7 @@
 @import url(components/modal.css) layer(components);
 @import url(components/chip.css) layer(components);
 @import url(components/skeleton.css) layer(components);
+@import url(components/loader.css) layer(components);
 
 @tailwind base;
 @tailwind components;

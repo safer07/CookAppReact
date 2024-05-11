@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import useFullRecipe from "../store/store";
+import TopAppBar from "../../../widgets/TopAppBar";
 import Button from "../../../shared/ui/Button";
 import ButtonIcon from "../../../shared/ui/ButtonIcon";
 import ListItem from "../../../shared/ui/ListItem";
 import Stepper from "../../../shared/ui/Stepper";
+import Loader from "../../../shared/ui/Loader";
 
-export default function CookingMode() {
+export default function CookingMode(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { recipe, status, fetchFullRecipe } = useFullRecipe();
@@ -34,10 +36,18 @@ export default function CookingMode() {
     else setStepIndex((prev) => prev + 1);
   }
 
-  if (!recipe) return;
-
   return (
     <>
+      {status === "loading" && (
+        <div className="h-svh">
+          <Loader />
+        </div>
+      )}
+
+      {status === "error" && (
+        <TopAppBar title="Не удалось загрузить рецепт" back />
+      )}
+
       {status === "success" && step && (
         <div className="layout-fullwidth flex h-svh flex-col">
           <div className="grow overflow-y-auto">
