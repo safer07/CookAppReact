@@ -1,16 +1,11 @@
 .lds-ring {
-  display: inline-block;
-  @apply relative size-8 text-primary;
-}
-.lds-ring,
-.lds-ring div {
-  box-sizing: border-box;
+  @apply relative inline-block size-8 text-primary;
 }
 .lds-ring div {
-  @apply absolute m-1.5 size-5 rounded-full;
   border: 5px solid currentColor;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: currentColor transparent transparent transparent;
+  @apply absolute m-1.5 box-border size-5 rounded-full;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;

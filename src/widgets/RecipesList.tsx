@@ -1,7 +1,5 @@
 import { TypeRecipesStatus } from "../pages/RecipesPage/store/store";
-import RecipeCard, {
-  RecipeCardSkeleton,
-} from "../entities/recipe/components/RecipeCard";
+import RecipeCard from "../entities/recipe/components/RecipeCard";
 
 type RecipesListProps = {
   title: string;
@@ -17,7 +15,7 @@ export default function RecipesList({
   button,
 }: RecipesListProps): JSX.Element {
   const skeletonRecipes = [...new Array(4)].map((_, i) => (
-    <RecipeCardSkeleton key={i} />
+    <RecipeCard.Skeleton key={i} />
   ));
 
   return (

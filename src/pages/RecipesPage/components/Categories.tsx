@@ -1,7 +1,5 @@
 import useRecipes from "../store/store";
-import RecipeCategoryCard, {
-  RecipeCategoryCardSkeleton,
-} from "../../../entities/recipeCategory/components/RecipeCategoryCard";
+import RecipeCategoryCard from "../../../entities/recipeCategory/components/RecipeCategoryCard";
 
 type CategoryProps = {
   categories: IRecipeCategoryItem[];
@@ -16,7 +14,7 @@ export default function Categories({ categories }: CategoryProps): JSX.Element {
       <div className="mt-2 grid grid-cols-3 gap-2">
         {!categories.length
           ? [...new Array(9)].map((_, i) => (
-              <RecipeCategoryCardSkeleton key={i} />
+              <RecipeCategoryCard.Skeleton key={i} />
             ))
           : categories.map((category) => (
               <RecipeCategoryCard

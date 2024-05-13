@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
 import { categories } from "../../../../entities/recipeCategory/const/categories";
 import LikeButton from "../../../../entities/user/components/LikeButton";
 import ButtonIcon from "../../../../shared/ui/ButtonIcon";
@@ -58,3 +59,5 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
     </>
   );
 }
+
+RecipeInfo.Skeleton = RecipeInfoSkeleton;

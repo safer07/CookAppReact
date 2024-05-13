@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import RecipeCardSkeleton from "./RecipeCardSkeleton";
 import { categories } from "../../../recipeCategory/const/categories";
 import LikeButton from "../../../user/components/LikeButton";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
@@ -52,3 +53,5 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
     </Link>
   );
 }
+
+RecipeCard.Skeleton = RecipeCardSkeleton;

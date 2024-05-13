@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import useFullRecipe from "./store/store";
-import RecipeInfo, { RecipeInfoSkeleton } from "./components/RecipeInfo";
+import RecipeInfo from "./components/RecipeInfo";
 import FeaturedRecipes from "./components/FeaturedRecipes";
 import RecipeTabs from "./components/RecipeTabs";
 import TopAppBar from "../../widgets/TopAppBar";
@@ -20,7 +20,7 @@ export default function RecipePage(): JSX.Element {
 
   return (
     <>
-      {status === "loading" && <RecipeInfoSkeleton />}
+      {status === "loading" && <RecipeInfo.Skeleton />}
       {status === "error" && (
         <>
           <TopAppBar title="Не удалось загрузить рецепт" back />
