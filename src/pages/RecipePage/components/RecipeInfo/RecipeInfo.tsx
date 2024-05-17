@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
+import LikeButton from "../../../../features/favouriteRecipe/components/LikeButton";
 import { categories } from "../../../../entities/recipeCategory/const/categories";
-import LikeButton from "../../../../entities/user/components/LikeButton";
 import ButtonIcon from "../../../../shared/ui/ButtonIcon";
 import Tag from "../../../../shared/ui/Tag";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import useUser from "../store/store";
+import useUser from "../../../entities/user/store/store";
 
 type LikeButtonProps = {
   itemId: string;

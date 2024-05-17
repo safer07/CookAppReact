@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import RecipeCardSkeleton from "./RecipeCardSkeleton";
 import { categories } from "../../../recipeCategory/const/categories";
-import LikeButton from "../../../user/components/LikeButton";
+import LikeButton from "../../../../features/favouriteRecipe/components/LikeButton";
 import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
 import Tag from "../../../../shared/ui/Tag";
 
