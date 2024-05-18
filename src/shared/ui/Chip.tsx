@@ -1,7 +1,7 @@
 type ChipProps = {
   text: string;
   onClick?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
-  variant?: "active";
+  variant?: "active" | "default";
   del?: boolean;
 };
 

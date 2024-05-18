@@ -16,14 +16,14 @@
 }
 
 .button-secondary {
-  @apply surface-default border-2 border-primary text-accent-color disabled:border-base-borders;
+  @apply surface-default border border-primary text-accent-color disabled:border-base-borders;
 }
 .button-secondary:not(:disabled) {
   @apply hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-highGradient;
 }
 
 .button-tertiary {
-  @apply surface-default border-2 border-base-borders text-secondary-color disabled:border-base-borders;
+  @apply surface-default border border-base-borders text-secondary-color disabled:border-base-borders;
 }
 .button-tertiary:not(:disabled) {
   @apply hover-hover:hover:border-primary hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-highGradient;
@@ -37,14 +37,17 @@
 }
 
 .button-icon {
-  @apply grid size-5 place-content-center rounded-full transition-colors duration-300;
+  @apply relative grid size-5 place-content-center rounded-full transition-colors duration-300;
   & :is(svg, img) {
     @apply size-3;
+  }
+  & .button-icon-badge {
+    @apply surface-accent-secondary absolute right-0.5 top-0.5 rounded-full px-0.5 text-right text-[0.625rem] leading-[0.875rem];
   }
 }
 
 .button-icon-tertiary {
-  @apply surface-default border-2 border-base-borders hover-hover:hover:border-primary hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-active;
+  @apply surface-default border border-base-borders hover-hover:hover:border-primary hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-active;
 }
 
 .button-icon-ghost {
@@ -53,6 +56,10 @@
 
 .button-icon-medium {
   @apply size-6;
+}
+
+.button-icon-square {
+  @apply rounded-lg;
 }
 
 .like-button {

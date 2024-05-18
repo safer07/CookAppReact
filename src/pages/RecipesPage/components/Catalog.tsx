@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 
 import { fetchCategories } from "../../../app/api";
 import useRecipes from "../store/store";
-import useDebounce from "../../../shared/hooks/debounce";
+import Filters from "./Filters";
 import Categories from "./Categories";
 import RecipesList from "../../../widgets/RecipesList";
+import useDebounce from "../../../shared/hooks/debounce";
 import Input from "../../../shared/ui/Input";
-import Chip from "../../../shared/ui/Chip";
+import ButtonIcon from "../../../shared/ui/ButtonIcon";
 
 export default function Catalog(): JSX.Element {
   const recipes = useRecipes((state) => state.items);
   const status = useRecipes((state) => state.status);
-  const { categoryId, searchQuery } = useRecipes((state) => state.filters);
+  const filters = useRecipes((state) => state.filters);
+  const { categoryId, searchQuery } = filters;
   const fetchRecipes = useRecipes((state) => state.fetchRecipes);
   const setCategoryId = useRecipes((state) => state.setCategoryId);
   const setSearchQuery = useRecipes((state) => state.setSearchQuery);
-  const resetFilters = useRecipes((state) => state.resetFilters);
+  const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false);
+  const filterCount = Object.values(filters).filter((value) => value).length;
   const [recipeСategories, setRecipeСategories] = useState<
     IRecipeCategoryItem[]
   >([]);
@@ -24,11 +27,6 @@ export default function Catalog(): JSX.Element {
     tempSearchQuery === ""
       ? useDebounce(tempSearchQuery, 0)
       : useDebounce(tempSearchQuery, 1000);
-
-  function resetHandle() {
-    resetFilters();
-    setTempSearchQuery("");
-  }
 
   function findCategoryById(id: string) {
     return recipeСategories.find((category) => category.id === id);
@@ -53,15 +51,32 @@ export default function Catalog(): JSX.Element {
 
   return (
     <>
-      <div className="pb-1 pt-2">
+      <div className="flex gap-2 pb-1 pt-2">
         <Input
           value={tempSearchQuery}
           placeholder="Поиск..."
           iconLeft="search"
           onChange={setTempSearchQuery}
           clearButton
+          className="grow"
+        />
+        <ButtonIcon
+          icon="settings"
+          onClick={() => setFiltersIsOpen(true)}
+          variant="tertiary"
+          square
+          badge={filterCount}
         />
       </div>
+
+      <Filters
+        open={filtersIsOpen}
+        setClose={() => setFiltersIsOpen(false)}
+        setTempSearchQuery={setTempSearchQuery}
+        recipeСategories={recipeСategories}
+        findCategoryById={findCategoryById}
+      />
+
       <div className="py-2">
         {/* Каталог по умолчанию - категории + каждая отдельно */}
         {categoryId === null && !searchQuery && (
@@ -95,32 +110,6 @@ export default function Catalog(): JSX.Element {
         {/* Показ результатов поиска или выбранной категории */}
         {(categoryId !== null || searchQuery) && (
           <>
-            <div className="mb-2 flex flex-wrap gap-1">
-              {searchQuery && (
-                <Chip
-                  text={`Поиск: ${searchQuery}`}
-                  onClick={() => {
-                    setSearchQuery("");
-                    setTempSearchQuery("");
-                  }}
-                  del
-                />
-              )}
-              {categoryId && (
-                <Chip
-                  text={`Категория: ${findCategoryById(categoryId!)?.name}`}
-                  onClick={() => setCategoryId(null)}
-                  del
-                />
-              )}
-              <Chip
-                text="Сбросить фильтры"
-                onClick={resetHandle}
-                variant="active"
-                del
-              />
-            </div>
-
             <RecipesList
               title={
                 searchQuery

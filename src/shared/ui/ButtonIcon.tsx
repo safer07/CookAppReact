@@ -4,6 +4,8 @@ type ButtonIconProps = {
   className?: string;
   variant?: "primary" | "tertiary" | "ghost";
   size?: "small" | "medium";
+  square?: boolean;
+  badge?: number;
 };
 
 export default function ButtonIcon({
@@ -12,6 +14,8 @@ export default function ButtonIcon({
   className = "",
   variant = "ghost",
   size = "medium",
+  square,
+  badge,
 }: ButtonIconProps) {
   const variantClass = (() => {
     switch (variant) {
@@ -28,12 +32,13 @@ export default function ButtonIcon({
 
   return (
     <button
-      className={`button-icon ${className} ${variantClass} ${size === "medium" ? "button-icon-medium" : "button-icon-small"}`}
+      className={`button-icon ${className} ${variantClass} ${size === "medium" ? "button-icon-medium" : "button-icon-small"} ${square === true ? "button-icon-square" : ""}`}
       onClick={onClick}
     >
       <svg>
         <use href={`/images/icons.svg#${icon}`} />
       </svg>
+      {badge !== 0 && <span className="button-icon-badge">{badge}</span>}
     </button>
   );
 }
