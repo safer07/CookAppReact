@@ -1,3 +1,1 @@
-import RecipeCategoryCard from "./RecipeCategoryCard";
-
-export default RecipeCategoryCard;
+export { default } from "./RecipeCategoryCard";

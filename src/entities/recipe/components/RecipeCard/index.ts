@@ -1,3 +1,1 @@
-import RecipeCard from "./RecipeCard";
-
-export default RecipeCard;
+export { default } from "./RecipeCard";
