@@ -34,7 +34,7 @@ export default function Filters({
       className="surface-default fixed inset-0 z-30 transition-transform duration-500 ease-in-out data-[open='false']:translate-x-full"
       data-open={open}
     >
-      <div className="layout-grid">
+      <aside className="layout-grid">
         <TopAppBar title="Фильтры" back backOnClick={setClose} />
 
         {/* TODO: чипы пока не функционируют (сервер должен принимать массив категорий) */}
@@ -83,7 +83,7 @@ export default function Filters({
             </ul>
           </div>
         </div>
-      </div>
+      </aside>
     </div>,
     document.getElementById("modal-portal")!,
   );

@@ -52,14 +52,16 @@ export default function Catalog(): JSX.Element {
   return (
     <>
       <div className="flex gap-2 pb-1 pt-2">
-        <Input
-          value={tempSearchQuery}
-          placeholder="Поиск..."
-          iconLeft="search"
-          onChange={setTempSearchQuery}
-          clearButton
-          className="grow"
-        />
+        <form className="grow">
+          <Input
+            type="search"
+            value={tempSearchQuery}
+            placeholder="Поиск..."
+            iconLeft="search"
+            onChange={setTempSearchQuery}
+            clearButton
+          />
+        </form>
         <ButtonIcon
           icon="settings"
           onClick={() => setFiltersIsOpen(true)}

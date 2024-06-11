@@ -31,7 +31,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
       )}
 
       {activeTabIndex === 1 && recipe.steps && (
-        <ol className="mt-2 grid gap-2">
+        <ol className="mt-3 grid gap-3">
           {recipe.steps.map((step, index) => (
             <li key={index} className="grid gap-1">
               <div className="headline-medium">Шаг {index + 1}</div>

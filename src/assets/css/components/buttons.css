@@ -37,7 +37,7 @@
 }
 
 .button-icon {
-  @apply relative grid size-5 place-content-center rounded-full transition-colors duration-300;
+  @apply relative grid size-5 shrink-0 place-content-center rounded-full transition-colors duration-300;
   & :is(svg, img) {
     @apply size-3;
   }

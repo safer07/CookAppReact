@@ -13,7 +13,7 @@ type InputProps = {
 } & (InputTextProps | InputNumberProps);
 
 type InputTextProps = {
-  type?: "text";
+  type?: "text" | "search";
   showCount?: boolean;
   maxLength?: number;
   min?: never;
@@ -68,6 +68,7 @@ export default function Input({
           onChange={(event) => onChange(event.target.value)}
           maxLength={maxLength}
           min={min}
+          autoComplete="off"
         />
 
         {(clearButton || iconRight) && (
