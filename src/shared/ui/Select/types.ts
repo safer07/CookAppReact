@@ -9,7 +9,6 @@ type SelectOption = {
 type SelectBaseProps = {
   options: SelectOption[];
   placeholder?: string;
-  disabled?: boolean;
   label?: string;
   clearButton?: boolean;
   optionSize?: ListItemSize;

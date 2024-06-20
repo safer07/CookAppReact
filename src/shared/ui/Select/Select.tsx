@@ -34,8 +34,8 @@ export default function Select(props: SelectProps): JSX.Element {
   // } = props
 
   const { value, options, onChange, placeholder, label, multiple } = props;
+  let disabled: boolean = false;
 
-  let { disabled } = props;
   // const {multiple = false} = props;
 
   // if (multiple) {

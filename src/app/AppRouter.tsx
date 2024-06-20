@@ -16,7 +16,7 @@ export default function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route path="" element={<RecipesPage />} />
+        <Route index element={<RecipesPage />} />
         <Route path="recipe/:id" element={<RecipePage />} />
         <Route path="profile" element={<Profile />} />
         {/* <Route path="*" element={<Navigate to="/404" />} /> */}

@@ -87,6 +87,7 @@ export default function Step3(): JSX.Element {
         onOk={onAddIngredient}
         okText="Добавить"
         title="Добавить ингредиент"
+        textAlign="left"
         cancellable
       >
         <div className="mt-2">
@@ -105,7 +106,7 @@ export default function Step3(): JSX.Element {
               label="Количество"
             />
             <Input
-              className="w-[7.5rem]"
+              className="w-[7.5rem] shrink-0"
               value={newIngredientUnit}
               onChange={(value) => setNewIngredientUnit(value)}
               label="Ед. измерения"

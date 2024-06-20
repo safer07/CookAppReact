@@ -10,8 +10,8 @@ type NavBarTab = {
   icon: string;
 };
 
-export default function NavBar() {
-  const pathname = useLocation().pathname;
+export default function NavBar(): JSX.Element {
+  const pathname: string = useLocation().pathname;
   const [activeTab, setActiveTab] = useState("");
   const tabs: NavBarTab[] = [
     { name: "Рецепты", id: "recipes", link: "/", icon: "fork" },
@@ -28,6 +28,13 @@ export default function NavBar() {
       setActiveTab("recipes");
     else if (pathname.startsWith("/profile")) setActiveTab("profile");
   }, [pathname]);
+
+  // TODO
+  // нужно объединять для recipe/.. и recipes (через NavLink)
+  // function getClass(isActive: boolean): string {
+  //   return `flex flex-col items-center py-1 transition-colors duration-300 ${isActive ? "cursor-default text-primary" : "text-secondary-color hover-hover:hover:text-primary"}`;
+  // }
+  // ({isActive}) => getClass(isActive)
 
   return (
     <div className="layout-grid">

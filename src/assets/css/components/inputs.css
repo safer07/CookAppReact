@@ -44,7 +44,6 @@
     @apply flex grow flex-wrap gap-1;
   }
   & .select-options {
-    width: calc(100% + 2px);
     @apply surface-default absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
     & .selected {
       @apply surface-accent-light;
@@ -74,7 +73,7 @@
 }
 .input .textfield,
 .textarea {
-  @apply grow outline-none placeholder:text-tertiary-color focus-visible:outline-none;
+  @apply w-full grow outline-none placeholder:text-tertiary-color focus-visible:outline-none;
 }
 .textarea {
   @apply min-h-[6rem] px-2 py-1.5;
