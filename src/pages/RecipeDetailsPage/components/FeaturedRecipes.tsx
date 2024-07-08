@@ -22,7 +22,9 @@ export default function FeaturedRecipes({
 
   // TODO: костыльно фильтруем рецепты, чтобы не отображался в предложенных такой же рецепт
   useEffect(() => {
-    const filteredRecipes = recipes.filter((recipe) => recipe.id !== excludeId);
+    const filteredRecipes = recipes.filter(
+      (recipe) => recipe._id !== excludeId,
+    );
     setTempRecipes(filteredRecipes);
   }, [recipes, excludeId]);
 

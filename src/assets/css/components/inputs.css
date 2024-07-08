@@ -45,13 +45,16 @@
   }
   & .select-options {
     @apply surface-default absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
-    & .selected {
+    & > .selected {
       @apply surface-accent-light;
       & .right-icon {
         @apply text-primary;
       }
     }
-    & .disabled {
+    & > :not(.disabled) {
+      @apply hover-hover:hover:surface-accent-light;
+    }
+    & > .disabled {
       @apply surface-low cursor-default text-tertiary-color;
       & :is(.list-item-secondary-text, .list-item-description, .right-icon) {
         @apply text-tertiary-color;
@@ -76,7 +79,7 @@
   @apply w-full grow outline-none placeholder:text-tertiary-color focus-visible:outline-none;
 }
 .textarea {
-  @apply min-h-[6rem] px-2 py-1.5;
+  @apply min-h-12 px-2 py-1.5;
 }
 
 :is(.input, .select) :where(.icon-left, .icon-right, .clear-button svg) {
@@ -95,4 +98,11 @@
 }
 .input-right-helper {
   @apply w-fit text-sm text-secondary-color;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }

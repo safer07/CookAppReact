@@ -7,7 +7,7 @@ type RecipeStep = {
 };
 
 type IRecipeItem = {
-  id: string;
+  _id: string;
   name: string;
   category: string;
   img: string;

@@ -34,7 +34,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
           onClick={() => navigate(-1)}
           size="small"
         />
-        <LikeButton itemId={recipe.id} className="absolute right-2 top-2" />
+        <LikeButton itemId={recipe._id} className="absolute right-2 top-2" />
       </div>
       <div className="grid gap-1 pb-2 pt-1">
         <div>

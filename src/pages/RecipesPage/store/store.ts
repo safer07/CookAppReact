@@ -34,10 +34,11 @@ const useRecipes = create<RecipesStore>()(
           const category = filters?.categoryId
             ? `category=${filters.categoryId}`
             : "";
-          const search = filters?.searchQuery
-            ? `&search=${filters.searchQuery}`
+          const query = filters?.searchQuery
+            ? `&query=${filters.searchQuery}`
             : "";
-          const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/recipes?${category}${search}`;
+          const url = `https://cook-app-backend-psi.vercel.app/recipes?${category}${query}`;
+          // const url = `http://localhost:4444/recipes?${category}${query}`;
           const response = await axios.get<IRecipeItem[]>(url);
           set({ items: response.data });
           set({ status: "success" });

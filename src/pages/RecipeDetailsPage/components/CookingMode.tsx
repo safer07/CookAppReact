@@ -18,12 +18,12 @@ export default function CookingMode(): JSX.Element {
   const step = recipe?.steps[stepIndex];
 
   useEffect(() => {
-    if (!id || recipe?.id === id) return;
+    if (!id || recipe?._id === id) return;
     fetchFullRecipe(id);
   }, [id]);
 
   function navigateToRecipe() {
-    navigate(`/recipe/${id}`, { replace: true });
+    navigate(`/recipes/${id}`, { replace: true });
   }
 
   function onClickBack() {

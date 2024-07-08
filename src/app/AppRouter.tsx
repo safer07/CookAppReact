@@ -17,13 +17,13 @@ export default function AppRouter() {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<RecipesPage />} />
-        <Route path="recipe/:id" element={<RecipePage />} />
+        <Route path="recipes/:id" element={<RecipePage />} />
         <Route path="profile" element={<Profile />} />
         {/* <Route path="*" element={<Navigate to="/404" />} /> */}
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
       <Route path="/" element={<FullScreenLayout />}>
-        <Route path="recipe/:id/cooking-mode" element={<CookingMode />} />
+        <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
         <Route path="create-recipe" element={<CreateRecipePage />} />
       </Route>
     </Routes>

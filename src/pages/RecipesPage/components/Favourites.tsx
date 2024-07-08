@@ -18,7 +18,7 @@ export default function Favourites(): JSX.Element {
 
   useEffect(() => {
     const filteredRecipes = recipes.filter((recipe) =>
-      favouriteRecipes.includes(recipe.id),
+      favouriteRecipes.includes(recipe._id),
     );
     setTempRecipes(filteredRecipes);
   }, [recipes]);

@@ -453,7 +453,7 @@ export const fullRecipes: IFullRecipeItem[] = [
     id: "r6",
     name: "Ролл филадельфия",
     category: "rc5",
-    img: "/images/recipes/recipe-6/main.png",
+    img: "/images/recipes/recipe-6/main.jpg",
     time: 30,
     difficulty: 1,
     description:
@@ -519,7 +519,7 @@ export const fullRecipes: IFullRecipeItem[] = [
     id: "r7",
     name: "Вишнёвый пирог",
     category: "rc6",
-    img: "/images/recipes/recipe-7/main.png",
+    img: "/images/recipes/recipe-7/main.jpg",
     time: 240,
     difficulty: 3,
     description:

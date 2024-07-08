@@ -12,7 +12,12 @@ const useUser = create<UserStore>()(
   persist(
     devtools(
       immer((set) => ({
-        favouriteRecipes: ["r1", "r5", "r7", "r9"],
+        favouriteRecipes: [
+          "668b9ede0cc1f0dab6c84e42",
+          "668b9ede0cc1f0dab6c84e47",
+          "668b9ede0cc1f0dab6c84e49",
+          "668b9ede0cc1f0dab6c84e4b",
+        ],
         addFavouriteRecipe: (id) =>
           set((state) => {
             state.favouriteRecipes.push(id);

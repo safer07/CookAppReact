@@ -15,7 +15,8 @@ const useFullRecipe = create<FullRecipeStore>()(
     fetchFullRecipe: async (id) => {
       try {
         set({ status: "loading" });
-        const url = `https://65f16da8034bdbecc7628a2a.mockapi.io/fullRecipes/${id}`;
+        const url = `https://cook-app-backend-psi.vercel.app/recipes/${id}`;
+        // const url = `http://localhost:4444/recipes/${id}`;
         const response = await axios.get<IFullRecipeItem>(url);
         set({ recipe: response.data });
         set({ status: "success" });

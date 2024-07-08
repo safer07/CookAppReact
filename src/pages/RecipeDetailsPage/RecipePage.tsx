@@ -14,7 +14,7 @@ export default function RecipePage(): JSX.Element {
   const { recipe, status, fetchFullRecipe } = useFullRecipe();
 
   useEffect(() => {
-    if (!id || recipe?.id === id) return;
+    if (!id || recipe?._id === id) return;
     fetchFullRecipe(id);
   }, [id]);
 
@@ -36,7 +36,7 @@ export default function RecipePage(): JSX.Element {
             <Button
               text="Начать готовить"
               onClick={() =>
-                navigate(`/recipe/${id}/cooking-mode`, { replace: true })
+                navigate(`/recipes/${id}/cooking-mode`, { replace: true })
               }
               variant="primary"
               block

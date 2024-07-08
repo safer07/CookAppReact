@@ -24,7 +24,7 @@ export default function NavBar(): JSX.Element {
   ];
 
   useEffect(() => {
-    if (pathname === "/" || pathname.startsWith("/recipe"))
+    if (pathname === "/" || pathname.startsWith("/recipes"))
       setActiveTab("recipes");
     else if (pathname.startsWith("/profile")) setActiveTab("profile");
   }, [pathname]);
