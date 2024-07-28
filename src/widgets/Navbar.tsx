@@ -29,7 +29,7 @@ export default function NavBar(): JSX.Element {
     else if (pathname.startsWith("/profile")) setActiveTab("profile");
   }, [pathname]);
 
-  // TODO
+  // TODO:
   // нужно объединять для recipe/.. и recipes (через NavLink)
   // function getClass(isActive: boolean): string {
   //   return `flex flex-col items-center py-1 transition-colors duration-300 ${isActive ? "cursor-default text-primary" : "text-secondary-color hover-hover:hover:text-primary"}`;

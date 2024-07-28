@@ -8,7 +8,7 @@ type FilterProps = {
   open: boolean;
   setClose: () => void;
   setTempSearchQuery: (value: string) => void;
-  recipeСategories: IRecipeCategoryItem[];
+  recipeCategories: IRecipeCategoryItem[];
   findCategoryById: (id: string) => IRecipeCategoryItem | undefined;
 };
 
@@ -16,7 +16,7 @@ export default function Filters({
   open,
   setClose,
   setTempSearchQuery,
-  recipeСategories,
+  recipeCategories,
   findCategoryById,
 }: FilterProps): JSX.Element {
   const { categoryId, searchQuery } = useRecipes((state) => state.filters);
@@ -71,7 +71,7 @@ export default function Filters({
           <div>
             <div className="headline-medium">Категория</div>
             <ul className="mt-2 flex flex-wrap gap-1">
-              {recipeСategories.map((category) => (
+              {recipeCategories.map((category) => (
                 <li key={category.name}>
                   <Chip
                     text={category.name}

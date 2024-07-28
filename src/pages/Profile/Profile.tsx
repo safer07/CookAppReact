@@ -1,7 +1,11 @@
+import { Link } from "react-router-dom";
+
 import Button from "../../shared/ui/Button";
 import ListItem from "../../shared/ui/ListItem";
 
 export default function Profile(): JSX.Element {
+  // TODO: сделать выйти (стереть из localStorage)
+
   return (
     <>
       <div className="flex items-center gap-2 py-2">
@@ -10,7 +14,9 @@ export default function Profile(): JSX.Element {
             <use href="/images/icons.svg#user" />
           </svg>
         </div>
-        <Button text="Войти" icon="login" onClick={() => {}} block />
+        <Link to="/login" className="w-full">
+          <Button text="Войти" icon="login" block />
+        </Link>
       </div>
       <ul className="layout-fullwidth py-1">
         <ListItem

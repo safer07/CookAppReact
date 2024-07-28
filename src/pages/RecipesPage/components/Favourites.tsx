@@ -11,7 +11,7 @@ export default function Favourites(): JSX.Element {
   const favouriteRecipes = useUser((state) => state.favouriteRecipes);
   const [tempRecipes, setTempRecipes] = useState<IRecipeItem[]>([]);
 
-  // TODO пока загружаются все рецепты, затем фильтруются. Нужно подгружать их с бэкенда запросом
+  // TODO: пока загружаются все рецепты, затем фильтруются. Нужно подгружать их с бэкенда запросом
   useEffect(() => {
     fetchRecipes();
   }, []);

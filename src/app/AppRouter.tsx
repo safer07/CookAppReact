@@ -4,6 +4,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import FullScreenLayout from "./layouts/FullScreenLayout";
 import RecipesPage from "../pages/RecipesPage";
+import Login from "../pages/Login";
+import Registration from "../pages/Registration";
 
 const RecipePage = lazy(() => import("../pages/RecipeDetailsPage"));
 const CookingMode = lazy(
@@ -25,6 +27,8 @@ export default function AppRouter() {
       <Route path="/" element={<FullScreenLayout />}>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
         <Route path="create-recipe" element={<CreateRecipePage />} />
+        <Route path="login" element={<Login />} />
+        <Route path="registration" element={<Registration />} />
       </Route>
     </Routes>
   );

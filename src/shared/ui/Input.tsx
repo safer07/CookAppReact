@@ -10,10 +10,11 @@ type InputProps = {
   label?: string;
   helper?: string;
   clearButton?: boolean;
+  name?: string;
 } & (InputTextProps | InputNumberProps);
 
 type InputTextProps = {
-  type?: "text" | "search";
+  type?: "text" | "search" | "email" | "password";
   showCount?: boolean;
   maxLength?: number;
   min?: never;
@@ -39,6 +40,7 @@ export default function Input({
   showCount,
   maxLength,
   clearButton,
+  name,
   min,
 }: InputProps): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,6 +71,7 @@ export default function Input({
           maxLength={maxLength}
           min={min}
           autoComplete="off"
+          name={name}
         />
 
         {(clearButton || iconRight) && (

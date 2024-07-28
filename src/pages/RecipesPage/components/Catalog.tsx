@@ -19,7 +19,7 @@ export default function Catalog(): JSX.Element {
   const setSearchQuery = useRecipes((state) => state.setSearchQuery);
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false);
   const filterCount = Object.values(filters).filter((value) => value).length;
-  const [recipeСategories, setRecipeСategories] = useState<
+  const [recipeCategories, setRecipeCategories] = useState<
     IRecipeCategoryItem[]
   >([]);
   const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
@@ -29,14 +29,14 @@ export default function Catalog(): JSX.Element {
       : useDebounce(tempSearchQuery, 1000);
 
   function findCategoryById(id: string) {
-    return recipeСategories.find((category) => category.id === id);
+    return recipeCategories.find((category) => category.id === id);
   }
 
   useEffect(() => {
-    // TODO каждый раз загружаются категории, сохранить в store
+    // TODO: каждый раз загружаются категории, сохранить в store
     async function loadCategories() {
       const categories: IRecipeCategoryItem[] = await fetchCategories();
-      setRecipeСategories(categories);
+      setRecipeCategories(categories);
     }
     loadCategories();
   }, []);
@@ -75,7 +75,7 @@ export default function Catalog(): JSX.Element {
         open={filtersIsOpen}
         setClose={() => setFiltersIsOpen(false)}
         setTempSearchQuery={setTempSearchQuery}
-        recipeСategories={recipeСategories}
+        recipeCategories={recipeCategories}
         findCategoryById={findCategoryById}
       />
 
@@ -83,14 +83,14 @@ export default function Catalog(): JSX.Element {
         {/* Каталог по умолчанию - категории + каждая отдельно */}
         {categoryId === null && !searchQuery && (
           <>
-            <Categories categories={recipeСategories} />
+            <Categories categories={recipeCategories} />
 
             {status === "error" ? (
               <h2 className="headline-medium mt-3">
                 Не удалось загрузить рецепты
               </h2>
             ) : (
-              recipeСategories.map((category) => (
+              recipeCategories.map((category) => (
                 <div className="mt-3" key={category.id}>
                   <RecipesList
                     title={category.fullName}
