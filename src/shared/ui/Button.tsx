@@ -6,6 +6,7 @@ type ButtonProps = {
   className?: string;
   variant?: "primary" | "secondary" | "tertiary" | "negative";
   block?: boolean;
+  submit?: boolean;
 };
 
 export default function Button({
@@ -16,6 +17,7 @@ export default function Button({
   className = "",
   variant,
   block,
+  submit,
 }: ButtonProps) {
   const variantClass = (() => {
     switch (variant) {
@@ -36,6 +38,7 @@ export default function Button({
       className={`button ${className} ${variantClass} ${block ? "w-full" : ""}`}
       onClick={onClick}
       disabled={disabled}
+      type={submit ? "submit" : "button"}
     >
       {icon && (
         <svg>

@@ -1,5 +1,5 @@
-import { TypeRecipesStatus } from "../pages/RecipesPage/store/store";
-import RecipeCard from "../entities/recipe/components/RecipeCard";
+import { TypeRecipesStatus } from "../pages/Recipes/store/store";
+import RecipeCard from "../entities/recipe/ui/RecipeCard";
 
 type RecipesListProps = {
   title: string;
