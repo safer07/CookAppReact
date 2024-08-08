@@ -1,12 +1,12 @@
 type TextAreaProps = {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  label?: string;
-  helper?: string;
-  showCount?: boolean;
-  maxLength?: number;
-};
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  label?: string
+  helper?: string
+  showCount?: boolean
+  maxLength?: number
+}
 
 export default function TextArea({
   value,
@@ -39,5 +39,5 @@ export default function TextArea({
         </div>
       )}
     </div>
-  );
+  )
 }

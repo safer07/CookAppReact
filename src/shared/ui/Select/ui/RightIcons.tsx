@@ -6,9 +6,9 @@ export default function RightIcons({
   setIsOpen,
 }: SelectRightIconsProps): JSX.Element {
   function onClickClear(): void {
-    if (multiple) onChange([]);
-    multiple ? onChange([]) : onChange("");
-    setIsOpen(false);
+    if (multiple) onChange([])
+    multiple ? onChange([]) : onChange('')
+    setIsOpen(false)
   }
 
   return (
@@ -18,8 +18,8 @@ export default function RightIcons({
           <button
             className="clear-button"
             onClick={(event) => {
-              event.stopPropagation();
-              onClickClear();
+              event.stopPropagation()
+              onClickClear()
             }}
           >
             <svg>
@@ -35,5 +35,5 @@ export default function RightIcons({
         <use href="/images/icons.svg#chevron_down" />
       </svg>
     </div>
-  );
+  )
 }

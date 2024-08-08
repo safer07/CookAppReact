@@ -1,24 +1,24 @@
 import recipeDifficulties, {
   errorRecipeDifficulty,
-} from "../../entities/recipe/const/recipeDifficulties";
-import { TypeTagSurface } from "../ui/Tag";
+} from '@/entities/recipe/const/recipeDifficulties'
+import { TagSurfaceType } from '../ui/Tag'
 
 export default function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,
-): [string, TypeTagSurface] {
+): [string, TagSurfaceType] {
   const difficultyItem = recipeDifficulties.find(
     (item) => item.value === recipeDifficulty,
-  );
+  )
 
-  let difficultyText, tagDifficultySurface;
+  let difficultyText, tagDifficultySurface
 
   if (difficultyItem) {
-    difficultyText = difficultyItem.difficultyText;
-    tagDifficultySurface = difficultyItem.tagDifficultySurface;
+    difficultyText = difficultyItem.difficultyText
+    tagDifficultySurface = difficultyItem.tagDifficultySurface
   } else {
-    difficultyText = errorRecipeDifficulty.difficultyText;
-    tagDifficultySurface = errorRecipeDifficulty.tagDifficultySurface;
+    difficultyText = errorRecipeDifficulty.difficultyText
+    tagDifficultySurface = errorRecipeDifficulty.tagDifficultySurface
   }
 
-  return [difficultyText, tagDifficultySurface];
+  return [difficultyText, tagDifficultySurface]
 }

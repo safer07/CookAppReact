@@ -1,20 +1,20 @@
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 
-import useMount from "./hooks/useMount";
-import Button from "../Button";
+import useMount from './hooks/useMount'
+import Button from '../Button'
 
 type ModalProps = {
-  title: string;
-  text?: string;
-  open: boolean;
-  setOpen: (status: boolean) => void;
-  onOk: () => void;
-  okText?: string;
-  type?: "negative";
-  children?: React.ReactNode;
-  textAlign?: "left" | "center";
-  cancellable?: boolean;
-};
+  title: string
+  text?: string
+  open: boolean
+  setOpen: (status: boolean) => void
+  onOk: () => void
+  okText?: string
+  type?: 'negative'
+  children?: React.ReactNode
+  textAlign?: 'left' | 'center'
+  cancellable?: boolean
+}
 
 export default function Modal({
   title,
@@ -22,34 +22,34 @@ export default function Modal({
   open,
   setOpen,
   onOk,
-  okText = "ОК",
+  okText = 'ОК',
   type,
   children,
   textAlign,
   cancellable,
 }: ModalProps): JSX.Element | null {
-  const mounted = useMount(open);
+  const mounted = useMount(open)
   const textAlignClass = (() => {
     switch (textAlign) {
-      case "left":
-        return "text-left";
-      case "center":
+      case 'left':
+        return 'text-left'
+      case 'center':
       default:
-        return "text-center";
+        return 'text-center'
     }
-  })();
+  })()
 
   function onClickOk(): void {
-    setOpen(false);
-    onOk();
+    setOpen(false)
+    onOk()
   }
 
   function onBackDropClick(): void {
-    if (cancellable) setOpen(false);
-    else onOk();
+    if (cancellable) setOpen(false)
+    else onOk()
   }
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
   return ReactDOM.createPortal(
     <div className="modal" data-open={open} role="dialog">
@@ -65,7 +65,7 @@ export default function Modal({
 
         {children}
 
-        <div className={`mt-3 grid ${cancellable ? "grid-cols-2" : ""}  gap-2`}>
+        <div className={`mt-3 grid ${cancellable ? 'grid-cols-2' : ''}  gap-2`}>
           {cancellable && (
             <Button
               text="Отмена"
@@ -77,12 +77,12 @@ export default function Modal({
           <Button
             text={okText}
             onClick={onClickOk}
-            variant={type === "negative" ? "negative" : "primary"}
+            variant={type === 'negative' ? 'negative' : 'primary'}
             block
           />
         </div>
       </div>
     </div>,
-    document.getElementById("modal-portal")!,
-  );
+    document.getElementById('modal-portal')!,
+  )
 }

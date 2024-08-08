@@ -1,4 +1,4 @@
-import { StepperSimpleProps } from "./types";
+import { StepperSimpleProps } from '../model/types'
 
 export default function StepperSimple({
   stepsCount,
@@ -9,9 +9,9 @@ export default function StepperSimple({
       {[...new Array(stepsCount)].map((_, index) => (
         <li
           key={index}
-          className={`h-0.5 grow rounded-full ${currentIndex === index ? "bg-primary" : "bg-base-borders"}`}
+          className={`h-0.5 grow rounded-full ${currentIndex === index ? 'bg-primary' : 'bg-base-borders'}`}
         ></li>
       ))}
     </ol>
-  );
+  )
 }

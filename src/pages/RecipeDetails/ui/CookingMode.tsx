@@ -1,54 +1,54 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import useFullRecipe from "../store/store";
-import TopAppBar from "../../../widgets/TopAppBar";
-import Button from "../../../shared/ui/Button";
-import ButtonIcon from "../../../shared/ui/ButtonIcon";
-import ListItem from "../../../shared/ui/ListItem";
-import Stepper from "../../../shared/ui/Stepper";
-import Loader from "../../../shared/ui/Loader";
+import useFullRecipe from '../store/store'
+import TopAppBar from '@/widgets/TopAppBar'
+import Button from '@/shared/ui/Button'
+import ButtonIcon from '@/shared/ui/ButtonIcon'
+import ListItem from '@/shared/ui/ListItem'
+import Loader from '@/shared/ui/Loader'
+import Stepper from '@/shared/ui/Stepper'
 
 export default function CookingMode(): JSX.Element {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const { recipe, status, fetchFullRecipe } = useFullRecipe();
-  const [stepIndex, setStepIndex] = useState<number>(0);
-  const stepsCount = recipe?.steps.length || 1;
-  const step = recipe?.steps[stepIndex];
+  const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const { recipe, status, fetchFullRecipe } = useFullRecipe()
+  const [stepIndex, setStepIndex] = useState<number>(0)
+  const stepsCount = recipe?.steps.length || 1
+  const step = recipe?.steps[stepIndex]
 
   useEffect(() => {
-    if (!id || recipe?._id === id) return;
-    fetchFullRecipe(id);
-  }, [id]);
+    if (!id || recipe?._id === id) return
+    fetchFullRecipe(id)
+  }, [id])
 
   function navigateToRecipe() {
-    navigate(`/recipes/${id}`, { replace: true });
+    navigate(`/recipes/${id}`, { replace: true })
   }
 
   function onClickBack() {
-    if (stepIndex === 0) navigateToRecipe();
-    else setStepIndex((prev) => prev - 1);
+    if (stepIndex === 0) navigateToRecipe()
+    else setStepIndex((prev) => prev - 1)
   }
 
   function onClickNext() {
-    if (stepIndex === stepsCount - 1) navigateToRecipe();
-    else setStepIndex((prev) => prev + 1);
+    if (stepIndex === stepsCount - 1) navigateToRecipe()
+    else setStepIndex((prev) => prev + 1)
   }
 
   return (
     <>
-      {status === "loading" && (
+      {status === 'loading' && (
         <div className="h-svh">
           <Loader />
         </div>
       )}
 
-      {status === "error" && (
+      {status === 'error' && (
         <TopAppBar title="Не удалось загрузить рецепт" back />
       )}
 
-      {status === "success" && step && (
+      {status === 'success' && step && (
         <div className="layout-fullwidth flex h-svh flex-col">
           <div className="grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
@@ -95,7 +95,7 @@ export default function CookingMode(): JSX.Element {
             <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
               <Button text="Назад" onClick={onClickBack} block />
               <Button
-                text={stepIndex !== stepsCount - 1 ? "Далее" : "Готово"}
+                text={stepIndex !== stepsCount - 1 ? 'Далее' : 'Готово'}
                 onClick={onClickNext}
                 variant="primary"
                 block
@@ -105,5 +105,5 @@ export default function CookingMode(): JSX.Element {
         </div>
       )}
     </>
-  );
+  )
 }

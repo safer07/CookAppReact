@@ -1,39 +1,39 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import TopAppBar from "../../../widgets/TopAppBar";
-import Button from "../../../shared/ui/Button";
-import Input from "../../../shared/ui/Input";
-import { backendUrl } from "../../../shared/config";
+import TopAppBar from '@/widgets/TopAppBar'
+import Button from '@/shared/ui/Button'
+import Input from '@/shared/ui/Input'
+import { backendUrl } from '@/shared/config'
 
 type RegistrationFormDataType = {
-  email: string;
-  password: string;
-  passwordRepeat: string;
-};
+  email: string
+  password: string
+  passwordRepeat: string
+}
 
-const emptyForm = { email: "", password: "", passwordRepeat: "" };
+const emptyForm = { email: '', password: '', passwordRepeat: '' }
 
 export default function RegistrationPage(): JSX.Element {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<RegistrationFormDataType>(emptyForm);
-  const [errors, setErrors] = useState<string[]>([]);
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState<RegistrationFormDataType>(emptyForm)
+  const [errors, setErrors] = useState<string[]>([])
 
   // проверять токен в localStorage и перенаправлять
   // navigate("/profile", { replace: true });
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrors([]);
+    event.preventDefault()
+    setErrors([])
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
       body: JSON.stringify(formData),
-    };
-    let ok: boolean;
+    }
+    let ok: boolean
 
     if (formData.password !== formData.passwordRepeat) {
-      return setErrors(["Пароль не совпадает"]);
+      return setErrors(['Пароль не совпадает'])
     }
 
     try {
@@ -41,9 +41,9 @@ export default function RegistrationPage(): JSX.Element {
         .then((response) => {
           // подтверждение отправки
           // здесь приходит код 400
-          console.log(response);
-          ok = response.ok;
-          return response.json();
+          console.log(response)
+          ok = response.ok
+          return response.json()
         })
         .then((data) => {
           // ответ на POST-запрос
@@ -64,19 +64,19 @@ export default function RegistrationPage(): JSX.Element {
           //         "location": "body"
           //     }
           // ]
-          console.log(data);
-          console.log(data?.message);
-          console.log(data?.token);
+          console.log(data)
+          console.log(data?.message)
+          console.log(data?.token)
           if (ok) {
             // сохранить токен
-            navigate("/profile", { replace: true });
+            navigate('/profile', { replace: true })
           } else {
-            if (Array.isArray(data)) setErrors(data.map((error) => error.msg));
-            else setErrors([data?.message]);
+            if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
+            else setErrors([data?.message])
           }
-        });
+        })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
@@ -153,5 +153,5 @@ export default function RegistrationPage(): JSX.Element {
         </Link>
       </div>
     </>
-  );
+  )
 }

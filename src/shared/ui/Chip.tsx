@@ -1,9 +1,9 @@
 type ChipProps = {
-  text: string;
-  onClick?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
-  variant?: "active" | "default";
-  del?: boolean;
-};
+  text: string
+  onClick?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
+  variant?: 'active' | 'default'
+  del?: boolean
+}
 
 export default function Chip({
   text,
@@ -13,7 +13,7 @@ export default function Chip({
 }: ChipProps) {
   return (
     <span
-      className={`chip ${variant === "active" && "active"} ${del && "chip-delete"}`}
+      className={`chip ${variant === 'active' && 'active'} ${del && 'chip-delete'}`}
       onClick={onClick}
     >
       {text}
@@ -23,5 +23,5 @@ export default function Chip({
         </svg>
       )}
     </span>
-  );
+  )
 }

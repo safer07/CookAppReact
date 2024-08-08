@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react'
 
-import Chip from "../../Chip";
-import RightIcons from "./RightIcons";
-import Options from "./Options";
+import Chip from '../../Chip'
+import RightIcons from './RightIcons'
+import Options from './Options'
 
 // {
 //   value,
@@ -17,8 +17,8 @@ import Options from "./Options";
 // }
 
 export default function Select(props: SelectProps): JSX.Element {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // Все props
   //   const {
@@ -33,8 +33,8 @@ export default function Select(props: SelectProps): JSX.Element {
   //   optionSize = "small",
   // } = props
 
-  const { value, options, onChange, placeholder, label, multiple } = props;
-  let disabled: boolean = false;
+  const { value, options, onChange, placeholder, label, multiple } = props
+  let disabled: boolean = false
 
   // const {multiple = false} = props;
 
@@ -42,32 +42,29 @@ export default function Select(props: SelectProps): JSX.Element {
   //   value;
   // }
 
-  let valueLabel: string | null = null;
-  if (typeof value === "string" && value !== "") {
-    valueLabel =
-      options.find((option) => option.value === value)?.label || null;
+  let valueLabel: string | null = null
+  if (typeof value === 'string' && value !== '') {
+    valueLabel = options.find((option) => option.value === value)?.label || null
   }
 
   const hasAvailableOptions = options.some(
-    (option): boolean => option.status !== "disabled",
-  );
+    (option): boolean => option.status !== 'disabled',
+  )
 
-  if (!hasAvailableOptions) disabled = true;
+  if (!hasAvailableOptions) disabled = true
 
   function onClick(): void {
-    if (!disabled) setIsOpen((prev) => !prev);
+    if (!disabled) setIsOpen((prev) => !prev)
   }
 
   function onChipClick(
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     chipValue: string,
   ): void {
-    event.stopPropagation();
+    event.stopPropagation()
     if (multiple) {
-      const filteredValue: string[] = value.filter(
-        (item) => item !== chipValue,
-      );
-      onChange(filteredValue);
+      const filteredValue: string[] = value.filter((item) => item !== chipValue)
+      onChange(filteredValue)
     }
   }
 
@@ -77,7 +74,7 @@ export default function Select(props: SelectProps): JSX.Element {
       <div
         ref={containerRef}
         tabIndex={disabled ? -1 : 0}
-        className={`select ${isOpen ? "open" : ""} ${multiple && value.length > 0 ? "select-multiple" : ""}`}
+        className={`select ${isOpen ? 'open' : ''} ${multiple && value.length > 0 ? 'select-multiple' : ''}`}
         onClick={onClick}
         onBlur={() => setIsOpen(false)}
         data-disabled={disabled}
@@ -96,7 +93,7 @@ export default function Select(props: SelectProps): JSX.Element {
           </span>
         ) : (
           <span
-            className={`textfield ${value.length > 0 ? "" : "placeholder"}`}
+            className={`textfield ${value.length > 0 ? '' : 'placeholder'}`}
           >
             {value.length > 0 ? valueLabel : placeholder}
           </span>
@@ -122,5 +119,5 @@ export default function Select(props: SelectProps): JSX.Element {
         />
       </div>
     </div>
-  );
+  )
 }

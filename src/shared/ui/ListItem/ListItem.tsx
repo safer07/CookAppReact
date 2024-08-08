@@ -1,8 +1,8 @@
-import Radio from "../Radio";
-import Switch from "../Switch";
+import Radio from '../Radio'
+import Switch from '../Switch'
 
 export default function ListItem({
-  size = "small",
+  size = 'small',
   text,
   description,
   secondaryText,
@@ -14,43 +14,43 @@ export default function ListItem({
   function onItemClick(
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
   ): void {
-    event.stopPropagation();
-    if (status === "disabled") return;
-    onClick();
+    event.stopPropagation()
+    if (status === 'disabled') return
+    onClick()
   }
 
   const sizeClass = (() => {
     switch (size) {
-      case "tiny":
-        return "list-item-tiny";
-      case "small":
-        return "list-item-small";
-      case "medium":
+      case 'tiny':
+        return 'list-item-tiny'
+      case 'small':
+        return 'list-item-small'
+      case 'medium':
       default:
-        return "";
+        return ''
     }
-  })();
+  })()
 
   const statusClass: ListItemStatus = (() => {
     switch (status) {
-      case "selected":
-        return "selected";
-      case "disabled":
-        return "disabled";
+      case 'selected':
+        return 'selected'
+      case 'disabled':
+        return 'disabled'
       default:
-        return "";
+        return ''
     }
-  })();
+  })()
 
   return (
     <li
       className={`listItem ${sizeClass} ${statusClass}`}
       onClick={(event) => onItemClick(event)}
     >
-      {leftElement?.element === "radio" && (
+      {leftElement?.element === 'radio' && (
         <Radio checked={leftElement.checked} />
       )}
-      {leftElement?.element === "switch" && (
+      {leftElement?.element === 'switch' && (
         <Switch checked={leftElement.checked} onClick={leftElement.onClick} />
       )}
 
@@ -65,15 +65,15 @@ export default function ListItem({
         <span className="list-item-secondary-text">{secondaryText}</span>
       )}
 
-      {rightElement?.element === "icon" && (
+      {rightElement?.element === 'icon' && (
         <svg className="right-icon">
           <use href={`/images/icons.svg#${rightElement.icon}`} />
         </svg>
       )}
-      {rightElement?.element === "emptyIcon" && (
+      {rightElement?.element === 'emptyIcon' && (
         <div className="empty-icon"></div>
       )}
-      {rightElement?.element === "delete" && (
+      {rightElement?.element === 'delete' && (
         <button className="text-tertiary-color" onClick={rightElement.onClick}>
           <svg className="size-3">
             <use href="/images/icons.svg#cross" />
@@ -81,5 +81,5 @@ export default function ListItem({
         </button>
       )}
     </li>
-  );
+  )
 }

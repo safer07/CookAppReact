@@ -1,1 +1,1 @@
-export { default } from "./ui/RegistrationPage";
+export { default } from './ui/RegistrationPage'

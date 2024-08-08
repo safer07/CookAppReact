@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-import Button from "../../../shared/ui/Button";
-import ListItem from "../../../shared/ui/ListItem";
+import Button from '@/shared/ui/Button'
+import ListItem from '@/shared/ui/ListItem'
 
 export default function ProfilePage(): JSX.Element {
   // TODO: сделать выйти (стереть из localStorage)
@@ -22,18 +22,18 @@ export default function ProfilePage(): JSX.Element {
         <ListItem
           text="Пользовательское соглашение"
           rightElement={{
-            element: "icon",
-            icon: "chevron_right",
+            element: 'icon',
+            icon: 'chevron_right',
           }}
         />
         <ListItem
           text="Политика конфиденциальности"
           rightElement={{
-            element: "icon",
-            icon: "chevron_right",
+            element: 'icon',
+            icon: 'chevron_right',
           }}
         />
       </ul>
     </>
-  );
+  )
 }

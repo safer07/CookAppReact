@@ -1,10 +1,10 @@
-import useCreateRecipe from "../store/store";
-import { categories } from "../../../entities/recipeCategory/const/categories";
-import RecipeLimits from "../../../entities/recipe/const/limits";
-import Input from "../../../shared/ui/Input";
-import TextArea from "../../../shared/ui/TextArea";
-import PhotoUpload from "../../../shared/ui/PhotoUpload";
-import Select from "../../../shared/ui/Select";
+import useCreateRecipe from '../store/store'
+import { categories } from '@/entities/recipeCategory/const/categories'
+import RecipeLimits from '@/entities/recipe/const/limits'
+import Input from '@/shared/ui/Input'
+import TextArea from '@/shared/ui/TextArea'
+import Select from '@/shared/ui/Select'
+import PhotoUpload from '@/shared/ui/PhotoUpload'
 
 export default function Step1(): JSX.Element {
   const {
@@ -16,11 +16,11 @@ export default function Step1(): JSX.Element {
     setCategory,
     setDescription,
     setImg,
-  } = useCreateRecipe();
+  } = useCreateRecipe()
 
   const categoriesOptions = categories.map((category) => {
-    return { value: category.id, label: category.fullName };
-  });
+    return { value: category.id, label: category.fullName }
+  })
 
   return (
     <div className="layout-grid flex flex-col gap-3">
@@ -55,5 +55,5 @@ export default function Step1(): JSX.Element {
         label="Главное фото"
       />
     </div>
-  );
+  )
 }

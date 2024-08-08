@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import Loader from "../../shared/ui/Loader";
+import Loader from '@/shared/ui/Loader'
 
 export default function FullScreenLayout() {
   return (
@@ -10,5 +10,5 @@ export default function FullScreenLayout() {
         <Outlet />
       </Suspense>
     </div>
-  );
+  )
 }

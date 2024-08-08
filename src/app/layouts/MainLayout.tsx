@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Suspense } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import NavBar from "../../widgets/Navbar";
-import Loader from "../../shared/ui/Loader";
+import NavBar from '@/widgets/Navbar'
+import Loader from '@/shared/ui/Loader'
 
 export default function MainLayout() {
   return (
@@ -14,5 +14,5 @@ export default function MainLayout() {
       </div>
       <NavBar />
     </div>
-  );
+  )
 }

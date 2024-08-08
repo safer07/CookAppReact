@@ -1,20 +1,20 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
-export const emptyStep = { description: "", ingredients: [], img: "" };
+export const emptyStep = { description: '', ingredients: [], img: '' }
 
 const initialState = {
-  name: "",
-  category: "",
-  img: "",
+  name: '',
+  category: '',
+  img: '',
   timeHours: null,
   timeMinutes: null,
   difficulty: 0,
-  description: "",
+  description: '',
   totalIngredients: [],
   steps: [emptyStep],
   hidden: false,
-};
+}
 
 const useCreateRecipe = create<CreateRecipeStore>()(
   persist(
@@ -33,8 +33,8 @@ const useCreateRecipe = create<CreateRecipeStore>()(
       setHidden: (value) => set({ hidden: value }),
       resetCreateRecipe: () => set(initialState),
     })),
-    { name: "createRecipeStore", version: 1 },
+    { name: 'createRecipeStore', version: 1 },
   ),
-);
+)
 
-export default useCreateRecipe;
+export default useCreateRecipe

@@ -8,5 +8,5 @@ export default function Loader() {
         <div></div>
       </div>
     </div>
-  );
+  )
 }

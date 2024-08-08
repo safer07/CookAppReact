@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import useCreateRecipe from "../store/store";
-import ListItem from "../../../shared/ui/ListItem";
-import Button from "../../../shared/ui/Button";
-import Modal from "../../../shared/ui/Modal";
-import Input from "../../../shared/ui/Input";
+import useCreateRecipe from '../store/store'
+import ListItem from '@/shared/ui/ListItem'
+import Button from '@/shared/ui/Button'
+import Modal from '@/shared/ui/Modal'
+import Input from '@/shared/ui/Input'
 
 export default function Step3(): JSX.Element {
   const { steps, totalIngredients, setSteps, setTotalIngredients } =
-    useCreateRecipe();
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [newIngredientName, setNewIngredientName] = useState<string>("");
-  const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0);
-  const [newIngredientUnit, setNewIngredientUnit] = useState<string>("");
+    useCreateRecipe()
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const [newIngredientName, setNewIngredientName] = useState<string>('')
+  const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0)
+  const [newIngredientUnit, setNewIngredientUnit] = useState<string>('')
 
   const newIngredient: Ingredient = {
     name: newIngredientName,
     amount: newIngredientAmount,
     unit: newIngredientUnit,
-  };
+  }
 
   function onAddIngredient(): void {
     if (
@@ -29,27 +29,27 @@ export default function Step3(): JSX.Element {
         (ingredient) => ingredient.name === newIngredientName,
       )
     ) {
-      return;
+      return
     }
 
-    setTotalIngredients([...totalIngredients, newIngredient]);
-    setNewIngredientName("");
-    setNewIngredientAmount(0);
-    setNewIngredientUnit("");
+    setTotalIngredients([...totalIngredients, newIngredient])
+    setNewIngredientName('')
+    setNewIngredientAmount(0)
+    setNewIngredientUnit('')
   }
 
   function deleteIngredient(deletedIngredient: Ingredient): void {
     const newTotalIngredients: Ingredient[] = totalIngredients.filter(
       (ingredient) => ingredient !== deletedIngredient,
-    );
+    )
     steps.forEach((step) => {
       step.ingredients = step.ingredients.filter(
         (ingredient) => ingredient.name !== deletedIngredient.name,
-      );
-    });
+      )
+    })
 
-    setSteps(steps);
-    setTotalIngredients(newTotalIngredients);
+    setSteps(steps)
+    setTotalIngredients(newTotalIngredients)
   }
 
   return (
@@ -66,7 +66,7 @@ export default function Step3(): JSX.Element {
                 secondaryText={`${i.amount} ${i.unit}`}
                 size="medium"
                 rightElement={{
-                  element: "delete",
+                  element: 'delete',
                   onClick: () => deleteIngredient(i),
                 }}
               />
@@ -115,5 +115,5 @@ export default function Step3(): JSX.Element {
         </div>
       </Modal>
     </>
-  );
+  )
 }

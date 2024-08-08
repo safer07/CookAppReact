@@ -1,53 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { fetchCategories } from "../../../app/api";
-import useRecipes from "../store/store";
-import Filters from "./Filters";
-import Categories from "./Categories";
-import RecipesList from "../../../widgets/RecipesList";
-import useDebounce from "../../../shared/hooks/debounce";
-import Input from "../../../shared/ui/Input";
-import ButtonIcon from "../../../shared/ui/ButtonIcon";
+import { fetchCategories } from '@/app/api'
+import useRecipes from '../store/store'
+import Categories from './Categories'
+import Filters from './Filters'
+import RecipesList from '@/widgets/RecipesList'
+import useDebounce from '@/shared/hooks/debounce'
+import ButtonIcon from '@/shared/ui/ButtonIcon'
+import Input from '@/shared/ui/Input'
+
+// TODO: убрать импорт из app
 
 export default function Catalog(): JSX.Element {
-  const recipes = useRecipes((state) => state.items);
-  const status = useRecipes((state) => state.status);
-  const filters = useRecipes((state) => state.filters);
-  const { categoryId, searchQuery } = filters;
-  const fetchRecipes = useRecipes((state) => state.fetchRecipes);
-  const setCategoryId = useRecipes((state) => state.setCategoryId);
-  const setSearchQuery = useRecipes((state) => state.setSearchQuery);
-  const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false);
-  const filterCount = Object.values(filters).filter((value) => value).length;
+  const recipes = useRecipes((state) => state.items)
+  const status = useRecipes((state) => state.status)
+  const filters = useRecipes((state) => state.filters)
+  const { categoryId, searchQuery } = filters
+  const fetchRecipes = useRecipes((state) => state.fetchRecipes)
+  const setCategoryId = useRecipes((state) => state.setCategoryId)
+  const setSearchQuery = useRecipes((state) => state.setSearchQuery)
+  const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
+  const filterCount = Object.values(filters).filter((value) => value).length
   const [recipeCategories, setRecipeCategories] = useState<
     IRecipeCategoryItem[]
-  >([]);
-  const [tempSearchQuery, setTempSearchQuery] = useState<string>("");
+  >([])
+  const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debouncedSearchQuery: string =
-    tempSearchQuery === ""
+    tempSearchQuery === ''
       ? useDebounce(tempSearchQuery, 0)
-      : useDebounce(tempSearchQuery, 1000);
+      : useDebounce(tempSearchQuery, 1000)
 
   function findCategoryById(id: string) {
-    return recipeCategories.find((category) => category.id === id);
+    return recipeCategories.find((category) => category.id === id)
   }
 
   useEffect(() => {
     // TODO: каждый раз загружаются категории, сохранить в store
     async function loadCategories() {
-      const categories: IRecipeCategoryItem[] = await fetchCategories();
-      setRecipeCategories(categories);
+      const categories: IRecipeCategoryItem[] = await fetchCategories()
+      setRecipeCategories(categories)
     }
-    loadCategories();
-  }, []);
+    loadCategories()
+  }, [])
 
   useEffect(() => {
-    fetchRecipes({ categoryId, searchQuery });
-  }, [categoryId, searchQuery]);
+    fetchRecipes({ categoryId, searchQuery })
+  }, [categoryId, searchQuery])
 
   useEffect(() => {
-    setSearchQuery(debouncedSearchQuery);
-  }, [debouncedSearchQuery]);
+    setSearchQuery(debouncedSearchQuery)
+  }, [debouncedSearchQuery])
 
   return (
     <>
@@ -85,7 +87,7 @@ export default function Catalog(): JSX.Element {
           <>
             <Categories categories={recipeCategories} />
 
-            {status === "error" ? (
+            {status === 'error' ? (
               <h2 className="headline-medium mt-3">
                 Не удалось загрузить рецепты
               </h2>
@@ -99,7 +101,7 @@ export default function Catalog(): JSX.Element {
                     )}
                     status={status}
                     button={{
-                      name: "Смотреть все",
+                      name: 'Смотреть все',
                       onClick: () => setCategoryId(category.id),
                     }}
                   />
@@ -115,9 +117,9 @@ export default function Catalog(): JSX.Element {
             <RecipesList
               title={
                 searchQuery
-                  ? "Найдены рецепты:"
+                  ? 'Найдены рецепты:'
                   : findCategoryById(categoryId!)?.fullName ||
-                    "Заголовок категории не найден"
+                    'Заголовок категории не найден'
               }
               recipes={recipes}
               status={status}
@@ -126,5 +128,5 @@ export default function Catalog(): JSX.Element {
         )}
       </div>
     </>
-  );
+  )
 }

@@ -1,39 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import useCreateRecipe, { emptyStep } from "../store/store";
-import RecipeLimits from "../../../entities/recipe/const/limits";
-import Stepper from "../../../shared/ui/Stepper";
-import Select from "../../../shared/ui/Select";
-import TextArea from "../../../shared/ui/TextArea";
-import PhotoUpload from "../../../shared/ui/PhotoUpload";
-import ListItem from "../../../shared/ui/ListItem";
-import ButtonIcon from "../../../shared/ui/ButtonIcon";
-import Modal from "../../../shared/ui/Modal";
-import useDebounce from "../../../shared/hooks/debounce";
+import useCreateRecipe, { emptyStep } from '../store/store'
+import RecipeLimits from '@/entities/recipe/const/limits'
+import ButtonIcon from '@/shared/ui/ButtonIcon'
+import ListItem from '@/shared/ui/ListItem'
+import Modal from '@/shared/ui/Modal'
+import PhotoUpload from '@/shared/ui/PhotoUpload'
+import Select from '@/shared/ui/Select'
+import Stepper from '@/shared/ui/Stepper'
+import TextArea from '@/shared/ui/TextArea'
+import useDebounce from '@/shared/hooks/debounce'
 
 export default function Step4(): JSX.Element {
   const { totalIngredients, steps, hidden, setSteps, setHidden } =
-    useCreateRecipe();
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+    useCreateRecipe()
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] =
-    useState<string[]>([]);
-  const [tempStepDescription, setTempStepDescription] = useState<string>("");
-  const debouncedStepDescription: string = useDebounce(
-    tempStepDescription,
-    300,
-  );
+    useState<string[]>([])
+  const [tempStepDescription, setTempStepDescription] = useState<string>('')
+  const debouncedStepDescription: string = useDebounce(tempStepDescription, 300)
 
   const currentStepIngredients: Ingredient[] =
-    steps[currentStepIndex].ingredients;
+    steps[currentStepIndex].ingredients
 
   const ingredientsOptions: SelectOption[] = totalIngredients.map(
     (ingredient): SelectOption => {
-      const usedIngredient: boolean = stepsHasIngredient(ingredient.name);
-      let optionStatus: ListItemStatus = "";
+      const usedIngredient: boolean = stepsHasIngredient(ingredient.name)
+      let optionStatus: ListItemStatus = ''
       if (currentStepIngredientsNames.includes(ingredient.name)) {
-        optionStatus = "selected";
-      } else if (usedIngredient) optionStatus = "disabled";
+        optionStatus = 'selected'
+      } else if (usedIngredient) optionStatus = 'disabled'
 
       return {
         value: ingredient.name,
@@ -42,27 +39,27 @@ export default function Step4(): JSX.Element {
         status: optionStatus,
         description: usedIngredient
           ? `Шаг ${findStepWithIngredient(ingredient.name)}`
-          : "",
-      };
+          : '',
+      }
     },
-  );
+  )
 
-  function setStepValue(value: string, field: "img" | "description"): void {
-    const newSteps = structuredClone(steps);
-    newSteps[currentStepIndex][field] = value;
-    setSteps(newSteps);
+  function setStepValue(value: string, field: 'img' | 'description'): void {
+    const newSteps = structuredClone(steps)
+    newSteps[currentStepIndex][field] = value
+    setSteps(newSteps)
   }
 
   function deleteStep(): void {
-    const newSteps = steps.filter((_, index) => index !== currentStepIndex);
-    setSteps(newSteps);
-    if (currentStepIndex !== 0) setCurrentStepIndex((prev) => prev - 1);
+    const newSteps = steps.filter((_, index) => index !== currentStepIndex)
+    setSteps(newSteps)
+    if (currentStepIndex !== 0) setCurrentStepIndex((prev) => prev - 1)
   }
 
   function stepsHasIngredient(ingredientName: string): boolean {
     return steps.some((step): boolean =>
       step.ingredients.some((i) => i.name === ingredientName),
-    );
+    )
   }
 
   function findStepWithIngredient(ingredientName: string): number {
@@ -70,7 +67,7 @@ export default function Step4(): JSX.Element {
       steps.findIndex((step) =>
         step.ingredients.some((i) => i.name === ingredientName),
       ) + 1
-    );
+    )
   }
 
   function stepIsEmpty(): boolean {
@@ -79,46 +76,46 @@ export default function Step4(): JSX.Element {
       !steps[currentStepIndex].img &&
       !steps[currentStepIndex].description
     )
-      return true;
-    else return false;
+      return true
+    else return false
   }
 
   function onClickDeleteStep(): void {
-    if (stepIsEmpty()) deleteStep();
-    else setModalIsOpen(true);
+    if (stepIsEmpty()) deleteStep()
+    else setModalIsOpen(true)
   }
 
   function deleteIngredient(deletedIngredientName: string): void {
     setCurrentStepIngredientsNames((prev) =>
       prev.filter((i) => i !== deletedIngredientName),
-    );
+    )
   }
 
   useEffect(() => {
-    setStepValue(debouncedStepDescription, "description");
-  }, [debouncedStepDescription]);
+    setStepValue(debouncedStepDescription, 'description')
+  }, [debouncedStepDescription])
 
   useEffect(() => {
-    setTempStepDescription(steps[currentStepIndex].description);
-  }, [currentStepIndex, steps]);
+    setTempStepDescription(steps[currentStepIndex].description)
+  }, [currentStepIndex, steps])
 
   useEffect(() => {
     const stepIngredientsNames: string[] = steps[
       currentStepIndex
-    ].ingredients.map((i) => i.name);
+    ].ingredients.map((i) => i.name)
 
-    setCurrentStepIngredientsNames(stepIngredientsNames);
-  }, [currentStepIndex, steps.length]);
+    setCurrentStepIngredientsNames(stepIngredientsNames)
+  }, [currentStepIndex, steps.length])
 
   useEffect(() => {
     // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
-    const newSteps = structuredClone(steps);
+    const newSteps = structuredClone(steps)
     const filteredIngredients = totalIngredients.filter((i) =>
       currentStepIngredientsNames.includes(i.name),
-    );
-    newSteps[currentStepIndex].ingredients = filteredIngredients;
-    setSteps(newSteps);
-  }, [currentStepIngredientsNames]);
+    )
+    newSteps[currentStepIndex].ingredients = filteredIngredients
+    setSteps(newSteps)
+  }, [currentStepIngredientsNames])
 
   return (
     <>
@@ -166,7 +163,7 @@ export default function Step4(): JSX.Element {
                   secondaryText={`${i.amount} ${i.unit}`}
                   size="medium"
                   rightElement={{
-                    element: "delete",
+                    element: 'delete',
                     onClick: () => deleteIngredient(i.name),
                   }}
                 />
@@ -185,7 +182,7 @@ export default function Step4(): JSX.Element {
 
         <PhotoUpload
           image={steps[currentStepIndex].img}
-          onChange={(value) => setStepValue(value, "img")}
+          onChange={(value) => setStepValue(value, 'img')}
           label={`Фото (шаг ${currentStepIndex + 1})`}
         />
       </div>
@@ -195,7 +192,7 @@ export default function Step4(): JSX.Element {
           text="Опубликовать рецепт"
           size="medium"
           leftElement={{
-            element: "switch",
+            element: 'switch',
             checked: !hidden,
             onClick: () => setHidden(!hidden),
           }}
@@ -213,5 +210,5 @@ export default function Step4(): JSX.Element {
         cancellable
       />
     </>
-  );
+  )
 }

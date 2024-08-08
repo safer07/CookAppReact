@@ -1,16 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 type Icon = {
-  icon: string;
-  onClick: () => void;
-};
+  icon: string
+  onClick: () => void
+}
 
 type TopAppBarProps = {
-  title: string;
-  back?: boolean;
-  backOnClick?: () => void;
-  rightIcon?: Icon;
-};
+  title: string
+  back?: boolean
+  backOnClick?: () => void
+  rightIcon?: Icon
+}
 
 export default function TopAppBar({
   title,
@@ -18,7 +18,7 @@ export default function TopAppBar({
   backOnClick,
   rightIcon,
 }: TopAppBarProps) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div className="py-1.5">
@@ -41,5 +41,5 @@ export default function TopAppBar({
         </div>
       </div>
     </div>
-  );
+  )
 }

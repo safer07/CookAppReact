@@ -1,77 +1,77 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import TopAppBar from "../../../widgets/TopAppBar";
-import Button from "../../../shared/ui/Button";
-import Input from "../../../shared/ui/Input";
-import { backendUrl } from "../../../shared/config";
+import TopAppBar from '@/widgets/TopAppBar'
+import Button from '@/shared/ui/Button'
+import Input from '@/shared/ui/Input'
+import { backendUrl } from '@/shared/config'
 
 export type LoginFormDataType = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}
 
 export type LoginResponse = {
-  message: string;
-  token: string;
-};
+  message: string
+  token: string
+}
 
 export type ValidationError = {
-  location: string;
-  msg: string;
-  path: string;
-  type: string;
-  value: string;
-};
+  location: string
+  msg: string
+  path: string
+  type: string
+  value: string
+}
 
-export type LoginValidationErrorResponse = ValidationError[];
+export type LoginValidationErrorResponse = ValidationError[]
 
 export type LoginErrorResponse = {
-  message: string;
-};
+  message: string
+}
 
-const emptyForm = { email: "", password: "" };
+const emptyForm = { email: '', password: '' }
 
 export default function LoginPage(): JSX.Element {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<LoginFormDataType>(emptyForm);
-  const [errors, setErrors] = useState<string[]>([]);
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState<LoginFormDataType>(emptyForm)
+  const [errors, setErrors] = useState<string[]>([])
 
   // TODO: проверять токен в localStorage и перенаправлять
   // navigate("/profile", { replace: true });
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrors([]);
+    event.preventDefault()
+    setErrors([])
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
       body: JSON.stringify(formData),
-    };
+    }
 
     try {
       // TODO: вынести fetch в api
-      const response = await fetch(`${backendUrl}/login`, requestOptions);
+      const response = await fetch(`${backendUrl}/login`, requestOptions)
       // подтверждение отправки
       // здесь приходит код 400
-      console.log(response);
+      console.log(response)
 
       if (!response.ok) {
         const data: LoginValidationErrorResponse | LoginErrorResponse =
-          await response.json();
-        if (Array.isArray(data)) setErrors(data.map((error) => error.msg));
-        else setErrors([data?.message]);
-        return;
+          await response.json()
+        if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
+        else setErrors([data?.message])
+        return
       }
 
-      const data: LoginResponse = await response.json();
+      const data: LoginResponse = await response.json()
 
       // TODO: сохранить токен
-      console.log(data?.message);
-      console.log(data?.token);
-      navigate("/profile", { replace: true });
+      console.log(data?.message)
+      console.log(data?.token)
+      navigate('/profile', { replace: true })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
@@ -124,5 +124,5 @@ export default function LoginPage(): JSX.Element {
         </Link>
       </div>
     </>
-  );
+  )
 }

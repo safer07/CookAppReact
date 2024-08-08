@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-import Button from "../../../shared/ui/Button";
+import Button from '@/shared/ui/Button'
 
 export default function MyRecipes() {
   return (
@@ -20,5 +20,5 @@ export default function MyRecipes() {
         <p className="mt-1">Список рецептов пуст. Создайте новый рецепт</p>
       </div>
     </>
-  );
+  )
 }

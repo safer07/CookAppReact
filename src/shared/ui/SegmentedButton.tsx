@@ -1,8 +1,8 @@
 type SegmentedButtonProps = {
-  buttons: string[];
-  handleClick: (value: number) => void;
-  activeTabIndex: number;
-};
+  buttons: string[]
+  handleClick: (value: number) => void
+  activeTabIndex: number
+}
 
 export default function SegmentedButton({
   buttons,
@@ -14,12 +14,12 @@ export default function SegmentedButton({
       {buttons.map((tab, index) => (
         <button
           key={tab}
-          className={`segment ${activeTabIndex === index ? "active" : ""}`}
+          className={`segment ${activeTabIndex === index ? 'active' : ''}`}
           onClick={() => handleClick(index)}
         >
           {tab}
         </button>
       ))}
     </div>
-  );
+  )
 }

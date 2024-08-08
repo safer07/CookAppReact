@@ -1,9 +1,9 @@
-import RecipeCategoryCardSkeleton from "./RecipeCategoryCardSkeleton";
+import RecipeCategoryCardSkeleton from './RecipeCategoryCardSkeleton'
 
 type RecipeCategoryCardProps = {
-  category: { name: string; img: string };
-  onClick: () => void;
-};
+  category: { name: string; img: string }
+  onClick: () => void
+}
 
 export default function RecipeCategoryCard({
   category,
@@ -25,7 +25,7 @@ export default function RecipeCategoryCard({
         {category.name}
       </h3>
     </button>
-  );
+  )
 }
 
-RecipeCategoryCard.Skeleton = RecipeCategoryCardSkeleton;
+RecipeCategoryCard.Skeleton = RecipeCategoryCardSkeleton

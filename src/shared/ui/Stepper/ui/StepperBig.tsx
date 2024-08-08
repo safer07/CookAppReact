@@ -1,4 +1,4 @@
-import { StepperBigProps } from "./types";
+import { StepperBigProps } from '../model/types'
 
 export default function StepperBig({
   stepsCount,
@@ -32,5 +32,5 @@ export default function StepperBig({
         </button>
       </li>
     </ol>
-  );
+  )
 }

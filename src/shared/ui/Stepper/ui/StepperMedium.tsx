@@ -1,4 +1,4 @@
-import { StepperMediumProps } from "./types";
+import { StepperMediumProps } from '../model/types'
 
 export default function StepperMedium({
   stepsCount,
@@ -24,5 +24,5 @@ export default function StepperMedium({
         </li>
       ))}
     </ol>
-  );
+  )
 }

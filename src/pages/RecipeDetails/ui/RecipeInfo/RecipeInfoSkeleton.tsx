@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
-import ButtonIcon from "../../../../shared/ui/ButtonIcon";
+import ButtonIcon from '@/shared/ui/ButtonIcon'
 
 export default function RecipeInfoSkeleton() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <>
@@ -41,5 +41,5 @@ export default function RecipeInfoSkeleton() {
         </div>
       </div>
     </>
-  );
+  )
 }

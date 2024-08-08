@@ -6,5 +6,5 @@ export default function RecipeCategoryCardSkeleton() {
         <div className="skeleton h-1.5 w-2/3 rounded-full"></div>
       </div>
     </div>
-  );
+  )
 }

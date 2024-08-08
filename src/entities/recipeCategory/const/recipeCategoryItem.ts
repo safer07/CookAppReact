@@ -1,6 +1,6 @@
 type IRecipeCategoryItem = {
-  id: string;
-  name: string;
-  fullName: string;
-  img: string;
-};
+  id: string
+  name: string
+  fullName: string
+  img: string
+}

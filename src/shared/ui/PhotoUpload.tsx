@@ -1,21 +1,21 @@
-import Button from "./Button";
-import ButtonIcon from "./ButtonIcon";
+import Button from './Button'
+import ButtonIcon from './ButtonIcon'
 
 type PhotoUploadProps = {
-  image?: string;
-  onChange: (value: string) => void;
-  label?: string;
-};
+  image?: string
+  onChange: (value: string) => void
+  label?: string
+}
 
 export default function PhotoUpload({
   image,
   onChange,
   label,
 }: PhotoUploadProps): JSX.Element {
-  const url = "/images/recipes/recipe-1/main.jpg";
+  const url = '/images/recipes/recipe-1/main.jpg'
 
   function setImage(): void {
-    onChange(url);
+    onChange(url)
   }
 
   if (!image) {
@@ -33,7 +33,7 @@ export default function PhotoUpload({
           </p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -47,9 +47,9 @@ export default function PhotoUpload({
         />
         <div className="absolute right-2 top-2 flex gap-2">
           <ButtonIcon icon="camera" onClick={setImage} />
-          <ButtonIcon icon="delete" onClick={() => onChange("")} />
+          <ButtonIcon icon="delete" onClick={() => onChange('')} />
         </div>
       </div>
     </div>
-  );
+  )
 }

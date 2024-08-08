@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import SegmentedButton from "../../../shared/ui/SegmentedButton";
-import ListItem from "../../../shared/ui/ListItem";
+import SegmentedButton from '@/shared/ui/SegmentedButton'
+import ListItem from '@/shared/ui/ListItem'
 
-type IRecipeTabs = { recipe: IFullRecipeItem };
+type IRecipeTabs = { recipe: IFullRecipeItem }
 
 export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const tabs = ["Ингредиенты", "Рецепт"];
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const tabs = ['Ингредиенты', 'Рецепт']
 
   return (
     <>
@@ -60,5 +60,5 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
         </ol>
       )}
     </>
-  );
+  )
 }

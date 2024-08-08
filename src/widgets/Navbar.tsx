@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
-type NavBarTabs = "recipes" | "profile";
+type NavBarTabs = 'recipes' | 'profile'
 
 type NavBarTab = {
-  name: string;
-  id: NavBarTabs;
-  link: string;
-  icon: string;
-};
+  name: string
+  id: NavBarTabs
+  link: string
+  icon: string
+}
 
 export default function NavBar(): JSX.Element {
-  const pathname: string = useLocation().pathname;
-  const [activeTab, setActiveTab] = useState("");
+  const pathname: string = useLocation().pathname
+  const [activeTab, setActiveTab] = useState('')
   const tabs: NavBarTab[] = [
-    { name: "Рецепты", id: "recipes", link: "/", icon: "fork" },
+    { name: 'Рецепты', id: 'recipes', link: '/', icon: 'fork' },
     {
-      name: "Профиль",
-      id: "profile",
-      link: "/profile",
-      icon: "user",
+      name: 'Профиль',
+      id: 'profile',
+      link: '/profile',
+      icon: 'user',
     },
-  ];
+  ]
 
   useEffect(() => {
-    if (pathname === "/" || pathname.startsWith("/recipes"))
-      setActiveTab("recipes");
-    else if (pathname.startsWith("/profile")) setActiveTab("profile");
-  }, [pathname]);
+    if (pathname === '/' || pathname.startsWith('/recipes'))
+      setActiveTab('recipes')
+    else if (pathname.startsWith('/profile')) setActiveTab('profile')
+  }, [pathname])
 
   // TODO:
   // нужно объединять для recipe/.. и recipes (через NavLink)
@@ -43,7 +43,7 @@ export default function NavBar(): JSX.Element {
           <Link
             key={index}
             to={tab.link}
-            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? "cursor-default text-primary" : "text-secondary-color hover-hover:hover:text-primary"}`}
+            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? 'cursor-default text-primary' : 'text-secondary-color hover-hover:hover:text-primary'}`}
           >
             <svg className="size-3">
               <use href={`/images/icons.svg#${tab.icon}`} />
@@ -53,5 +53,5 @@ export default function NavBar(): JSX.Element {
         ))}
       </nav>
     </div>
-  );
+  )
 }

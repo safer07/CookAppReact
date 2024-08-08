@@ -1,16 +1,16 @@
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 
-import useRecipes from "../store/store";
-import TopAppBar from "../../../widgets/TopAppBar";
-import Chip from "../../../shared/ui/Chip";
+import useRecipes from '../store/store'
+import TopAppBar from '@/widgets/TopAppBar'
+import Chip from '@/shared/ui/Chip'
 
 type FilterProps = {
-  open: boolean;
-  setClose: () => void;
-  setTempSearchQuery: (value: string) => void;
-  recipeCategories: IRecipeCategoryItem[];
-  findCategoryById: (id: string) => IRecipeCategoryItem | undefined;
-};
+  open: boolean
+  setClose: () => void
+  setTempSearchQuery: (value: string) => void
+  recipeCategories: IRecipeCategoryItem[]
+  findCategoryById: (id: string) => IRecipeCategoryItem | undefined
+}
 
 export default function Filters({
   open,
@@ -19,14 +19,14 @@ export default function Filters({
   recipeCategories,
   findCategoryById,
 }: FilterProps): JSX.Element {
-  const { categoryId, searchQuery } = useRecipes((state) => state.filters);
-  const setCategoryId = useRecipes((state) => state.setCategoryId);
-  const setSearchQuery = useRecipes((state) => state.setSearchQuery);
-  const resetFilters = useRecipes((state) => state.resetFilters);
+  const { categoryId, searchQuery } = useRecipes((state) => state.filters)
+  const setCategoryId = useRecipes((state) => state.setCategoryId)
+  const setSearchQuery = useRecipes((state) => state.setSearchQuery)
+  const resetFilters = useRecipes((state) => state.resetFilters)
 
   function resetHandle() {
-    resetFilters();
-    setTempSearchQuery("");
+    resetFilters()
+    setTempSearchQuery('')
   }
 
   return ReactDOM.createPortal(
@@ -46,8 +46,8 @@ export default function Filters({
                 <Chip
                   text={`Поиск: ${searchQuery}`}
                   onClick={() => {
-                    setSearchQuery("");
-                    setTempSearchQuery("");
+                    setSearchQuery('')
+                    setTempSearchQuery('')
                   }}
                   del
                 />
@@ -76,7 +76,7 @@ export default function Filters({
                   <Chip
                     text={category.name}
                     onClick={() => setCategoryId(category.id)}
-                    variant={categoryId === category.id ? "active" : "default"}
+                    variant={categoryId === category.id ? 'active' : 'default'}
                   />
                 </li>
               ))}
@@ -85,6 +85,6 @@ export default function Filters({
         </div>
       </aside>
     </div>,
-    document.getElementById("modal-portal")!,
-  );
+    document.getElementById('modal-portal')!,
+  )
 }

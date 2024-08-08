@@ -1,12 +1,12 @@
-import useRecipes from "../store/store";
-import RecipeCategoryCard from "../../../entities/recipeCategory/ui/RecipeCategoryCard";
+import useRecipes from '../store/store'
+import RecipeCategoryCard from '@/entities/recipeCategory/ui/RecipeCategoryCard'
 
 type CategoryProps = {
-  categories: IRecipeCategoryItem[];
-};
+  categories: IRecipeCategoryItem[]
+}
 
 export default function Categories({ categories }: CategoryProps): JSX.Element {
-  const setCategoryId = useRecipes((state) => state.setCategoryId);
+  const setCategoryId = useRecipes((state) => state.setCategoryId)
 
   return (
     <>
@@ -25,5 +25,5 @@ export default function Categories({ categories }: CategoryProps): JSX.Element {
             ))}
       </div>
     </>
-  );
+  )
 }

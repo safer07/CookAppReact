@@ -1,24 +1,24 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
-import RecipeInfoSkeleton from "./RecipeInfoSkeleton";
-import LikeButton from "../../../../features/favouriteRecipe/ui/LikeButton";
-import { categories } from "../../../../entities/recipeCategory/const/categories";
-import ButtonIcon from "../../../../shared/ui/ButtonIcon";
-import Tag from "../../../../shared/ui/Tag";
-import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
+import RecipeInfoSkeleton from './RecipeInfoSkeleton'
+import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
+import { categories } from '@/entities/recipeCategory/const/categories'
+import ButtonIcon from '@/shared/ui/ButtonIcon'
+import Tag from '@/shared/ui/Tag'
+import getRecipeDifficultyTextAndSurface from '@/shared/utils/getRecipeDifficultyTextAndSurface'
 
 type RecipeInfoProps = {
-  recipe: IFullRecipeItem;
-};
+  recipe: IFullRecipeItem
+}
 
 export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [difficultyText, tagDifficultySurface] =
-    getRecipeDifficultyTextAndSurface(recipe?.difficulty);
+    getRecipeDifficultyTextAndSurface(recipe?.difficulty)
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe?.category,
-  );
+  )
 
   return (
     <>
@@ -57,7 +57,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-RecipeInfo.Skeleton = RecipeInfoSkeleton;
+RecipeInfo.Skeleton = RecipeInfoSkeleton

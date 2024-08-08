@@ -1,38 +1,38 @@
-import { useRef } from "react";
+import { useRef } from 'react'
 
 type InputProps = {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  iconLeft?: string;
-  iconRight?: string;
-  label?: string;
-  helper?: string;
-  clearButton?: boolean;
-  name?: string;
-} & (InputTextProps | InputNumberProps);
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  className?: string
+  iconLeft?: string
+  iconRight?: string
+  label?: string
+  helper?: string
+  clearButton?: boolean
+  name?: string
+} & (InputTextProps | InputNumberProps)
 
 type InputTextProps = {
-  type?: "text" | "search" | "email" | "password";
-  showCount?: boolean;
-  maxLength?: number;
-  min?: never;
-};
+  type?: 'text' | 'search' | 'email' | 'password'
+  showCount?: boolean
+  maxLength?: number
+  min?: never
+}
 
 type InputNumberProps = {
-  type: "number";
-  showCount?: never;
-  maxLength?: never;
-  min?: string;
-};
+  type: 'number'
+  showCount?: never
+  maxLength?: never
+  min?: string
+}
 
 export default function Input({
   value,
   onChange,
-  type = "text",
+  type = 'text',
   placeholder,
-  className = "",
+  className = '',
   iconLeft,
   iconRight,
   label,
@@ -43,11 +43,11 @@ export default function Input({
   name,
   min,
 }: InputProps): JSX.Element {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null)
 
   function onClickClear() {
-    onChange("");
-    inputRef.current?.focus();
+    onChange('')
+    inputRef.current?.focus()
   }
 
   return (
@@ -108,5 +108,5 @@ export default function Input({
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,1 +1,1 @@
-export { default } from "./ui/RecipesPage";
+export { default } from './ui/RecipesPage'

@@ -1,22 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-import RecipeCardSkeleton from "./RecipeCardSkeleton";
-import { categories } from "../../../recipeCategory/const/categories";
-import LikeButton from "../../../../features/favouriteRecipe/ui/LikeButton";
-import getRecipeDifficultyTextAndSurface from "../../../../shared/utils/getRecipeDifficultyTextAndSurface";
-import Tag from "../../../../shared/ui/Tag";
+import RecipeCardSkeleton from './RecipeCardSkeleton'
+import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
+import { categories } from '@/entities/recipeCategory/const/categories'
+import getRecipeDifficultyTextAndSurface from '@/shared/utils/getRecipeDifficultyTextAndSurface'
+import Tag from '@/shared/ui/Tag'
 
 type RecipeCardProps = {
-  recipe: IRecipeItem;
-};
+  recipe: IRecipeItem
+}
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   const [difficultyText, tagDifficultySurface] =
-    getRecipeDifficultyTextAndSurface(recipe?.difficulty);
+    getRecipeDifficultyTextAndSurface(recipe?.difficulty)
 
   const recipeCategory = categories.find(
     (category) => category.id === recipe.category,
-  );
+  )
 
   return (
     <Link
@@ -54,7 +54,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
         </div>
       </div>
     </Link>
-  );
+  )
 }
 
-RecipeCard.Skeleton = RecipeCardSkeleton;
+RecipeCard.Skeleton = RecipeCardSkeleton

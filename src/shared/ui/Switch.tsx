@@ -1,7 +1,7 @@
 type SwitchProps = {
-  checked: boolean;
-  onClick: () => void;
-};
+  checked: boolean
+  onClick: () => void
+}
 
 export default function Switch({ checked, onClick }: SwitchProps) {
   return (
@@ -12,5 +12,5 @@ export default function Switch({ checked, onClick }: SwitchProps) {
       onClick={onClick}
       readOnly
     />
-  );
+  )
 }
