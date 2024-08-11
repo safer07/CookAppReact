@@ -12,6 +12,7 @@ type SwitchElem = {
 type IconElem = {
   element: 'icon'
   icon: string
+  className?: string
 }
 
 type EmptyIconElem = {
@@ -32,7 +33,7 @@ type ListItemProps = {
   text: string
   description?: string
   secondaryText?: string
-  leftElement?: RadioElem | SwitchElem
+  leftElement?: RadioElem | SwitchElem | IconElem
   rightElement?: ListItemRightElem
   onClick?: () => void
   status?: ListItemStatus

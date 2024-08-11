@@ -53,6 +53,13 @@ export default function ListItem({
       {leftElement?.element === 'switch' && (
         <Switch checked={leftElement.checked} onClick={leftElement.onClick} />
       )}
+      {leftElement?.element === 'icon' && (
+        <svg
+          className={`left-icon ${leftElement.className ? leftElement.className : ''}`}
+        >
+          <use href={`/images/icons.svg#${leftElement.icon}`} />
+        </svg>
+      )}
 
       <div className="list-item-content">
         <span className="list-item-text">{text}</span>

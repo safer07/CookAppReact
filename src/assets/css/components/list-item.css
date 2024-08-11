@@ -12,7 +12,7 @@
   & .list-item-secondary-text {
     @apply w-[4.5rem] shrink-0 text-right text-secondary-color has-[treo]:opacity-0;
   }
-  & :is(.right-icon, .empty-icon) {
+  & :is(.left-icon, .right-icon, .empty-icon) {
     @apply size-3 shrink-0;
   }
   &:has(.list-item-description) .list-item-text {
