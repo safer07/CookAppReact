@@ -1,82 +1,64 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import TopAppBar from '@/widgets/TopAppBar'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import { backendUrl } from '@/shared/config'
-
-type RegistrationFormDataType = {
-  email: string
-  password: string
-  passwordRepeat: string
-}
+import {
+  RegistrationErrorResponse,
+  RegistrationFormDataType,
+  RegistrationResponse,
+  ValidationError,
+} from '../model/types'
 
 const emptyForm = { email: '', password: '', passwordRepeat: '' }
 
 export default function RegistrationPage(): JSX.Element {
   const navigate = useNavigate()
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('token'),
+  )
   const [formData, setFormData] = useState<RegistrationFormDataType>(emptyForm)
   const [errors, setErrors] = useState<string[]>([])
 
-  // проверять токен в localStorage и перенаправлять
-  // navigate("/profile", { replace: true });
+  useEffect(() => {
+    if (token) navigate('/profile', { replace: true })
+  }, [token])
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setErrors([])
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      body: JSON.stringify(formData),
-    }
-    let ok: boolean
 
     if (formData.password !== formData.passwordRepeat) {
       return setErrors(['Пароль не совпадает'])
     }
 
+    axios.defaults.baseURL = backendUrl
+    const requestOptions = {
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    }
+
     try {
-      fetch(`${backendUrl}/registration`, requestOptions)
-        .then((response) => {
-          // подтверждение отправки
-          // здесь приходит код 400
-          console.log(response)
-          ok = response.ok
-          return response.json()
-        })
-        .then((data) => {
-          // ответ на POST-запрос
-          // при неудачном здесь приходит массив с ошибками
-          //   [
-          //     {
-          //         "type": "field",
-          //         "value": "1@1",
-          //         "msg": "Неверный формат почты",
-          //         "path": "email",
-          //         "location": "body"
-          //     },
-          //     {
-          //         "type": "field",
-          //         "value": "12",
-          //         "msg": "Пароль должен быть минимум 5 символов",
-          //         "path": "password",
-          //         "location": "body"
-          //     }
-          // ]
-          console.log(data)
-          console.log(data?.message)
-          console.log(data?.token)
-          if (ok) {
-            // сохранить токен
-            navigate('/profile', { replace: true })
-          } else {
-            if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
-            else setErrors([data?.message])
-          }
-        })
+      // TODO: вынести fetch в api
+      const { data } = await axios.post<RegistrationResponse>(
+        '/registration',
+        formData,
+        requestOptions,
+      )
+      localStorage.setItem('token', data.token)
+      setToken(data.token)
     } catch (error) {
-      console.log(error)
+      if (
+        axios.isAxiosError<ValidationError[] | RegistrationErrorResponse>(error)
+      ) {
+        const data = error.response?.data
+        if (data) {
+          if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
+          else setErrors([data?.message])
+        }
+      }
     }
   }
 

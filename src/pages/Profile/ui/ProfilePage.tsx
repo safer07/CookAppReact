@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import Button from '@/shared/ui/Button'
@@ -26,23 +25,25 @@ export default function ProfilePage(): JSX.Element {
 
   // TODO: состояние загрузки (скелетон шапки), и неудачного fetchUser
 
-  useEffect(() => {
-    if (!token) return
+  // TODO: вынести fetch в api
+  async function fetchUser() {
     try {
-      // TODO: вынести fetch в api
-      ;(async () => {
-        axios.defaults.baseURL = backendUrl
-        axios.defaults.headers.common = {
-          Authorization: `Bearer ${token}`,
-        }
-
-        const { data } = await axios.get<UserType>('/profile')
-        setUser(data)
-      })()
+      axios.defaults.baseURL = backendUrl
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${token}`,
+      }
+      const { data } = await axios.get<UserType>('/profile')
+      setUser(data)
     } catch (error) {
       console.error(error)
     }
-  }, [token])
+  }
+
+  // TODO: здесь есть глюк с зависающим токеном
+  useEffect(() => {
+    if (!token) return
+    fetchUser()
+  }, [token, fetchUser])
 
   return (
     <>
@@ -61,11 +62,7 @@ export default function ProfilePage(): JSX.Element {
             alt="Аватар пользователя"
           />
         )}
-        {!user && (
-          <Link to="/login" className="w-full">
-            <Button text="Войти" icon="login" block />
-          </Link>
-        )}
+        {!user && <Button text="Войти" icon="login" block link="/login" />}
         {user && (
           <div className="space-y-0.5">
             <p className="headline-small">Имя пользователя</p>

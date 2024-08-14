@@ -1,24 +1,34 @@
-type ButtonProps = {
+import { Link } from 'react-router-dom'
+
+type BaseProps = {
   text: string
   icon?: string
-  onClick?: () => void
-  disabled?: boolean
   className?: string
   variant?: 'primary' | 'secondary' | 'tertiary' | 'negative'
   block?: boolean
-  submit?: boolean
 }
 
-export default function Button({
-  text,
-  icon,
-  onClick,
-  disabled,
-  className = '',
-  variant,
-  block,
-  submit,
-}: ButtonProps) {
+type LinkProps = {
+  link: string
+} & BaseProps
+
+type ButtonProps = {
+  onClick?: () => void
+  disabled?: boolean
+  submit?: boolean
+  link?: never
+} & BaseProps
+
+export default function Button(props: ButtonProps | LinkProps) {
+  const { text, icon, className = '', variant, block } = props
+  let link, onClick, disabled, submit
+  if (props?.link !== undefined) {
+    link = props.link
+  } else {
+    onClick = props.onClick
+    disabled = props.disabled
+    submit = props.submit
+  }
   const variantClass = (() => {
     switch (variant) {
       case 'primary':
@@ -34,18 +44,34 @@ export default function Button({
   })()
 
   return (
-    <button
-      className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
-      onClick={onClick}
-      disabled={disabled}
-      type={submit ? 'submit' : 'button'}
-    >
-      {icon && (
-        <svg>
-          <use href={`/images/icons.svg#${icon}`} />
-        </svg>
+    <>
+      {link ? (
+        <Link
+          to={link}
+          className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
+        >
+          {icon && (
+            <svg>
+              <use href={`/images/icons.svg#${icon}`} />
+            </svg>
+          )}
+          <span>{text}</span>
+        </Link>
+      ) : (
+        <button
+          className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
+          onClick={onClick}
+          disabled={disabled}
+          type={submit ? 'submit' : 'button'}
+        >
+          {icon && (
+            <svg>
+              <use href={`/images/icons.svg#${icon}`} />
+            </svg>
+          )}
+          <span>{text}</span>
+        </button>
       )}
-      <span>{text}</span>
-    </button>
+    </>
   )
 }
