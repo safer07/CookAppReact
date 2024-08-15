@@ -11,13 +11,23 @@ type InputProps = {
   helper?: string
   clearButton?: boolean
   name?: string
-} & (InputTextProps | InputNumberProps)
+} & (InputTextProps | InputDateProps | InputNumberProps)
 
+// TODO: есть ли вариант сделать это без never?
 type InputTextProps = {
   type?: 'text' | 'search' | 'email' | 'password'
   showCount?: boolean
   maxLength?: number
   min?: never
+  max?: never
+}
+
+type InputDateProps = {
+  type: 'date'
+  showCount?: never
+  maxLength?: never
+  min?: string
+  max?: string
 }
 
 type InputNumberProps = {
@@ -25,6 +35,7 @@ type InputNumberProps = {
   showCount?: never
   maxLength?: never
   min?: string
+  max?: string
 }
 
 export default function Input({
@@ -42,6 +53,7 @@ export default function Input({
   clearButton,
   name,
   min,
+  max,
 }: InputProps): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -70,6 +82,7 @@ export default function Input({
           onChange={(event) => onChange(event.target.value)}
           maxLength={maxLength}
           min={min}
+          max={max}
           autoComplete="off"
           name={name}
         />

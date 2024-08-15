@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import Button from '@/shared/ui/Button'
@@ -11,6 +12,7 @@ export type UserType = {
 }
 
 export default function ProfilePage(): JSX.Element {
+  const navigate = useNavigate()
   // const [token, setToken] = useState<string | null>(
   //   localStorage.getItem('token'),
   // )
@@ -71,8 +73,20 @@ export default function ProfilePage(): JSX.Element {
         )}
       </div>
       <ul className="layout-fullwidth py-1">
+        {user && (
+          <ListItem
+            text="Редактировать профиль"
+            size="medium"
+            rightElement={{
+              element: 'icon',
+              icon: 'chevron_right',
+            }}
+            onClick={() => navigate('/profile/edit', { replace: true })}
+          />
+        )}
         <ListItem
           text="Пользовательское соглашение"
+          size="medium"
           rightElement={{
             element: 'icon',
             icon: 'chevron_right',
@@ -80,6 +94,7 @@ export default function ProfilePage(): JSX.Element {
         />
         <ListItem
           text="Политика конфиденциальности"
+          size="medium"
           rightElement={{
             element: 'icon',
             icon: 'chevron_right',
@@ -88,6 +103,7 @@ export default function ProfilePage(): JSX.Element {
         {user && (
           <ListItem
             text="Выйти"
+            size="medium"
             leftElement={{
               element: 'icon',
               icon: 'logout',

@@ -108,7 +108,7 @@ export default function Step4(): JSX.Element {
   }, [currentStepIndex, steps.length])
 
   useEffect(() => {
-    // Нужно копировать массив и всё внутри нето, так как нельзя использовать изначальные значения
+    // Нужно копировать массив и всё внутри него, так как нельзя использовать изначальные значения
     const newSteps = structuredClone(steps)
     const filteredIngredients = totalIngredients.filter((i) =>
       currentStepIngredientsNames.includes(i.name),

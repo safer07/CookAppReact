@@ -55,7 +55,7 @@ export default function CreateRecipePage(): JSX.Element {
 
       <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
 
-      <div className="layout-fullwidth mt-3 grow basis-0 overflow-y-auto pb-2">
+      <div className="layout-fullwidth mt-3 grow overflow-y-auto pb-2">
         {step === 1 && <Step1 />}
         {step === 2 && <Step2 />}
         {step === 3 && <Step3 />}
