@@ -8,11 +8,8 @@
   }
 }
 
-.button-primary {
-  @apply surface-accent shadow-md shadow-primary-highGradient;
-}
 .button-primary:not(:disabled) {
-  @apply hover-hover:hover:shadow-md-active hover-hover:hover:shadow-primary-highGradient;
+  @apply surface-accent shadow-md shadow-primary-highGradient hover-hover:hover:shadow-md-active hover-hover:hover:shadow-primary-highGradient;
 }
 
 .button-secondary {

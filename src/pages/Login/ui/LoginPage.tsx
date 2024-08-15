@@ -21,6 +21,7 @@ export default function LoginPage(): JSX.Element {
     localStorage.getItem('token'),
   )
   const [formData, setFormData] = useState<LoginFormDataType>(emptyForm)
+  const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<string[]>([])
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function LoginPage(): JSX.Element {
 
     try {
       // TODO: вынести fetch в api
+      setLoading(true)
       const { data } = await axios.post<LoginResponse>(
         '/login',
         formData,
@@ -45,6 +47,7 @@ export default function LoginPage(): JSX.Element {
       )
       localStorage.setItem('token', data.token)
       setToken(data.token)
+      setLoading(false)
     } catch (error) {
       if (axios.isAxiosError<ValidationError[] | LoginErrorResponse>(error)) {
         const data = error.response?.data
@@ -53,6 +56,7 @@ export default function LoginPage(): JSX.Element {
           else setErrors([data?.message])
         }
       }
+      setLoading(false)
     }
   }
 
@@ -90,9 +94,10 @@ export default function LoginPage(): JSX.Element {
         <Button
           variant="primary"
           text="Войти"
-          onClick={() => {}}
           block
           submit
+          disabled={loading}
+          loading={loading}
         />
       </form>
       <div className="mt-auto py-2 text-center">

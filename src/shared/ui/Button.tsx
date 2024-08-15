@@ -17,17 +17,19 @@ type ButtonProps = {
   disabled?: boolean
   submit?: boolean
   link?: never
+  loading?: boolean
 } & BaseProps
 
 export default function Button(props: ButtonProps | LinkProps) {
   const { text, icon, className = '', variant, block } = props
-  let link, onClick, disabled, submit
+  let link, onClick, disabled, submit, loading
   if (props?.link !== undefined) {
     link = props.link
   } else {
     onClick = props.onClick
     disabled = props.disabled
     submit = props.submit
+    loading = props.loading
   }
   const variantClass = (() => {
     switch (variant) {
@@ -60,16 +62,21 @@ export default function Button(props: ButtonProps | LinkProps) {
       ) : (
         <button
           className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
-          onClick={onClick}
+          onClick={disabled ? () => {} : onClick}
           disabled={disabled}
           type={submit ? 'submit' : 'button'}
         >
-          {icon && (
+          {icon && !loading && (
             <svg>
               <use href={`/images/icons.svg#${icon}`} />
             </svg>
           )}
-          <span>{text}</span>
+          {loading && (
+            <svg className="animate-spin">
+              <use href={'/images/icons.svg#loader'} />
+            </svg>
+          )}
+          <span>{loading ? 'Загрузка...' : text}</span>
         </button>
       )}
     </>

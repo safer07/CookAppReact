@@ -21,6 +21,7 @@ export default function RegistrationPage(): JSX.Element {
     localStorage.getItem('token'),
   )
   const [formData, setFormData] = useState<RegistrationFormDataType>(emptyForm)
+  const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<string[]>([])
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function RegistrationPage(): JSX.Element {
 
     try {
       // TODO: вынести fetch в api
+      setLoading(true)
       const { data } = await axios.post<RegistrationResponse>(
         '/registration',
         formData,
@@ -49,6 +51,7 @@ export default function RegistrationPage(): JSX.Element {
       )
       localStorage.setItem('token', data.token)
       setToken(data.token)
+      setLoading(false)
     } catch (error) {
       if (
         axios.isAxiosError<ValidationError[] | RegistrationErrorResponse>(error)
@@ -59,6 +62,7 @@ export default function RegistrationPage(): JSX.Element {
           else setErrors([data?.message])
         }
       }
+      setLoading(false)
     }
   }
 
@@ -120,9 +124,10 @@ export default function RegistrationPage(): JSX.Element {
         <Button
           variant="primary"
           text="Зарегистрироваться"
-          onClick={() => {}}
           block
           submit
+          disabled={loading}
+          loading={loading}
         />
       </form>
       <div className="mt-auto py-2 text-center">
