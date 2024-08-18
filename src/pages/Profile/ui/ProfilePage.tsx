@@ -2,27 +2,20 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+import useUser, { UserType } from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import { backendUrl } from '@/shared/config'
 
-export type UserType = {
-  email: string
-}
-
 export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate()
-  // const [token, setToken] = useState<string | null>(
-  //   localStorage.getItem('token'),
-  // )
-  const [user, setUser] = useState<UserType | null>(null)
+  const { user, token, status, setUser, setToken, setStatus } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
-  const token = localStorage.getItem('token')
 
   function logout() {
-    localStorage.removeItem('token')
     setUser(null)
+    setToken(null)
   }
 
   // TODO: состояние загрузки (скелетон шапки), и неудачного fetchUser
@@ -41,11 +34,9 @@ export default function ProfilePage(): JSX.Element {
     }
   }
 
-  // TODO: здесь есть глюк с зависающим токеном
   useEffect(() => {
-    if (!token) return
-    fetchUser()
-  }, [token, fetchUser])
+    if (token) fetchUser()
+  }, [token])
 
   return (
     <>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import TopAppBar from '@/widgets/TopAppBar'
+import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import { backendUrl } from '@/shared/config'
@@ -17,11 +18,8 @@ const emptyForm = { email: '', password: '', passwordRepeat: '' }
 
 export default function RegistrationPage(): JSX.Element {
   const navigate = useNavigate()
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem('token'),
-  )
+  const { token, status, setToken, setStatus } = useUser()
   const [formData, setFormData] = useState<RegistrationFormDataType>(emptyForm)
-  const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<string[]>([])
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function RegistrationPage(): JSX.Element {
 
     try {
       // TODO: вынести fetch в api
-      setLoading(true)
+      setStatus('loading')
       const { data } = await axios.post<RegistrationResponse>(
         '/registration',
         formData,
@@ -51,7 +49,7 @@ export default function RegistrationPage(): JSX.Element {
       )
       localStorage.setItem('token', data.token)
       setToken(data.token)
-      setLoading(false)
+      setStatus('success')
     } catch (error) {
       if (
         axios.isAxiosError<ValidationError[] | RegistrationErrorResponse>(error)
@@ -62,7 +60,7 @@ export default function RegistrationPage(): JSX.Element {
           else setErrors([data?.message])
         }
       }
-      setLoading(false)
+      setStatus('error')
     }
   }
 
@@ -126,8 +124,8 @@ export default function RegistrationPage(): JSX.Element {
           text="Зарегистрироваться"
           block
           submit
-          disabled={loading}
-          loading={loading}
+          disabled={status === 'loading'}
+          loading={status === 'loading'}
         />
       </form>
       <div className="mt-auto py-2 text-center">

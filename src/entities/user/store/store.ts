@@ -1,8 +1,24 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
+import axios from 'axios'
+
+import { backendUrl } from '@/shared/config'
+
+export type UserType = {
+  email: string
+} | null
+
+type StatusType = 'init' | 'loading' | 'success' | 'error'
 
 type UserStore = {
+  user: UserType
+  token: string | null
+  status: StatusType
+  setUser: (value: UserType) => void
+  setToken: (token: string | null) => void
+  setStatus: (value: StatusType) => void
+  // fetchUser: (id: string) => Promise<void>
   favouriteRecipes: string[]
   addFavouriteRecipe: (id: string) => void
   removeFavouriteRecipe: (id: string) => void
@@ -12,6 +28,24 @@ const useUser = create<UserStore>()(
   persist(
     devtools(
       immer((set) => ({
+        user: null,
+        token: null,
+        status: 'init',
+        setUser: (value) => set({ user: value }),
+        setToken: (value) => set({ token: value }),
+        setStatus: (value) => set({ status: value }),
+        // fetchUser: async (id) => {
+        //   try {
+        //     set({ status: 'loading' })
+        //     const url = `${backendUrl}/recipes/${id}`
+        //     const response = await axios.get<IFullRecipeItem>(url)
+        //     set({ recipe: response.data })
+        //     set({ status: 'success' })
+        //   } catch (error) {
+        //     set({ status: 'error' })
+        //     console.error(error)
+        //   }
+        // },
         favouriteRecipes: [
           '668b9ede0cc1f0dab6c84e42',
           '668b9ede0cc1f0dab6c84e47',
