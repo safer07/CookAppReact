@@ -14,8 +14,8 @@ export default function ProfilePage(): JSX.Element {
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
 
   function logout() {
-    setUser(null)
     setToken(null)
+    setUser(null)
   }
 
   // TODO: состояние загрузки (скелетон шапки), и неудачного fetchUser
@@ -27,10 +27,12 @@ export default function ProfilePage(): JSX.Element {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${token}`,
       }
+      setStatus('loading')
       const { data } = await axios.get<UserType>('/profile')
       setUser(data)
+      setStatus('success')
     } catch (error) {
-      console.error(error)
+      setStatus('error')
     }
   }
 
@@ -72,7 +74,7 @@ export default function ProfilePage(): JSX.Element {
               element: 'icon',
               icon: 'chevron_right',
             }}
-            onClick={() => navigate('/profile/edit', { replace: true })}
+            onClick={() => navigate('/profile/edit')}
           />
         )}
         <ListItem

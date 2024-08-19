@@ -1,100 +1,98 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import TopAppBar from '@/widgets/TopAppBar'
+import useUser, { UserType } from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
 import { backendUrl } from '@/shared/config'
 
+const genderSelectOptions = [
+  { value: 'male', label: 'Мужской' },
+  { value: 'female', label: 'Женский' },
+]
+
+type formDataType = {
+  name: string
+  lastName: string
+  email: string
+  gender: string
+  birthDate: string
+}
+
 export default function ProfileEditPage(): JSX.Element {
-  const [name, setName] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
+  const { token, user, status, setUser, setStatus } = useUser()
+  const [formData, setFormData] = useState<formDataType>({
+    name: user?.name || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    gender: user?.gender || '',
+    birthDate: user?.birthDate || '',
+  })
 
-  // из store
+  useEffect(() => {
+    if (!token || !user) navigate('/profile', { replace: true })
+  }, [token, user])
 
-  // const {
-  //   name,
-  //   category,
-  //   description,
-  //   img,
-  //   setName,
-  //   setCategory,
-  //   setDescription,
-  //   setImg,
-  // } = useCreateRecipe()
-
-  const categoriesOptions = [
-    { value: 'male', label: 'Мужской' },
-    { value: 'female', label: 'Женский' },
-  ]
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function onSubmit() {
+    if (!user?._id) return
 
     axios.defaults.baseURL = backendUrl
     const requestOptions = {
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
     }
 
-    // try {
-    //   // TODO: вынести fetch в api
-    //   setLoading(true)
-    //   const { data } = await axios.post<LoginResponse>(
-    //     '/login',
-    //     formData,
-    //     requestOptions,
-    //   )
-    //   localStorage.setItem('token', data.token)
-    //   setToken(data.token)
-    //   setLoading(false)
-    // } catch (error) {
-    //   if (axios.isAxiosError<ValidationError[] | LoginErrorResponse>(error)) {
-    //     const data = error.response?.data
-    //     if (data) {
-    //       if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
-    //       else setErrors([data?.message])
-    //     }
-    //   }
-    //   setLoading(false)
-    // }
+    try {
+      // TODO: вынести fetch в api
+      setStatus('loading')
+      const { data } = await axios.patch<UserType>(`/profile/${user._id}`, formData, requestOptions)
+      setUser(data)
+      setStatus('success')
+    } catch (error) {
+      setStatus('error')
+    }
   }
+
+  // TODO: сделать обработки ошибок и сообщение об успехе
 
   return (
     <>
       <TopAppBar title="Редактировать профиль" back />
 
+      {/* TODO: переверстать, чтобы было внутри формы (а лучше создать layout) */}
       <div className="my-2 grow space-y-3 overflow-y-auto">
-        <form className="space-y-3" onSubmit={onSubmit}>
+        <form className="space-y-3">
           <Input
-            value={name}
-            onChange={(value) => setName(value)}
+            value={formData.name}
+            onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
             label="Имя"
           />
           <Input
-            value={name}
-            onChange={(value) => setName(value)}
+            value={formData.lastName}
+            onChange={(value) => setFormData((prev) => ({ ...prev, lastName: value }))}
             label="Фамилия"
           />
           <Input
-            value={name}
-            onChange={(value) => setName(value)}
+            value={formData.email}
+            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
             label="Email"
           />
           <Select
-            value={''}
-            options={categoriesOptions}
-            onChange={() => {}}
+            value={formData.gender}
+            options={genderSelectOptions}
+            onChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
             label="Пол"
           />
           <Input
             type="date"
-            value={name}
-            onChange={(value) => setName(value)}
+            value={formData.birthDate}
+            onChange={(value) => setFormData((prev) => ({ ...prev, birthDate: value }))}
             label="Дата рождения"
           />
         </form>
-
         {/* TODO: добавить функционал смены пароля */}
         <Button text="Изменить пароль" block />
       </div>
@@ -102,10 +100,11 @@ export default function ProfileEditPage(): JSX.Element {
       <div className="mt-auto shrink-0 py-2">
         <Button
           text={'Сохранить изменения'}
-          onClick={() => {}}
+          onClick={onSubmit}
           variant="primary"
           block
-          submit
+          disabled={status === 'loading'}
+          loading={status === 'loading'}
         />
       </div>
     </>

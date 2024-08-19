@@ -2,5 +2,6 @@
   "content": ["./src/**/*.{js,jsx,ts,tsx}"],
   "plugins": ["prettier-plugin-tailwindcss"],
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "printWidth": 100
 }

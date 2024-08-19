@@ -6,7 +6,13 @@ import axios from 'axios'
 import { backendUrl } from '@/shared/config'
 
 export type UserType = {
+  _id: string
+  name: string
+  lastName: string
   email: string
+  avatarUrl: string
+  gender: 'male' | 'female'
+  birthDate: string
 } | null
 
 type StatusType = 'init' | 'loading' | 'success' | 'error'
@@ -58,9 +64,7 @@ const useUser = create<UserStore>()(
           }),
         removeFavouriteRecipe: (id) =>
           set((state) => {
-            state.favouriteRecipes = state.favouriteRecipes.filter(
-              (item) => item !== id,
-            )
+            state.favouriteRecipes = state.favouriteRecipes.filter((item) => item !== id)
           }),
       })),
     ),
