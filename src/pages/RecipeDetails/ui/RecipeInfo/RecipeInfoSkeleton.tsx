@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import ButtonIcon from '@/shared/ui/ButtonIcon'
+import navigateBack from '@/shared/utils/navigateBack'
 
 export default function RecipeInfoSkeleton() {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ export default function RecipeInfoSkeleton() {
         <ButtonIcon
           className="absolute left-2 top-2"
           icon="arrow_left"
-          onClick={() => navigate(-1)}
+          onClick={() => navigateBack(navigate)}
           size="small"
         />
         <div className="surface-default absolute right-2 top-2 size-5 rounded-full" />

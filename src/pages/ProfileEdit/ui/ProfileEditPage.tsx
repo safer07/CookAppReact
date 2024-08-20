@@ -37,6 +37,10 @@ export default function ProfileEditPage(): JSX.Element {
     if (!token || !user) navigate('/profile', { replace: true })
   }, [token, user])
 
+  useEffect(() => {
+    setStatus('init')
+  }, [])
+
   async function onSubmit() {
     if (!user?._id) return
 
@@ -56,45 +60,48 @@ export default function ProfileEditPage(): JSX.Element {
     }
   }
 
-  // TODO: сделать обработки ошибок и сообщение об успехе
+  // TODO: сделать обработки ошибок
 
   return (
     <>
       <TopAppBar title="Редактировать профиль" back />
 
       {/* TODO: переверстать, чтобы было внутри формы (а лучше создать layout) */}
-      <div className="my-2 grow space-y-3 overflow-y-auto">
-        <form className="space-y-3">
-          <Input
-            value={formData.name}
-            onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
-            label="Имя"
-          />
-          <Input
-            value={formData.lastName}
-            onChange={(value) => setFormData((prev) => ({ ...prev, lastName: value }))}
-            label="Фамилия"
-          />
-          <Input
-            value={formData.email}
-            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
-            label="Email"
-          />
-          <Select
-            value={formData.gender}
-            options={genderSelectOptions}
-            onChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
-            label="Пол"
-          />
-          <Input
-            type="date"
-            value={formData.birthDate}
-            onChange={(value) => setFormData((prev) => ({ ...prev, birthDate: value }))}
-            label="Дата рождения"
-          />
-        </form>
-        {/* TODO: добавить функционал смены пароля */}
-        <Button text="Изменить пароль" block />
+      <div className="layout-fullwidth my-2 grow overflow-y-auto">
+        <div className="layout-grid space-y-3">
+          <form className="space-y-3">
+            <Input
+              value={formData.name}
+              onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
+              label="Имя"
+            />
+            <Input
+              value={formData.lastName}
+              onChange={(value) => setFormData((prev) => ({ ...prev, lastName: value }))}
+              label="Фамилия"
+            />
+            <Input
+              value={formData.email}
+              onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
+              label="Email"
+            />
+            <Select
+              value={formData.gender}
+              options={genderSelectOptions}
+              onChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
+              label="Пол"
+            />
+            <Input
+              type="date"
+              value={formData.birthDate}
+              onChange={(value) => setFormData((prev) => ({ ...prev, birthDate: value }))}
+              label="Дата рождения"
+            />
+          </form>
+          {/* TODO: добавить функционал смены пароля */}
+          <Button text="Изменить пароль" block />
+          {status === 'success' && <p className="text-system-positive">Профиль обновлён</p>}
+        </div>
       </div>
 
       <div className="mt-auto shrink-0 py-2">

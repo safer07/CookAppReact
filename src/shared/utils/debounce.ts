@@ -1,3 +1,5 @@
+// TODO: этот файл не используется
+
 export default function debounce(func: Function, ms: number) {
   let timeout: ReturnType<typeof setTimeout>
   return function (this: any, ...args: any[]) {

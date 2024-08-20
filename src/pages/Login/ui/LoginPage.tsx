@@ -23,6 +23,7 @@ export default function LoginPage(): JSX.Element {
   const [errors, setErrors] = useState<string[]>([])
 
   useEffect(() => {
+    // TODO: вместо этого переносить на страницу, откуда перешёл к логину
     if (token) navigate('/profile', { replace: true })
   }, [token])
 
@@ -38,11 +39,7 @@ export default function LoginPage(): JSX.Element {
     try {
       // TODO: вынести fetch в api
       setStatus('loading')
-      const { data } = await axios.post<LoginResponse>(
-        '/login',
-        formData,
-        requestOptions,
-      )
+      const { data } = await axios.post<LoginResponse>('/login', formData, requestOptions)
       setToken(data.token)
       setStatus('success')
     } catch (error) {
@@ -64,17 +61,13 @@ export default function LoginPage(): JSX.Element {
         <div className="space-y-2">
           <Input
             value={formData.email}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, email: value }))
-            }
+            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
             type="email"
             label="Email"
           />
           <Input
             value={formData.password}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, password: value }))
-            }
+            onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
             type="password"
             label="Пароль"
           />

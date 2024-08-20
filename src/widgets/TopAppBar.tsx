@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
+import navigateBack from '@/shared/utils/navigateBack'
+
 type Icon = {
   icon: string
   onClick: () => void
@@ -12,12 +14,7 @@ type TopAppBarProps = {
   rightIcon?: Icon
 }
 
-export default function TopAppBar({
-  title,
-  back,
-  backOnClick,
-  rightIcon,
-}: TopAppBarProps) {
+export default function TopAppBar({ title, back, backOnClick, rightIcon }: TopAppBarProps) {
   const navigate = useNavigate()
 
   return (
@@ -25,7 +22,7 @@ export default function TopAppBar({
       <div className="flex items-center gap-2">
         {back && (
           <svg
-            onClick={backOnClick ? backOnClick : () => navigate(-1)}
+            onClick={backOnClick ? backOnClick : () => navigateBack(navigate)}
             className="size-3 cursor-pointer"
           >
             <use href="/images/icons.svg#arrow_left" />

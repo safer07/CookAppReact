@@ -97,6 +97,7 @@ export default {
         },
         system: {
           error: '#DE1B1B',
+          positive: '#38BDA1',
         },
         green: {
           highGradient: '#38BDA1',

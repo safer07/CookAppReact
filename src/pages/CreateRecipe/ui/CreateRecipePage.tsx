@@ -10,6 +10,7 @@ import TopAppBar from '@/widgets/TopAppBar'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
+import navigateBack from '@/shared/utils/navigateBack'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ export default function CreateRecipePage(): JSX.Element {
   const stepsCount = 4
 
   function onClickBack(): void {
-    if (step === 1) navigate(-1)
+    if (step === 1) navigateBack(navigate)
     else setStep((prev) => prev - 1)
   }
 

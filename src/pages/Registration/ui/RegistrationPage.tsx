@@ -23,6 +23,7 @@ export default function RegistrationPage(): JSX.Element {
   const [errors, setErrors] = useState<string[]>([])
 
   useEffect(() => {
+    // TODO: вместо этого переносить на страницу, откуда перешёл к логину
     if (token) navigate('/profile', { replace: true })
   }, [token])
 
@@ -51,9 +52,7 @@ export default function RegistrationPage(): JSX.Element {
       setToken(data.token)
       setStatus('success')
     } catch (error) {
-      if (
-        axios.isAxiosError<ValidationError[] | RegistrationErrorResponse>(error)
-      ) {
+      if (axios.isAxiosError<ValidationError[] | RegistrationErrorResponse>(error)) {
         const data = error.response?.data
         if (data) {
           if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
@@ -71,25 +70,19 @@ export default function RegistrationPage(): JSX.Element {
         <div className="space-y-2">
           <Input
             value={formData.email}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, email: value }))
-            }
+            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
             type="email"
             label="Email"
           />
           <Input
             value={formData.password}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, password: value }))
-            }
+            onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
             type="password"
             label="Пароль"
           />
           <Input
             value={formData.passwordRepeat}
-            onChange={(value) =>
-              setFormData((prev) => ({ ...prev, passwordRepeat: value }))
-            }
+            onChange={(value) => setFormData((prev) => ({ ...prev, passwordRepeat: value }))}
             type="password"
             label="Повторите пароль"
           />
@@ -130,10 +123,7 @@ export default function RegistrationPage(): JSX.Element {
       </form>
       <div className="mt-auto py-2 text-center">
         <span>Уже есть аккаунт? </span>
-        <Link
-          to="/login"
-          className="font-bold text-primary hover-hover:hover:text-primary-active"
-        >
+        <Link to="/login" className="font-bold text-primary hover-hover:hover:text-primary-active">
           Вход
         </Link>
       </div>

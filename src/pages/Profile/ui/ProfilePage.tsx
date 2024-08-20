@@ -37,7 +37,7 @@ export default function ProfilePage(): JSX.Element {
   }
 
   useEffect(() => {
-    if (token) fetchUser()
+    if (token && !user) fetchUser()
   }, [token])
 
   return (
@@ -60,7 +60,9 @@ export default function ProfilePage(): JSX.Element {
         {!user && <Button text="Войти" icon="login" block link="/login" />}
         {user && (
           <div className="space-y-0.5">
-            <p className="headline-small">Имя пользователя</p>
+            <p className="headline-small">
+              {user?.name || user?.lastName ? `${user?.name} ${user?.lastName}` : 'Имя не указано'}
+            </p>
             <p className="text-secondary-color">{user?.email}</p>
           </div>
         )}
