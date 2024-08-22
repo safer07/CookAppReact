@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+import UserInfo from './UserInfo'
 import useUser, { UserType } from '@/entities/user/store/store'
-import Button from '@/shared/ui/Button'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import { backendUrl } from '@/shared/config'
@@ -18,7 +18,9 @@ export default function ProfilePage(): JSX.Element {
     setUser(null)
   }
 
-  // TODO: состояние загрузки (скелетон шапки), и неудачного fetchUser
+  // TODO: состояние неудачного fetchUser
+
+  // TODO: создать массив list item, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   // TODO: вынести fetch в api
   async function fetchUser() {
@@ -42,31 +44,7 @@ export default function ProfilePage(): JSX.Element {
 
   return (
     <>
-      <div className="flex items-center gap-2 py-2">
-        {!user && (
-          <div className="surface-low grid size-10 shrink-0 place-content-center rounded-full">
-            <svg className="size-5">
-              <use href="/images/icons.svg#user" />
-            </svg>
-          </div>
-        )}
-        {user && (
-          <img
-            className="size-10 rounded-full"
-            src="/images/avatar.jpg"
-            alt="Аватар пользователя"
-          />
-        )}
-        {!user && <Button text="Войти" icon="login" block link="/login" />}
-        {user && (
-          <div className="space-y-0.5">
-            <p className="headline-small">
-              {user?.name || user?.lastName ? `${user?.name} ${user?.lastName}` : 'Имя не указано'}
-            </p>
-            <p className="text-secondary-color">{user?.email}</p>
-          </div>
-        )}
-      </div>
+      {status !== 'loading' ? <UserInfo /> : <UserInfo.Skeleton />}
       <ul className="layout-fullwidth py-1">
         {user && (
           <ListItem
