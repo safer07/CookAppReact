@@ -52,6 +52,7 @@ export default function Filters({
                   del
                 />
               )}
+              {/* TODO: мапать массив, а не 1 чип */}
               {categoryId && (
                 <Chip
                   text={`Категория: ${findCategoryById(categoryId!)?.name}`}
@@ -59,12 +60,7 @@ export default function Filters({
                   del
                 />
               )}
-              <Chip
-                text="Сбросить фильтры"
-                onClick={resetHandle}
-                variant="active"
-                del
-              />
+              <Chip text="Сбросить фильтры" onClick={resetHandle} variant="active" del />
             </div>
           )}
 

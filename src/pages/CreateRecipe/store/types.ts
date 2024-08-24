@@ -2,8 +2,7 @@ type CreateRecipeStore = {
   name: string
   category: string
   img: string
-  timeHours: number | null
-  timeMinutes: number | null
+  time: number | null
   difficulty: number
   description: string
   totalIngredients: Ingredient[]
@@ -13,8 +12,7 @@ type CreateRecipeStore = {
   setName: (value: string) => void
   setCategory: (value: string) => void
   setImg: (value: string) => void
-  setTimeHours: (value: number) => void
-  setTimeMinutes: (value: number) => void
+  setTime: (value: number) => void
   setDifficulty: (value: number) => void
   setDescription: (value: string) => void
   setTotalIngredients: (value: Ingredient[]) => void

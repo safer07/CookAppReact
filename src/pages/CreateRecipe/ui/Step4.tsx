@@ -11,38 +11,33 @@ import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
 import useDebounce from '@/shared/hooks/debounce'
 
-export default function Step4(): JSX.Element {
-  const { totalIngredients, steps, hidden, setSteps, setHidden } =
-    useCreateRecipe()
+type StepProps = { errors: string[] }
+
+export default function Step4({ errors }: StepProps): JSX.Element {
+  const { totalIngredients, steps, hidden, setSteps, setHidden } = useCreateRecipe()
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-  const [currentStepIngredientsNames, setCurrentStepIngredientsNames] =
-    useState<string[]>([])
+  const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])
   const [tempStepDescription, setTempStepDescription] = useState<string>('')
   const debouncedStepDescription: string = useDebounce(tempStepDescription, 300)
 
-  const currentStepIngredients: Ingredient[] =
-    steps[currentStepIndex].ingredients
+  const currentStepIngredients: Ingredient[] = steps[currentStepIndex].ingredients
 
-  const ingredientsOptions: SelectOption[] = totalIngredients.map(
-    (ingredient): SelectOption => {
-      const usedIngredient: boolean = stepsHasIngredient(ingredient.name)
-      let optionStatus: ListItemStatus = ''
-      if (currentStepIngredientsNames.includes(ingredient.name)) {
-        optionStatus = 'selected'
-      } else if (usedIngredient) optionStatus = 'disabled'
+  const ingredientsOptions: SelectOption[] = totalIngredients.map((ingredient): SelectOption => {
+    const usedIngredient: boolean = stepsHasIngredient(ingredient.name)
+    let optionStatus: ListItemStatus = ''
+    if (currentStepIngredientsNames.includes(ingredient.name)) {
+      optionStatus = 'selected'
+    } else if (usedIngredient) optionStatus = 'disabled'
 
-      return {
-        value: ingredient.name,
-        label: ingredient.name,
-        secondaryText: `${ingredient.amount} ${ingredient.unit}`,
-        status: optionStatus,
-        description: usedIngredient
-          ? `Шаг ${findStepWithIngredient(ingredient.name)}`
-          : '',
-      }
-    },
-  )
+    return {
+      value: ingredient.name,
+      label: ingredient.name,
+      secondaryText: `${ingredient.amount} ${ingredient.unit}`,
+      status: optionStatus,
+      description: usedIngredient ? `Шаг ${findStepWithIngredient(ingredient.name)}` : '',
+    }
+  })
 
   function setStepValue(value: string, field: 'img' | 'description'): void {
     const newSteps = structuredClone(steps)
@@ -57,17 +52,11 @@ export default function Step4(): JSX.Element {
   }
 
   function stepsHasIngredient(ingredientName: string): boolean {
-    return steps.some((step): boolean =>
-      step.ingredients.some((i) => i.name === ingredientName),
-    )
+    return steps.some((step): boolean => step.ingredients.some((i) => i.name === ingredientName))
   }
 
   function findStepWithIngredient(ingredientName: string): number {
-    return (
-      steps.findIndex((step) =>
-        step.ingredients.some((i) => i.name === ingredientName),
-      ) + 1
-    )
+    return steps.findIndex((step) => step.ingredients.some((i) => i.name === ingredientName)) + 1
   }
 
   function stepIsEmpty(): boolean {
@@ -86,9 +75,7 @@ export default function Step4(): JSX.Element {
   }
 
   function deleteIngredient(deletedIngredientName: string): void {
-    setCurrentStepIngredientsNames((prev) =>
-      prev.filter((i) => i !== deletedIngredientName),
-    )
+    setCurrentStepIngredientsNames((prev) => prev.filter((i) => i !== deletedIngredientName))
   }
 
   useEffect(() => {
@@ -100,9 +87,7 @@ export default function Step4(): JSX.Element {
   }, [currentStepIndex, steps])
 
   useEffect(() => {
-    const stepIngredientsNames: string[] = steps[
-      currentStepIndex
-    ].ingredients.map((i) => i.name)
+    const stepIngredientsNames: string[] = steps[currentStepIndex].ingredients.map((i) => i.name)
 
     setCurrentStepIngredientsNames(stepIngredientsNames)
   }, [currentStepIndex, steps.length])
@@ -119,7 +104,7 @@ export default function Step4(): JSX.Element {
 
   return (
     <>
-      <div className="layout-grid flex flex-col gap-3">
+      <form className="layout-grid flex flex-col gap-3">
         <div>
           <p className="headline-medium mb-2">Добавить шаги приготовления</p>
           <Stepper
@@ -135,11 +120,7 @@ export default function Step4(): JSX.Element {
           <div className="flex h-6 items-center justify-between gap-2">
             <h2 className="headline-medium">Шаг {currentStepIndex + 1}</h2>
             {steps.length > 1 && (
-              <ButtonIcon
-                icon="delete"
-                onClick={onClickDeleteStep}
-                variant="tertiary"
-              />
+              <ButtonIcon icon="delete" onClick={onClickDeleteStep} variant="tertiary" />
             )}
           </div>
           <h3 className="headline-small">Ингредиенты в шаге</h3>
@@ -185,7 +166,17 @@ export default function Step4(): JSX.Element {
           onChange={(value) => setStepValue(value, 'img')}
           label={`Фото (шаг ${currentStepIndex + 1})`}
         />
-      </div>
+      </form>
+
+      {errors.length > 0 && (
+        <ul className="layout-grid mt-3 space-y-1">
+          {errors.map((error) => (
+            <li className="text-system-error" key={error}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ul className="mt-2">
         <ListItem

@@ -14,11 +14,23 @@ import navigateBack from '@/shared/utils/navigateBack'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
-  const resetCreateRecipe = useCreateRecipe((state) => state.resetCreateRecipe)
+  const {
+    name,
+    category,
+    time,
+    difficulty,
+    description,
+    totalIngredients,
+    steps,
+    resetCreateRecipe,
+  } = useCreateRecipe()
   const [step, setStep] = useState<number>(1)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false)
+  const [stepIsValid, setStepIsValid] = useState<boolean>(false)
+  const [errors, setErrors] = useState<string[]>([])
 
+  const validationErrors: string[] = []
   const stepsCount = 4
 
   function onClickBack(): void {
@@ -27,7 +39,7 @@ export default function CreateRecipePage(): JSX.Element {
   }
 
   function onClickNext(): void {
-    if (step === stepsCount) onRecipeComplete()
+    if (step === stepsCount) onSubmit()
     else setStep((prev) => prev + 1)
   }
 
@@ -36,10 +48,32 @@ export default function CreateRecipePage(): JSX.Element {
     navigate('/')
   }
 
-  function onRecipeComplete(): void {
-    // TODO: Загружать на сервер (при успехе обнулить store и открыть popup - успешно)
-    resetCreateRecipe()
-    setModalFinishIsOpen(true)
+  function validateRecipe(): void {
+    setErrors([])
+    if (!name) validationErrors.push('Введите название рецепта')
+    if (!category) validationErrors.push('Выберите категорию рецепта')
+    if (!time) validationErrors.push('Введите время приготовления')
+    if (!difficulty) validationErrors.push('Выберите сложность рецепта')
+    if (!description) validationErrors.push('Введите описание приготовления')
+    if (!totalIngredients.length) validationErrors.push('Введите ингредиенты')
+    steps.forEach((step, index) => {
+      if (!step.description) validationErrors.push(`Введите описание для шага ${index + 1}`)
+    })
+    setErrors(validationErrors)
+  }
+
+  function onSubmit(): void {
+    validateRecipe()
+    if (!validationErrors.length) {
+      try {
+        setErrors([])
+        // TODO: Загружать на сервер
+        resetCreateRecipe()
+        setModalFinishIsOpen(true)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   return (
@@ -57,10 +91,10 @@ export default function CreateRecipePage(): JSX.Element {
       <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
 
       <div className="layout-fullwidth mt-3 grow overflow-y-auto pb-2">
-        {step === 1 && <Step1 />}
-        {step === 2 && <Step2 />}
-        {step === 3 && <Step3 />}
-        {step === 4 && <Step4 />}
+        {step === 1 && <Step1 setStepIsValid={setStepIsValid} />}
+        {step === 2 && <Step2 setStepIsValid={setStepIsValid} />}
+        {step === 3 && <Step3 setStepIsValid={setStepIsValid} />}
+        {step === 4 && <Step4 errors={errors} />}
       </div>
 
       <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
@@ -70,6 +104,7 @@ export default function CreateRecipePage(): JSX.Element {
           onClick={onClickNext}
           variant="primary"
           block
+          disabled={!stepIsValid}
         />
       </div>
 

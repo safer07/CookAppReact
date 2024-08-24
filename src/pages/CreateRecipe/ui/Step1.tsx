@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import useCreateRecipe from '../store/store'
 import { categories } from '@/entities/recipeCategory/const/categories'
 import RecipeLimits from '@/entities/recipe/const/limits'
@@ -6,24 +8,23 @@ import TextArea from '@/shared/ui/TextArea'
 import Select from '@/shared/ui/Select'
 import PhotoUpload from '@/shared/ui/PhotoUpload'
 
-export default function Step1(): JSX.Element {
-  const {
-    name,
-    category,
-    description,
-    img,
-    setName,
-    setCategory,
-    setDescription,
-    setImg,
-  } = useCreateRecipe()
+type StepProps = { setStepIsValid: (status: boolean) => void }
+
+export default function Step1({ setStepIsValid }: StepProps): JSX.Element {
+  const { name, category, description, img, setName, setCategory, setDescription, setImg } =
+    useCreateRecipe()
 
   const categoriesOptions = categories.map((category) => {
     return { value: category.id, label: category.fullName }
   })
 
+  useEffect(() => {
+    if (name && category && description) setStepIsValid(true)
+    else setStepIsValid(false)
+  }, [name, category, description])
+
   return (
-    <div className="layout-grid flex flex-col gap-3">
+    <form className="layout-grid flex flex-col gap-3">
       <Input
         value={name}
         onChange={(value) => setName(value)}
@@ -49,11 +50,7 @@ export default function Step1(): JSX.Element {
         maxLength={RecipeLimits.description.max}
       />
 
-      <PhotoUpload
-        image={img}
-        onChange={(value) => setImg(value)}
-        label="Главное фото"
-      />
-    </div>
+      <PhotoUpload image={img} onChange={(value) => setImg(value)} label="Главное фото" />
+    </form>
   )
 }

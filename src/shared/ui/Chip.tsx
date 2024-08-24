@@ -5,15 +5,10 @@ type ChipProps = {
   del?: boolean
 }
 
-export default function Chip({
-  text,
-  onClick,
-  variant,
-  del = false,
-}: ChipProps) {
+export default function Chip({ text, onClick, variant, del = false }: ChipProps): JSX.Element {
   return (
-    <span
-      className={`chip ${variant === 'active' && 'active'} ${del && 'chip-delete'}`}
+    <button
+      className={`chip ${variant === 'active' ? 'active' : ''} ${del ? 'chip-delete' : ''}`}
       onClick={onClick}
     >
       {text}
@@ -22,6 +17,6 @@ export default function Chip({
           <use href="/images/icons.svg#cross"></use>
         </svg>
       )}
-    </span>
+    </button>
   )
 }

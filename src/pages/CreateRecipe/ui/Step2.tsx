@@ -1,35 +1,55 @@
+import { useEffect } from 'react'
+
 import useCreateRecipe from '../store/store'
 import recipeDifficulties from '@/entities/recipe/const/recipeDifficulties'
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 
-export default function Step2(): JSX.Element {
-  const {
-    timeHours,
-    timeMinutes,
-    difficulty,
-    setDifficulty,
-    setTimeHours,
-    setTimeMinutes,
-  } = useCreateRecipe()
+type StepProps = { setStepIsValid: (status: boolean) => void }
+
+export default function Step2({ setStepIsValid }: StepProps): JSX.Element {
+  const { time, difficulty, setDifficulty, setTime } = useCreateRecipe()
+
+  let hours: number | null = null
+  let minutes: number | null = null
+
+  if (time) {
+    hours = Math.floor(time / 60)
+    minutes = time % 60
+  }
+
+  function setHours(value: number) {
+    if (minutes) setTime(value * 60 + minutes)
+    else setTime(value * 60)
+  }
+
+  function setMinutes(value: number) {
+    if (hours) setTime(hours * 60 + +value)
+    else setTime(+value)
+  }
+
+  useEffect(() => {
+    if (time && difficulty) setStepIsValid(true)
+    else setStepIsValid(false)
+  }, [time, difficulty])
 
   return (
-    <div className="layout-grid flex flex-col gap-3">
+    <form className="layout-grid flex flex-col gap-3">
       <h2 className="headline-medium">Параметры рецепта</h2>
 
       <div>
         <h3 className="headline-small">Время приготовления</h3>
         <div className="mt-2 grid grid-cols-2 gap-2">
           <Input
-            value={timeHours ? String(timeHours) : ''}
-            onChange={(value) => setTimeHours(+value)}
+            value={hours ? String(hours) : ''}
+            onChange={(value) => setHours(+value)}
             type="number"
             label="Часы"
             min="0"
           />
           <Input
-            value={timeMinutes ? String(timeMinutes) : ''}
-            onChange={(value) => setTimeMinutes(+value)}
+            value={minutes ? String(minutes) : ''}
+            onChange={(value) => setMinutes(+value)}
             type="number"
             label="Минуты"
             min="0"
@@ -54,6 +74,6 @@ export default function Step2(): JSX.Element {
           ))}
         </ul>
       </div>
-    </div>
+    </form>
   )
 }

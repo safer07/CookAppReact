@@ -14,26 +14,35 @@ type TopAppBarProps = {
   rightIcon?: Icon
 }
 
-export default function TopAppBar({ title, back, backOnClick, rightIcon }: TopAppBarProps) {
+export default function TopAppBar({
+  title,
+  back,
+  backOnClick,
+  rightIcon,
+}: TopAppBarProps): JSX.Element {
   const navigate = useNavigate()
 
   return (
     <div className="py-1.5">
       <div className="flex items-center gap-2">
         {back && (
-          <svg
-            onClick={backOnClick ? backOnClick : () => navigateBack(navigate)}
-            className="size-3 cursor-pointer"
-          >
-            <use href="/images/icons.svg#arrow_left" />
-          </svg>
+          <button>
+            <svg
+              onClick={backOnClick ? backOnClick : () => navigateBack(navigate)}
+              className="size-3"
+            >
+              <use href="/images/icons.svg#arrow_left" />
+            </svg>
+          </button>
         )}
         <div className="flex grow items-center gap-3">
           <h1 className="headline-large line-clamp-1 grow">{title}</h1>
           {rightIcon && (
-            <svg onClick={rightIcon.onClick} className="size-3 cursor-pointer">
-              <use href={`/images/icons.svg#${rightIcon.icon}`} />
-            </svg>
+            <button>
+              <svg onClick={rightIcon.onClick} className="size-3">
+                <use href={`/images/icons.svg#${rightIcon.icon}`} />
+              </svg>
+            </button>
           )}
         </div>
       </div>

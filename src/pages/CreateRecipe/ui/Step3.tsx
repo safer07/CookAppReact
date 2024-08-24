@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import useCreateRecipe from '../store/store'
 import ListItem from '@/shared/ui/ListItem'
@@ -6,9 +6,10 @@ import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
 import Input from '@/shared/ui/Input'
 
-export default function Step3(): JSX.Element {
-  const { steps, totalIngredients, setSteps, setTotalIngredients } =
-    useCreateRecipe()
+type StepProps = { setStepIsValid: (status: boolean) => void }
+
+export default function Step3({ setStepIsValid }: StepProps): JSX.Element {
+  const { steps, totalIngredients, setSteps, setTotalIngredients } = useCreateRecipe()
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [newIngredientName, setNewIngredientName] = useState<string>('')
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0)
@@ -25,9 +26,7 @@ export default function Step3(): JSX.Element {
       !newIngredientName ||
       !newIngredientAmount ||
       !newIngredientUnit ||
-      totalIngredients.some(
-        (ingredient) => ingredient.name === newIngredientName,
-      )
+      totalIngredients.some((ingredient) => ingredient.name === newIngredientName)
     ) {
       return
     }
@@ -52,9 +51,14 @@ export default function Step3(): JSX.Element {
     setTotalIngredients(newTotalIngredients)
   }
 
+  useEffect(() => {
+    if (totalIngredients.length > 0) setStepIsValid(true)
+    else setStepIsValid(false)
+  }, [totalIngredients])
+
   return (
     <>
-      <div className="layout-grid flex flex-col gap-3">
+      <form className="layout-grid flex flex-col gap-3">
         <h2 className="headline-medium">Ингредиенты</h2>
 
         {totalIngredients.length > 0 && (
@@ -74,12 +78,8 @@ export default function Step3(): JSX.Element {
           </ul>
         )}
 
-        <Button
-          text="Добавить ингредиент"
-          icon="plus"
-          onClick={() => setModalIsOpen(true)}
-        />
-      </div>
+        <Button text="Добавить ингредиент" icon="plus" onClick={() => setModalIsOpen(true)} />
+      </form>
 
       <Modal
         open={modalIsOpen}

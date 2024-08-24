@@ -17,6 +17,7 @@ type RecipesStore = {
   status: TypeRecipesStatus
   filters: RecipesFilters
   fetchRecipes: (filters?: RecipesFilters) => Promise<void>
+  // устанавливать не id, а категории
   setCategoryId: (id: string | null) => void
   setSearchQuery: (query: string) => void
   resetFilters: () => void
@@ -33,14 +34,11 @@ const useRecipes = create<RecipesStore>()(
       fetchRecipes: async (filters) => {
         try {
           set({ status: 'loading' })
-          const category = filters?.categoryId
-            ? `category=${filters.categoryId}`
-            : ''
-          const query = filters?.searchQuery
-            ? `&query=${filters.searchQuery}`
-            : ''
-          const url = `${backendUrl}/recipes?${category}${query}`
-          const response = await axios.get<IRecipeItem[]>(url)
+          // TODO: добавить возможность выбора несколько категорий
+          axios.defaults.baseURL = backendUrl
+          const response = await axios.get<IRecipeItem[]>(`/recipes`, {
+            params: { category: filters?.categoryId, query: filters?.searchQuery },
+          })
           set({ items: response.data })
           set({ status: 'success' })
         } catch (error) {
