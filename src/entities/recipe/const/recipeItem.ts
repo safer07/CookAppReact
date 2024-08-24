@@ -21,8 +21,3 @@ interface IFullRecipeItem extends IRecipeItem {
   totalIngredients: Ingredient[]
   steps: RecipeStep[]
 }
-
-interface INewFullRecipeItem extends Omit<IFullRecipeItem, 'id'> {
-  timeHours: number | null
-  timeMinutes: number | null
-}

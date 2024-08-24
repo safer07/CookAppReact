@@ -1,34 +1,43 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import useCreateRecipe from '../store/store'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
+import { CreateRecipeErrorResponse, CreateRecipeResponse } from '../model/types'
 import TopAppBar from '@/widgets/TopAppBar'
+import useUser from '@/entities/user/store/store'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
 import navigateBack from '@/shared/utils/navigateBack'
+import { backendUrl } from '@/shared/config'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
+  const { token } = useUser()
   const {
     name,
     category,
+    img,
     time,
     difficulty,
     description,
     totalIngredients,
     steps,
+    hidden,
     resetCreateRecipe,
   } = useCreateRecipe()
   const [step, setStep] = useState<number>(1)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<string[]>([])
+  const [recipeId, setRecipeId] = useState<string>('')
 
   const validationErrors: string[] = []
   const stepsCount = 4
@@ -62,15 +71,48 @@ export default function CreateRecipePage(): JSX.Element {
     setErrors(validationErrors)
   }
 
-  function onSubmit(): void {
+  async function onSubmit() {
     validateRecipe()
     if (!validationErrors.length) {
       try {
         setErrors([])
+        setLoading(true)
         // TODO: Загружать на сервер
-        resetCreateRecipe()
+        axios.defaults.baseURL = backendUrl
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${token}`,
+        }
+        const requestOptions = {
+          headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        }
+        const recipeData = {
+          name,
+          category,
+          img,
+          time,
+          difficulty,
+          description,
+          totalIngredients,
+          steps,
+          hidden,
+        }
+        const { data } = await axios.post<CreateRecipeResponse>(
+          '/recipes',
+          recipeData,
+          requestOptions,
+        )
+        setLoading(false)
+        setRecipeId(data.recipe._id)
+        // resetCreateRecipe()
         setModalFinishIsOpen(true)
       } catch (error) {
+        if (axios.isAxiosError<CreateRecipeErrorResponse>(error)) {
+          const data = error.response?.data
+          if (data) {
+            setErrors([data?.error?.message])
+          }
+        }
+        setLoading(false)
         console.error(error)
       }
     }
@@ -104,7 +146,7 @@ export default function CreateRecipePage(): JSX.Element {
           onClick={onClickNext}
           variant="primary"
           block
-          disabled={!stepIsValid}
+          disabled={!stepIsValid || loading}
         />
       </div>
 
@@ -122,7 +164,7 @@ export default function CreateRecipePage(): JSX.Element {
       <Modal
         open={modalFinishIsOpen}
         setOpen={setModalFinishIsOpen}
-        onOk={() => navigate('/')}
+        onOk={() => navigate(`/recipes/${recipeId}`, { replace: true })}
         okText="Готово"
         title="Рецепт создан"
         text="Рецепт сохранён в базе данных"
