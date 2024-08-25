@@ -77,7 +77,6 @@ export default function CreateRecipePage(): JSX.Element {
       try {
         setErrors([])
         setLoading(true)
-        // TODO: Загружать на сервер
         axios.defaults.baseURL = backendUrl
         axios.defaults.headers.common = {
           Authorization: `Bearer ${token}`,
@@ -103,7 +102,7 @@ export default function CreateRecipePage(): JSX.Element {
         )
         setLoading(false)
         setRecipeId(data.recipe._id)
-        // resetCreateRecipe()
+        resetCreateRecipe()
         setModalFinishIsOpen(true)
       } catch (error) {
         if (axios.isAxiosError<CreateRecipeErrorResponse>(error)) {
@@ -113,7 +112,6 @@ export default function CreateRecipePage(): JSX.Element {
           }
         }
         setLoading(false)
-        console.error(error)
       }
     }
   }
