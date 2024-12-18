@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { PROFILE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
+
 type NavBarTabs = 'recipes' | 'profile'
 
 type NavBarTab = {
@@ -14,19 +16,18 @@ export default function NavBar(): JSX.Element {
   const pathname: string = useLocation().pathname
   const [activeTab, setActiveTab] = useState('')
   const tabs: NavBarTab[] = [
-    { name: 'Рецепты', id: 'recipes', link: '/', icon: 'fork' },
+    { name: 'Рецепты', id: 'recipes', link: RECIPES_ROUTE, icon: 'fork' },
     {
       name: 'Профиль',
       id: 'profile',
-      link: '/profile',
+      link: PROFILE_ROUTE,
       icon: 'user',
     },
   ]
 
   useEffect(() => {
-    if (pathname === '/' || pathname.startsWith('/recipes'))
-      setActiveTab('recipes')
-    else if (pathname.startsWith('/profile')) setActiveTab('profile')
+    if (pathname === RECIPES_ROUTE || pathname.startsWith('/recipes')) setActiveTab('recipes')
+    else if (pathname.startsWith(PROFILE_ROUTE)) setActiveTab('profile')
   }, [pathname])
 
   // TODO:

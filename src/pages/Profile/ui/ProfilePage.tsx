@@ -7,6 +7,7 @@ import useUser, { UserType } from '@/entities/user/store/store'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import { backendUrl } from '@/shared/config'
+import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
 
 export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate()
@@ -54,7 +55,7 @@ export default function ProfilePage(): JSX.Element {
               element: 'icon',
               icon: 'chevron_right',
             }}
-            onClick={() => navigate('/profile/edit')}
+            onClick={() => navigate(EDIT_PROFILE_ROUTE)}
           />
         )}
         <ListItem

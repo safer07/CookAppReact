@@ -6,6 +6,7 @@ import TopAppBar from '@/widgets/TopAppBar'
 import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
+import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 import {
   LoginErrorResponse,
   LoginFormDataType,
@@ -28,7 +29,7 @@ const emptyRegistrationForm: RegistrationFormDataType = {
 export default function LoginPage(): JSX.Element {
   const navigate = useNavigate()
   const location = useLocation()
-  const isLogin: boolean = location.pathname === '/login'
+  const isLogin: boolean = location.pathname === LOGIN_ROUTE
   //   const isLogin: boolean = false
   //   let initialFormData
   //   if (isLogin) {
@@ -50,7 +51,7 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
-    if (token) navigate('/profile', { replace: true })
+    if (token) navigate(PROFILE_ROUTE, { replace: true })
   }, [token])
 
   // //   function foo(): string
@@ -157,7 +158,7 @@ export default function LoginPage(): JSX.Element {
       <div className="mt-auto py-2 text-center">
         <span>{isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'} </span>
         <Link
-          to={isLogin ? '/registration' : '/login'}
+          to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}
           className="font-bold text-primary hover-hover:hover:text-primary-active"
         >
           {isLogin ? 'Регистрация' : 'Вход'}

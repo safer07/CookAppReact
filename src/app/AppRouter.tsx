@@ -4,6 +4,14 @@ import { Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import FullScreenLayout from './layouts/FullScreenLayout'
 import RecipesPage from '@/pages/Recipes'
+import {
+  CREATE_RECIPE_ROUTE,
+  EDIT_PROFILE_ROUTE,
+  LOGIN_ROUTE,
+  PROFILE_ROUTE,
+  RECIPES_ROUTE,
+  REGISTRATION_ROUTE,
+} from '@/shared/routes'
 
 const RecipeDetails = lazy(() => import('@/pages/RecipeDetails'))
 const CookingMode = lazy(() => import('@/pages/RecipeDetails/ui/CookingMode'))
@@ -16,18 +24,18 @@ const ProfileEdit = lazy(() => import('@/pages/ProfileEdit'))
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<RecipesPage />} />
+      <Route element={<MainLayout />}>
+        <Route path={RECIPES_ROUTE} element={<RecipesPage />} />
         <Route path="recipes/:id" element={<RecipeDetails />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path={PROFILE_ROUTE} element={<Profile />} />
         <Route path="*" element={<Page404 />} />
       </Route>
-      <Route path="/" element={<FullScreenLayout />}>
+      <Route element={<FullScreenLayout />}>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
-        <Route path="create-recipe" element={<CreateRecipe />} />
-        <Route path="login" element={<Auth />} />
-        <Route path="registration" element={<Auth />} />
-        <Route path="profile/edit" element={<ProfileEdit />} />
+        <Route path={CREATE_RECIPE_ROUTE} element={<CreateRecipe />} />
+        <Route path={LOGIN_ROUTE} element={<Auth />} />
+        <Route path={REGISTRATION_ROUTE} element={<Auth />} />
+        <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
       </Route>
     </Routes>
   )

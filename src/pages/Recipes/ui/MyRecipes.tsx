@@ -6,6 +6,7 @@ import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
 import Button from '@/shared/ui/Button'
 import { backendUrl } from '@/shared/config'
+import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 
 export default function MyRecipes() {
   const { token, user } = useUser()
@@ -45,7 +46,7 @@ export default function MyRecipes() {
     return (
       <>
         <p className="mt-2">Войдите или зарегистрируйтесь, чтобы создать рецепт</p>
-        <Button className="mt-2" text="Войти" icon="login" block link="/login" />
+        <Button className="mt-2" text="Войти" icon="login" block link={LOGIN_ROUTE} />
       </>
     )
   }
@@ -53,7 +54,7 @@ export default function MyRecipes() {
   return (
     <>
       <div className="pt-1">
-        <Button text="Добавить рецепт" icon="plus" block link="/create-recipe" />
+        <Button text="Добавить рецепт" icon="plus" block link={CREATE_RECIPE_ROUTE} />
       </div>
       <div className="mt-3 pb-2">
         <div>

@@ -1,6 +1,7 @@
 import UserInfoSkeleton from './UserInfoSkeleton'
 import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
+import { LOGIN_ROUTE } from '@/shared/routes'
 
 export default function UserInfo(): JSX.Element {
   const { user } = useUser()
@@ -17,7 +18,7 @@ export default function UserInfo(): JSX.Element {
       {user && (
         <img className="size-10 rounded-full" src="/images/avatar.jpg" alt="Аватар пользователя" />
       )}
-      {!user && <Button text="Войти" icon="login" block link="/login" />}
+      {!user && <Button text="Войти" icon="login" block link={LOGIN_ROUTE} />}
       {user && (
         <div className="space-y-0.5">
           <p className="headline-small">
