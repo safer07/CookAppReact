@@ -15,20 +15,20 @@ type LinkProps = {
 type ButtonProps = {
   onClick?: () => void
   disabled?: boolean
-  submit?: boolean
+  type?: 'button' | 'submit' | 'reset'
   link?: never
   loading?: boolean
 } & BaseProps
 
 export default function Button(props: ButtonProps | LinkProps) {
   const { text, icon, className = '', variant, block } = props
-  let link, onClick, disabled, submit, loading
+  let link, onClick, disabled, type, loading
   if (props?.link !== undefined) {
     link = props.link
   } else {
     onClick = props.onClick
     disabled = props.disabled
-    submit = props.submit
+    type = props.type || 'button'
     loading = props.loading
   }
   const variantClass = (() => {
@@ -48,10 +48,7 @@ export default function Button(props: ButtonProps | LinkProps) {
   return (
     <>
       {link ? (
-        <Link
-          to={link}
-          className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
-        >
+        <Link to={link} className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}>
           {icon && (
             <svg>
               <use href={`/images/icons.svg#${icon}`} />
@@ -64,7 +61,7 @@ export default function Button(props: ButtonProps | LinkProps) {
           className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
           onClick={disabled ? () => {} : onClick}
           disabled={disabled}
-          type={submit ? 'submit' : 'button'}
+          type={type}
         >
           {icon && !loading && (
             <svg>

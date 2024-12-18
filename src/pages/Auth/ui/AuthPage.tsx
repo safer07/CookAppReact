@@ -150,7 +150,7 @@ export default function LoginPage(): JSX.Element {
           variant="primary"
           text={isLogin ? 'Войти' : 'Зарегистрироваться'}
           block
-          submit
+          type="submit"
           disabled={status === 'loading'}
           loading={status === 'loading'}
         />

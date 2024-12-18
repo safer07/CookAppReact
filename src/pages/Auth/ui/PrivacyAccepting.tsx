@@ -4,6 +4,7 @@ export default function PrivacyAccepting() {
   return (
     <p>
       <span>Нажимая “Зарегистрироваться”, вы принимаете условия </span>
+      {/* TODO: нет этих страниц и маршрутов */}
       <Link
         to="/privacy-policy"
         className="font-bold text-primary hover-hover:hover:text-primary-active"
