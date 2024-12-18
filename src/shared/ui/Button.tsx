@@ -5,7 +5,7 @@ type BaseProps = {
   icon?: string
   className?: string
   variant?: 'primary' | 'secondary' | 'tertiary' | 'negative'
-  block?: boolean
+  fullWidth?: boolean
 }
 
 type LinkProps = {
@@ -21,7 +21,7 @@ type ButtonProps = {
 } & BaseProps
 
 export default function Button(props: ButtonProps | LinkProps) {
-  const { text, icon, className = '', variant, block } = props
+  const { text, icon, className = '', variant, fullWidth } = props
   let link, onClick, disabled, type, loading
   if (props?.link !== undefined) {
     link = props.link
@@ -48,7 +48,10 @@ export default function Button(props: ButtonProps | LinkProps) {
   return (
     <>
       {link ? (
-        <Link to={link} className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}>
+        <Link
+          to={link}
+          className={`button ${className} ${variantClass} ${fullWidth ? 'w-full' : ''}`}
+        >
           {icon && (
             <svg>
               <use href={`/images/icons.svg#${icon}`} />
@@ -58,7 +61,7 @@ export default function Button(props: ButtonProps | LinkProps) {
         </Link>
       ) : (
         <button
-          className={`button ${className} ${variantClass} ${block ? 'w-full' : ''}`}
+          className={`button ${className} ${variantClass} ${fullWidth ? 'w-full' : ''}`}
           onClick={disabled ? () => {} : onClick}
           disabled={disabled}
           type={type}

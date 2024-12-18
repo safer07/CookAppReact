@@ -138,12 +138,12 @@ export default function CreateRecipePage(): JSX.Element {
       </div>
 
       <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
-        <Button text="Назад" onClick={onClickBack} block />
+        <Button text="Назад" onClick={onClickBack} fullWidth />
         <Button
           text={step !== stepsCount ? 'Далее' : 'Сохранить'}
           onClick={onClickNext}
           variant="primary"
-          block
+          fullWidth
           disabled={!stepIsValid || loading}
         />
       </div>

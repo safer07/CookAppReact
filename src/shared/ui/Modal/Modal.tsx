@@ -53,12 +53,7 @@ export default function Modal({
 
   return ReactDOM.createPortal(
     <div className="modal" data-open={open} role="dialog">
-      <div
-        className="modal-backdrop"
-        onClick={onBackDropClick}
-        tabIndex={0}
-        role="button"
-      ></div>
+      <div className="modal-backdrop" onClick={onBackDropClick} tabIndex={0} role="button"></div>
       <div className={`modal-content ${textAlignClass}`}>
         <p className="headline-medium">{title}</p>
         {text && <p className="mt-2 text-secondary-color">{text}</p>}
@@ -67,18 +62,13 @@ export default function Modal({
 
         <div className={`mt-3 grid ${cancellable ? 'grid-cols-2' : ''}  gap-2`}>
           {cancellable && (
-            <Button
-              text="Отмена"
-              onClick={() => setOpen(false)}
-              variant="tertiary"
-              block
-            />
+            <Button text="Отмена" onClick={() => setOpen(false)} variant="tertiary" fullWidth />
           )}
           <Button
             text={okText}
             onClick={onClickOk}
             variant={type === 'negative' ? 'negative' : 'primary'}
-            block
+            fullWidth
           />
         </div>
       </div>

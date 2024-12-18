@@ -46,7 +46,7 @@ export default function MyRecipes() {
     return (
       <>
         <p className="mt-2">Войдите или зарегистрируйтесь, чтобы создать рецепт</p>
-        <Button className="mt-2" text="Войти" icon="login" block link={LOGIN_ROUTE} />
+        <Button className="mt-2" text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} />
       </>
     )
   }
@@ -54,7 +54,7 @@ export default function MyRecipes() {
   return (
     <>
       <div className="pt-1">
-        <Button text="Добавить рецепт" icon="plus" block link={CREATE_RECIPE_ROUTE} />
+        <Button text="Добавить рецепт" icon="plus" fullWidth link={CREATE_RECIPE_ROUTE} />
       </div>
       <div className="mt-3 pb-2">
         <div>

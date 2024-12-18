@@ -44,9 +44,7 @@ export default function CookingMode(): JSX.Element {
         </div>
       )}
 
-      {status === 'error' && (
-        <TopAppBar title="Не удалось загрузить рецепт" back />
-      )}
+      {status === 'error' && <TopAppBar title="Не удалось загрузить рецепт" back />}
 
       {status === 'success' && step && (
         <div className="layout-fullwidth flex h-svh flex-col">
@@ -66,9 +64,7 @@ export default function CookingMode(): JSX.Element {
             </div>
             <div className="layout-grid">
               <div className="grid gap-2 py-2">
-                <h1 className="headline-large text-center">
-                  Шаг {stepIndex + 1}
-                </h1>
+                <h1 className="headline-large text-center">Шаг {stepIndex + 1}</h1>
                 <Stepper
                   stepsCount={stepsCount}
                   currentIndex={stepIndex}
@@ -93,12 +89,12 @@ export default function CookingMode(): JSX.Element {
           </div>
           <div className="layout-grid">
             <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
-              <Button text="Назад" onClick={onClickBack} block />
+              <Button text="Назад" onClick={onClickBack} fullWidth />
               <Button
                 text={stepIndex !== stepsCount - 1 ? 'Далее' : 'Готово'}
                 onClick={onClickNext}
                 variant="primary"
-                block
+                fullWidth
               />
             </div>
           </div>

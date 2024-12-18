@@ -35,11 +35,9 @@ export default function RecipeDetailsPage(): JSX.Element {
           <div className="py-2">
             <Button
               text="Начать готовить"
-              onClick={() =>
-                navigate(`/recipes/${id}/cooking-mode`, { replace: true })
-              }
+              onClick={() => navigate(`/recipes/${id}/cooking-mode`, { replace: true })}
               variant="primary"
-              block
+              fullWidth
             />
           </div>
 

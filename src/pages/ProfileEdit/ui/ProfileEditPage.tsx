@@ -99,7 +99,7 @@ export default function ProfileEditPage(): JSX.Element {
             />
           </form>
           {/* TODO: добавить функционал смены пароля */}
-          <Button text="Изменить пароль" block />
+          <Button text="Изменить пароль" fullWidth />
           {status === 'success' && <p className="text-system-positive">Профиль обновлён</p>}
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function ProfileEditPage(): JSX.Element {
           text={'Сохранить изменения'}
           onClick={onSubmit}
           variant="primary"
-          block
+          fullWidth
           disabled={status === 'loading'}
           loading={status === 'loading'}
         />

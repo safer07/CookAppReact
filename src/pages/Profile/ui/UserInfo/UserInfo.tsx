@@ -18,7 +18,7 @@ export default function UserInfo(): JSX.Element {
       {user && (
         <img className="size-10 rounded-full" src="/images/avatar.jpg" alt="Аватар пользователя" />
       )}
-      {!user && <Button text="Войти" icon="login" block link={LOGIN_ROUTE} />}
+      {!user && <Button text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} />}
       {user && (
         <div className="space-y-0.5">
           <p className="headline-small">
