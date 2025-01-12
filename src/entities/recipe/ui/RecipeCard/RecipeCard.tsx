@@ -11,12 +11,11 @@ type RecipeCardProps = {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const [difficultyText, tagDifficultySurface] =
-    getRecipeDifficultyTextAndSurface(recipe?.difficulty)
-
-  const recipeCategory = categories.find(
-    (category) => category.id === recipe.category,
+  const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
+    recipe?.difficulty,
   )
+
+  const recipeCategory = categories.find((category) => category.id === recipe.category)
 
   return (
     <Link
@@ -31,10 +30,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
             alt={recipe.name}
           />
         </div>
-        <LikeButton
-          itemId={recipe._id}
-          className="absolute right-1.5 top-1.5"
-        />
+        <LikeButton itemId={recipe._id} className="absolute right-1.5 top-1.5" />
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300 hover-hover:group-hover:text-primary">
@@ -46,9 +42,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
             <svg className="size-2 fill-primary">
               <use href="/images/icons.svg#clock"></use>
             </svg>
-            <div className="label-small text-secondary-color">
-              {recipe.time} минут
-            </div>
+            <div className="label-small text-secondary-color">{recipe.time} минут</div>
           </div>
           <Tag text={difficultyText} surface={tagDifficultySurface} />
         </div>

@@ -11,11 +11,11 @@ import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
 
 export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate()
-  const { user, token, status, setUser, setToken, setStatus } = useUser()
+  const { user, accessToken, status, setUser, setAccessToken, setStatus } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
 
   function logout() {
-    setToken(null)
+    setAccessToken(null)
     setUser(null)
   }
 
@@ -28,10 +28,10 @@ export default function ProfilePage(): JSX.Element {
     try {
       axios.defaults.baseURL = backendUrl
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       }
       setStatus('loading')
-      const { data } = await axios.get<UserType>('/profile')
+      const { data } = await axios.get<UserType>('/users/profile')
       setUser(data)
       setStatus('success')
     } catch (error) {
@@ -40,8 +40,8 @@ export default function ProfilePage(): JSX.Element {
   }
 
   useEffect(() => {
-    if (token && !user) fetchUser()
-  }, [token])
+    if (accessToken && !user) fetchUser()
+  }, [accessToken])
 
   return (
     <>

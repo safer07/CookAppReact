@@ -1,29 +1,23 @@
-export type LoginFormDataType = {
-  email: string
-  password: string
-}
+import { z } from 'zod'
 
-export type LoginResponse = {
-  message: string
-  token: string
-}
+export const LoginFormDataSchema = z.object({ email: z.string().email(), password: z.string() })
+export type LoginFormDataType = z.infer<typeof LoginFormDataSchema>
 
-export type LoginErrorResponse = {
-  message: string
-}
+export const RegistrationFormDataSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+  passwordRepeat: z.string(),
+})
+export type RegistrationFormDataType = z.infer<typeof RegistrationFormDataSchema>
 
-export type RegistrationFormDataType = {
-  email: string
-  password: string
-  passwordRepeat: string
-}
+export const authResponseSchema = z.object({
+  message: z.string(),
+  accessToken: z.string(),
+  refreshToken: z.string(),
+})
+export type AuthResponse = z.infer<typeof authResponseSchema>
 
-export type RegistrationResponse = {
-  message: string
-  token: string
-}
-
-export type RegistrationErrorResponse = {
+export type AuthErrorResponse = {
   message: string
 }
 

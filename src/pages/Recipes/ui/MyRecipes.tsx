@@ -9,7 +9,7 @@ import { backendUrl } from '@/shared/config'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 
 export default function MyRecipes() {
-  const { token, user } = useUser()
+  const { accessToken, user } = useUser()
   const [recipes, setRecipes] = useState<IRecipeItem[]>([])
   const [status, setStatus] = useState<string>('error')
   const [error, setError] = useState<string>('error')
@@ -21,7 +21,7 @@ export default function MyRecipes() {
       setError('')
       axios.defaults.baseURL = backendUrl
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       }
       setStatus('loading')
       const { data } = await axios.get<IRecipeItem[]>('/recipes/my-recipes')

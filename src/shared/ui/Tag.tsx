@@ -1,8 +1,4 @@
-export type TagSurfaceType =
-  | 'surface-accent'
-  | 'surface-green'
-  | 'surface-yellow'
-  | 'surface-red'
+export type TagSurfaceType = 'surface-accent' | 'surface-green' | 'surface-yellow' | 'surface-red'
 
 type TagProps = {
   text: string
@@ -10,16 +6,9 @@ type TagProps = {
   surface?: TagSurfaceType
 }
 
-export default function Tag({
-  text,
-  onClick,
-  surface = 'surface-accent',
-}: TagProps) {
+export default function Tag({ text, onClick, surface = 'surface-accent' }: TagProps) {
   return (
-    <span
-      className={`${surface} label-small rounded-full px-1.5 py-0.5`}
-      onClick={onClick}
-    >
+    <span className={`${surface} label-small rounded-full px-1.5 py-0.5`} onClick={onClick}>
       {text}
     </span>
   )

@@ -24,7 +24,7 @@ type formDataType = {
 
 export default function ProfileEditPage(): JSX.Element {
   const navigate = useNavigate()
-  const { token, user, status, setUser, setStatus } = useUser()
+  const { accessToken, user, status, setUser, setStatus } = useUser()
   const [formData, setFormData] = useState<formDataType>({
     name: user?.name || '',
     lastName: user?.lastName || '',
@@ -34,8 +34,8 @@ export default function ProfileEditPage(): JSX.Element {
   })
 
   useEffect(() => {
-    if (!token || !user) navigate('/profile', { replace: true })
-  }, [token, user])
+    if (!accessToken || !user) navigate('/profile', { replace: true })
+  }, [accessToken, user])
 
   useEffect(() => {
     setStatus('init')
@@ -52,7 +52,11 @@ export default function ProfileEditPage(): JSX.Element {
     try {
       // TODO: вынести fetch в api
       setStatus('loading')
-      const { data } = await axios.patch<UserType>(`/profile/${user._id}`, formData, requestOptions)
+      const { data } = await axios.patch<UserType>(
+        `/users/profile/${user._id}`,
+        formData,
+        requestOptions,
+      )
       setUser(data)
       setStatus('success')
     } catch (error) {

@@ -8,9 +8,8 @@ import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 import {
-  LoginErrorResponse,
+  AuthErrorResponse,
   LoginFormDataType,
-  RegistrationErrorResponse,
   RegistrationFormDataType,
   ValidationError,
 } from '../model/types'
@@ -30,6 +29,11 @@ export default function LoginPage(): JSX.Element {
   const navigate = useNavigate()
   const location = useLocation()
   const isLogin: boolean = location.pathname === LOGIN_ROUTE
+
+  // let formDataType
+  // if (isLogin) type formDataType = LoginFormDataType
+  // else type formDataType = RegistrationFormDataType
+
   //   const isLogin: boolean = false
   //   let initialFormData
   //   if (isLogin) {
@@ -40,7 +44,7 @@ export default function LoginPage(): JSX.Element {
   // const initialFormData: LoginFormDataType | RegistrationFormDataType = isLogin
   //   ? emptyLoginForm
   //   : emptyRegistrationForm
-  const { token, status, setToken, setStatus } = useUser()
+  const { accessToken, status, setAccessToken, setStatus } = useUser()
   // TODO: как типизировать форму в зависимости от isLogin?
   // const [formData, setFormData] = useState<LoginFormDataType | RegistrationFormDataType>(
   //   initialFormData,
@@ -51,8 +55,8 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
-    if (token) navigate(PROFILE_ROUTE, { replace: true })
-  }, [token])
+    if (accessToken) navigate(PROFILE_ROUTE, { replace: true })
+  }, [accessToken])
 
   // //   function foo(): string
   // // function foo<B extends boolean | undefined>(isLogin: B): B extends true ? number : string
@@ -90,20 +94,18 @@ export default function LoginPage(): JSX.Element {
       } else {
         data = await registration(formData)
       }
-      setToken(data.token)
+      setAccessToken(data.accessToken)
       setStatus('success')
     } catch (error) {
-      if (
-        axios.isAxiosError<ValidationError[] | LoginErrorResponse | RegistrationErrorResponse>(
-          error,
-        )
-      ) {
+      if (axios.isAxiosError<ValidationError[] | AuthErrorResponse>(error)) {
         const data = error.response?.data
         if (data) {
           if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
           else setErrors([data?.message])
         }
       }
+      console.log(error)
+      // TODO: ничего не указывается, если zod выдаёт ошибку, и статус ни на что не влияет
       setStatus('error')
     }
   }

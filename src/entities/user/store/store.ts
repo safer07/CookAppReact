@@ -19,10 +19,10 @@ type StatusType = 'init' | 'loading' | 'success' | 'error'
 
 type UserStore = {
   user: UserType
-  token: string | null
+  accessToken: string | null
   status: StatusType
   setUser: (value: UserType) => void
-  setToken: (token: string | null) => void
+  setAccessToken: (accessToken: string | null) => void
   setStatus: (value: StatusType) => void
   // fetchUser: (id: string) => Promise<void>
   favouriteRecipes: string[]
@@ -35,10 +35,10 @@ const useUser = create<UserStore>()(
     devtools(
       immer((set) => ({
         user: null,
-        token: null,
+        accessToken: null,
         status: 'init',
         setUser: (value) => set({ user: value }),
-        setToken: (value) => set({ token: value }),
+        setAccessToken: (value) => set({ accessToken: value }),
         setStatus: (value) => set({ status: value }),
         // fetchUser: async (id) => {
         //   try {
