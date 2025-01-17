@@ -9,16 +9,15 @@ import Step3 from './Step3'
 import Step4 from './Step4'
 import { CreateRecipeErrorResponse, CreateRecipeResponse } from '../model/types'
 import TopAppBar from '@/widgets/TopAppBar'
-import useUser from '@/entities/user/store/store'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
 import navigateBack from '@/shared/utils/navigateBack'
-import { BACKEND_URL } from '@/shared/config'
+import api from '@/shared/api'
+import { API_PATHS } from '@/shared/config'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken } = useUser()
   const {
     name,
     category,
@@ -77,13 +76,6 @@ export default function CreateRecipePage(): JSX.Element {
       try {
         setErrors([])
         setLoading(true)
-        axios.defaults.baseURL = BACKEND_URL
-        axios.defaults.headers.common = {
-          Authorization: `Bearer ${accessToken}`,
-        }
-        const requestOptions = {
-          headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        }
         const recipeData = {
           name,
           category,
@@ -95,16 +87,17 @@ export default function CreateRecipePage(): JSX.Element {
           steps,
           hidden,
         }
-        const { data } = await axios.post<CreateRecipeResponse>(
-          '/recipes',
+        const { data } = await api.post<CreateRecipeResponse>(
+          API_PATHS.recipes.createRecipe,
           recipeData,
-          requestOptions,
         )
+        // TODO: валидация ответа и ошибок
         setLoading(false)
         setRecipeId(data.recipe._id)
         resetCreateRecipe()
         setModalFinishIsOpen(true)
       } catch (error) {
+        // CreateRecipeErrorResponse синхронизировать с ответом backend
         if (axios.isAxiosError<CreateRecipeErrorResponse>(error)) {
           const data = error.response?.data
           if (data) {

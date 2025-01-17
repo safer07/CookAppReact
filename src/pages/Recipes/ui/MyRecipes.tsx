@@ -5,11 +5,12 @@ import { RecipesErrorResponse } from '../model/types'
 import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
 import Button from '@/shared/ui/Button'
-import { BACKEND_URL } from '@/shared/config'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
+import api from '@/shared/api'
+import { API_PATHS } from '@/shared/config'
 
 export default function MyRecipes() {
-  const { accessToken, user } = useUser()
+  const { user } = useUser()
   const [recipes, setRecipes] = useState<IRecipeItem[]>([])
   const [status, setStatus] = useState<string>('error')
   const [error, setError] = useState<string>('error')
@@ -19,15 +20,13 @@ export default function MyRecipes() {
   async function fetchUserRecipes() {
     try {
       setError('')
-      axios.defaults.baseURL = BACKEND_URL
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${accessToken}`,
-      }
       setStatus('loading')
-      const { data } = await axios.get<IRecipeItem[]>('/recipes/my-recipes')
+      const { data } = await api.get<IRecipeItem[]>(API_PATHS.recipes.myRecipes)
+      // TODO: нет валидации входящих данных и ошибок загрузки
       setRecipes(data)
       setStatus('success')
     } catch (error) {
+      // RecipesErrorResponse привести к типу с backend
       if (axios.isAxiosError<RecipesErrorResponse>(error)) {
         const data = error.response?.data
         if (data) {

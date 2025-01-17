@@ -7,4 +7,10 @@ export const API_PATHS = {
     getProfile: '/users/profile',
     updateProfile: '/users/profile',
   },
+  recipes: {
+    getAll: '/recipes',
+    getOne: '/recipes',
+    createRecipe: '/recipes',
+    myRecipes: '/recipes/my-recipes',
+  },
 }

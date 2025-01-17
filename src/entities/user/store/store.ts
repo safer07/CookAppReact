@@ -11,8 +11,6 @@ type StatusType = 'init' | 'loading' | 'success' | 'error'
 
 type UserStore = {
   user: IUser | null
-  // TODO: удалить accessToken
-  accessToken: string | null
   status: StatusType
   setUser: (value: IUser) => void
   setStatus: (value: StatusType) => void
@@ -31,7 +29,6 @@ const useUser = create<UserStore>()(
     devtools(
       immer((set) => ({
         user: null,
-        accessToken: null,
         status: 'init',
         setUser: (value) => set({ user: value }),
         setStatus: (value) => set({ status: value }),

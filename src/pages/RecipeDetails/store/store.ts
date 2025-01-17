@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import axios from 'axios'
 
-import { BACKEND_URL } from '@/shared/config'
+import { API_PATHS } from '@/shared/config'
+import api from '@/shared/api'
 
 type FullRecipeStore = {
   recipe: IFullRecipeItem | null
@@ -17,9 +17,8 @@ const useFullRecipe = create<FullRecipeStore>()(
     fetchFullRecipe: async (id) => {
       try {
         set({ status: 'loading' })
-        const url = `${BACKEND_URL}/recipes/${id}`
-        const response = await axios.get<IFullRecipeItem>(url)
-        set({ recipe: response.data })
+        const { data } = await api.get<IFullRecipeItem>(`${API_PATHS.recipes.getOne}/${id}`)
+        set({ recipe: data })
         set({ status: 'success' })
       } catch (error) {
         set({ status: 'error' })

@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import axios from 'axios'
 
-import { BACKEND_URL } from '@/shared/config'
+import { API_PATHS } from '@/shared/config'
+import api from '@/shared/api'
 
 export type TypeRecipesStatus = 'init' | 'loading' | 'success' | 'error'
 
@@ -35,11 +35,10 @@ const useRecipes = create<RecipesStore>()(
         try {
           set({ status: 'loading' })
           // TODO: добавить возможность выбора несколько категорий
-          axios.defaults.baseURL = BACKEND_URL
-          const response = await axios.get<IRecipeItem[]>(`/recipes`, {
+          const { data } = await api.get<IRecipeItem[]>(API_PATHS.recipes.getAll, {
             params: { category: filters?.categoryId, query: filters?.searchQuery },
           })
-          set({ items: response.data })
+          set({ items: data })
           set({ status: 'success' })
         } catch (error) {
           set({ status: 'error' })

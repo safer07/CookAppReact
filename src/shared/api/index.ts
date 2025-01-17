@@ -24,10 +24,10 @@ api.interceptors.response.use(
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
       originalRequest._isRetry = true
       try {
-        const response = await axios.get<AuthResponse>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
+        const { data } = await axios.get<AuthResponse>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
           withCredentials: true,
         })
-        localStorage.setItem(ACCESS_TOKEN_KEY, response.data.accessToken)
+        localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken)
         return api.request(originalRequest)
       } catch (error) {
         console.error('Пользователь не авторизован')
