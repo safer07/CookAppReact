@@ -1,41 +1,35 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 import TopAppBar from '@/widgets/TopAppBar'
-import useUser, { UserType } from '@/entities/user/store/store'
+import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
-import { backendUrl } from '@/shared/config'
+import { PROFILE_ROUTE } from '@/shared/routes'
+import { UpdateProfileDtoType } from '@/entities/user/model/api'
 
+// TODO: в сущность user (config? model?)
 const genderSelectOptions = [
   { value: 'male', label: 'Мужской' },
   { value: 'female', label: 'Женский' },
 ]
 
-type formDataType = {
-  name: string
-  lastName: string
-  email: string
-  gender: string
-  birthDate: string
-}
-
 export default function ProfileEditPage(): JSX.Element {
   const navigate = useNavigate()
-  const { accessToken, user, status, setUser, setStatus } = useUser()
-  const [formData, setFormData] = useState<formDataType>({
+  const { user, status, setStatus, updateProfile } = useUser()
+  const [formData, setFormData] = useState<UpdateProfileDtoType>({
     name: user?.name || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
     gender: user?.gender || '',
+    // TODO: дата не строка
     birthDate: user?.birthDate || '',
   })
 
   useEffect(() => {
-    if (!accessToken || !user) navigate('/profile', { replace: true })
-  }, [accessToken, user])
+    if (!user) navigate(PROFILE_ROUTE, { replace: true })
+  }, [user])
 
   useEffect(() => {
     setStatus('init')
@@ -44,27 +38,13 @@ export default function ProfileEditPage(): JSX.Element {
   async function onSubmit() {
     if (!user?._id) return
 
-    axios.defaults.baseURL = backendUrl
-    const requestOptions = {
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    }
-
     try {
-      // TODO: вынести fetch в api
-      setStatus('loading')
-      const { data } = await axios.patch<UserType>(
-        `/users/profile/${user._id}`,
-        formData,
-        requestOptions,
-      )
-      setUser(data)
-      setStatus('success')
+      // TODO: сделать валидацию формы
+      await updateProfile(user._id, formData)
     } catch (error) {
-      setStatus('error')
+      // TODO: сделать обработки ошибок
     }
   }
-
-  // TODO: сделать обработки ошибок
 
   return (
     <>

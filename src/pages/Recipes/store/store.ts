@@ -3,7 +3,7 @@ import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import axios from 'axios'
 
-import { backendUrl } from '@/shared/config'
+import { BACKEND_URL } from '@/shared/config'
 
 export type TypeRecipesStatus = 'init' | 'loading' | 'success' | 'error'
 
@@ -35,7 +35,7 @@ const useRecipes = create<RecipesStore>()(
         try {
           set({ status: 'loading' })
           // TODO: добавить возможность выбора несколько категорий
-          axios.defaults.baseURL = backendUrl
+          axios.defaults.baseURL = BACKEND_URL
           const response = await axios.get<IRecipeItem[]>(`/recipes`, {
             params: { category: filters?.categoryId, query: filters?.searchQuery },
           })

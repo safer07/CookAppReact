@@ -5,7 +5,7 @@ import { RecipesErrorResponse } from '../model/types'
 import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
 import Button from '@/shared/ui/Button'
-import { backendUrl } from '@/shared/config'
+import { BACKEND_URL } from '@/shared/config'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 
 export default function MyRecipes() {
@@ -19,7 +19,7 @@ export default function MyRecipes() {
   async function fetchUserRecipes() {
     try {
       setError('')
-      axios.defaults.baseURL = backendUrl
+      axios.defaults.baseURL = BACKEND_URL
       axios.defaults.headers.common = {
         Authorization: `Bearer ${accessToken}`,
       }

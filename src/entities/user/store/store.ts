@@ -1,30 +1,26 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import axios from 'axios'
 
-import { backendUrl } from '@/shared/config'
-
-export type UserType = {
-  _id: string
-  name: string
-  lastName: string
-  email: string
-  avatarUrl: string
-  gender: 'male' | 'female'
-  birthDate: string
-} | null
+import userService from '../api'
+import { IUser } from '../model'
+import { AuthUserDtoType, UpdateProfileDtoType } from '../model/api'
+import { ACCESS_TOKEN_KEY } from '@/shared/config'
 
 type StatusType = 'init' | 'loading' | 'success' | 'error'
 
 type UserStore = {
-  user: UserType
+  user: IUser | null
+  // TODO: удалить accessToken
   accessToken: string | null
   status: StatusType
-  setUser: (value: UserType) => void
-  setAccessToken: (accessToken: string | null) => void
+  setUser: (value: IUser) => void
   setStatus: (value: StatusType) => void
-  // fetchUser: (id: string) => Promise<void>
+  registration: (AuthUserDto: AuthUserDtoType) => Promise<void>
+  login: (AuthUserDto: AuthUserDtoType) => Promise<void>
+  logout: () => Promise<void>
+  fetchUser: () => Promise<void>
+  updateProfile: (userId: string, UpdateProfileDto: UpdateProfileDtoType) => Promise<void>
   favouriteRecipes: string[]
   addFavouriteRecipe: (id: string) => void
   removeFavouriteRecipe: (id: string) => void
@@ -38,20 +34,63 @@ const useUser = create<UserStore>()(
         accessToken: null,
         status: 'init',
         setUser: (value) => set({ user: value }),
-        setAccessToken: (value) => set({ accessToken: value }),
         setStatus: (value) => set({ status: value }),
-        // fetchUser: async (id) => {
-        //   try {
-        //     set({ status: 'loading' })
-        //     const url = `${backendUrl}/recipes/${id}`
-        //     const response = await axios.get<IFullRecipeItem>(url)
-        //     set({ recipe: response.data })
-        //     set({ status: 'success' })
-        //   } catch (error) {
-        //     set({ status: 'error' })
-        //     console.error(error)
-        //   }
-        // },
+        registration: async (AuthUserDto) => {
+          try {
+            set({ status: 'loading' })
+            const response = await userService.registration(AuthUserDto)
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+            set({ user: response.user })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+            throw error
+          }
+        },
+        login: async (AuthUserDto) => {
+          try {
+            set({ status: 'loading' })
+            const response = await userService.login(AuthUserDto)
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+            set({ user: response.user })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+            throw error
+          }
+        },
+        logout: async () => {
+          try {
+            set({ status: 'loading' })
+            await userService.logout()
+            localStorage.removeItem(ACCESS_TOKEN_KEY)
+            set({ user: null })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+          }
+        },
+        fetchUser: async () => {
+          try {
+            set({ status: 'loading' })
+            const user = await userService.getProfile()
+            set({ user })
+            set({ status: 'success' })
+          } catch (error) {
+            // TODO: обнулять пользователя, если не удалось обновить данные?
+            set({ status: 'error' })
+          }
+        },
+        updateProfile: async (id, UpdateProfileDto) => {
+          try {
+            set({ status: 'loading' })
+            const user = await userService.updateProfile(id, UpdateProfileDto)
+            set({ user })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+          }
+        },
         favouriteRecipes: [
           '668b9ede0cc1f0dab6c84e42',
           '668b9ede0cc1f0dab6c84e47',

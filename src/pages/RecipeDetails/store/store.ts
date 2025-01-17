@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import axios from 'axios'
 
-import { backendUrl } from '@/shared/config'
+import { BACKEND_URL } from '@/shared/config'
 
 type FullRecipeStore = {
   recipe: IFullRecipeItem | null
@@ -17,7 +17,7 @@ const useFullRecipe = create<FullRecipeStore>()(
     fetchFullRecipe: async (id) => {
       try {
         set({ status: 'loading' })
-        const url = `${backendUrl}/recipes/${id}`
+        const url = `${BACKEND_URL}/recipes/${id}`
         const response = await axios.get<IFullRecipeItem>(url)
         set({ recipe: response.data })
         set({ status: 'success' })

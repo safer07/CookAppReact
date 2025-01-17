@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
+import PrivacyAccepting from './PrivacyAccepting'
 import TopAppBar from '@/widgets/TopAppBar'
-import useUser from '@/entities/user/store/store'
-import Button from '@/shared/ui/Button'
-import Input from '@/shared/ui/Input'
-import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 import {
   AuthErrorResponse,
   LoginFormDataType,
   RegistrationFormDataType,
   ValidationError,
-} from '../model/types'
-import { login, registration } from '../api/auth'
-import PrivacyAccepting from './PrivacyAccepting'
+} from '@/entities/user/model/api'
+import useUser from '@/entities/user/store/store'
+import Button from '@/shared/ui/Button'
+import Input from '@/shared/ui/Input'
+import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 
 const emptyLoginForm: LoginFormDataType = { email: '', password: '' }
 const emptyRegistrationForm: RegistrationFormDataType = {
@@ -28,6 +27,7 @@ const emptyRegistrationForm: RegistrationFormDataType = {
 export default function LoginPage(): JSX.Element {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user, status, login, registration } = useUser()
   const isLogin: boolean = location.pathname === LOGIN_ROUTE
 
   // let formDataType
@@ -44,7 +44,7 @@ export default function LoginPage(): JSX.Element {
   // const initialFormData: LoginFormDataType | RegistrationFormDataType = isLogin
   //   ? emptyLoginForm
   //   : emptyRegistrationForm
-  const { accessToken, status, setAccessToken, setStatus } = useUser()
+
   // TODO: как типизировать форму в зависимости от isLogin?
   // const [formData, setFormData] = useState<LoginFormDataType | RegistrationFormDataType>(
   //   initialFormData,
@@ -55,8 +55,8 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
-    if (accessToken) navigate(PROFILE_ROUTE, { replace: true })
-  }, [accessToken])
+    if (user) navigate(PROFILE_ROUTE, { replace: true })
+  }, [user])
 
   // //   function foo(): string
   // // function foo<B extends boolean | undefined>(isLogin: B): B extends true ? number : string
@@ -87,16 +87,10 @@ export default function LoginPage(): JSX.Element {
     }
 
     try {
-      setStatus('loading')
-      let data
-      if (isLogin) {
-        data = await login(formData)
-      } else {
-        data = await registration(formData)
-      }
-      setAccessToken(data.accessToken)
-      setStatus('success')
+      isLogin ? await login(formData) : await registration(formData)
     } catch (error) {
+      // TODO: ошибки переписываются на основании типового ответа (не express-validator)
+      // if (error instanceof AxiosError) {const data = error.response?.data}
       if (axios.isAxiosError<ValidationError[] | AuthErrorResponse>(error)) {
         const data = error.response?.data
         if (data) {
@@ -106,7 +100,7 @@ export default function LoginPage(): JSX.Element {
       }
       console.log(error)
       // TODO: ничего не указывается, если zod выдаёт ошибку, и статус ни на что не влияет
-      setStatus('error')
+      // setStatus('error')
     }
   }
 

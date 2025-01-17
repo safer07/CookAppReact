@@ -1,47 +1,29 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 import UserInfo from './UserInfo'
-import useUser, { UserType } from '@/entities/user/store/store'
+import useUser from '@/entities/user/store/store'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
-import { backendUrl } from '@/shared/config'
-import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
+import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 
 export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate()
-  const { user, accessToken, status, setUser, setAccessToken, setStatus } = useUser()
+  const { user, status, logout, fetchUser } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
 
-  function logout() {
-    setAccessToken(null)
-    setUser(null)
-  }
+  // TODO: состояние неудачного fetchUser и logout
 
-  // TODO: состояние неудачного fetchUser
-
-  // TODO: создать массив list item, чтобы делать их через map (для авторизованных и обычные ссылки)
-
-  // TODO: вынести fetch в api
-  async function fetchUser() {
-    try {
-      axios.defaults.baseURL = backendUrl
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${accessToken}`,
-      }
-      setStatus('loading')
-      const { data } = await axios.get<UserType>('/users/profile')
-      setUser(data)
-      setStatus('success')
-    } catch (error) {
-      setStatus('error')
-    }
-  }
+  // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   useEffect(() => {
-    if (accessToken && !user) fetchUser()
-  }, [accessToken])
+    // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
+    if (!user) navigate(LOGIN_ROUTE, { replace: true })
+  }, [user])
+
+  useEffect(() => {
+    if (user) fetchUser()
+  }, [])
 
   return (
     <>

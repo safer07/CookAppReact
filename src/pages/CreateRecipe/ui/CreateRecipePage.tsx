@@ -14,11 +14,11 @@ import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
 import navigateBack from '@/shared/utils/navigateBack'
-import { backendUrl } from '@/shared/config'
+import { BACKEND_URL } from '@/shared/config'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
-  const { token } = useUser()
+  const { accessToken } = useUser()
   const {
     name,
     category,
@@ -77,9 +77,9 @@ export default function CreateRecipePage(): JSX.Element {
       try {
         setErrors([])
         setLoading(true)
-        axios.defaults.baseURL = backendUrl
+        axios.defaults.baseURL = BACKEND_URL
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         }
         const requestOptions = {
           headers: { 'Content-type': 'application/json; charset=UTF-8' },
