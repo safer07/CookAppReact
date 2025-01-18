@@ -7,7 +7,7 @@ import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
 import { PROFILE_ROUTE } from '@/shared/routes'
-import { UpdateProfileDtoType } from '@/entities/user/model/api'
+import { UpdateProfileDTO } from '@/entities/user/model/api'
 
 // TODO: в сущность user (config? model?)
 const genderSelectOptions = [
@@ -18,7 +18,7 @@ const genderSelectOptions = [
 export default function ProfileEditPage(): JSX.Element {
   const navigate = useNavigate()
   const { user, status, setStatus, updateProfile } = useUser()
-  const [formData, setFormData] = useState<UpdateProfileDtoType>({
+  const [formData, setFormData] = useState<UpdateProfileDTO>({
     name: user?.name || '',
     lastName: user?.lastName || '',
     email: user?.email || '',

@@ -1,22 +1,17 @@
 import { IUser } from '../model'
-import {
-  AuthResponse,
-  AuthResponseSchema,
-  AuthUserDtoType,
-  UpdateProfileDtoType,
-} from '../model/api'
+import { AuthResponse, AuthResponseSchema, AuthUserDTO, UpdateProfileDTO } from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
 const userService = {
-  registration: async (AuthUserDto: AuthUserDtoType) => {
-    const { data } = await api.post<AuthResponse>(API_PATHS.user.registration, AuthUserDto)
+  registration: async (AuthUserDTO: AuthUserDTO) => {
+    const { data } = await api.post<AuthResponse>(API_PATHS.user.registration, AuthUserDTO)
     const validatedData = AuthResponseSchema.parse(data)
     return validatedData
   },
 
-  login: async (AuthUserDto: AuthUserDtoType) => {
-    const { data } = await api.post<AuthResponse>(API_PATHS.user.login, AuthUserDto)
+  login: async (AuthUserDTO: AuthUserDTO) => {
+    const { data } = await api.post<AuthResponse>(API_PATHS.user.login, AuthUserDTO)
     const validatedData = AuthResponseSchema.parse(data)
     return validatedData
 
@@ -38,10 +33,10 @@ const userService = {
     return data
   },
 
-  updateProfile: async (id: string, UpdateProfileDto: UpdateProfileDtoType) => {
+  updateProfile: async (id: string, UpdateProfileDTO: UpdateProfileDTO) => {
     const { data } = await api.patch<IUser>(
       `${API_PATHS.user.updateProfile}/${id}`,
-      UpdateProfileDto,
+      UpdateProfileDTO,
     )
     // TODO: валидация user
     // const validatedData = AuthResponseSchema.parse(data)

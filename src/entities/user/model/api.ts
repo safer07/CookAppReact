@@ -10,11 +10,11 @@ export const RegistrationFormDataSchema = z.object({
 })
 export type RegistrationFormDataType = z.infer<typeof RegistrationFormDataSchema>
 
-export const AuthUserDto = z.object({
+export const AuthUserDTO = z.object({
   email: z.string().email(),
   password: z.string(),
 })
-export type AuthUserDtoType = z.infer<typeof AuthUserDto>
+export type AuthUserDTO = z.infer<typeof AuthUserDTO>
 
 export const AuthResponseSchema = z.object({
   message: z.string(),
@@ -37,7 +37,7 @@ export type AuthErrorResponse = {
 // })
 // export type AuthResponse = z.infer<typeof AuthResponseSchema>
 
-export const UpdateProfileDto = z.object({
+export const UpdateProfileDTO = z.object({
   name: z.string(),
   lastName: z.string(),
   email: z.string().email(),
@@ -45,7 +45,7 @@ export const UpdateProfileDto = z.object({
   birthDate: z.string(),
   // birthDate: z.date(),
 })
-export type UpdateProfileDtoType = z.infer<typeof UpdateProfileDto>
+export type UpdateProfileDTO = z.infer<typeof UpdateProfileDTO>
 
 // TODO: Ошибки теперь имеют тип zod, а не express-validator (создать тип ошибки в shared/model)
 export type ValidationError = {

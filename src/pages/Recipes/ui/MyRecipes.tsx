@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { RecipesErrorResponse } from '../model/types'
+import { RecipesErrorResponse } from '../model/api'
 import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
 import Button from '@/shared/ui/Button'

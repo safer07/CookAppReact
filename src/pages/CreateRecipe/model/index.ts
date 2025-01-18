@@ -1,4 +1,4 @@
-type CreateRecipeStore = {
+export type CreateRecipeStore = {
   name: string
   category: string
   img: string

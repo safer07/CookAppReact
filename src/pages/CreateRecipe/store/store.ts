@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
+import { CreateRecipeStore } from '../model'
+
 export const emptyStep = { description: '', ingredients: [], img: '' }
 
 const initialState = {

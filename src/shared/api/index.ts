@@ -4,8 +4,9 @@ import { AuthResponse } from '@/entities/user/model/api'
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
 
 const api = axios.create({
-  withCredentials: true,
   baseURL: BACKEND_URL,
+  headers: { Accept: 'application/json', 'Content-Type': 'application/json; charset=UTF-8' },
+  withCredentials: true,
 })
 
 // Авторизация в исходящем запросе
@@ -37,5 +38,7 @@ api.interceptors.response.use(
     throw error
   },
 )
+
+export type ErrorResponse = { message: string; errors: { message: string }[] }
 
 export default api

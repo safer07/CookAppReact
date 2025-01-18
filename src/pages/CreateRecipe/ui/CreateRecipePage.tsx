@@ -7,7 +7,7 @@ import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
-import { CreateRecipeErrorResponse, CreateRecipeResponse } from '../model/types'
+import { CreateRecipeErrorResponse, CreateRecipeResponse } from '../model/api'
 import TopAppBar from '@/widgets/TopAppBar'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
@@ -90,6 +90,7 @@ export default function CreateRecipePage(): JSX.Element {
         const { data } = await api.post<CreateRecipeResponse>(
           API_PATHS.recipes.createRecipe,
           recipeData,
+          // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
         )
         // TODO: валидация ответа и ошибок
         setLoading(false)

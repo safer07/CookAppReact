@@ -3,26 +3,8 @@ import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import userService from '../api'
-import { IUser } from '../model'
-import { AuthUserDtoType, UpdateProfileDtoType } from '../model/api'
+import { UserStore } from '../model'
 import { ACCESS_TOKEN_KEY } from '@/shared/config'
-
-type StatusType = 'init' | 'loading' | 'success' | 'error'
-
-type UserStore = {
-  user: IUser | null
-  status: StatusType
-  setUser: (value: IUser) => void
-  setStatus: (value: StatusType) => void
-  registration: (AuthUserDto: AuthUserDtoType) => Promise<void>
-  login: (AuthUserDto: AuthUserDtoType) => Promise<void>
-  logout: () => Promise<void>
-  fetchUser: () => Promise<void>
-  updateProfile: (userId: string, UpdateProfileDto: UpdateProfileDtoType) => Promise<void>
-  favouriteRecipes: string[]
-  addFavouriteRecipe: (id: string) => void
-  removeFavouriteRecipe: (id: string) => void
-}
 
 const useUser = create<UserStore>()(
   persist(
@@ -32,10 +14,10 @@ const useUser = create<UserStore>()(
         status: 'init',
         setUser: (value) => set({ user: value }),
         setStatus: (value) => set({ status: value }),
-        registration: async (AuthUserDto) => {
+        registration: async (AuthUserDTO) => {
           try {
             set({ status: 'loading' })
-            const response = await userService.registration(AuthUserDto)
+            const response = await userService.registration(AuthUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
             set({ status: 'success' })
@@ -44,10 +26,10 @@ const useUser = create<UserStore>()(
             throw error
           }
         },
-        login: async (AuthUserDto) => {
+        login: async (AuthUserDTO) => {
           try {
             set({ status: 'loading' })
-            const response = await userService.login(AuthUserDto)
+            const response = await userService.login(AuthUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
             set({ status: 'success' })
@@ -78,10 +60,10 @@ const useUser = create<UserStore>()(
             set({ status: 'error' })
           }
         },
-        updateProfile: async (id, UpdateProfileDto) => {
+        updateProfile: async (id, UpdateProfileDTO) => {
           try {
             set({ status: 'loading' })
-            const user = await userService.updateProfile(id, UpdateProfileDto)
+            const user = await userService.updateProfile(id, UpdateProfileDTO)
             set({ user })
             set({ status: 'success' })
           } catch (error) {
