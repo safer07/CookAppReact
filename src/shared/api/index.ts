@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { AuthResponse } from '@/entities/user/model/api'
+import { authResponseSchema } from '@/entities/user/model/api'
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
 
 const api = axios.create({
@@ -10,25 +10,26 @@ const api = axios.create({
 })
 
 // Авторизация в исходящем запросе
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((request) => {
   const token = localStorage.getItem(ACCESS_TOKEN_KEY)
-  if (token) config.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`
-  return config
+  if (token) request.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`
+  return request
 })
 
 // Использовать refreshToken однократно при получении статуса 401
 api.interceptors.response.use(
-  (config) => config,
+  (response) => response,
   async (error) => {
     const originalRequest = error.config
 
-    if (error.response.status === 401 && error.config && !error.config._isRetry) {
+    if (error.response?.status === 401 && error.config && !error.config._isRetry) {
       originalRequest._isRetry = true
       try {
-        const { data } = await axios.get<AuthResponse>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
+        const { data } = await axios.get<unknown>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
           withCredentials: true,
         })
-        localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken)
+        const validatedData = authResponseSchema.parse(data)
+        localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
         return api.request(originalRequest)
       } catch (error) {
         console.error('Пользователь не авторизован')
@@ -38,7 +39,5 @@ api.interceptors.response.use(
     throw error
   },
 )
-
-export type ErrorResponse = { message: string; errors: { message: string }[] }
 
 export default api

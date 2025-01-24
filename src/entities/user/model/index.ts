@@ -7,10 +7,9 @@ export interface IUser {
   name: string
   lastName: string
   avatarUrl: string
-  gender: 'male' | 'female'
-  // birthDate: Date
+  gender: string
   birthDate: string
-  isEmailVerificated: boolean
+  isEmailVerified: boolean
   emailVerificationLink: string
   forgotPasswordLink: string | null
   forgotPasswordDate: Date | null
@@ -23,11 +22,11 @@ export type UserStore = {
   status: Status
   setUser: (value: IUser) => void
   setStatus: (value: Status) => void
-  registration: (AuthUserDTO: AuthUserDTO) => Promise<void>
-  login: (AuthUserDTO: AuthUserDTO) => Promise<void>
+  registration: (authUserDTO: AuthUserDTO) => Promise<void>
+  login: (authUserDTO: AuthUserDTO) => Promise<void>
   logout: () => Promise<void>
   fetchUser: () => Promise<void>
-  updateProfile: (userId: string, UpdateProfileDTO: UpdateProfileDTO) => Promise<void>
+  updateProfile: (userId: string, updateProfileDTO: UpdateProfileDTO) => Promise<void>
   favouriteRecipes: string[]
   addFavouriteRecipe: (id: string) => void
   removeFavouriteRecipe: (id: string) => void

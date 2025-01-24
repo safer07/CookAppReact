@@ -14,10 +14,10 @@ const useUser = create<UserStore>()(
         status: 'init',
         setUser: (value) => set({ user: value }),
         setStatus: (value) => set({ status: value }),
-        registration: async (AuthUserDTO) => {
+        registration: async (authUserDTO) => {
           try {
             set({ status: 'loading' })
-            const response = await userService.registration(AuthUserDTO)
+            const response = await userService.registration(authUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
             set({ status: 'success' })
@@ -26,10 +26,10 @@ const useUser = create<UserStore>()(
             throw error
           }
         },
-        login: async (AuthUserDTO) => {
+        login: async (authUserDTO) => {
           try {
             set({ status: 'loading' })
-            const response = await userService.login(AuthUserDTO)
+            const response = await userService.login(authUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
             set({ status: 'success' })
@@ -60,10 +60,10 @@ const useUser = create<UserStore>()(
             set({ status: 'error' })
           }
         },
-        updateProfile: async (id, UpdateProfileDTO) => {
+        updateProfile: async (id, updateProfileDTO) => {
           try {
             set({ status: 'loading' })
-            const user = await userService.updateProfile(id, UpdateProfileDTO)
+            const user = await userService.updateProfile(id, updateProfileDTO)
             set({ user })
             set({ status: 'success' })
           } catch (error) {

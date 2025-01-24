@@ -1,106 +1,88 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import axios, { AxiosError } from 'axios'
+import { isAxiosError } from 'axios'
+import { ZodError } from 'zod'
 
 import PrivacyAccepting from './PrivacyAccepting'
 import TopAppBar from '@/widgets/TopAppBar'
 import {
-  AuthErrorResponse,
-  LoginFormDataType,
-  RegistrationFormDataType,
-  ValidationError,
+  LoginFormData,
+  loginFormDataSchema,
+  RegistrationFormData,
+  registrationFormDataSchema,
 } from '@/entities/user/model/api'
 import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
-import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
+import { CustomError } from '@/shared/model/customError'
+import { LOGIN_ROUTE, RECIPES_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
+import { HttpErrorResponse, ZodErrorResponse } from '@/shared/model/httpError'
 
-const emptyLoginForm: LoginFormDataType = { email: '', password: '' }
-const emptyRegistrationForm: RegistrationFormDataType = {
-  email: '',
-  password: '',
+const emptyLoginForm: LoginFormData = { email: '', password: '' }
+const emptyRegistrationForm: RegistrationFormData = {
+  ...emptyLoginForm,
   passwordRepeat: '',
 }
 
-// type FormDataType = LoginFormDataType | RegistrationFormDataType
-
 export default function LoginPage(): JSX.Element {
-  const navigate = useNavigate()
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, status, login, registration } = useUser()
-  const isLogin: boolean = location.pathname === LOGIN_ROUTE
-
-  // let formDataType
-  // if (isLogin) type formDataType = LoginFormDataType
-  // else type formDataType = RegistrationFormDataType
-
-  //   const isLogin: boolean = false
-  //   let initialFormData
-  //   if (isLogin) {
-  //     initialFormData = emptyLoginForm
-  //   } else {
-  //     initialFormData = emptyRegistrationForm
-  //   }
-  // const initialFormData: LoginFormDataType | RegistrationFormDataType = isLogin
-  //   ? emptyLoginForm
-  //   : emptyRegistrationForm
-
-  // TODO: как типизировать форму в зависимости от isLogin?
-  // const [formData, setFormData] = useState<LoginFormDataType | RegistrationFormDataType>(
-  //   initialFormData,
-  // )
-  //   const [formData, setFormData] = useState(initialFormData)
-  const [formData, setFormData] = useState<RegistrationFormDataType>(emptyRegistrationForm)
-  const [errors, setErrors] = useState<string[]>([])
+  const emptyFormData = location.pathname === LOGIN_ROUTE ? emptyLoginForm : emptyRegistrationForm
+  const [formData, setFormData] = useState<LoginFormData | RegistrationFormData>(emptyFormData)
+  const [error, setError] = useState<CustomError>(null)
+  const isRegistration = ((
+    formData: LoginFormData | RegistrationFormData,
+  ): formData is RegistrationFormData => 'passwordRepeat' in formData)(formData)
+  const isLogin = !isRegistration
 
   useEffect(() => {
-    // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
-    if (user) navigate(PROFILE_ROUTE, { replace: true })
+    // TODO: Возвращать откуда пришёл, но navigate(-1) запирает при прямом логине, а другие решения не работали. нужно учитывать ссылки снизу и забыли пароль
+    // if (user) navigate(-1)
+    if (user) navigate(RECIPES_ROUTE, { replace: true })
   }, [user])
 
-  // //   function foo(): string
-  // // function foo<B extends boolean | undefined>(isLogin: B): B extends true ? number : string
-  // function foo(): RegistrationFormDataType
-  // function foo<B extends boolean | undefined>(isLogin: B): B extends true ? LoginFormDataType : RegistrationFormDataType
-
-  // // function foo(x?: boolean): number | string {
-  // //   return x ? 123 : 'asdf'
-  // // }
-
-  // function foo(isLogin?: boolean): LoginFormDataType | RegistrationFormDataType {
-  //   return isLogin ? emptyLoginForm : emptyRegistrationForm
-  // }
-
-  // const isLogin = false
-  // if (isLogin) {
-  //     const dataType = foo(isLogin)
-  //     // dataType.
-  // }
+  useEffect(() => {
+    setFormData(emptyFormData)
+  }, [location])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    // TODO: Нет валидации на клиенте, например, через zod. Не проверяет даже пустая ли форма
     event.preventDefault()
-    setErrors([])
+    setError(null)
 
-    if (!isLogin && formData.password !== formData.passwordRepeat) {
-      return setErrors(['Пароль не совпадает'])
+    const result = isLogin
+      ? loginFormDataSchema.safeParse(formData)
+      : registrationFormDataSchema.safeParse(formData)
+    if (!result.success) {
+      setError({
+        errors: result.error.errors.map((issue) => ({ message: issue.message })),
+      })
+      return
     }
 
     try {
-      isLogin ? await login(formData) : await registration(formData)
+      isLogin ? await login(result.data) : await registration(result.data)
     } catch (error) {
-      // TODO: ошибки переписываются на основании типового ответа (не express-validator)
+      console.error(error)
+      // TODO: возможно ли это переписать?
       // if (error instanceof AxiosError) {const data = error.response?.data}
-      if (axios.isAxiosError<ValidationError[] | AuthErrorResponse>(error)) {
+      if (isAxiosError<HttpErrorResponse | ZodErrorResponse>(error)) {
         const data = error.response?.data
         if (data) {
-          if (Array.isArray(data)) setErrors(data.map((error) => error.msg))
-          else setErrors([data?.message])
+          setError(data)
+        } else {
+          setError({ message: error.message })
         }
       }
-      console.log(error)
-      // TODO: ничего не указывается, если zod выдаёт ошибку, и статус ни на что не влияет
-      // setStatus('error')
+
+      if (error instanceof ZodError) {
+        setError({
+          message: 'Ошибка валидации входящих данных от сервера',
+          errors: error.errors.map((issue) => ({
+            message: `${issue.path.join('.')}: ${issue.message}`,
+          })),
+        })
+      }
     }
   }
 
@@ -129,13 +111,23 @@ export default function LoginPage(): JSX.Element {
               label="Повторите пароль"
             />
           )}
-          {errors.length > 0 && (
+          {error && (
             <div className="space-y-1">
-              {errors.map((error, index) => (
-                <p className="text-system-error" key={index}>
-                  {error}
+              {error?.message && (
+                <p className="text-system-error">
+                  {error.message}
+                  {error.errors?.length !== 0 && ':'}
                 </p>
-              ))}
+              )}
+              {error.errors?.length !== 0 && (
+                <ul className="space-y-1">
+                  {error.errors?.map(({ message }, index) => (
+                    <li className="text-system-error" key={index}>
+                      {message}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
         </div>

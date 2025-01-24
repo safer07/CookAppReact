@@ -1,57 +1,56 @@
 import { z } from 'zod'
 
-export const LoginFormDataSchema = z.object({ email: z.string().email(), password: z.string() })
-export type LoginFormDataType = z.infer<typeof LoginFormDataSchema>
+const emailSchema = z.string({ required_error: 'Введите email' }).email('Неверный email')
+const passwordSchema = z
+  .string({ required_error: 'Введите пароль' })
+  .min(5, 'Пароль должен состоять минимум из 5 символов')
 
-export const RegistrationFormDataSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-  passwordRepeat: z.string(),
+export const authUserDTOSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
 })
-export type RegistrationFormDataType = z.infer<typeof RegistrationFormDataSchema>
+export type AuthUserDTO = z.infer<typeof authUserDTOSchema>
 
-export const AuthUserDTO = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
-export type AuthUserDTO = z.infer<typeof AuthUserDTO>
+export const loginFormDataSchema = authUserDTOSchema
+export type LoginFormData = z.infer<typeof loginFormDataSchema>
 
-export const AuthResponseSchema = z.object({
+export const registrationFormDataSchema = z
+  .intersection(
+    loginFormDataSchema,
+    z.object({
+      passwordRepeat: passwordSchema,
+    }),
+  )
+  .refine((data) => data.password === data.passwordRepeat, {
+    message: 'Пароли не совпадают',
+    path: ['passwordRepeat'],
+  })
+export type RegistrationFormData = z.infer<typeof registrationFormDataSchema>
+
+export const authResponseSchema = z.object({
   message: z.string(),
   accessToken: z.string().jwt(),
-  refreshToken: z.string().jwt(),
   // TODO: тип есть IUser, но изначально он не zod, посмотреть примеры
   user: z.any(),
 })
-export type AuthResponse = z.infer<typeof AuthResponseSchema>
-
-// TODO: убрать, когда со страницы Auth будет убрана зависимость. Все error имеют одинаковый формат
-export type AuthErrorResponse = {
-  message: string
-}
+export type AuthResponse = z.infer<typeof authResponseSchema>
 
 // export const getUser = z.object({
 //   message: z.string(),
 //   accessToken: z.string().jwt(),
-//   refreshToken: z.string().jwt(),
 // })
 // export type AuthResponse = z.infer<typeof AuthResponseSchema>
 
-export const UpdateProfileDTO = z.object({
-  name: z.string(),
-  lastName: z.string(),
-  email: z.string().email(),
-  gender: z.string(),
-  birthDate: z.string(),
-  // birthDate: z.date(),
-})
-export type UpdateProfileDTO = z.infer<typeof UpdateProfileDTO>
-
-// TODO: Ошибки теперь имеют тип zod, а не express-validator (создать тип ошибки в shared/model)
-export type ValidationError = {
-  location: string
-  msg: string
-  path: string
-  type: string
-  value: string
-}
+export const updateProfileDTOSchema = z
+  .object({
+    name: z.string(),
+    lastName: z.string(),
+    email: emailSchema,
+    avatarUrl: z.string().url(),
+    password: passwordSchema,
+    gender: z.string(),
+    birthDate: z.string().datetime(),
+  })
+  .partial()
+  .strict()
+export type UpdateProfileDTO = z.infer<typeof updateProfileDTOSchema>

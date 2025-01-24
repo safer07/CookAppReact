@@ -17,11 +17,11 @@ export default function ProfilePage(): JSX.Element {
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   useEffect(() => {
-    // TODO: вместо этого переносить на страницу, откуда перешёл к логину (или это делается в route?)
     if (!user) navigate(LOGIN_ROUTE, { replace: true })
   }, [user])
 
   useEffect(() => {
+    // TODO: зачем? или просто каждый раз делать fetch, или без условия (проверить на ошибки, когда не залогинен)
     if (user) fetchUser()
   }, [])
 

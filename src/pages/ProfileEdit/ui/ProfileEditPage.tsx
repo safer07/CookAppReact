@@ -22,8 +22,7 @@ export default function ProfileEditPage(): JSX.Element {
     name: user?.name || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
-    gender: user?.gender || '',
-    // TODO: дата не строка
+    gender: user?.gender,
     birthDate: user?.birthDate || '',
   })
 

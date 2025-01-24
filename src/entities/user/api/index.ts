@@ -1,25 +1,19 @@
 import { IUser } from '../model'
-import { AuthResponse, AuthResponseSchema, AuthUserDTO, UpdateProfileDTO } from '../model/api'
+import { authResponseSchema, AuthUserDTO, UpdateProfileDTO } from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
 const userService = {
-  registration: async (AuthUserDTO: AuthUserDTO) => {
-    const { data } = await api.post<AuthResponse>(API_PATHS.user.registration, AuthUserDTO)
-    const validatedData = AuthResponseSchema.parse(data)
+  registration: async (authUserDTO: AuthUserDTO) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.registration, authUserDTO)
+    const validatedData = authResponseSchema.parse(data)
     return validatedData
   },
 
-  login: async (AuthUserDTO: AuthUserDTO) => {
-    const { data } = await api.post<AuthResponse>(API_PATHS.user.login, AuthUserDTO)
-    const validatedData = AuthResponseSchema.parse(data)
+  login: async (authUserDTO: AuthUserDTO) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.login, authUserDTO)
+    const validatedData = authResponseSchema.parse(data)
     return validatedData
-
-    // TODO: как валидировать?
-    // const validatedData = AuthResponseSchema.safeParse(data)
-    // console.log(validatedData)
-    // if (!validatedData.success) return console.error(validatedData.error)
-    // else return data
   },
 
   logout: async (): Promise<void> => {
@@ -33,10 +27,10 @@ const userService = {
     return data
   },
 
-  updateProfile: async (id: string, UpdateProfileDTO: UpdateProfileDTO) => {
+  updateProfile: async (id: string, updateProfileDTO: UpdateProfileDTO) => {
     const { data } = await api.patch<IUser>(
       `${API_PATHS.user.updateProfile}/${id}`,
-      UpdateProfileDTO,
+      updateProfileDTO,
     )
     // TODO: валидация user
     // const validatedData = AuthResponseSchema.parse(data)
