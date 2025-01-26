@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { authResponseSchema } from '@/entities/user/model/api'
+import { refreshResponseSchema } from '@/entities/user/model/api'
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
 
 const api = axios.create({
@@ -28,7 +28,7 @@ api.interceptors.response.use(
         const { data } = await axios.get<unknown>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
           withCredentials: true,
         })
-        const validatedData = authResponseSchema.parse(data)
+        const validatedData = refreshResponseSchema.parse(data)
         localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
         return api.request(originalRequest)
       } catch (error) {

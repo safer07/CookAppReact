@@ -1,5 +1,5 @@
-import { IUser } from '../model'
-import { authResponseSchema, AuthUserDTO, UpdateProfileDTO } from '../model/api'
+import { User } from '../model'
+import { authResponseSchema, AuthUserDTO, UpdateProfileDTO, userSchema } from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
@@ -21,20 +21,18 @@ const userService = {
   },
 
   getProfile: async () => {
-    const { data } = await api.get<IUser>(API_PATHS.user.getProfile)
-    // TODO: валидация user
-    // const validatedData = AuthResponseSchema.parse(data)
-    return data
+    const { data } = await api.get<User>(API_PATHS.user.getProfile)
+    const validatedData = userSchema.parse(data)
+    return validatedData
   },
 
   updateProfile: async (id: string, updateProfileDTO: UpdateProfileDTO) => {
-    const { data } = await api.patch<IUser>(
+    const { data } = await api.patch<User>(
       `${API_PATHS.user.updateProfile}/${id}`,
       updateProfileDTO,
     )
-    // TODO: валидация user
-    // const validatedData = AuthResponseSchema.parse(data)
-    return data
+    const validatedData = userSchema.parse(data)
+    return validatedData
   },
 }
 

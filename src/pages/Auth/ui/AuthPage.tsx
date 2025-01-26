@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { isAxiosError } from 'axios'
-import { ZodError } from 'zod'
 
 import PrivacyAccepting from './PrivacyAccepting'
 import TopAppBar from '@/widgets/TopAppBar'
@@ -14,9 +12,10 @@ import {
 import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import catchHttpError from '@/shared/utils/catchHttpError'
 import { CustomError } from '@/shared/model/customError'
 import { LOGIN_ROUTE, RECIPES_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
-import { HttpErrorResponse, ZodErrorResponse } from '@/shared/model/httpError'
 
 const emptyLoginForm: LoginFormData = { email: '', password: '' }
 const emptyRegistrationForm: RegistrationFormData = {
@@ -63,26 +62,7 @@ export default function LoginPage(): JSX.Element {
     try {
       isLogin ? await login(result.data) : await registration(result.data)
     } catch (error) {
-      console.error(error)
-      // TODO: возможно ли это переписать?
-      // if (error instanceof AxiosError) {const data = error.response?.data}
-      if (isAxiosError<HttpErrorResponse | ZodErrorResponse>(error)) {
-        const data = error.response?.data
-        if (data) {
-          setError(data)
-        } else {
-          setError({ message: error.message })
-        }
-      }
-
-      if (error instanceof ZodError) {
-        setError({
-          message: 'Ошибка валидации входящих данных от сервера',
-          errors: error.errors.map((issue) => ({
-            message: `${issue.path.join('.')}: ${issue.message}`,
-          })),
-        })
-      }
+      catchHttpError(error, setError)
     }
   }
 
@@ -111,25 +91,7 @@ export default function LoginPage(): JSX.Element {
               label="Повторите пароль"
             />
           )}
-          {error && (
-            <div className="space-y-1">
-              {error?.message && (
-                <p className="text-system-error">
-                  {error.message}
-                  {error.errors?.length !== 0 && ':'}
-                </p>
-              )}
-              {error.errors?.length !== 0 && (
-                <ul className="space-y-1">
-                  {error.errors?.map(({ message }, index) => (
-                    <li className="text-system-error" key={index}>
-                      {message}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
+          <ErrorComponent error={error} />
         </div>
 
         {!isLogin && <PrivacyAccepting />}

@@ -5,29 +5,47 @@ import UserInfo from './UserInfo'
 import useUser from '@/entities/user/store/store'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
+import catchHttpError from '@/shared/utils/catchHttpError'
+import { CustomError } from '@/shared/model/customError'
 
 export default function ProfilePage(): JSX.Element {
   const navigate = useNavigate()
   const { user, status, logout, fetchUser } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
-
-  // TODO: состояние неудачного fetchUser и logout
+  const [error, setError] = useState<CustomError>(null)
 
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   useEffect(() => {
-    if (!user) navigate(LOGIN_ROUTE, { replace: true })
-  }, [user])
-
-  useEffect(() => {
     // TODO: зачем? или просто каждый раз делать fetch, или без условия (проверить на ошибки, когда не залогинен)
-    if (user) fetchUser()
+    if (!user) navigate(LOGIN_ROUTE, { replace: true })
+    else onFetchUser()
   }, [])
+
+  async function onFetchUser() {
+    setError(null)
+    try {
+      await fetchUser()
+    } catch (error) {
+      catchHttpError(error, setError)
+    }
+  }
+
+  async function onLogout() {
+    setError(null)
+    try {
+      await logout()
+    } catch (error) {
+      catchHttpError(error, setError)
+    }
+  }
 
   return (
     <>
       {status !== 'loading' ? <UserInfo /> : <UserInfo.Skeleton />}
+      <ErrorComponent error={error} />
       <ul className="layout-fullwidth py-1">
         {user && (
           <ListItem
@@ -73,7 +91,7 @@ export default function ProfilePage(): JSX.Element {
       <Modal
         open={modalLogoutIsOpen}
         setOpen={setModalLogoutIsOpen}
-        onOk={logout}
+        onOk={onLogout}
         okText="Выйти"
         title="Выход"
         text="Вы уверены, что хотите выйти из учётной записи?"

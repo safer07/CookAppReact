@@ -47,6 +47,7 @@ const useUser = create<UserStore>()(
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
+            throw error
           }
         },
         fetchUser: async () => {
@@ -56,8 +57,8 @@ const useUser = create<UserStore>()(
             set({ user })
             set({ status: 'success' })
           } catch (error) {
-            // TODO: обнулять пользователя, если не удалось обновить данные?
             set({ status: 'error' })
+            throw error
           }
         },
         updateProfile: async (id, updateProfileDTO) => {
@@ -68,6 +69,7 @@ const useUser = create<UserStore>()(
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
+            throw error
           }
         },
         favouriteRecipes: [

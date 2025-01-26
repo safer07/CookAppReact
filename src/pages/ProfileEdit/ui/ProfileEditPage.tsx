@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 import useUser from '@/entities/user/store/store'
+import { UpdateProfileDTO, updateProfileDTOSchema } from '@/entities/user/model/api'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
 import { PROFILE_ROUTE } from '@/shared/routes'
-import { UpdateProfileDTO } from '@/entities/user/model/api'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import { CustomError } from '@/shared/model/customError'
+import catchHttpError from '@/shared/utils/catchHttpError'
 
 // TODO: в сущность user (config? model?)
 const genderSelectOptions = [
@@ -18,12 +21,13 @@ const genderSelectOptions = [
 export default function ProfileEditPage(): JSX.Element {
   const navigate = useNavigate()
   const { user, status, setStatus, updateProfile } = useUser()
+  const [error, setError] = useState<CustomError>(null)
   const [formData, setFormData] = useState<UpdateProfileDTO>({
-    name: user?.name || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
+    name: user?.name,
+    lastName: user?.lastName,
+    email: user?.email,
     gender: user?.gender,
-    birthDate: user?.birthDate || '',
+    birthDate: user?.birthDate?.split('T')[0] || '',
   })
 
   useEffect(() => {
@@ -36,12 +40,22 @@ export default function ProfileEditPage(): JSX.Element {
 
   async function onSubmit() {
     if (!user?._id) return
+    setError(null)
+
+    const result = updateProfileDTOSchema.safeParse(formData)
+    if (!result.success) {
+      setError({
+        errors: result.error.errors.map((issue) => ({
+          message: issue.message,
+        })),
+      })
+      return
+    }
 
     try {
-      // TODO: сделать валидацию формы
       await updateProfile(user._id, formData)
     } catch (error) {
-      // TODO: сделать обработки ошибок
+      catchHttpError(error, setError)
     }
   }
 
@@ -54,35 +68,36 @@ export default function ProfileEditPage(): JSX.Element {
         <div className="layout-grid space-y-3">
           <form className="space-y-3">
             <Input
-              value={formData.name}
+              value={formData.name || ''}
               onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
               label="Имя"
             />
             <Input
-              value={formData.lastName}
+              value={formData.lastName || ''}
               onChange={(value) => setFormData((prev) => ({ ...prev, lastName: value }))}
               label="Фамилия"
             />
             <Input
-              value={formData.email}
+              value={formData.email || ''}
               onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
               label="Email"
             />
             <Select
-              value={formData.gender}
+              value={formData.gender || ''}
               options={genderSelectOptions}
               onChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
               label="Пол"
             />
             <Input
               type="date"
-              value={formData.birthDate}
+              value={formData.birthDate || ''}
               onChange={(value) => setFormData((prev) => ({ ...prev, birthDate: value }))}
               label="Дата рождения"
             />
           </form>
           {/* TODO: добавить функционал смены пароля */}
           <Button text="Изменить пароль" fullWidth />
+          <ErrorComponent error={error} />
           {status === 'success' && <p className="text-system-positive">Профиль обновлён</p>}
         </div>
       </div>

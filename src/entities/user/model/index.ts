@@ -1,26 +1,21 @@
 import { AuthUserDTO, UpdateProfileDTO } from './api'
 
-export interface IUser {
+export type User = {
   _id: string
   email: string
-  password: string
-  name: string
-  lastName: string
-  avatarUrl: string
-  gender: string
-  birthDate: string
-  isEmailVerified: boolean
-  emailVerificationLink: string
-  forgotPasswordLink: string | null
-  forgotPasswordDate: Date | null
+  name?: string
+  lastName?: string
+  avatarUrl?: string
+  gender?: string
+  birthDate?: string | null
 }
 
 type Status = 'init' | 'loading' | 'success' | 'error'
 
 export type UserStore = {
-  user: IUser | null
+  user: User | null
   status: Status
-  setUser: (value: IUser) => void
+  setUser: (value: User) => void
   setStatus: (value: Status) => void
   registration: (authUserDTO: AuthUserDTO) => Promise<void>
   login: (authUserDTO: AuthUserDTO) => Promise<void>
