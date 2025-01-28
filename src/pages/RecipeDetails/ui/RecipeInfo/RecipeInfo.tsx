@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import RecipeInfoSkeleton from './RecipeInfoSkeleton'
 import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
 import { categories } from '@/entities/recipeCategory/const/categories'
+import { FullRecipe } from '@/entities/recipe/model'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Tag from '@/shared/ui/Tag'
 import getRecipeDifficultyTextAndSurface from '@/shared/utils/getRecipeDifficultyTextAndSurface'
 import navigateBack from '@/shared/utils/navigateBack'
 
 type RecipeInfoProps = {
-  recipe: IFullRecipeItem
+  recipe: FullRecipe
 }
 
 export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {

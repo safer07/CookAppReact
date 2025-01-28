@@ -6,7 +6,7 @@ import { CustomError } from '../model/customError'
 
 export default function catchHttpError(
   error: unknown,
-  setError: (value: React.SetStateAction<CustomError>) => void,
+  setError: (value: React.SetStateAction<CustomError>) => CustomError | void = () => {},
 ) {
   console.error(error)
 
@@ -14,19 +14,30 @@ export default function catchHttpError(
   // if (error instanceof AxiosError) {const data = error.response?.data}
   if (isAxiosError<HttpErrorResponse | ZodErrorResponse>(error)) {
     const data = error.response?.data
-    if (data) setError(data)
-    else {
-      if (error.code === 'ERR_NETWORK') setError({ message: 'Ошибка подключения к серверу' })
-      else setError({ message: error.message })
+    if (data) {
+      setError(data)
+      return data
+    } else {
+      const errorData =
+        error.code === 'ERR_NETWORK'
+          ? { message: 'Ошибка подключения к серверу' }
+          : { message: error.message }
+
+      setError(errorData)
+      return errorData
     }
   }
 
   if (error instanceof ZodError) {
-    setError({
+    const errorData = {
       message: 'Ошибка валидации входящих данных от сервера',
       errors: error.errors.map((issue) => ({
         message: `${issue.path.join('.')}: ${issue.message}`,
       })),
-    })
+    }
+    setError(errorData)
+    return errorData
   }
+
+  return null
 }

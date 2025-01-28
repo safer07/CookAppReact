@@ -2,26 +2,8 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { API_PATHS } from '@/shared/config'
-import api from '@/shared/api'
-
-export type TypeRecipesStatus = 'init' | 'loading' | 'success' | 'error'
-
-type RecipesFilters = {
-  categoryId?: string | null
-  searchQuery?: string
-}
-
-type RecipesStore = {
-  items: IRecipeItem[]
-  status: TypeRecipesStatus
-  filters: RecipesFilters
-  fetchRecipes: (filters?: RecipesFilters) => Promise<void>
-  // устанавливать не id, а категории
-  setCategoryId: (id: string | null) => void
-  setSearchQuery: (query: string) => void
-  resetFilters: () => void
-}
+import recipesService from '../api'
+import { RecipesStore } from '../model/store'
 
 const initialFilters = { categoryId: null, searchQuery: '' }
 
@@ -34,15 +16,12 @@ const useRecipes = create<RecipesStore>()(
       fetchRecipes: async (filters) => {
         try {
           set({ status: 'loading' })
-          // TODO: добавить возможность выбора несколько категорий
-          const { data } = await api.get<IRecipeItem[]>(API_PATHS.recipes.getAll, {
-            params: { category: filters?.categoryId, query: filters?.searchQuery },
-          })
-          set({ items: data })
+          const recipes = await recipesService.getRecipes(filters)
+          set({ items: recipes })
           set({ status: 'success' })
         } catch (error) {
           set({ status: 'error' })
-          console.error(error)
+          throw error
         }
       },
       setCategoryId: (id) =>

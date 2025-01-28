@@ -8,11 +8,12 @@ import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
 import Loader from '@/shared/ui/Loader'
 import Stepper from '@/shared/ui/Stepper'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 export default function CookingMode(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { recipe, status, fetchFullRecipe } = useFullRecipe()
+  const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
   const [stepIndex, setStepIndex] = useState<number>(0)
   const stepsCount = recipe?.steps.length || 1
   const step = recipe?.steps[stepIndex]
@@ -44,7 +45,12 @@ export default function CookingMode(): JSX.Element {
         </div>
       )}
 
-      {status === 'error' && <TopAppBar title="Не удалось загрузить рецепт" back />}
+      {status === 'error' && (
+        <>
+          <TopAppBar title="Не удалось загрузить рецепт" back />
+          <ErrorComponent className="mt-1" error={error} />
+        </>
+      )}
 
       {status === 'success' && step && (
         <div className="layout-fullwidth flex h-svh flex-col">

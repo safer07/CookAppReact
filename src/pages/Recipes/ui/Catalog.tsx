@@ -8,30 +8,40 @@ import RecipesList from '@/widgets/RecipesList'
 import useDebounce from '@/shared/hooks/debounce'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Input from '@/shared/ui/Input'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import { CustomError } from '@/shared/model/customError'
+import catchHttpError from '@/shared/utils/catchHttpError'
 
 // TODO: убрать импорт из app
 
 export default function Catalog(): JSX.Element {
-  const recipes = useRecipes((state) => state.items)
-  const status = useRecipes((state) => state.status)
-  const filters = useRecipes((state) => state.filters)
+  const {
+    items: recipes,
+    status,
+    filters,
+    fetchRecipes,
+    setCategoryId,
+    setSearchQuery,
+  } = useRecipes()
   const { categoryId, searchQuery } = filters
-  const fetchRecipes = useRecipes((state) => state.fetchRecipes)
-  const setCategoryId = useRecipes((state) => state.setCategoryId)
-  const setSearchQuery = useRecipes((state) => state.setSearchQuery)
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
-  const filterCount = Object.values(filters).filter((value) => value).length
-  const [recipeCategories, setRecipeCategories] = useState<
-    IRecipeCategoryItem[]
-  >([])
+  const [error, setError] = useState<CustomError>(null)
+  const filtersCount = Object.values(filters).filter((value) => value).length
+  const [recipeCategories, setRecipeCategories] = useState<IRecipeCategoryItem[]>([])
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debouncedSearchQuery: string =
-    tempSearchQuery === ''
-      ? useDebounce(tempSearchQuery, 0)
-      : useDebounce(tempSearchQuery, 1000)
+    tempSearchQuery === '' ? useDebounce(tempSearchQuery, 0) : useDebounce(tempSearchQuery, 1000)
 
   function findCategoryById(id: string) {
     return recipeCategories.find((category) => category.id === id)
+  }
+
+  async function onFetchRecipes() {
+    try {
+      await fetchRecipes({ categoryId, searchQuery })
+    } catch (error) {
+      catchHttpError(error, setError)
+    }
   }
 
   useEffect(() => {
@@ -44,7 +54,7 @@ export default function Catalog(): JSX.Element {
   }, [])
 
   useEffect(() => {
-    fetchRecipes({ categoryId, searchQuery })
+    onFetchRecipes()
   }, [categoryId, searchQuery])
 
   useEffect(() => {
@@ -69,7 +79,7 @@ export default function Catalog(): JSX.Element {
           onClick={() => setFiltersIsOpen(true)}
           variant="tertiary"
           square
-          badge={filterCount}
+          badge={filtersCount}
         />
       </div>
 
@@ -88,17 +98,13 @@ export default function Catalog(): JSX.Element {
             <Categories categories={recipeCategories} />
 
             {status === 'error' ? (
-              <h2 className="headline-medium mt-3">
-                Не удалось загрузить рецепты
-              </h2>
+              <h2 className="headline-medium mt-3">Не удалось загрузить рецепты</h2>
             ) : (
               recipeCategories.map((category) => (
                 <div className="mt-3" key={category.id}>
                   <RecipesList
                     title={category.fullName}
-                    recipes={recipes.filter(
-                      (recipe) => recipe.category === category.id,
-                    )}
+                    recipes={recipes.filter((recipe) => recipe.category === category.id)}
                     status={status}
                     button={{
                       name: 'Смотреть все',
@@ -118,14 +124,15 @@ export default function Catalog(): JSX.Element {
               title={
                 searchQuery
                   ? 'Найдены рецепты:'
-                  : findCategoryById(categoryId!)?.fullName ||
-                    'Заголовок категории не найден'
+                  : findCategoryById(categoryId!)?.fullName || 'Заголовок категории не найден'
               }
               recipes={recipes}
               status={status}
             />
           </>
         )}
+
+        <ErrorComponent className="mt-1" error={error} />
       </div>
     </>
   )

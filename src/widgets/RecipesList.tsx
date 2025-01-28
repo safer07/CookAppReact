@@ -1,10 +1,11 @@
-import { TypeRecipesStatus } from '@/pages/Recipes/store/store'
+import { RecipesStatus } from '@/pages/Recipes/model/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
+import { Recipe } from '@/entities/recipe/model'
 
 type RecipesListProps = {
   title: string
-  recipes: IRecipeItem[]
-  status: TypeRecipesStatus
+  recipes: Recipe[]
+  status: RecipesStatus
   button?: { name: string; onClick: () => void }
 }
 
@@ -14,9 +15,7 @@ export default function RecipesList({
   status,
   button,
 }: RecipesListProps): JSX.Element {
-  const skeletonRecipes = [...new Array(4)].map((_, i) => (
-    <RecipeCard.Skeleton key={i} />
-  ))
+  const skeletonRecipes = [...new Array(4)].map((_, i) => <RecipeCard.Skeleton key={i} />)
 
   return (
     <>
@@ -42,9 +41,7 @@ export default function RecipesList({
         <div className="mt-2 grid gap-2">
           {status === 'loading'
             ? skeletonRecipes
-            : recipes.map((recipe) => (
-                <RecipeCard key={recipe._id} recipe={recipe} />
-              ))}
+            : recipes.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
         </div>
       )}
     </>

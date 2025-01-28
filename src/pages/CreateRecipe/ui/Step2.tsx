@@ -8,7 +8,8 @@ import ListItem from '@/shared/ui/ListItem'
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
 export default function Step2({ setStepIsValid }: StepProps): JSX.Element {
-  const { time, difficulty, setDifficulty, setTime } = useCreateRecipe()
+  const { recipeData, setDifficulty, setTime } = useCreateRecipe()
+  const { time, difficulty } = recipeData
 
   let hours: number | null = null
   let minutes: number | null = null

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
+import { FullRecipe } from '@/entities/recipe/model'
 import SegmentedButton from '@/shared/ui/SegmentedButton'
 import ListItem from '@/shared/ui/ListItem'
 
-type IRecipeTabs = { recipe: IFullRecipeItem }
+type IRecipeTabs = { recipe: FullRecipe }
 
 export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
@@ -48,13 +49,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
                 </ul>
               )}
               <p className="text-secondary-color">{step.description}</p>
-              {step.img && (
-                <img
-                  className="w-full"
-                  src={step.img}
-                  alt={`Шаг ${index + 1}`}
-                />
-              )}
+              {step.img && <img className="w-full" src={step.img} alt={`Шаг ${index + 1}`} />}
             </li>
           ))}
         </ol>

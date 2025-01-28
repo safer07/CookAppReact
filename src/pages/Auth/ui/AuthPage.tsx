@@ -52,17 +52,16 @@ export default function LoginPage(): JSX.Element {
     const result = isLogin
       ? loginFormDataSchema.safeParse(formData)
       : registrationFormDataSchema.safeParse(formData)
-    if (!result.success) {
+    if (result.success) {
+      try {
+        isLogin ? await login(result.data) : await registration(result.data)
+      } catch (error) {
+        catchHttpError(error, setError)
+      }
+    } else {
       setError({
         errors: result.error.errors.map((issue) => ({ message: issue.message })),
       })
-      return
-    }
-
-    try {
-      isLogin ? await login(result.data) : await registration(result.data)
-    } catch (error) {
-      catchHttpError(error, setError)
     }
   }
 

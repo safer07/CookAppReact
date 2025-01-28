@@ -1,44 +1,34 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 import useCreateRecipe from '../store/store'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
-import { CreateRecipeErrorResponse, CreateRecipeResponse } from '../model/api'
+import createRecipe from '../api'
+import { createRecipeDTOSchema, CreateRecipeStatus } from '../model'
 import TopAppBar from '@/widgets/TopAppBar'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 import navigateBack from '@/shared/utils/navigateBack'
-import api from '@/shared/api'
+import catchHttpError from '@/shared/utils/catchHttpError'
 import { API_PATHS } from '@/shared/config'
+import { CustomError } from '@/shared/model/customError'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
-  const {
-    name,
-    category,
-    img,
-    time,
-    difficulty,
-    description,
-    totalIngredients,
-    steps,
-    hidden,
-    resetCreateRecipe,
-  } = useCreateRecipe()
+  const { recipeData, resetCreateRecipe } = useCreateRecipe()
   const [step, setStep] = useState<number>(1)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
-  const [errors, setErrors] = useState<string[]>([])
-  const [recipeId, setRecipeId] = useState<string>('')
+  const [status, setStatus] = useState<CreateRecipeStatus>('init')
+  const [error, setError] = useState<CustomError>(null)
+  const [newRecipeId, setNewRecipeId] = useState<string>('')
 
-  const validationErrors: string[] = []
   const stepsCount = 4
 
   function onClickBack(): void {
@@ -56,57 +46,29 @@ export default function CreateRecipePage(): JSX.Element {
     navigate('/')
   }
 
-  function validateRecipe(): void {
-    setErrors([])
-    if (!name) validationErrors.push('Введите название рецепта')
-    if (!category) validationErrors.push('Выберите категорию рецепта')
-    if (!time) validationErrors.push('Введите время приготовления')
-    if (!difficulty) validationErrors.push('Выберите сложность рецепта')
-    if (!description) validationErrors.push('Введите описание приготовления')
-    if (!totalIngredients.length) validationErrors.push('Введите ингредиенты')
-    steps.forEach((step, index) => {
-      if (!step.description) validationErrors.push(`Введите описание для шага ${index + 1}`)
-    })
-    setErrors(validationErrors)
-  }
-
   async function onSubmit() {
-    validateRecipe()
-    if (!validationErrors.length) {
+    setError(null)
+
+    const result = createRecipeDTOSchema.safeParse(recipeData)
+    if (result.success) {
       try {
-        setErrors([])
-        setLoading(true)
-        const recipeData = {
-          name,
-          category,
-          img,
-          time,
-          difficulty,
-          description,
-          totalIngredients,
-          steps,
-          hidden,
-        }
-        const { data } = await api.post<CreateRecipeResponse>(
-          API_PATHS.recipes.createRecipe,
-          recipeData,
-          // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
-        )
-        // TODO: валидация ответа и ошибок
-        setLoading(false)
-        setRecipeId(data.recipe._id)
+        setError(null)
+        setStatus('loading')
+        const response = await createRecipe(result.data)
+        setStatus('success')
         resetCreateRecipe()
+        setNewRecipeId(response.recipe._id)
         setModalFinishIsOpen(true)
       } catch (error) {
-        // CreateRecipeErrorResponse синхронизировать с ответом backend
-        if (axios.isAxiosError<CreateRecipeErrorResponse>(error)) {
-          const data = error.response?.data
-          if (data) {
-            setErrors([data?.error?.message])
-          }
-        }
-        setLoading(false)
+        setStatus('error')
+        catchHttpError(error, setError)
       }
+    } else {
+      setError({
+        errors: result.error.errors.map((issue) => ({
+          message: issue.message,
+        })),
+      })
     }
   }
 
@@ -128,7 +90,8 @@ export default function CreateRecipePage(): JSX.Element {
         {step === 1 && <Step1 setStepIsValid={setStepIsValid} />}
         {step === 2 && <Step2 setStepIsValid={setStepIsValid} />}
         {step === 3 && <Step3 setStepIsValid={setStepIsValid} />}
-        {step === 4 && <Step4 errors={errors} />}
+        {step === 4 && <Step4 />}
+        <ErrorComponent className="layout-grid mt-3" error={error} />
       </div>
 
       <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
@@ -138,7 +101,7 @@ export default function CreateRecipePage(): JSX.Element {
           onClick={onClickNext}
           variant="primary"
           fullWidth
-          disabled={!stepIsValid || loading}
+          disabled={!stepIsValid || status === 'loading'}
         />
       </div>
 
@@ -156,7 +119,7 @@ export default function CreateRecipePage(): JSX.Element {
       <Modal
         open={modalFinishIsOpen}
         setOpen={setModalFinishIsOpen}
-        onOk={() => navigate(`/recipes/${recipeId}`, { replace: true })}
+        onOk={() => navigate(`${API_PATHS.recipes.getOne}/${newRecipeId}`, { replace: true })}
         okText="Готово"
         title="Рецепт создан"
         text="Рецепт сохранён в базе данных"

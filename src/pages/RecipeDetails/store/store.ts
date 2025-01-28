@@ -1,13 +1,16 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import { API_PATHS } from '@/shared/config'
-import api from '@/shared/api'
+import getFullRecipe from '../api'
+import { FullRecipe } from '@/entities/recipe/model'
+import catchHttpError from '@/shared/utils/catchHttpError'
+import { CustomError } from '@/shared/model/customError'
 
 type FullRecipeStore = {
-  recipe: IFullRecipeItem | null
+  recipe: FullRecipe | null
   status: 'init' | 'loading' | 'success' | 'error'
   fetchFullRecipe: (id: string) => Promise<void>
+  error: CustomError
 }
 
 const useFullRecipe = create<FullRecipeStore>()(
@@ -17,14 +20,16 @@ const useFullRecipe = create<FullRecipeStore>()(
     fetchFullRecipe: async (id) => {
       try {
         set({ status: 'loading' })
-        const { data } = await api.get<IFullRecipeItem>(`${API_PATHS.recipes.getOne}/${id}`)
-        set({ recipe: data })
+        set({ error: null })
+        const recipe = await getFullRecipe(id)
+        set({ recipe })
         set({ status: 'success' })
       } catch (error) {
         set({ status: 'error' })
-        console.error(error)
+        set({ error: catchHttpError(error) })
       }
     },
+    error: null,
   })),
 )
 

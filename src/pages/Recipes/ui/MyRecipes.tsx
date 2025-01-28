@@ -1,39 +1,35 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
-import { RecipesErrorResponse } from '../model/api'
+import recipesService from '../api'
 import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
+import { Recipe } from '@/entities/recipe/model'
 import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import catchHttpError from '@/shared/utils/catchHttpError'
+import { CustomError } from '@/shared/model/customError'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
-import api from '@/shared/api'
-import { API_PATHS } from '@/shared/config'
+
+type Status = 'init' | 'loading' | 'success' | 'error'
 
 export default function MyRecipes() {
   const { user } = useUser()
-  const [recipes, setRecipes] = useState<IRecipeItem[]>([])
-  const [status, setStatus] = useState<string>('error')
-  const [error, setError] = useState<string>('error')
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [status, setStatus] = useState<Status>('init')
+  const [error, setError] = useState<CustomError>(null)
 
   const skeletonRecipes = [...new Array(4)].map((_, i) => <RecipeCard.Skeleton key={i} />)
 
   async function fetchUserRecipes() {
     try {
-      setError('')
+      setError(null)
       setStatus('loading')
-      const { data } = await api.get<IRecipeItem[]>(API_PATHS.recipes.myRecipes)
-      // TODO: нет валидации входящих данных и ошибок загрузки
-      setRecipes(data)
+      const recipes = await recipesService.getUserRecipes()
+      setRecipes(recipes)
       setStatus('success')
     } catch (error) {
-      // RecipesErrorResponse привести к типу с backend
-      if (axios.isAxiosError<RecipesErrorResponse>(error)) {
-        const data = error.response?.data
-        if (data) {
-          setError(data?.message)
-        }
-      }
       setStatus('error')
+      catchHttpError(error, setError)
     }
   }
 
@@ -62,10 +58,9 @@ export default function MyRecipes() {
         {status === 'success' && recipes?.length < 1 && (
           <p className="mt-1">Список рецептов пуст. Создайте новый рецепт</p>
         )}
-        {status === 'error' && recipes?.length < 1 && (
-          <p className="mt-1 text-system-error">{error}</p>
-        )}
-        {status !== 'error' && (
+        {status === 'error' ? (
+          <ErrorComponent className="mt-1" error={error} />
+        ) : (
           <div className="mt-2 grid gap-2">
             {status === 'loading'
               ? skeletonRecipes

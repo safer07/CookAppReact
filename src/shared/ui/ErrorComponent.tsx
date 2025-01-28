@@ -2,13 +2,17 @@ import { CustomError } from '../model/customError'
 
 type ErrorComponentProps = {
   error: CustomError
+  className?: string
 }
 
-export default function ErrorComponent({ error }: ErrorComponentProps): JSX.Element | null {
+export default function ErrorComponent({
+  error,
+  className = '',
+}: ErrorComponentProps): JSX.Element | null {
   if (!error) return null
 
   return (
-    <div className="space-y-1">
+    <div className={`space-y-1 ${className}`}>
       {error?.message && (
         <p className="text-system-error">
           {error.message}

@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 
 import RecipeCardSkeleton from './RecipeCardSkeleton'
+import { Recipe } from '../../model'
 import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
 import { categories } from '@/entities/recipeCategory/const/categories'
 import getRecipeDifficultyTextAndSurface from '@/shared/utils/getRecipeDifficultyTextAndSurface'
 import Tag from '@/shared/ui/Tag'
 
 type RecipeCardProps = {
-  recipe: IRecipeItem
+  recipe: Recipe
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {

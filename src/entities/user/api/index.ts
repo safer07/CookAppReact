@@ -1,4 +1,3 @@
-import { User } from '../model'
 import { authResponseSchema, AuthUserDTO, UpdateProfileDTO, userSchema } from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
@@ -21,13 +20,13 @@ const userService = {
   },
 
   getProfile: async () => {
-    const { data } = await api.get<User>(API_PATHS.user.getProfile)
+    const { data } = await api.get<unknown>(API_PATHS.user.getProfile)
     const validatedData = userSchema.parse(data)
     return validatedData
   },
 
   updateProfile: async (id: string, updateProfileDTO: UpdateProfileDTO) => {
-    const { data } = await api.patch<User>(
+    const { data } = await api.patch<unknown>(
       `${API_PATHS.user.updateProfile}/${id}`,
       updateProfileDTO,
     )

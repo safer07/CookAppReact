@@ -5,7 +5,7 @@ import { CreateRecipeStore } from '../model'
 
 export const emptyStep = { description: '', ingredients: [], img: '' }
 
-const initialState = {
+const initialRecipeData = {
   name: '',
   category: '',
   img: '',
@@ -20,18 +20,35 @@ const initialState = {
 const useCreateRecipe = create<CreateRecipeStore>()(
   persist(
     devtools((set) => ({
-      ...initialState,
+      recipeData: initialRecipeData,
 
-      setName: (value) => set({ name: value }),
-      setCategory: (value) => set({ category: value }),
-      setImg: (value) => set({ img: value }),
-      setTime: (value) => set({ time: value }),
-      setDifficulty: (value) => set({ difficulty: value }),
-      setDescription: (value) => set({ description: value }),
-      setTotalIngredients: (value) => set({ totalIngredients: value }),
-      setSteps: (value) => set({ steps: value }),
-      setHidden: (value) => set({ hidden: value }),
-      resetCreateRecipe: () => set(initialState),
+      setName: (value) =>
+        set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, name: value } })),
+      setCategory: (value) =>
+        set((state: CreateRecipeStore) => ({
+          recipeData: { ...state.recipeData, category: value },
+        })),
+      setImg: (value) =>
+        set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, img: value } })),
+      setTime: (value) =>
+        set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, time: value } })),
+      setDifficulty: (value) =>
+        set((state: CreateRecipeStore) => ({
+          recipeData: { ...state.recipeData, difficulty: value },
+        })),
+      setDescription: (value) =>
+        set((state: CreateRecipeStore) => ({
+          recipeData: { ...state.recipeData, description: value },
+        })),
+      setTotalIngredients: (value) =>
+        set((state: CreateRecipeStore) => ({
+          recipeData: { ...state.recipeData, totalIngredients: value },
+        })),
+      setSteps: (value) =>
+        set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, steps: value } })),
+      setHidden: (value) =>
+        set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, hidden: value } })),
+      resetCreateRecipe: () => set({ recipeData: initialRecipeData }),
     })),
     { name: 'createRecipeStore', version: 1 },
   ),

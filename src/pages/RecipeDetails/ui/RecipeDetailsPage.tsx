@@ -7,11 +7,12 @@ import FeaturedRecipes from './FeaturedRecipes'
 import RecipeTabs from './RecipeTabs'
 import TopAppBar from '@/widgets/TopAppBar'
 import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 export default function RecipeDetailsPage(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { recipe, status, fetchFullRecipe } = useFullRecipe()
+  const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
 
   useEffect(() => {
     if (!id || recipe?._id === id) return
@@ -24,7 +25,7 @@ export default function RecipeDetailsPage(): JSX.Element {
       {status === 'error' && (
         <>
           <TopAppBar title="Не удалось загрузить рецепт" back />
-          <FeaturedRecipes excludeId={id} />
+          <ErrorComponent className="mt-1" error={error} />
         </>
       )}
       {status === 'success' && recipe && (
@@ -40,10 +41,9 @@ export default function RecipeDetailsPage(): JSX.Element {
               fullWidth
             />
           </div>
-
-          <FeaturedRecipes excludeId={id} />
         </>
       )}
+      {status !== 'loading' && <FeaturedRecipes excludeId={id} />}
     </>
   )
 }

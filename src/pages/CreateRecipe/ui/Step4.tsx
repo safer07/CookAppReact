@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import useCreateRecipe, { emptyStep } from '../store/store'
 import RecipeLimits from '@/entities/recipe/const/limits'
+import { Ingredient } from '@/entities/recipe/model'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
@@ -11,10 +12,9 @@ import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
 import useDebounce from '@/shared/hooks/debounce'
 
-type StepProps = { errors: string[] }
-
-export default function Step4({ errors }: StepProps): JSX.Element {
-  const { totalIngredients, steps, hidden, setSteps, setHidden } = useCreateRecipe()
+export default function Step4(): JSX.Element {
+  const { recipeData, setSteps, setHidden } = useCreateRecipe()
+  const { totalIngredients, steps, hidden } = recipeData
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])
@@ -167,16 +167,6 @@ export default function Step4({ errors }: StepProps): JSX.Element {
           label={`Фото (шаг ${currentStepIndex + 1})`}
         />
       </form>
-
-      {errors.length > 0 && (
-        <ul className="layout-grid mt-3 space-y-1">
-          {errors.map((error) => (
-            <li className="text-system-error" key={error}>
-              {error}
-            </li>
-          ))}
-        </ul>
-      )}
 
       <ul className="mt-2">
         <ListItem

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import useCreateRecipe from '../store/store'
+import { Ingredient } from '@/entities/recipe/model'
 import ListItem from '@/shared/ui/ListItem'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
@@ -9,7 +10,8 @@ import Input from '@/shared/ui/Input'
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
 export default function Step3({ setStepIsValid }: StepProps): JSX.Element {
-  const { steps, totalIngredients, setSteps, setTotalIngredients } = useCreateRecipe()
+  const { recipeData, setSteps, setTotalIngredients } = useCreateRecipe()
+  const { steps, totalIngredients } = recipeData
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [newIngredientName, setNewIngredientName] = useState<string>('')
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0)

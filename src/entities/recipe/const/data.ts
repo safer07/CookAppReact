@@ -1,4 +1,8 @@
-export const recipes: IRecipeItem[] = [
+// TODO: удалить этот файл в production
+
+import { Recipe } from '../model'
+
+export const recipes: Recipe[] = [
   {
     id: 'r1',
     name: 'Омлет классический с сыром и ветчиной',
@@ -127,7 +131,7 @@ export const recipes: IRecipeItem[] = [
   },
 ]
 
-export const fullRecipes: IFullRecipeItem[] = [
+export const fullRecipes: FullRecipe[] = [
   {
     id: 'r1',
     name: 'Омлет классический с сыром и ветчиной',
@@ -409,8 +413,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: '/images/recipes/recipe-5/step-2.png',
       },
       {
-        description:
-          'Постепенно засыпать муку. Взбить до однородности, чтобы не было комочков.',
+        description: 'Постепенно засыпать муку. Взбить до однородности, чтобы не было комочков.',
         ingredients: [{ name: 'Мука пшеничная', amount: 2, unit: 'стакана' }],
         img: '/images/recipes/recipe-5/step-3.png',
       },
@@ -468,8 +471,7 @@ export const fullRecipes: IFullRecipeItem[] = [
     ],
     steps: [
       {
-        description:
-          'Положите водоросли нори блестящей стороной вниз на макисо.',
+        description: 'Положите водоросли нори блестящей стороной вниз на макисо.',
         ingredients: [{ name: 'Сухие водоросли нори', amount: 1, unit: 'г' }],
         img: '/images/recipes/recipe-6/step-1.png',
       },
@@ -480,8 +482,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: '/images/recipes/recipe-6/step-2.png',
       },
       {
-        description:
-          'Посередине водорослей нори нанесите васаби, затем сыр «Филадельфия».',
+        description: 'Посередине водорослей нори нанесите васаби, затем сыр «Филадельфия».',
         ingredients: [{ name: 'Сыр филадельфия', amount: 35, unit: 'г' }],
         img: '/images/recipes/recipe-6/step-3.png',
       },
@@ -662,8 +663,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: '/images/recipes/recipe-9/step-2.png',
       },
       {
-        description:
-          'Добавляем ледяную крошку и перекладываем смесь в шейкер. Взбиваем.',
+        description: 'Добавляем ледяную крошку и перекладываем смесь в шейкер. Взбиваем.',
         ingredients: [{ name: 'Лёд', amount: 8, unit: 'кусков' }],
         img: '/images/recipes/recipe-9/step-3.png',
       },
@@ -673,8 +673,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: '/images/recipes/recipe-9/step-4.png',
       },
       {
-        description:
-          'Декорируем коктейль листиком мяты и лаймом — напиток готов.',
+        description: 'Декорируем коктейль листиком мяты и лаймом — напиток готов.',
         ingredients: [],
         img: '/images/recipes/recipe-9/step-5.png',
       },
@@ -700,8 +699,7 @@ export const fullRecipes: IFullRecipeItem[] = [
     ],
     steps: [
       {
-        description:
-          'Мелко нарезать лук, пожарить на растительном масле и посолить.',
+        description: 'Мелко нарезать лук, пожарить на растительном масле и посолить.',
         ingredients: [
           { name: 'Лук репчатый', amount: 1, unit: 'шт.' },
           { name: 'Масло растительное', amount: 3, unit: 'ст.л.' },
@@ -728,8 +726,7 @@ export const fullRecipes: IFullRecipeItem[] = [
         img: '/images/recipes/recipe-10/step-4.png',
       },
       {
-        description:
-          'Выключить огонь, положить лавровый лист, закрыть крышкой и дать настояться.',
+        description: 'Выключить огонь, положить лавровый лист, закрыть крышкой и дать настояться.',
         ingredients: [{ name: 'Лавровый лист', amount: 1, unit: 'шт.' }],
         img: '/images/recipes/recipe-10/step-5.png',
       },

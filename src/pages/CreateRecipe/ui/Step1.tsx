@@ -11,8 +11,8 @@ import PhotoUpload from '@/shared/ui/PhotoUpload'
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
 export default function Step1({ setStepIsValid }: StepProps): JSX.Element {
-  const { name, category, description, img, setName, setCategory, setDescription, setImg } =
-    useCreateRecipe()
+  const { recipeData, setName, setCategory, setDescription, setImg } = useCreateRecipe()
+  const { name, category, description, img } = recipeData
 
   const categoriesOptions = categories.map((category) => {
     return { value: category.id, label: category.fullName }

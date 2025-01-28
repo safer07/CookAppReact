@@ -43,19 +43,18 @@ export default function ProfileEditPage(): JSX.Element {
     setError(null)
 
     const result = updateProfileDTOSchema.safeParse(formData)
-    if (!result.success) {
+    if (result.success) {
+      try {
+        await updateProfile(user._id, formData)
+      } catch (error) {
+        catchHttpError(error, setError)
+      }
+    } else {
       setError({
         errors: result.error.errors.map((issue) => ({
           message: issue.message,
         })),
       })
-      return
-    }
-
-    try {
-      await updateProfile(user._id, formData)
-    } catch (error) {
-      catchHttpError(error, setError)
     }
   }
 
