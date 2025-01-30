@@ -7,10 +7,11 @@ import { UpdateProfileDTO, updateProfileDTOSchema } from '@/entities/user/model/
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
-import { PROFILE_ROUTE } from '@/shared/routes'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { CustomError } from '@/shared/model/customError'
 import catchHttpError from '@/shared/utils/catchHttpError'
+import formatZodError from '@/shared/utils/formatZodError'
+import { CustomError } from '@/shared/model/customError'
+import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 
 // TODO: в сущность user (config? model?)
 const genderSelectOptions = [
@@ -51,9 +52,7 @@ export default function ProfileEditPage(): JSX.Element {
       }
     } else {
       setError({
-        errors: result.error.errors.map((issue) => ({
-          message: issue.message,
-        })),
+        errors: formatZodError(result),
       })
     }
   }
@@ -94,8 +93,7 @@ export default function ProfileEditPage(): JSX.Element {
               label="Дата рождения"
             />
           </form>
-          {/* TODO: добавить функционал смены пароля */}
-          <Button text="Изменить пароль" fullWidth />
+          <Button text="Изменить пароль" fullWidth link={CHANGE_PASSWORD_ROUTE} />
           <ErrorComponent error={error} />
           {status === 'success' && <p className="text-system-positive">Профиль обновлён</p>}
         </div>

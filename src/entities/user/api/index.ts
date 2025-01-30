@@ -1,4 +1,12 @@
-import { authResponseSchema, AuthUserDTO, UpdateProfileDTO, userSchema } from '../model/api'
+import {
+  authResponseSchema,
+  AuthUserDTO,
+  changePasswordResponseSchema,
+  forgotPasswordResponseSchema,
+  resetPasswordResponseSchema,
+  UpdateProfileDTO,
+} from '../model/api'
+import { userSchema } from '../model'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
@@ -31,6 +39,27 @@ const userService = {
       updateProfileDTO,
     )
     const validatedData = userSchema.parse(data)
+    return validatedData
+  },
+
+  forgotPassword: async (email: string) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.forgotPassword, { email })
+    const validatedData = forgotPasswordResponseSchema.parse(data)
+    return validatedData
+  },
+
+  resetPassword: async (forgotPasswordLink: string, password: string) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.resetPassword, {
+      link: forgotPasswordLink,
+      password,
+    })
+    const validatedData = resetPasswordResponseSchema.parse(data)
+    return validatedData
+  },
+
+  changePassword: async (password: string) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.changePassword, { password })
+    const validatedData = changePasswordResponseSchema.parse(data)
     return validatedData
   },
 }

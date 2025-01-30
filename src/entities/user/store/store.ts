@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import userService from '../api'
-import { UserStore } from '../model'
+import { UserStore } from '../model/store'
 import { ACCESS_TOKEN_KEY } from '@/shared/config'
 
 const useUser = create<UserStore>()(
@@ -66,6 +66,28 @@ const useUser = create<UserStore>()(
             set({ status: 'loading' })
             const user = await userService.updateProfile(id, updateProfileDTO)
             set({ user })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+            throw error
+          }
+        },
+        resetPassword: async (link, password) => {
+          try {
+            set({ status: 'loading' })
+            const response = await userService.resetPassword(link, password)
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+            set({ user: response.user })
+            set({ status: 'success' })
+          } catch (error) {
+            set({ status: 'error' })
+            throw error
+          }
+        },
+        changePassword: async (password) => {
+          try {
+            set({ status: 'loading' })
+            await userService.changePassword(password)
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })

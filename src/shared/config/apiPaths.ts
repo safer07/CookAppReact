@@ -6,6 +6,9 @@ export const API_PATHS = {
     refresh: '/users/refresh',
     getProfile: '/users/profile',
     updateProfile: '/users/profile',
+    forgotPassword: '/users/forgot-password',
+    resetPassword: '/users/reset-password',
+    changePassword: '/users/change-password',
   },
   recipes: {
     getAll: '/recipes',

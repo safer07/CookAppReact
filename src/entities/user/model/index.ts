@@ -1,4 +1,22 @@
-import { AuthUserDTO, UpdateProfileDTO } from './api'
+import { z } from 'zod'
+
+export const emailSchema = z.string({ required_error: 'Введите email' }).email('Неверный email')
+export const passwordSchema = z
+  .string({ required_error: 'Введите пароль' })
+  .min(5, 'Пароль должен состоять минимум из 5 символов')
+
+export const accessTokenSchema = z.string().jwt()
+
+export const userSchema = z.object({
+  _id: z.string(),
+  email: emailSchema,
+  name: z.string().optional(),
+  lastName: z.string().optional(),
+  avatarUrl: z.string().url().optional(),
+  gender: z.string().optional(),
+  // В БД ISO '2012-01-26T13:51:50.417-07:00', а в форме '2012-01-26' (z.string().datetime() vs z.string().date())
+  birthDate: z.string().datetime().nullish(),
+})
 
 export type User = {
   _id: string
@@ -8,21 +26,4 @@ export type User = {
   avatarUrl?: string
   gender?: string
   birthDate?: string | null
-}
-
-type Status = 'init' | 'loading' | 'success' | 'error'
-
-export type UserStore = {
-  user: User | null
-  status: Status
-  setUser: (value: User) => void
-  setStatus: (value: Status) => void
-  registration: (authUserDTO: AuthUserDTO) => Promise<void>
-  login: (authUserDTO: AuthUserDTO) => Promise<void>
-  logout: () => Promise<void>
-  fetchUser: () => Promise<void>
-  updateProfile: (userId: string, updateProfileDTO: UpdateProfileDTO) => Promise<void>
-  favouriteRecipes: string[]
-  addFavouriteRecipe: (id: string) => void
-  removeFavouriteRecipe: (id: string) => void
 }

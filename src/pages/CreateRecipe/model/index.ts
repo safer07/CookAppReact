@@ -14,7 +14,8 @@ export const createRecipeDTOSchema = z.object({
   // img: z.string().url(),
   time: z
     .number({ required_error: 'Укажите время приготовления рецепта' })
-    .positive('Время должно быть больше 0'),
+    .positive('Время должно быть больше 0')
+    .step(1),
   difficulty: z.number({ required_error: 'Укажите сложность рецепта' }),
   description: z.string({ required_error: 'Введите описание рецепта' }),
   totalIngredients: z.array(ingredientSchema).nonempty('Список ингредиентов пуст'),

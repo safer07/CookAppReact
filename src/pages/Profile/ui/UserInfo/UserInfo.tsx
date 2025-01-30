@@ -5,6 +5,9 @@ import { LOGIN_ROUTE } from '@/shared/routes'
 
 export default function UserInfo(): JSX.Element {
   const { user } = useUser()
+  const name = user?.name || ''
+  const lastName = user?.lastName || ''
+  const userName = name || lastName ? `${name} ${lastName}`.trim() : 'Имя не указано'
 
   return (
     <div className="flex items-center gap-2 py-2">
@@ -21,9 +24,7 @@ export default function UserInfo(): JSX.Element {
       {!user && <Button text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} />}
       {user && (
         <div className="space-y-0.5">
-          <p className="headline-small">
-            {user?.name || user?.lastName ? `${user?.name} ${user?.lastName}` : 'Имя не указано'}
-          </p>
+          <p className="headline-small">{userName}</p>
           <p className="text-secondary-color">{user?.email}</p>
         </div>
       )}

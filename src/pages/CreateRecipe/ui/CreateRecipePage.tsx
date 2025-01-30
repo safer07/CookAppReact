@@ -15,8 +15,10 @@ import Modal from '@/shared/ui/Modal'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import navigateBack from '@/shared/utils/navigateBack'
 import catchHttpError from '@/shared/utils/catchHttpError'
+import formatZodError from '@/shared/utils/formatZodError'
 import { API_PATHS } from '@/shared/config'
 import { CustomError } from '@/shared/model/customError'
+import { RECIPES_ROUTE } from '@/shared/routes'
 
 export default function CreateRecipePage(): JSX.Element {
   const navigate = useNavigate()
@@ -43,7 +45,7 @@ export default function CreateRecipePage(): JSX.Element {
 
   function onDelete(): void {
     resetCreateRecipe()
-    navigate('/')
+    navigate(RECIPES_ROUTE)
   }
 
   async function onSubmit() {
@@ -65,9 +67,7 @@ export default function CreateRecipePage(): JSX.Element {
       }
     } else {
       setError({
-        errors: result.error.errors.map((issue) => ({
-          message: issue.message,
-        })),
+        errors: formatZodError(result),
       })
     }
   }

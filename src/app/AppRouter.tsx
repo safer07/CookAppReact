@@ -5,12 +5,15 @@ import MainLayout from './layouts/MainLayout'
 import FullScreenLayout from './layouts/FullScreenLayout'
 import RecipesPage from '@/pages/Recipes'
 import {
+  CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
   EDIT_PROFILE_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
   LOGIN_ROUTE,
   PROFILE_ROUTE,
   RECIPES_ROUTE,
   REGISTRATION_ROUTE,
+  RESET_PASSWORD_ROUTE,
 } from '@/shared/routes'
 
 const RecipeDetails = lazy(() => import('@/pages/RecipeDetails'))
@@ -20,6 +23,8 @@ const Profile = lazy(() => import('@/pages/Profile'))
 const Auth = lazy(() => import('@/pages/Auth'))
 const Page404 = lazy(() => import('@/pages/404'))
 const ProfileEdit = lazy(() => import('@/pages/ProfileEdit'))
+const ForgotPassword = lazy(() => import('@/pages/ForgotPassword'))
+const ChangePassword = lazy(() => import('@/pages/ChangePassword'))
 
 export default function AppRouter() {
   return (
@@ -36,6 +41,9 @@ export default function AppRouter() {
         <Route path={LOGIN_ROUTE} element={<Auth />} />
         <Route path={REGISTRATION_ROUTE} element={<Auth />} />
         <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
+        <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgotPassword />} />
+        <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
+        <Route path={CHANGE_PASSWORD_ROUTE} element={<ChangePassword />} />
       </Route>
     </Routes>
   )

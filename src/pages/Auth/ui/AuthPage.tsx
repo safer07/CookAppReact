@@ -14,12 +14,13 @@ import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import catchHttpError from '@/shared/utils/catchHttpError'
+import formatZodError from '@/shared/utils/formatZodError'
 import { CustomError } from '@/shared/model/customError'
-import { LOGIN_ROUTE, RECIPES_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
+import { FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 
-const emptyLoginForm: LoginFormData = { email: '', password: '' }
-const emptyRegistrationForm: RegistrationFormData = {
-  ...emptyLoginForm,
+const emptyLoginFormData: LoginFormData = { email: '', password: '' }
+const emptyRegistrationFormData: RegistrationFormData = {
+  ...emptyLoginFormData,
   passwordRepeat: '',
 }
 
@@ -27,7 +28,8 @@ export default function LoginPage(): JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, status, login, registration } = useUser()
-  const emptyFormData = location.pathname === LOGIN_ROUTE ? emptyLoginForm : emptyRegistrationForm
+  const emptyFormData =
+    location.pathname === LOGIN_ROUTE ? emptyLoginFormData : emptyRegistrationFormData
   const [formData, setFormData] = useState<LoginFormData | RegistrationFormData>(emptyFormData)
   const [error, setError] = useState<CustomError>(null)
   const isRegistration = ((
@@ -38,7 +40,7 @@ export default function LoginPage(): JSX.Element {
   useEffect(() => {
     // TODO: Возвращать откуда пришёл, но navigate(-1) запирает при прямом логине, а другие решения не работали. нужно учитывать ссылки снизу и забыли пароль
     // if (user) navigate(-1)
-    if (user) navigate(RECIPES_ROUTE, { replace: true })
+    if (user) navigate(MAIN_ROUTE, { replace: true })
   }, [user])
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function LoginPage(): JSX.Element {
       }
     } else {
       setError({
-        errors: result.error.errors.map((issue) => ({ message: issue.message })),
+        errors: formatZodError(result),
       })
     }
   }
@@ -76,12 +78,20 @@ export default function LoginPage(): JSX.Element {
             type="email"
             label="Email"
           />
-          <Input
-            value={formData.password}
-            onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
-            type="password"
-            label="Пароль"
-          />
+          <div className="flex flex-col gap-1">
+            <Input
+              value={formData.password}
+              onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
+              type="password"
+              label="Пароль"
+            />
+            <Link
+              to={FORGOT_PASSWORD_ROUTE}
+              className="self-end font-bold text-primary hover-hover:hover:text-primary-active"
+            >
+              Забыли пароль?
+            </Link>
+          </div>
           {!isLogin && (
             <Input
               value={formData.passwordRepeat}
@@ -104,7 +114,7 @@ export default function LoginPage(): JSX.Element {
           loading={status === 'loading'}
         />
       </form>
-      <div className="mt-auto py-2 text-center">
+      <div className="py-2 text-center">
         <span>{isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'} </span>
         <Link
           to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}

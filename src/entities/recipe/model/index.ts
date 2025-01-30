@@ -30,12 +30,9 @@ export const recipeSchema = z.object({
 })
 export type Recipe = z.infer<typeof recipeSchema>
 
-export const fullRecipeSchema = z.intersection(
-  recipeSchema,
-  z.object({
-    description: z.string(),
-    totalIngredients: z.array(ingredientSchema),
-    steps: z.array(recipeStepSchema),
-  }),
-)
+export const fullRecipeSchema = recipeSchema.extend({
+  description: z.string(),
+  totalIngredients: z.array(ingredientSchema),
+  steps: z.array(recipeStepSchema),
+})
 export type FullRecipe = z.infer<typeof fullRecipeSchema>
