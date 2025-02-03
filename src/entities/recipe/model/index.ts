@@ -26,7 +26,7 @@ export const recipeSchema = z.object({
   // img: z.string().url(),
   time: z.number().positive('Время должно быть больше 0'),
   difficulty: z.number(),
-  hidden: z.boolean(),
+  hidden: z.boolean().optional(),
 })
 export type Recipe = z.infer<typeof recipeSchema>
 
@@ -36,3 +36,8 @@ export const fullRecipeSchema = recipeSchema.extend({
   steps: z.array(recipeStepSchema),
 })
 export type FullRecipe = z.infer<typeof fullRecipeSchema>
+
+export type RecipesFilters = {
+  categoryId?: string | null
+  searchQuery?: string
+}

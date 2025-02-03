@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import getFullRecipe from '../api'
+import recipesService from '@/entities/recipe/api'
 import { FullRecipe } from '@/entities/recipe/model'
 import catchHttpError from '@/shared/utils/catchHttpError'
 import { CustomError } from '@/shared/model/customError'
@@ -21,7 +21,7 @@ const useFullRecipe = create<FullRecipeStore>()(
       try {
         set({ status: 'loading' })
         set({ error: null })
-        const recipe = await getFullRecipe(id)
+        const recipe = await recipesService.getFullRecipe(id)
         set({ recipe })
         set({ status: 'success' })
       } catch (error) {

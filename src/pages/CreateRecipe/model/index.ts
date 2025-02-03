@@ -6,9 +6,11 @@ export const createRecipeDTOSchema = z.object({
   name: z.string({ required_error: 'Введите название рецепта' }),
   category: z.string({ required_error: 'Выберите категорию рецепта' }),
   // TODO: когда категории будут в БД
-  // category: z.string().refine((value) => {
-  //   return mongoose.Types.ObjectId.isValid(value)
-  // }),
+  // category: z
+  //   .string()
+  //   .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+  //     message: 'Значение не соответствует Mongoose ObjectId',
+  //   }),
   img: z.string({ required_error: 'Не выбрано главное изображение рецепта' }),
   // TODO: когда фотки будут загружены на сервер
   // img: z.string().url(),

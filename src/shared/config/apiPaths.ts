@@ -15,5 +15,6 @@ export const API_PATHS = {
     getOne: '/recipes',
     createRecipe: '/recipes',
     myRecipes: '/recipes/my-recipes',
+    getSimilar: '/recipes/similar',
   },
 }

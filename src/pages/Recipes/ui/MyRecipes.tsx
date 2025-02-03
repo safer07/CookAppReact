@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import recipesService from '../api'
 import useUser from '@/entities/user/store/store'
 import RecipeCard from '@/entities/recipe/ui/RecipeCard'
+import recipesService from '@/entities/recipe/api'
 import { Recipe } from '@/entities/recipe/model'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'

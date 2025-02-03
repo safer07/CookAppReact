@@ -42,6 +42,7 @@ export default function RecipesList({
           {status === 'loading'
             ? skeletonRecipes
             : recipes.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
+          {status === 'success' && recipes.length === 0 && 'Рецепты не найдены'}
         </div>
       )}
     </>

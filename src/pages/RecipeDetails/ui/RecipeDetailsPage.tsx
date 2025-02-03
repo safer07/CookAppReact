@@ -3,13 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import useFullRecipe from '../store/store'
 import RecipeInfo from './RecipeInfo'
-import FeaturedRecipes from './FeaturedRecipes'
+import SimilarRecipes from './SimilarRecipes'
 import RecipeTabs from './RecipeTabs'
 import TopAppBar from '@/widgets/TopAppBar'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
-export default function RecipeDetailsPage(): JSX.Element {
+export default function RecipeDetailsPage(): JSX.Element | null {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
@@ -18,6 +18,8 @@ export default function RecipeDetailsPage(): JSX.Element {
     if (!id || recipe?._id === id) return
     fetchFullRecipe(id)
   }, [id])
+
+  if (!id) return null
 
   return (
     <>
@@ -43,7 +45,7 @@ export default function RecipeDetailsPage(): JSX.Element {
           </div>
         </>
       )}
-      {status !== 'loading' && <FeaturedRecipes excludeId={id} />}
+      {status !== 'loading' && <SimilarRecipes excludeId={id} />}
     </>
   )
 }

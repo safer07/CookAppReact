@@ -97,6 +97,8 @@ export default function Catalog(): JSX.Element {
           <>
             <Categories categories={recipeCategories} />
 
+            {/* TODO: это будет featuredRecipes */}
+
             {status === 'error' ? (
               <h2 className="headline-medium mt-3">Не удалось загрузить рецепты</h2>
             ) : (

@@ -1,11 +1,6 @@
-import { Recipe } from '@/entities/recipe/model'
+import { Recipe, RecipesFilters } from '@/entities/recipe/model'
 
 export type RecipesStatus = 'init' | 'loading' | 'success' | 'error'
-
-export type RecipesFilters = {
-  categoryId?: string | null
-  searchQuery?: string
-}
 
 export type RecipesStore = {
   items: Recipe[]

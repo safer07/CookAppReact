@@ -9,10 +9,12 @@ const api = axios.create({
   withCredentials: true,
 })
 
+// TODO: не импортировать из entities
+
 // Авторизация в исходящем запросе
 api.interceptors.request.use((request) => {
-  const token = localStorage.getItem(ACCESS_TOKEN_KEY)
-  if (token) request.headers.Authorization = `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)
+  if (accessToken) request.headers.Authorization = `Bearer ${accessToken}`
   return request
 })
 
