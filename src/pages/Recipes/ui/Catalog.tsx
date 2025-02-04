@@ -11,23 +11,17 @@ import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { CustomError } from '@/shared/model/customError'
 import catchHttpError from '@/shared/utils/catchHttpError'
+import FeaturedRecipes from './FeaturedRecipes'
 
 // TODO: убрать импорт из app
 
 export default function Catalog(): JSX.Element {
-  const {
-    items: recipes,
-    status,
-    filters,
-    fetchRecipes,
-    setCategoryId,
-    setSearchQuery,
-  } = useRecipes()
+  const { items: recipes, status, filters, fetchRecipes, setSearchQuery } = useRecipes()
   const { categoryId, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
   const filtersCount = Object.values(filters).filter((value) => value).length
-  const [recipeCategories, setRecipeCategories] = useState<IRecipeCategoryItem[]>([])
+  const [recipeCategories, setRecipeCategories] = useState<RecipeCategory[]>([])
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debouncedSearchQuery: string =
     tempSearchQuery === '' ? useDebounce(tempSearchQuery, 0) : useDebounce(tempSearchQuery, 1000)
@@ -44,12 +38,13 @@ export default function Catalog(): JSX.Element {
     }
   }
 
+  // TODO: каждый раз загружаются категории, сохранить в store
+  async function loadCategories() {
+    const categories: RecipeCategory[] = await fetchCategories()
+    setRecipeCategories(categories)
+  }
+
   useEffect(() => {
-    // TODO: каждый раз загружаются категории, сохранить в store
-    async function loadCategories() {
-      const categories: IRecipeCategoryItem[] = await fetchCategories()
-      setRecipeCategories(categories)
-    }
     loadCategories()
   }, [])
 
@@ -97,24 +92,10 @@ export default function Catalog(): JSX.Element {
           <>
             <Categories categories={recipeCategories} />
 
-            {/* TODO: это будет featuredRecipes */}
-
             {status === 'error' ? (
-              <h2 className="headline-medium mt-3">Не удалось загрузить рецепты</h2>
+              <p className="headline-medium mt-3">Не удалось загрузить рецепты</p>
             ) : (
-              recipeCategories.map((category) => (
-                <div className="mt-3" key={category.id}>
-                  <RecipesList
-                    title={category.fullName}
-                    recipes={recipes.filter((recipe) => recipe.category === category.id)}
-                    status={status}
-                    button={{
-                      name: 'Смотреть все',
-                      onClick: () => setCategoryId(category.id),
-                    }}
-                  />
-                </div>
-              ))
+              <FeaturedRecipes categories={recipeCategories} recipes={recipes} status={status} />
             )}
           </>
         )}

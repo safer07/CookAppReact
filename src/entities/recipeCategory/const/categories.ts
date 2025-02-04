@@ -1,4 +1,4 @@
-export const categories: IRecipeCategoryItem[] = [
+export const categories: RecipeCategory[] = [
   {
     id: 'rc1',
     name: 'Горячее',

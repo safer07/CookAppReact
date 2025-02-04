@@ -8,8 +8,8 @@ type FilterProps = {
   open: boolean
   setClose: () => void
   setTempSearchQuery: (value: string) => void
-  recipeCategories: IRecipeCategoryItem[]
-  findCategoryById: (id: string) => IRecipeCategoryItem | undefined
+  recipeCategories: RecipeCategory[]
+  findCategoryById: (id: string) => RecipeCategory | undefined
 }
 
 export default function Filters({

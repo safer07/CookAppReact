@@ -1,7 +1,7 @@
 import { categories } from '@/entities/recipeCategory/const/categories'
 
 export function fetchCategories() {
-  return new Promise<IRecipeCategoryItem[]>((resolve) => {
+  return new Promise<RecipeCategory[]>((resolve) => {
     setTimeout(() => {
       resolve(categories)
     }, 100)
