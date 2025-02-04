@@ -6,9 +6,10 @@ import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
-import createRecipe from '../api'
-import { createRecipeDTOSchema, CreateRecipeStatus } from '../model'
+import { CreateRecipeStatus } from '../model'
 import TopAppBar from '@/widgets/TopAppBar'
+import recipesService from '@/entities/recipe/api'
+import { createRecipeDTOSchema } from '@/entities/recipe/model'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
@@ -56,7 +57,7 @@ export default function CreateRecipePage(): JSX.Element {
       try {
         setError(null)
         setStatus('loading')
-        const response = await createRecipe(result.data)
+        const response = await recipesService.create(result.data)
         setStatus('success')
         resetCreateRecipe()
         setNewRecipeId(response.recipe._id)

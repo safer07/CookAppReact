@@ -4,14 +4,19 @@ import RecipeCardSkeleton from './RecipeCardSkeleton'
 import { Recipe } from '../../model'
 import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
 import { categories } from '@/entities/recipeCategory/const/categories'
+import useUser from '@/entities/user/store/store'
 import getRecipeDifficultyTextAndSurface from '@/shared/utils/getRecipeDifficultyTextAndSurface'
 import Tag from '@/shared/ui/Tag'
+
+// TODO: не импортировать feature, а user импортировать через кросс-экспорт
 
 type RecipeCardProps = {
   recipe: Recipe
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
+  const { user } = useUser()
+  const isAuthor = user?._id === recipe.author
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe?.difficulty,
   )
@@ -31,8 +36,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
             alt={recipe.name}
           />
         </div>
-        <LikeButton itemId={recipe._id} className="absolute right-1.5 top-1.5" />
-        {/* TODO: дополнительные кнопки для автора рецепта */}
+        {!isAuthor && <LikeButton itemId={recipe._id} className="absolute right-1.5 top-1.5" />}
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300 hover-hover:group-hover:text-primary">

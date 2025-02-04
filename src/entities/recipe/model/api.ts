@@ -1,6 +1,14 @@
 import { z } from 'zod'
 
-import { recipeSchema } from '.'
+import { fullRecipeSchema, recipeSchema } from '.'
 
 export const recipesResponseSchema = z.array(recipeSchema)
-export type RecipesResponse = z.infer<typeof recipesResponseSchema>
+
+export const createRecipeResponseSchema = z.object({
+  message: z.string(),
+  recipe: fullRecipeSchema,
+})
+
+export const deleteRecipeResponseSchema = z.object({
+  message: z.string(),
+})

@@ -1,5 +1,9 @@
-import { fullRecipeSchema, RecipesFilters } from '../model'
-import { recipesResponseSchema } from '@/entities/recipe/model/api'
+import { CreateRecipeDTO, fullRecipeSchema, RecipesFilters } from '../model'
+import {
+  createRecipeResponseSchema,
+  deleteRecipeResponseSchema,
+  recipesResponseSchema,
+} from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
@@ -29,6 +33,19 @@ const recipesService = {
   getUserRecipes: async () => {
     const { data } = await api.get<unknown>(API_PATHS.recipes.myRecipes)
     const validatedData = recipesResponseSchema.parse(data)
+    return validatedData
+  },
+
+  create: async (recipeData: CreateRecipeDTO) => {
+    // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
+    const { data } = await api.post<unknown>(API_PATHS.recipes.createRecipe, recipeData)
+    const validatedData = createRecipeResponseSchema.parse(data)
+    return validatedData
+  },
+
+  delete: async (id: string) => {
+    const { data } = await api.delete<unknown>(`${API_PATHS.recipes.delete}/${id}`)
+    const validatedData = deleteRecipeResponseSchema.parse(data)
     return validatedData
   },
 }
