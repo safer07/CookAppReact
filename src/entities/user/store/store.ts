@@ -4,7 +4,10 @@ import { immer } from 'zustand/middleware/immer'
 
 import userService from '../api'
 import { UserStore } from '../model/store'
+import useFavorites from '@/features/favorites/store/store'
 import { ACCESS_TOKEN_KEY } from '@/shared/config'
+
+// TODO: не импортировать useFavorites (features) в entity
 
 const useUser = create<UserStore>()(
   persist(
@@ -16,10 +19,12 @@ const useUser = create<UserStore>()(
         setStatus: (value) => set({ status: value }),
         registration: async (authUserDTO) => {
           try {
+            const payload = { ...authUserDTO, favorites: useFavorites.getState().favorites }
             set({ status: 'loading' })
-            const response = await userService.registration(authUserDTO)
+            const response = await userService.registration(payload)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
+            useFavorites.getState().setFavorites(response.user.favorites)
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
@@ -32,6 +37,7 @@ const useUser = create<UserStore>()(
             const response = await userService.login(authUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
+            useFavorites.getState().setFavorites(response.user.favorites)
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
@@ -44,6 +50,7 @@ const useUser = create<UserStore>()(
             await userService.logout()
             localStorage.removeItem(ACCESS_TOKEN_KEY)
             set({ user: null })
+            useFavorites.getState().resetFavorites()
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
@@ -94,20 +101,6 @@ const useUser = create<UserStore>()(
             throw error
           }
         },
-        favouriteRecipes: [
-          '668b9ede0cc1f0dab6c84e42',
-          '668b9ede0cc1f0dab6c84e47',
-          '668b9ede0cc1f0dab6c84e49',
-          '668b9ede0cc1f0dab6c84e4b',
-        ],
-        addFavouriteRecipe: (id) =>
-          set((state) => {
-            state.favouriteRecipes.push(id)
-          }),
-        removeFavouriteRecipe: (id) =>
-          set((state) => {
-            state.favouriteRecipes = state.favouriteRecipes.filter((item) => item !== id)
-          }),
       })),
     ),
     { name: 'userStore', version: 1 },

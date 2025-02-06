@@ -15,7 +15,4 @@ export type UserStore = {
   updateProfile: (userId: string, updateProfileDTO: UpdateProfileDTO) => Promise<void>
   resetPassword: (link: string, password: string) => Promise<void>
   changePassword: (password: string) => Promise<void>
-  favouriteRecipes: string[]
-  addFavouriteRecipe: (id: string) => void
-  removeFavouriteRecipe: (id: string) => void
 }

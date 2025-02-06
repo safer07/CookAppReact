@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import RecipeInfoSkeleton from './RecipeInfoSkeleton'
-import LikeButton from '@/features/favouriteRecipe/ui/LikeButton'
+import LikeButton from '@/features/favorites/ui/LikeButton'
 import useUser from '@/entities/user/store/store'
 import recipesService from '@/entities/recipe/api'
 import { categories } from '@/entities/recipeCategory/const/categories'

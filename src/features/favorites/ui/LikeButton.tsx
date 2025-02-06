@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import useUser from '@/entities/user/store/store'
+import useFavorites from '@/features/favorites/store/store'
 
 type LikeButtonProps = {
   itemId: string
@@ -8,16 +8,14 @@ type LikeButtonProps = {
 }
 
 export default function LikeButton({ itemId, className = '' }: LikeButtonProps): JSX.Element {
-  const favouriteRecipes = useUser((state) => state.favouriteRecipes)
-  const addFavouriteRecipe = useUser((state) => state.addFavouriteRecipe)
-  const removeFavouriteRecipe = useUser((state) => state.removeFavouriteRecipe)
+  const { favorites, addFavouriteRecipe, removeFavouriteRecipe } = useFavorites()
+  const favouriteRecipes = favorites.recipes
   const [animation, setAnimation] = useState<boolean>(false)
   const isActive: boolean = favouriteRecipes.includes(itemId)
 
   function onClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
 
-    // TODO: это сохраняет в state, а нужно делать fetch на API
     if (favouriteRecipes.includes(itemId)) removeFavouriteRecipe(itemId)
     else addFavouriteRecipe(itemId)
 

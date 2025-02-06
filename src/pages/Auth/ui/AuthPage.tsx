@@ -85,12 +85,14 @@ export default function LoginPage(): JSX.Element {
               type="password"
               label="Пароль"
             />
-            <Link
-              to={FORGOT_PASSWORD_ROUTE}
-              className="self-end font-bold text-primary hover-hover:hover:text-primary-active"
-            >
-              Забыли пароль?
-            </Link>
+            {isLogin && (
+              <Link
+                to={FORGOT_PASSWORD_ROUTE}
+                className="self-end font-bold text-primary hover-hover:hover:text-primary-active"
+              >
+                Забыли пароль?
+              </Link>
+            )}
           </div>
           {!isLogin && (
             <Input

@@ -19,8 +19,7 @@ export const recipeSchema = z.object({
   _id: z.string(),
   name: z.string(),
   category: z.string(),
-  // TODO: убрать optional на проде
-  author: z.string().optional(),
+  author: z.string(),
   img: z.string(),
   // TODO: когда фотки будут загружены на сервер
   // img: z.string().url(),

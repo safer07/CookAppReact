@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 
 import useRecipes from '../store/store'
 import RecipesList from '@/widgets/RecipesList'
-import useUser from '@/entities/user/store/store'
+import useFavorites from '@/features/favorites/store/store'
 import { Recipe } from '@/entities/recipe/model'
 
-export default function Favourites(): JSX.Element {
+export default function Favorites(): JSX.Element {
   const { items: recipes, status, fetchRecipes } = useRecipes()
-  const favouriteRecipes = useUser((state) => state.favouriteRecipes)
+  const favouriteRecipes = useFavorites((state) => state.favorites.recipes)
   const [tempRecipes, setTempRecipes] = useState<Recipe[]>([])
 
   // TODO: пока загружаются все рецепты, затем фильтруются. Нужно подгружать их с бэкенда запросом

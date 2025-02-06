@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 import Catalog from './Catalog'
 import MyRecipes from './MyRecipes'
-import Favourites from './Favourites'
+import Favorites from './Favorites'
 import TopAppBar from '@/widgets/TopAppBar'
 import SegmentedButton from '@/shared/ui/SegmentedButton'
 
-type RecipesPageTabId = 'catalog' | 'myrecipes' | 'favourites'
+type RecipesPageTabId = 'catalog' | 'myrecipes' | 'favorites'
 
 interface IRecipesPageTab {
   name: string
@@ -27,8 +27,8 @@ export default function RecipesPage() {
     },
     {
       name: 'Избранное',
-      link: '?favourites',
-      id: 'favourites',
+      link: '?favorites',
+      id: 'favorites',
     },
   ]
   const activeTabIndex: number = tabs.findIndex((item) => item.id === activeTab)
@@ -50,7 +50,7 @@ export default function RecipesPage() {
 
       {activeTab === 'catalog' && <Catalog />}
       {activeTab === 'myrecipes' && <MyRecipes />}
-      {activeTab === 'favourites' && <Favourites />}
+      {activeTab === 'favorites' && <Favorites />}
     </>
   )
 }

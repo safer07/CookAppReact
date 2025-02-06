@@ -3,6 +3,7 @@ import {
   AuthUserDTO,
   changePasswordResponseSchema,
   forgotPasswordResponseSchema,
+  RegistrationUserDTO,
   resetPasswordResponseSchema,
   UpdateProfileDTO,
 } from '../model/api'
@@ -11,8 +12,8 @@ import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
 const userService = {
-  registration: async (authUserDTO: AuthUserDTO) => {
-    const { data } = await api.post<unknown>(API_PATHS.user.registration, authUserDTO)
+  registration: async (registrationUserDTO: RegistrationUserDTO) => {
+    const { data } = await api.post<unknown>(API_PATHS.user.registration, registrationUserDTO)
     const validatedData = authResponseSchema.parse(data)
     return validatedData
   },

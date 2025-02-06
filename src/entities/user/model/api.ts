@@ -13,6 +13,15 @@ export const authUserDTOSchema = z.object({
 })
 export type AuthUserDTO = z.infer<typeof authUserDTOSchema>
 
+export const registrationUserDTOSchema = authUserDTOSchema.extend({
+  favorites: z
+    .object({
+      recipes: z.array(z.string()),
+    })
+    .optional(),
+})
+export type RegistrationUserDTO = z.infer<typeof registrationUserDTOSchema>
+
 export const loginFormDataSchema = authUserDTOSchema
 export type LoginFormData = z.infer<typeof loginFormDataSchema>
 

@@ -16,6 +16,7 @@ export const userSchema = z.object({
   gender: z.string().optional(),
   // В БД ISO '2012-01-26T13:51:50.417-07:00', а в форме '2012-01-26' (z.string().datetime() vs z.string().date())
   birthDate: z.string().datetime().nullish(),
+  favorites: z.object({ recipes: z.array(z.string()) }),
 })
 
 export type User = {

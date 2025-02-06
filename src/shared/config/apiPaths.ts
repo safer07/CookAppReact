@@ -18,4 +18,5 @@ export const API_PATHS = {
     myRecipes: '/recipes/my-recipes',
     getSimilar: '/recipes/similar',
   },
+  favorites: { addRecipe: '/favorites/recipes', removeRecipe: '/favorites/recipes' },
 }
