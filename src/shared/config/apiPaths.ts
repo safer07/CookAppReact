@@ -13,10 +13,11 @@ export const API_PATHS = {
   recipes: {
     getAll: '/recipes',
     getOne: '/recipes',
-    delete: '/recipes',
     createRecipe: '/recipes',
-    myRecipes: '/recipes/my-recipes',
+    delete: '/recipes',
     getSimilar: '/recipes/similar',
+    favorite: '/recipes/favorite',
+    myRecipes: '/recipes/my-recipes',
   },
   favorites: { addRecipe: '/favorites/recipes', removeRecipe: '/favorites/recipes' },
 }

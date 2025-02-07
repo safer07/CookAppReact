@@ -8,16 +8,16 @@ type LikeButtonProps = {
 }
 
 export default function LikeButton({ itemId, className = '' }: LikeButtonProps): JSX.Element {
-  const { favorites, addFavouriteRecipe, removeFavouriteRecipe } = useFavorites()
-  const favouriteRecipes = favorites.recipes
+  const { favorites, addFavoriteRecipe, removeFavoriteRecipe } = useFavorites()
+  const favoriteRecipes = favorites.recipes
   const [animation, setAnimation] = useState<boolean>(false)
-  const isActive: boolean = favouriteRecipes.includes(itemId)
+  const isActive: boolean = favoriteRecipes.includes(itemId)
 
   function onClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
 
-    if (favouriteRecipes.includes(itemId)) removeFavouriteRecipe(itemId)
-    else addFavouriteRecipe(itemId)
+    if (favoriteRecipes.includes(itemId)) removeFavoriteRecipe(itemId)
+    else addFavoriteRecipe(itemId)
 
     setAnimation(true)
   }

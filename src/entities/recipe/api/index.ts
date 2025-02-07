@@ -36,6 +36,12 @@ const recipesService = {
     return validatedData
   },
 
+  getFavoriteRecipes: async (ids: string[]) => {
+    const { data } = await api.post<unknown>(API_PATHS.recipes.favorite, { ids })
+    const validatedData = recipesResponseSchema.parse(data)
+    return validatedData
+  },
+
   create: async (recipeData: CreateRecipeDTO) => {
     // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
     const { data } = await api.post<unknown>(API_PATHS.recipes.createRecipe, recipeData)

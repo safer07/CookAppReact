@@ -13,12 +13,12 @@ const useFavorites = create<FavoritesStore>()(
     devtools(
       immer((set) => ({
         favorites: emptyFavorites,
-        addFavouriteRecipe: async (id) => {
+        addFavoriteRecipe: async (id) => {
           if (useUser.getState().user) {
             try {
-              const favouriteRecipes = await favoritesService.addRecipe(id)
+              const favoriteRecipes = await favoritesService.addRecipe(id)
               set((state) => {
-                state.favorites.recipes = favouriteRecipes
+                state.favorites.recipes = favoriteRecipes
               })
             } catch (error) {}
           } else
@@ -26,12 +26,12 @@ const useFavorites = create<FavoritesStore>()(
               state.favorites.recipes.push(id)
             })
         },
-        removeFavouriteRecipe: async (id) => {
+        removeFavoriteRecipe: async (id) => {
           if (useUser.getState().user) {
             try {
-              const favouriteRecipes = await favoritesService.removeRecipe(id)
+              const favoriteRecipes = await favoritesService.removeRecipe(id)
               set((state) => {
-                state.favorites.recipes = favouriteRecipes
+                state.favorites.recipes = favoriteRecipes
               })
             } catch (error) {}
           } else {
