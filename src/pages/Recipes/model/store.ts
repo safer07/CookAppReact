@@ -7,8 +7,7 @@ export type RecipesStore = {
   status: RecipesStatus
   filters: RecipesFilters
   fetchRecipes: (filters?: RecipesFilters) => Promise<void>
-  // TODO: устанавливать не id, а категории
-  setCategoryId: (id: string | null) => void
+  setCategories: (categories: string[]) => void
   setSearchQuery: (query: string) => void
   resetFilters: () => void
 }

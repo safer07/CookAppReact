@@ -14,9 +14,8 @@ export default function FeaturedRecipes({
   recipes,
   status,
 }: FeaturedRecipesProps): JSX.Element {
-  const setCategoryId = useRecipes((state) => state.setCategoryId)
+  const setCategories = useRecipes((state) => state.setCategories)
 
-  // TODO: recipesStore и особенно setCategoryId стоит пересмотреть
   // TODO: категории и рецепты загружать самостоятельно (а не фильтровать), без store, limit=5
 
   return (
@@ -29,7 +28,7 @@ export default function FeaturedRecipes({
             status={status}
             button={{
               name: 'Смотреть все',
-              onClick: () => setCategoryId(category.id),
+              onClick: () => setCategories([category.id]),
             }}
           />
         </div>

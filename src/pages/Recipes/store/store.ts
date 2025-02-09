@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer'
 import { RecipesStore } from '../model/store'
 import recipesService from '@/entities/recipe/api'
 
-const initialFilters = { categoryId: null, searchQuery: '' }
+const initialFilters = { categories: [], searchQuery: '' }
 
 const useRecipes = create<RecipesStore>()(
   devtools(
@@ -24,9 +24,9 @@ const useRecipes = create<RecipesStore>()(
           throw error
         }
       },
-      setCategoryId: (id) =>
+      setCategories: (categories) =>
         set((state) => {
-          state.filters.categoryId = id
+          state.filters.categories = categories
         }),
       setSearchQuery: (query) =>
         set((state) => {

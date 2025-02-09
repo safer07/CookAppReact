@@ -19,14 +19,17 @@ export default function Filters({
   recipeCategories,
   findCategoryById,
 }: FilterProps): JSX.Element {
-  const { categoryId, searchQuery } = useRecipes((state) => state.filters)
-  const setCategoryId = useRecipes((state) => state.setCategoryId)
-  const setSearchQuery = useRecipes((state) => state.setSearchQuery)
-  const resetFilters = useRecipes((state) => state.resetFilters)
+  const { filters, setCategories, setSearchQuery, resetFilters } = useRecipes()
+  const { categories, searchQuery } = filters
 
   function resetHandle() {
     resetFilters()
     setTempSearchQuery('')
+  }
+
+  function toggleCategory(categoryId: string) {
+    if (categories.includes(categoryId)) setCategories(categories.filter((id) => id !== categoryId))
+    else setCategories([...categories, categoryId])
   }
 
   return ReactDOM.createPortal(
@@ -37,10 +40,9 @@ export default function Filters({
       <aside className="layout-grid">
         <TopAppBar title="Фильтры" back backOnClick={setClose} />
 
-        {/* TODO: чипы пока не функционируют (сервер должен принимать массив категорий) */}
         <div className="mt-2">
           {/* Чипы */}
-          {(categoryId || searchQuery) && (
+          {(categories.length > 0 || searchQuery) && (
             <div className="mb-3 flex flex-wrap gap-1">
               {searchQuery && (
                 <Chip
@@ -52,14 +54,14 @@ export default function Filters({
                   del
                 />
               )}
-              {/* TODO: мапать массив, а не 1 чип */}
-              {categoryId && (
+              {categories.map((categoryId) => (
                 <Chip
-                  text={`Категория: ${findCategoryById(categoryId!)?.name}`}
-                  onClick={() => setCategoryId(null)}
+                  key={categoryId}
+                  text={`Категория: ${findCategoryById(categoryId)?.name}`}
+                  onClick={() => toggleCategory(categoryId)}
                   del
                 />
-              )}
+              ))}
               <Chip text="Сбросить фильтры" onClick={resetHandle} variant="active" del />
             </div>
           )}
@@ -71,8 +73,8 @@ export default function Filters({
                 <li key={category.name}>
                   <Chip
                     text={category.name}
-                    onClick={() => setCategoryId(category.id)}
-                    variant={categoryId === category.id ? 'active' : 'default'}
+                    onClick={() => toggleCategory(category.id)}
+                    variant={categories.includes(category.id) ? 'active' : 'default'}
                   />
                 </li>
               ))}

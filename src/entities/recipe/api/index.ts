@@ -9,10 +9,8 @@ import { API_PATHS } from '@/shared/config'
 
 const recipesService = {
   getRecipes: async (filters?: RecipesFilters) => {
-    // TODO: добавить возможность выбора несколько категорий
-
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
-      params: { category: filters?.categoryId, query: filters?.searchQuery },
+      params: { categories: filters?.categories, query: filters?.searchQuery },
     })
     const validatedData = recipesResponseSchema.parse(data)
     return validatedData
@@ -37,7 +35,7 @@ const recipesService = {
   },
 
   getFavoriteRecipes: async (ids: string[]) => {
-    const { data } = await api.post<unknown>(API_PATHS.recipes.favorite, { ids })
+    const { data } = await api.post<unknown>(API_PATHS.recipes.favorite, ids)
     const validatedData = recipesResponseSchema.parse(data)
     return validatedData
   },

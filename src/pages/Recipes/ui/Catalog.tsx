@@ -4,6 +4,7 @@ import { fetchCategories } from '@/app/api'
 import useRecipes from '../store/store'
 import Categories from './Categories'
 import Filters from './Filters'
+import FeaturedRecipes from './FeaturedRecipes'
 import RecipesList from '@/widgets/RecipesList'
 import useDebounce from '@/shared/hooks/debounce'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
@@ -11,16 +12,15 @@ import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { CustomError } from '@/shared/model/customError'
 import catchHttpError from '@/shared/utils/catchHttpError'
-import FeaturedRecipes from './FeaturedRecipes'
 
 // TODO: убрать импорт из app
 
 export default function Catalog(): JSX.Element {
   const { items: recipes, status, filters, fetchRecipes, setSearchQuery } = useRecipes()
-  const { categoryId, searchQuery } = filters
+  const { categories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
-  const filtersCount = Object.values(filters).filter((value) => value).length
+  const filtersCount = Object.values(filters).filter((value) => value.length !== 0).length
   const [recipeCategories, setRecipeCategories] = useState<RecipeCategory[]>([])
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debouncedSearchQuery: string =
@@ -32,7 +32,7 @@ export default function Catalog(): JSX.Element {
 
   async function onFetchRecipes() {
     try {
-      await fetchRecipes({ categoryId, searchQuery })
+      await fetchRecipes({ categories, searchQuery })
     } catch (error) {
       catchHttpError(error, setError)
     }
@@ -49,8 +49,8 @@ export default function Catalog(): JSX.Element {
   }, [])
 
   useEffect(() => {
-    onFetchRecipes()
-  }, [categoryId, searchQuery])
+    if (!filtersIsOpen) onFetchRecipes()
+  }, [categories, searchQuery, filtersIsOpen])
 
   useEffect(() => {
     setSearchQuery(debouncedSearchQuery)
@@ -88,7 +88,7 @@ export default function Catalog(): JSX.Element {
 
       <div className="py-2">
         {/* Каталог по умолчанию - категории + каждая отдельно */}
-        {categoryId === null && !searchQuery && (
+        {categories.length === 0 && !searchQuery && (
           <>
             <Categories categories={recipeCategories} />
 
@@ -101,13 +101,13 @@ export default function Catalog(): JSX.Element {
         )}
 
         {/* Показ результатов поиска или выбранной категории */}
-        {(categoryId !== null || searchQuery) && (
+        {(categories.length > 0 || searchQuery) && (
           <>
             <RecipesList
               title={
-                searchQuery
+                searchQuery || categories.length !== 1
                   ? 'Найдены рецепты:'
-                  : findCategoryById(categoryId!)?.fullName || 'Заголовок категории не найден'
+                  : findCategoryById(categories[0])?.fullName || 'Заголовок категории не найден'
               }
               recipes={recipes}
               status={status}

@@ -6,7 +6,7 @@ type CategoryProps = {
 }
 
 export default function Categories({ categories }: CategoryProps): JSX.Element {
-  const setCategoryId = useRecipes((state) => state.setCategoryId)
+  const setCategories = useRecipes((state) => state.setCategories)
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function Categories({ categories }: CategoryProps): JSX.Element {
               <RecipeCategoryCard
                 key={category.id}
                 category={category}
-                onClick={() => setCategoryId(category.id)}
+                onClick={() => setCategories([category.id])}
               />
             ))}
       </div>

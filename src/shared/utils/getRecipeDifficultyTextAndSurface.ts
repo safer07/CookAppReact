@@ -1,14 +1,12 @@
 import recipeDifficulties, {
   errorRecipeDifficulty,
 } from '@/entities/recipe/const/recipeDifficulties'
-import { TagSurfaceType } from '../ui/Tag'
+import { TagSurface } from '../ui/Tag'
 
 export default function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,
-): [string, TagSurfaceType] {
-  const difficultyItem = recipeDifficulties.find(
-    (item) => item.value === recipeDifficulty,
-  )
+): [string, TagSurface] {
+  const difficultyItem = recipeDifficulties.find((item) => item.value === recipeDifficulty)
 
   let difficultyText, tagDifficultySurface
 
