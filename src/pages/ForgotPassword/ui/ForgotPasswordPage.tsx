@@ -15,7 +15,7 @@ import { PROFILE_ROUTE } from '@/shared/routes'
 
 type Status = 'init' | 'loading' | 'error' | 'success'
 
-export default function ForgotPasswordPage(): JSX.Element {
+export default function ForgotPasswordPage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
   const [email, setEmail] = useState<string>('')

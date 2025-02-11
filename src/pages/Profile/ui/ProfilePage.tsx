@@ -10,7 +10,7 @@ import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 import catchHttpError from '@/shared/utils/catchHttpError'
 import { CustomError } from '@/shared/model/customError'
 
-export default function ProfilePage(): JSX.Element {
+export default function ProfilePage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user, status, logout, fetchUser } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)

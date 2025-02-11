@@ -10,7 +10,7 @@ import PhotoUpload from '@/shared/ui/PhotoUpload'
 
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
-export default function Step1({ setStepIsValid }: StepProps): JSX.Element {
+export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element {
   const { recipeData, setName, setCategory, setDescription, setImg } = useCreateRecipe()
   const { name, category, description, img } = recipeData
 

@@ -4,7 +4,7 @@ export default function StepperMedium({
   stepsCount,
   currentIndex,
   setStep,
-}: StepperMediumProps): JSX.Element {
+}: StepperMediumProps): React.JSX.Element {
   return (
     <ol className="flex flex-wrap justify-center gap-2">
       {[...new Array(stepsCount)].map((_, index) => (

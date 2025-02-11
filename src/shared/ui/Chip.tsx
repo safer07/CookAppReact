@@ -5,7 +5,12 @@ type ChipProps = {
   del?: boolean
 }
 
-export default function Chip({ text, onClick, variant, del = false }: ChipProps): JSX.Element {
+export default function Chip({
+  text,
+  onClick,
+  variant,
+  del = false,
+}: ChipProps): React.JSX.Element {
   return (
     <button
       className={`chip ${variant === 'active' ? 'active' : ''} ${del ? 'chip-delete' : ''}`}

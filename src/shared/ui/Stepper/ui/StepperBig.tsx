@@ -5,7 +5,7 @@ export default function StepperBig({
   currentIndex,
   setStep,
   createStep,
-}: StepperBigProps): JSX.Element {
+}: StepperBigProps): React.JSX.Element {
   return (
     <ol className="grid grid-cols-4 gap-1">
       {[...new Array(stepsCount)].map((_, index) => (

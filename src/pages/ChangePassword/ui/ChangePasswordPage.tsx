@@ -18,7 +18,7 @@ import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 
 const emptyFormData: ChangePasswordFormData = { password: '', passwordRepeat: '' }
 
-export default function ResetPasswordPage(): JSX.Element {
+export default function ResetPasswordPage(): React.JSX.Element {
   const location = useLocation()
   const { link } = useParams<{ link: string }>()
   const navigate = useNavigate()

@@ -54,7 +54,7 @@ export default function Input({
   name,
   min,
   max,
-}: InputProps): JSX.Element {
+}: InputProps): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
   function onClickClear() {

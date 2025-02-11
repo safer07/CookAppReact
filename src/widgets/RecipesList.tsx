@@ -14,7 +14,7 @@ export default function RecipesList({
   recipes,
   status,
   button,
-}: RecipesListProps): JSX.Element {
+}: RecipesListProps): React.JSX.Element {
   const skeletonRecipes = [...new Array(4)].map((_, i) => <RecipeCard.Skeleton key={i} />)
 
   return (

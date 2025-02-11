@@ -21,7 +21,7 @@ type RecipeInfoProps = {
   recipe: FullRecipe
 }
 
-export default function RecipeInfo({ recipe }: RecipeInfoProps): JSX.Element {
+export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
   const isAuthor = user?._id === recipe.author

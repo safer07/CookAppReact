@@ -9,7 +9,7 @@ import TopAppBar from '@/widgets/TopAppBar'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
-export default function RecipeDetailsPage(): JSX.Element | null {
+export default function RecipeDetailsPage(): React.JSX.Element | null {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { recipe, status, error, fetchFullRecipe } = useFullRecipe()

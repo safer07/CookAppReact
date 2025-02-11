@@ -3,7 +3,7 @@ import StepperBig from './StepperBig'
 import StepperMedium from './StepperMedium'
 import StepperSimple from './StepperSimple'
 
-export default function Stepper(props: StepperProps): JSX.Element {
+export default function Stepper(props: StepperProps): React.JSX.Element {
   switch (props.type) {
     case 'big':
       return <StepperBig {...props} />

@@ -8,7 +8,7 @@ export default function Options({
   optionSize = 'small',
   setIsOpen,
   containerRef,
-}: SelectOptionProps): JSX.Element {
+}: SelectOptionProps): React.JSX.Element {
   function isSelectedOption(optionValue: string): boolean {
     if (multiple) return value.includes(optionValue)
     else return optionValue === value
@@ -43,9 +43,7 @@ export default function Options({
 
         if (multiple) {
           const rightElementType =
-            optionStatus === 'disabled' || optionStatus === 'selected'
-              ? 'icon'
-              : 'emptyIcon'
+            optionStatus === 'disabled' || optionStatus === 'selected' ? 'icon' : 'emptyIcon'
 
           const rightElementIcon = (() => {
             switch (optionStatus) {

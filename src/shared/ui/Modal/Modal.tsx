@@ -27,7 +27,7 @@ export default function Modal({
   children,
   textAlign,
   cancellable,
-}: ModalProps): JSX.Element | null {
+}: ModalProps): React.JSX.Element | null {
   const mounted = useMount(open)
   const textAlignClass = (() => {
     switch (textAlign) {
@@ -60,7 +60,7 @@ export default function Modal({
 
         {children}
 
-        <div className={`mt-3 grid ${cancellable ? 'grid-cols-2' : ''}  gap-2`}>
+        <div className={`mt-3 grid ${cancellable ? 'grid-cols-2' : ''} gap-2`}>
           {cancellable && (
             <Button text="Отмена" onClick={() => setOpen(false)} variant="tertiary" fullWidth />
           )}

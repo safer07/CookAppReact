@@ -3,7 +3,7 @@ import { StepperSimpleProps } from '../model/types'
 export default function StepperSimple({
   stepsCount,
   currentIndex,
-}: StepperSimpleProps): JSX.Element {
+}: StepperSimpleProps): React.JSX.Element {
   return (
     <ol className="flex gap-1">
       {[...new Array(stepsCount)].map((_, index) => (

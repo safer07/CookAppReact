@@ -10,7 +10,7 @@ import { CustomError } from '@/shared/model/customError'
 
 type HttpStatus = 'init' | 'loading' | 'success' | 'error'
 
-export default function Favorites(): JSX.Element {
+export default function Favorites(): React.JSX.Element {
   const favoriteRecipes = useFavorites((state) => state.favorites.recipes)
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [status, setStatus] = useState<HttpStatus>('init')

@@ -15,7 +15,7 @@ import catchHttpError from '@/shared/utils/catchHttpError'
 
 // TODO: убрать импорт из app
 
-export default function Catalog(): JSX.Element {
+export default function Catalog(): React.JSX.Element {
   const { items: recipes, status, filters, fetchRecipes, setSearchQuery } = useRecipes()
   const { categories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)

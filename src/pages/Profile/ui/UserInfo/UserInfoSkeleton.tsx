@@ -1,4 +1,4 @@
-export default function UserInfoSkeleton(): JSX.Element {
+export default function UserInfoSkeleton(): React.JSX.Element {
   return (
     <div className="flex items-center gap-2 py-2">
       <div className="skeleton size-10 rounded-full" />

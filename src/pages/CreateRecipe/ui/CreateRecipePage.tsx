@@ -21,7 +21,7 @@ import { API_PATHS } from '@/shared/config'
 import { CustomError } from '@/shared/model/customError'
 import { RECIPES_ROUTE } from '@/shared/routes'
 
-export default function CreateRecipePage(): JSX.Element {
+export default function CreateRecipePage(): React.JSX.Element {
   const navigate = useNavigate()
   const { recipeData, resetCreateRecipe } = useCreateRecipe()
   const [step, setStep] = useState<number>(1)

@@ -13,7 +13,7 @@ type SimilarRecipesProps = {
 
 type Status = 'init' | 'loading' | 'success' | 'error'
 
-export default function SimilarRecipes({ excludeId }: SimilarRecipesProps): JSX.Element {
+export default function SimilarRecipes({ excludeId }: SimilarRecipesProps): React.JSX.Element {
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [status, setStatus] = useState<Status>('init')
   const [error, setError] = useState<CustomError>(null)

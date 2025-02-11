@@ -19,7 +19,7 @@ export default function TopAppBar({
   back,
   backOnClick,
   rightIcon,
-}: TopAppBarProps): JSX.Element {
+}: TopAppBarProps): React.JSX.Element {
   const navigate = useNavigate()
 
   return (

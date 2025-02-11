@@ -9,7 +9,7 @@ import Input from '@/shared/ui/Input'
 
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
-export default function Step3({ setStepIsValid }: StepProps): JSX.Element {
+export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element {
   const { recipeData, setSteps, setTotalIngredients } = useCreateRecipe()
   const { steps, totalIngredients } = recipeData
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)

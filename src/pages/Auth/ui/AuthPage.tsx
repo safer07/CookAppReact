@@ -24,7 +24,7 @@ const emptyRegistrationFormData: RegistrationFormData = {
   passwordRepeat: '',
 }
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, status, login, registration } = useUser()

@@ -18,7 +18,7 @@ export default function Filters({
   setTempSearchQuery,
   recipeCategories,
   findCategoryById,
-}: FilterProps): JSX.Element {
+}: FilterProps): React.JSX.Element {
   const { filters, setCategories, setSearchQuery, resetFilters } = useRecipes()
   const { categories, searchQuery } = filters
 

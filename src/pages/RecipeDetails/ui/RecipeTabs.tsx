@@ -6,7 +6,7 @@ import ListItem from '@/shared/ui/ListItem'
 
 type IRecipeTabs = { recipe: FullRecipe }
 
-export default function RecipeTabs({ recipe }: IRecipeTabs): JSX.Element {
+export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const tabs = ['Ингредиенты', 'Рецепт']
 

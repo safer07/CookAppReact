@@ -16,7 +16,7 @@ import Options from './Options'
 //   optionSize = "small",
 // }
 
-export default function Select(props: SelectProps): JSX.Element {
+export default function Select(props: SelectProps): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -47,9 +47,7 @@ export default function Select(props: SelectProps): JSX.Element {
     valueLabel = options.find((option) => option.value === value)?.label || null
   }
 
-  const hasAvailableOptions = options.some(
-    (option): boolean => option.status !== 'disabled',
-  )
+  const hasAvailableOptions = options.some((option): boolean => option.status !== 'disabled')
 
   if (!hasAvailableOptions) disabled = true
 
@@ -57,10 +55,7 @@ export default function Select(props: SelectProps): JSX.Element {
     if (!disabled) setIsOpen((prev) => !prev)
   }
 
-  function onChipClick(
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
-    chipValue: string,
-  ): void {
+  function onChipClick(event: React.MouseEvent<HTMLElement, MouseEvent>, chipValue: string): void {
     event.stopPropagation()
     if (multiple) {
       const filteredValue: string[] = value.filter((item) => item !== chipValue)
@@ -92,9 +87,7 @@ export default function Select(props: SelectProps): JSX.Element {
             ))}
           </span>
         ) : (
-          <span
-            className={`textfield ${value.length > 0 ? '' : 'placeholder'}`}
-          >
+          <span className={`textfield ${value.length > 0 ? '' : 'placeholder'}`}>
             {value.length > 0 ? valueLabel : placeholder}
           </span>
         )}

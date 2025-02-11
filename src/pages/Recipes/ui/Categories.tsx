@@ -5,7 +5,7 @@ type CategoryProps = {
   categories: RecipeCategory[]
 }
 
-export default function Categories({ categories }: CategoryProps): JSX.Element {
+export default function Categories({ categories }: CategoryProps): React.JSX.Element {
   const setCategories = useRecipes((state) => state.setCategories)
 
   return (

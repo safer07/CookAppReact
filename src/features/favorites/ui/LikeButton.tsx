@@ -7,7 +7,7 @@ type LikeButtonProps = {
   className?: string
 }
 
-export default function LikeButton({ itemId, className = '' }: LikeButtonProps): JSX.Element {
+export default function LikeButton({ itemId, className = '' }: LikeButtonProps): React.JSX.Element {
   const { favorites, addFavoriteRecipe, removeFavoriteRecipe } = useFavorites()
   const favoriteRecipes = favorites.recipes
   const [animation, setAnimation] = useState<boolean>(false)

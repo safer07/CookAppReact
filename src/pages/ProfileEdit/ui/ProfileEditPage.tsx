@@ -19,7 +19,7 @@ const genderSelectOptions = [
   { value: 'female', label: 'Женский' },
 ]
 
-export default function ProfileEditPage(): JSX.Element {
+export default function ProfileEditPage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user, status, setStatus, updateProfile } = useUser()
   const [error, setError] = useState<CustomError>(null)

@@ -11,7 +11,7 @@ export default function PhotoUpload({
   image,
   onChange,
   label,
-}: PhotoUploadProps): JSX.Element {
+}: PhotoUploadProps): React.JSX.Element {
   const url = '/images/recipes/recipe-1/main.jpg'
 
   function setImage(): void {
@@ -28,8 +28,8 @@ export default function PhotoUpload({
           </svg>
           <Button text="Загрузить фото" onClick={setImage} variant="primary" />
           <p>
-            Пожалуйста используйте только свои уникальные фотографии. Формат:
-            JPEG, JPG, PNG. Размер: до&nbsp;10&nbsp;Mb.
+            Пожалуйста используйте только свои уникальные фотографии. Формат: JPEG, JPG, PNG.
+            Размер: до&nbsp;10&nbsp;Mb.
           </p>
         </div>
       </div>

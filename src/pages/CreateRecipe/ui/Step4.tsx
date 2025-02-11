@@ -12,7 +12,7 @@ import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
 import useDebounce from '@/shared/hooks/debounce'
 
-export default function Step4(): JSX.Element {
+export default function Step4(): React.JSX.Element {
   const { recipeData, setSteps, setHidden } = useCreateRecipe()
   const { totalIngredients, steps, hidden } = recipeData
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)

@@ -7,7 +7,7 @@ import ListItem from '@/shared/ui/ListItem'
 
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
-export default function Step2({ setStepIsValid }: StepProps): JSX.Element {
+export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element {
   const { recipeData, setDifficulty, setTime } = useCreateRecipe()
   const { time, difficulty } = recipeData
 

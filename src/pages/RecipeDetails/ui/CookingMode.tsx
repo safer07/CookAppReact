@@ -10,7 +10,7 @@ import Loader from '@/shared/ui/Loader'
 import Stepper from '@/shared/ui/Stepper'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
-export default function CookingMode(): JSX.Element {
+export default function CookingMode(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { recipe, status, error, fetchFullRecipe } = useFullRecipe()

@@ -14,7 +14,7 @@ type RecipeCardProps = {
   recipe: Recipe
 }
 
-export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
+export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Element {
   const { user } = useUser()
   const isAuthor = user?._id === recipe.author
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(

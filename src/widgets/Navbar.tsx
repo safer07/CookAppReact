@@ -12,7 +12,7 @@ type NavBarTab = {
   icon: string
 }
 
-export default function NavBar(): JSX.Element {
+export default function NavBar(): React.JSX.Element {
   const pathname: string = useLocation().pathname
   const [activeTab, setActiveTab] = useState('')
   const tabs: NavBarTab[] = [

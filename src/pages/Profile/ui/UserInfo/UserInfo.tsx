@@ -3,7 +3,7 @@ import useUser from '@/entities/user/store/store'
 import Button from '@/shared/ui/Button'
 import { LOGIN_ROUTE } from '@/shared/routes'
 
-export default function UserInfo(): JSX.Element {
+export default function UserInfo(): React.JSX.Element {
   const { user } = useUser()
   const name = user?.name || ''
   const lastName = user?.lastName || ''

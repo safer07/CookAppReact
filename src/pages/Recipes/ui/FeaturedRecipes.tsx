@@ -13,7 +13,7 @@ export default function FeaturedRecipes({
   categories,
   recipes,
   status,
-}: FeaturedRecipesProps): JSX.Element {
+}: FeaturedRecipesProps): React.JSX.Element {
   const setCategories = useRecipes((state) => state.setCategories)
 
   // TODO: категории и рецепты загружать самостоятельно (а не фильтровать), без store, limit=5
