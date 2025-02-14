@@ -8,7 +8,7 @@ type ErrorComponentProps = {
 export default function ErrorComponent({
   error,
   className = '',
-}: ErrorComponentProps): React.JSX.Element | null {
+}: ErrorComponentProps): React.ReactNode {
   if (!error) return null
 
   return (

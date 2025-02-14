@@ -27,7 +27,7 @@ export default function Modal({
   children,
   textAlign,
   cancellable,
-}: ModalProps): React.JSX.Element | null {
+}: ModalProps): React.ReactNode {
   const mounted = useMount(open)
   const textAlignClass = (() => {
     switch (textAlign) {
