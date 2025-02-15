@@ -11,9 +11,7 @@ export default function ListItem({
   onClick = () => {},
   status,
 }: ListItemProps) {
-  function onItemClick(
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-  ): void {
+  function onItemClick(event: React.MouseEvent<HTMLLIElement, MouseEvent>): void {
     event.stopPropagation()
     if (status === 'disabled') return
     onClick()
@@ -43,45 +41,32 @@ export default function ListItem({
   })()
 
   return (
-    <li
-      className={`listItem ${sizeClass} ${statusClass}`}
-      onClick={(event) => onItemClick(event)}
-    >
-      {leftElement?.element === 'radio' && (
-        <Radio checked={leftElement.checked} />
-      )}
+    <li className={`listItem ${sizeClass} ${statusClass}`} onClick={(event) => onItemClick(event)}>
+      {leftElement?.element === 'radio' && <Radio checked={leftElement.checked} />}
       {leftElement?.element === 'switch' && (
         <Switch checked={leftElement.checked} onClick={leftElement.onClick} />
       )}
       {leftElement?.element === 'icon' && (
-        <svg
-          className={`left-icon ${leftElement.className ? leftElement.className : ''}`}
-        >
+        <svg className={`left-icon ${leftElement.className ? leftElement.className : ''}`}>
           <use href={`/images/icons.svg#${leftElement.icon}`} />
         </svg>
       )}
 
       <div className="list-item-content">
         <span className="list-item-text">{text}</span>
-        {description && (
-          <span className="list-item-description">{description}</span>
-        )}
+        {description && <span className="list-item-description">{description}</span>}
       </div>
 
-      {secondaryText && (
-        <span className="list-item-secondary-text">{secondaryText}</span>
-      )}
+      {secondaryText && <span className="list-item-secondary-text">{secondaryText}</span>}
 
       {rightElement?.element === 'icon' && (
         <svg className="right-icon">
           <use href={`/images/icons.svg#${rightElement.icon}`} />
         </svg>
       )}
-      {rightElement?.element === 'emptyIcon' && (
-        <div className="empty-icon"></div>
-      )}
+      {rightElement?.element === 'emptyIcon' && <div className="empty-icon"></div>}
       {rightElement?.element === 'delete' && (
-        <button className="text-tertiary-color" onClick={rightElement.onClick}>
+        <button className="text-txt-tertiary" onClick={rightElement.onClick}>
           <svg className="size-3">
             <use href="/images/icons.svg#cross" />
           </svg>

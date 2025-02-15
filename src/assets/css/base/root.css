@@ -1,25 +1,21 @@
 :root {
-  --body-padding-inline: theme("spacing.2");
+  --body-padding-inline: --spacing(2);
   --container-max-width: 32rem; /* 512px */
 
   /* Текст */
+  /* Размер текста */
+  --headline-large-font-size: var(--text-2xl);
+  --headline-large-line-height: var(--text-2xl--line-height);
+  --headline-medium-font-size: var(--text-xl);
+  --headline-medium-line-height: var(--text-xl--line-height);
+  --headline-small-font-size: var(--text-lg);
+  --headline-small-line-height: var(--text-lg--line-height);
 
-  --font-title: "Nunito", "sans-serif";
-  --font-body: "Nunito", "sans-serif";
-  --font-weight-default: 400;
-
-  --h1-font-size: theme("fontSize.2xl[0]");
-  --h1-line-height: theme("fontSize.2xl[1]");
-  --h2-font-size: theme("fontSize.xl[0]");
-  --h2-line-height: theme("fontSize.xl[1]");
-  --h3-font-size: theme("fontSize.lg[0]");
-  --h3-line-height: theme("fontSize.lg[1]");
-
-  --text-title-color: theme("colors.base.800");
-  --text-primary-color: theme("colors.base.800");
-  --text-secondary-color: theme("colors.base.600");
-  --text-tertiary-color: theme("colors.base.400");
-  --text-accent-color: theme("colors.primary.DEFAULT");
+  /* Цвет текста */
+  --text-title-color: var(--color-base-800);
+  --text-main-color: var(--color-base-800);
+  --text-secondary-color: var(--color-base-600);
+  --text-tertiary-color: var(--color-base-400);
 }
 
 @media screen and (prefers-reduced-motion: reduce), (update: slow) {
@@ -36,5 +32,5 @@ html {
 }
 
 body {
-  @apply surface-default min-h-dvh max-w-full font-body text-base font-[--font-weight-default];
+  @apply surface-default font-body min-h-dvh max-w-full text-base font-normal;
 }

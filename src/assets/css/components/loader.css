@@ -1,5 +1,5 @@
 .lds-ring {
-  @apply relative inline-block size-8 text-primary;
+  @apply text-primary relative inline-block size-8;
 }
 .lds-ring div {
   border: 5px solid currentColor;

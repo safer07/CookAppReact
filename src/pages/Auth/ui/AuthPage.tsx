@@ -88,7 +88,7 @@ export default function LoginPage(): React.JSX.Element {
             {isLogin && (
               <Link
                 to={FORGOT_PASSWORD_ROUTE}
-                className="self-end font-bold text-primary hover-hover:hover:text-primary-active"
+                className="text-primary hover:text-primary-active self-end font-bold"
               >
                 Забыли пароль?
               </Link>
@@ -120,7 +120,7 @@ export default function LoginPage(): React.JSX.Element {
         <span>{isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'} </span>
         <Link
           to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}
-          className="font-bold text-primary hover-hover:hover:text-primary-active"
+          className="text-primary hover:text-primary-active font-bold"
         >
           {isLogin ? 'Регистрация' : 'Вход'}
         </Link>

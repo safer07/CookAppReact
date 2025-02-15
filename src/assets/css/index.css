@@ -1,29 +1,24 @@
-@import url(base/fonts.css) layer(base);
-@import url(base/root.css) layer(base);
-@import url(base/headings.css) layer(base);
-@import url(base/other.css) layer(base);
+@import 'tailwindcss';
 
-@import url(components/layout.css) layer(components);
-@import url(components/surface.css) layer(components);
-@import url(components/buttons.css) layer(components);
-@import url(components/inputs.css) layer(components);
-@import url(components/list-item.css) layer(components);
-@import url(components/radio.css) layer(components);
-@import url(components/switch.css) layer(components);
-@import url(components/modal.css) layer(components);
-@import url(components/chip.css) layer(components);
-@import url(components/skeleton.css) layer(components);
-@import url(components/loader.css) layer(components);
+@import './theme/theme.css' layer(theme);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './base/fonts.css' layer(base);
+@import './base/root.css' layer(base);
+@import './base/other.css' layer(base);
+
+@import './components/buttons.css' layer(components);
+@import './components/chip.css' layer(components);
+@import './components/inputs.css' layer(components);
+@import './components/layout.css' layer(components);
+@import './components/list-item.css' layer(components);
+@import './components/loader.css' layer(components);
+@import './components/modal.css' layer(components);
+@import './components/radio.css' layer(components);
+@import './components/skeleton.css' layer(components);
+@import './components/switch.css' layer(components);
+
+@import './utilities/headings.css';
+@import './utilities/surface.css';
 
 @layer base {
-}
-
-@layer components {
-}
-
-@layer utilities {
 }

@@ -56,7 +56,7 @@ export default function Modal({
       <div className="modal-backdrop" onClick={onBackDropClick} tabIndex={0} role="button"></div>
       <div className={`modal-content ${textAlignClass}`}>
         <p className="headline-medium">{title}</p>
-        {text && <p className="mt-2 text-secondary-color">{text}</p>}
+        {text && <p className="text-txt-secondary mt-2">{text}</p>}
 
         {children}
 

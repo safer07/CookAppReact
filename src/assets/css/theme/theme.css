@@ -1,0 +1,113 @@
+@theme {
+  --spacing: 0.5rem; /* 8px (default 4px) */
+
+  /* Шрифты */
+  --font-title: Nunito, sans-serif;
+  --font-body: Nunito, sans-serif;
+
+  /* Размеры текста */
+  --text-3xl: 2rem; /* 32px */
+  --text-3xl--line-height: 2.5rem; /* 40px */
+  --text-4xl: 2.5rem; /* 40px */
+  --text-4xl--line-height: 3rem; /* 48px */
+  --text-5xl: 3rem; /* 48px */
+  --text-5xl--line-height: 3.5rem; /* 56px */
+
+  /* Цвета */
+  --color-primary-active: #2e7349;
+  --color-primary: #42a66a;
+  --color-primary-highGradient: #38bda1;
+  --color-primary-lowGradient: #90dc7b;
+  --color-primary-bg: #edfaf2;
+
+  --color-base-800: #333840;
+  --color-base-600: #58606e;
+  --color-base-400: #8e99ab;
+  --color-base-borders: #c8d1e0;
+  --color-base-bg: #f5f7fa;
+
+  --color-system-error: #de1b1b;
+  --color-system-positive: #38bda1;
+
+  --color-green-highGradient: #38bda1;
+  --color-green-lowGradient: #90dc7b;
+
+  --color-yellow-highGradient: #f59d22;
+  --color-yellow-lowGradient: #fad843;
+
+  --color-red-highGradient: #f53422;
+  --color-red-lowGradient: #fa7d43;
+
+  --color-pink-highGradient: #ff6ba2;
+  --color-pink-lowGradient: #ffa1a1;
+
+  /* Тени */
+  --shadow-sm: 0 2px 6px -2px rgb(0 0 0 / 0.2);
+  --shadow-md: 0 2px 8px -2px rgb(0 0 0 / 0.2);
+  --shadow-md-active: 0 2px 8px 0 rgb(0 0 0 / 0.2);
+  --shadow-glow: 0 0 8px -2px rgb(0 0 0 / 0.2);
+
+  /* Анимации */
+  --animate-blink: blink 300ms ease-in-out forwards;
+  @keyframes blink {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.25);
+    }
+  }
+
+  --animate-showModal: showModal 300ms ease-in-out forwards;
+  @keyframes showModal {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  --animate-hideModal: hideModal 300ms ease-in-out forwards;
+  @keyframes hideModal {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+
+  --animate-showBackdrop: showBackdrop 300ms ease-in-out forwards;
+  @keyframes showBackdrop {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  --animate-hideBackdrop: hideBackdrop 300ms ease-in-out forwards;
+  @keyframes hideBackdrop {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+@theme inline {
+  --color-txt-title: var(--text-title-color);
+  --color-txt-main: var(--text-main-color);
+  --color-txt-secondary: var(--text-secondary-color);
+  --color-txt-tertiary: var(--text-tertiary-color);
+  --color-txt-accent: var(--text-accent-color);
+}

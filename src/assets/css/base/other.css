@@ -1,12 +1,17 @@
 a,
 button,
-input[type="checkbox"],
-input[type="radio"],
-input[type="file"],
+input[type='checkbox'],
+input[type='radio'],
+input[type='file'],
 .btn,
 summary,
-[tabindex]:where(:not([tabindex="-1"])) {
-  @apply rounded-lg outline-4 outline-offset-4 outline-blue-300 focus-visible:outline;
+[tabindex]:where(:not([tabindex='-1'])) {
+  @apply rounded-lg outline-4 outline-offset-4 outline-blue-300 outline-none focus-visible:outline-solid;
+}
+
+button:not(:disabled),
+[role='button']:not(:disabled) {
+  cursor: pointer;
 }
 
 img {
@@ -28,10 +33,10 @@ svg {
 
 ::-webkit-scrollbar-track {
   border: solid 6px transparent;
-  @apply rounded-full shadow-[inset_0_0_10px_10px] shadow-primary-bg;
+  @apply shadow-primary-bg rounded-full shadow-[inset_0_0_10px_10px];
 }
 
 ::-webkit-scrollbar-thumb {
   border: solid 6px transparent;
-  @apply rounded-full shadow-[inset_0_0_10px_10px] shadow-primary hover-hover:hover:shadow-primary-active;
+  @apply shadow-primary hover:shadow-primary-active rounded-full shadow-[inset_0_0_10px_10px];
 }

@@ -48,7 +48,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
                   ))}
                 </ul>
               )}
-              <p className="text-secondary-color">{step.description}</p>
+              <p className="text-txt-secondary">{step.description}</p>
               {step.img && <img className="w-full" src={step.img} alt={`Шаг ${index + 1}`} />}
             </li>
           ))}

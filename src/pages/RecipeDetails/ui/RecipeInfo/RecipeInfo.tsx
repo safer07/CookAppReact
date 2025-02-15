@@ -46,38 +46,38 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
   return (
     <>
       <div className="layout-fullwidth relative">
-        <img className="aspect-[9/7] w-full object-cover" src={recipe?.img} alt={recipe?.name} />
+        <img className="aspect-9/7 w-full object-cover" src={recipe?.img} alt={recipe?.name} />
         <ButtonIcon
-          className="absolute left-2 top-2"
+          className="absolute top-2 left-2"
           icon="arrow_left"
           onClick={() => navigateBack(navigate)}
           size="small"
         />
         {isAuthor ? (
-          <div className="absolute right-2 top-2 flex gap-2">
+          <div className="absolute top-2 right-2 flex gap-2">
             {/* TODO: ссылка на редактирование рецепта */}
             <ButtonIcon icon="edit" onClick={() => {}} size="small" />
             <ButtonIcon icon="delete" onClick={() => setModalDeleteIsOpen(true)} size="small" />
           </div>
         ) : (
-          <LikeButton itemId={recipe._id} className="absolute right-2 top-2" />
+          <LikeButton itemId={recipe._id} className="absolute top-2 right-2" />
         )}
       </div>
 
       <ErrorComponent error={error} className="mt-2" />
 
-      <div className="grid gap-1 pb-2 pt-1">
+      <div className="grid gap-1 pt-1 pb-2">
         <div>
           <h1 className="headline-large">{recipe?.name}</h1>
-          <p className="pt-0.5 text-secondary-color">{recipeCategory?.fullName}</p>
+          <p className="text-txt-secondary pt-0.5">{recipeCategory?.fullName}</p>
         </div>
-        <p className="text-secondary-color">{recipe.description}</p>
+        <p className="text-txt-secondary">{recipe.description}</p>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
-            <svg className="size-2 fill-primary">
+            <svg className="fill-primary size-2">
               <use href="/images/icons.svg#clock"></use>
             </svg>
-            <div className="label-small text-secondary-color">{recipe.time} минут</div>
+            <div className="label-small text-txt-secondary">{recipe.time} минут</div>
           </div>
           <Tag text={difficultyText} surface={tagDifficultySurface} />
         </div>

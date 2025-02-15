@@ -33,18 +33,18 @@ export default function NavBar(): React.JSX.Element {
   // TODO:
   // нужно объединять для recipe/.. и recipes (через NavLink)
   // function getClass(isActive: boolean): string {
-  //   return `flex flex-col items-center py-1 transition-colors duration-300 ${isActive ? "cursor-default text-primary" : "text-secondary-color hover-hover:hover:text-primary"}`;
+  //   return `flex flex-col items-center py-1 transition-colors duration-300 ${isActive ? "cursor-default text-primary" : "text-txt-secondary hover:text-primary"}`;
   // }
   // ({isActive}) => getClass(isActive)
 
   return (
     <div className="layout-grid">
-      <nav className="layout-fullwidth grid grid-cols-2 border-y border-base-borders">
+      <nav className="layout-fullwidth border-base-borders grid grid-cols-2 border-y">
         {tabs.map((tab, index) => (
           <Link
             key={index}
             to={tab.link}
-            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? 'cursor-default text-primary' : 'text-secondary-color hover-hover:hover:text-primary'}`}
+            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? 'text-primary cursor-default' : 'text-txt-secondary hover:text-primary'}`}
           >
             <svg className="size-3">
               <use href={`/images/icons.svg#${tab.icon}`} />

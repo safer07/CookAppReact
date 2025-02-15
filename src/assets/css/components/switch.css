@@ -1,31 +1,31 @@
-input[type="checkbox"].switch {
+input[type='checkbox'].switch {
   @apply relative cursor-pointer appearance-none;
 }
 
-input[type="checkbox"].switch::before {
+input[type='checkbox'].switch::before {
   transition: border-color 300ms;
-  @apply -mx-[1.625rem] -my-[1rem] block h-8 w-[6.5rem] scale-50 rounded-full border border-base-borders bg-white content-[''];
+  @apply border-base-borders -mx-3.25 -my-2 block h-8 w-13 scale-50 rounded-full border bg-white content-[''];
 }
 
-input[type="checkbox"].switch::after {
+input[type='checkbox'].switch::after {
   transition:
     transform 300ms,
     background-color 300ms;
-  @apply absolute left-0.5 top-0.5 z-[2] h-3 w-3 rounded-full bg-base-borders content-[''];
+  @apply bg-base-borders absolute top-0.5 left-0.5 z-2 h-3 w-3 rounded-full content-[''];
 }
 
-input[type="checkbox"].switch:checked::before {
+input[type='checkbox'].switch:checked::before {
   @apply border-primary;
 }
-input[type="checkbox"].switch:checked::after {
+input[type='checkbox'].switch:checked::after {
   @apply surface-accent translate-x-2.5;
 }
 
 @media (hover: hover) {
-  input[type="checkbox"].switch:hover::before {
+  input[type='checkbox'].switch:hover::before {
     @apply border-primary shadow-glow shadow-primary-active;
   }
-  input[type="checkbox"].switch:checked:hover::after {
-    @apply bg-primary-active shadow-md shadow-primary-highGradient;
+  input[type='checkbox'].switch:checked:hover::after {
+    @apply bg-primary-active shadow-primary-highGradient shadow-md;
   }
 }

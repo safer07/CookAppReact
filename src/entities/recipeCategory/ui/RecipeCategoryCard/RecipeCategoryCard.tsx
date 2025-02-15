@@ -5,23 +5,20 @@ type RecipeCategoryCardProps = {
   onClick: () => void
 }
 
-export default function RecipeCategoryCard({
-  category,
-  onClick,
-}: RecipeCategoryCardProps) {
+export default function RecipeCategoryCard({ category, onClick }: RecipeCategoryCardProps) {
   return (
     <button
-      className="surface-default group overflow-hidden rounded-2xl shadow transition-all duration-300 hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-active"
+      className="surface-default group hover:shadow-glow hover:shadow-primary-active overflow-hidden rounded-2xl shadow-sm transition-all duration-300"
       onClick={onClick}
     >
-      <div className="aspect-[3/2] overflow-hidden">
+      <div className="aspect-3/2 overflow-hidden">
         <img
-          className="w-full object-cover transition-transform duration-300 hover-hover:group-hover:scale-110"
+          className="w-full object-cover transition-transform duration-300 group-hover:scale-110"
           src={category.img}
           alt={category.name}
         />
       </div>
-      <h3 className="label-small mb-0.75 mt-0.5 text-center transition-colors duration-300 hover-hover:group-hover:text-primary">
+      <h3 className="label-small group-hover:text-primary mt-0.5 mb-0.75 text-center transition-colors duration-300">
         {category.name}
       </h3>
     </button>

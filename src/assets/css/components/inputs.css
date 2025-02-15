@@ -1,5 +1,5 @@
 .input-label {
-  @apply label-small mb-0.5 block text-left text-secondary-color;
+  @apply label-small text-txt-secondary mb-0.5 block text-left;
 }
 
 .input {
@@ -8,12 +8,12 @@
 .input,
 .textarea,
 .select {
-  @apply surface-default flex w-full items-center gap-1 rounded-lg border border-base-borders text-base caret-primary transition-colors duration-300;
+  @apply surface-default border-base-borders caret-primary flex w-full items-center gap-1 rounded-lg border text-base transition-colors duration-300;
 }
 .input:not(:disabled),
 .textarea:not(:disabled),
-.select:not([data-disabled="true"]) {
-  @apply focus-within:border-primary focus-within:shadow-glow focus-within:shadow-primary/50 hover-hover:hover:border-primary hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary/50;
+.select:not([data-disabled='true']) {
+  @apply focus-within:border-primary focus-within:shadow-glow focus-within:shadow-primary/50 hover:border-primary hover:shadow-glow hover:shadow-primary/50;
 }
 .input,
 .select {
@@ -25,7 +25,7 @@
     @apply flex items-center gap-1 self-stretch;
     & .input-icons-divider {
       height: calc(100% + 4px);
-      @apply w-px rounded-full bg-base-borders;
+      @apply bg-base-borders w-px rounded-full;
     }
   }
 }
@@ -37,14 +37,14 @@
   & .textfield {
     @apply grow;
     &.placeholder {
-      @apply text-tertiary-color;
+      @apply text-txt-tertiary;
     }
   }
   & .chips-list {
     @apply flex grow flex-wrap gap-1;
   }
   & .select-options {
-    @apply surface-default absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border border-primary shadow-glow shadow-primary/50;
+    @apply surface-default border-primary shadow-glow shadow-primary/50 absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border;
     & > .selected {
       @apply surface-accent-light;
       & .right-icon {
@@ -52,12 +52,12 @@
       }
     }
     & > :not(.disabled) {
-      @apply hover-hover:hover:surface-accent-light;
+      @apply hover:surface-accent-light;
     }
     & > .disabled {
-      @apply surface-low cursor-default text-tertiary-color;
+      @apply surface-low text-txt-tertiary cursor-default;
       & :is(.list-item-secondary-text, .list-item-description, .right-icon) {
-        @apply text-tertiary-color;
+        @apply text-txt-tertiary;
       }
     }
   }
@@ -70,39 +70,39 @@
       @apply rotate-180;
     }
   }
-  &[data-disabled="true"] {
+  &[data-disabled='true'] {
     @apply surface-low cursor-default;
   }
 }
 .input .textfield,
 .textarea {
-  @apply w-full grow outline-none placeholder:text-tertiary-color focus-visible:outline-none;
+  @apply placeholder:text-txt-tertiary w-full grow outline-none focus-visible:outline-none;
 }
 .textarea {
   @apply min-h-12 px-2 py-1.5;
 }
 
 :is(.input, .select) :where(.icon-left, .icon-right, .clear-button svg) {
-  @apply size-3 text-tertiary-color transition-colors duration-300;
+  @apply text-txt-tertiary size-3 transition-colors duration-300;
 }
 
 :is(.input, .select) .clear-button svg {
-  @apply hover-hover:hover:text-primary-color;
+  @apply hover:text-txt-main;
 }
 
 .input-helper-block {
   @apply mt-0.5 flex justify-end gap-1;
 }
 .input-helper {
-  @apply text-sm text-secondary-color;
+  @apply text-txt-secondary text-sm;
 }
 .input-right-helper {
-  @apply w-fit text-sm text-secondary-color;
+  @apply text-txt-secondary w-fit text-sm;
 }
 
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
   display: none;
 }

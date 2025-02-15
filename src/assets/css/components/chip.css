@@ -1,10 +1,10 @@
 .chip {
   @apply label-small flex h-4 cursor-pointer items-center gap-0.75 rounded-lg px-1.5 py-0.5 transition-shadow duration-300;
   &:not(.active) {
-    @apply surface-default border border-base-borders hover-hover:hover:border-primary hover-hover:hover:text-primary-active hover-hover:hover:shadow-glow hover-hover:hover:shadow-primary-highGradient;
+    @apply surface-default border-base-borders hover:border-primary hover:text-primary-active hover:shadow-glow hover:shadow-primary-highGradient border;
   }
   &.active {
-    @apply surface-accent border-x border-transparent shadow-md shadow-primary-highGradient hover-hover:hover:shadow-md-active hover-hover:hover:shadow-primary-highGradient;
+    @apply surface-accent shadow-primary-highGradient hover:shadow-md-active hover:shadow-primary-highGradient border-x border-transparent shadow-md;
   }
   &.chip-delete {
     @apply pr-1;

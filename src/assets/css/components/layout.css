@@ -31,5 +31,5 @@
 .layout-fullwidth {
   /* @apply col-[fullwidth]; */
   width: calc(100% + var(--body-padding-inline) * 2);
-  @apply -mx-[--body-padding-inline];
+  @apply -mx-(--body-padding-inline);
 }

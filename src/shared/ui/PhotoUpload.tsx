@@ -41,7 +41,7 @@ export default function PhotoUpload({
       {label && <div className="input-label">{label}</div>}
       <div className="relative">
         <img
-          className="aspect-[9/7] w-full object-cover"
+          className="aspect-9/7 w-full object-cover"
           src={image}
           alt="Загруженное изображение"
         />

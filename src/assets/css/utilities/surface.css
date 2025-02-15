@@ -1,0 +1,64 @@
+@utility surface-default {
+  --text-title-color: var(--color-base-800);
+  --text-main-color: var(--color-base-800);
+  --text-secondary-color: var(--color-base-600);
+  --text-tertiary-color: var(--color-base-400);
+
+  @apply bg-white;
+}
+
+@utility surface-low {
+  --text-title-color: var(--color-base-800);
+  --text-main-color: var(--color-base-800);
+  --text-secondary-color: var(--color-base-600);
+  --text-tertiary-color: var(--color-base-400);
+
+  @apply bg-base-bg;
+}
+
+@utility surface-accent-light {
+  --text-title-color: var(--color-base-800);
+  --text-main-color: var(--color-base-800);
+  --text-secondary-color: var(--color-base-600);
+  --text-tertiary-color: var(--color-base-400);
+
+  @apply bg-primary-bg;
+}
+
+@utility surface-accent {
+  --text-title-color: var(--color-white);
+  --text-main-color: var(--color-white);
+
+  @apply from-primary-lowGradient to-primary-highGradient bg-gradient-to-b;
+}
+
+@utility surface-accent-secondary {
+  --text-title-color: var(--color-white);
+  --text-main-color: var(--color-white);
+  background-color: var(--color-primary);
+  color: var(--text-main-color);
+
+  /* Почему-то не применяется */
+  @apply bg-primary text-txt-main;
+}
+
+@utility surface-green {
+  --text-title-color: var(--color-white);
+  --text-main-color: var(--color-white);
+
+  @apply from-green-lowGradient to-green-highGradient bg-gradient-to-b;
+}
+
+@utility surface-yellow {
+  --text-title-color: var(--color-white);
+  --text-main-color: var(--color-white);
+
+  @apply from-yellow-lowGradient to-yellow-highGradient bg-gradient-to-b;
+}
+
+@utility surface-red {
+  --text-title-color: var(--color-white);
+  --text-main-color: var(--color-white);
+
+  @apply from-red-lowGradient to-red-highGradient bg-gradient-to-b;
+}

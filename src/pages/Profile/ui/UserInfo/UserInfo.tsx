@@ -25,7 +25,7 @@ export default function UserInfo(): React.JSX.Element {
       {user && (
         <div className="space-y-0.5">
           <p className="headline-small">{userName}</p>
-          <p className="text-secondary-color">{user?.email}</p>
+          <p className="text-txt-secondary">{user?.email}</p>
         </div>
       )}
     </div>

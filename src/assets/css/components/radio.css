@@ -7,12 +7,12 @@
 
 .radio::before {
   transition: border-color 300ms;
-  @apply surface-default block size-[1.125rem] rounded-full border border-base-400 content-[''];
+  @apply surface-default border-base-400 block size-2.25 rounded-full border content-[''];
 }
 
 .radio::after {
   transition: background-color 300ms;
-  @apply absolute left-1 top-1 z-[2] hidden h-1 w-1 rounded-full bg-primary content-[''];
+  @apply bg-primary absolute top-1 left-1 z-2 hidden size-1 rounded-full content-[''];
 }
 
 .radio:checked::before {

@@ -57,12 +57,12 @@ export default function CookingMode(): React.JSX.Element {
           <div className="grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
               <img
-                className="aspect-[9/7] w-full object-cover"
+                className="aspect-9/7 w-full object-cover"
                 src={step.img}
                 alt={`Шаг ${stepIndex + 1}`}
               />
               <ButtonIcon
-                className="absolute left-2 top-2"
+                className="absolute top-2 left-2"
                 icon="cross"
                 onClick={() => navigateToRecipe()}
                 size="small"
@@ -89,7 +89,7 @@ export default function CookingMode(): React.JSX.Element {
                     ))}
                   </ul>
                 )}
-                <p className="text-primary-color">{step.description}</p>
+                <p className="text-txt-main">{step.description}</p>
               </div>
             </div>
           </div>
