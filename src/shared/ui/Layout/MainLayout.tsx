@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import NavBar from '@/widgets/Navbar'
+import NavBar from '@/shared/ui/Navbar'
 import Loader from '@/shared/ui/Loader'
 
 export default function MainLayout() {

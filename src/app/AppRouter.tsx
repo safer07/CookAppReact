@@ -1,9 +1,8 @@
 import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import MainLayout from './layouts/MainLayout'
-import FullScreenLayout from './layouts/FullScreenLayout'
 import RecipesPage from '@/pages/Recipes'
+import { FullScreenLayout, MainLayout } from '@/shared/ui/Layout'
 import {
   CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
