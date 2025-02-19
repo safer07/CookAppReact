@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-import { CreateRecipeStore } from '../model'
+import { CreateRecipeStore } from '../model/store'
 
 export const emptyStep = { description: '', ingredients: [], img: '' }
 
@@ -17,7 +17,7 @@ const initialRecipeData = {
   hidden: false,
 }
 
-const useCreateRecipe = create<CreateRecipeStore>()(
+export const useCreateRecipe = create<CreateRecipeStore>()(
   persist(
     devtools((set) => ({
       recipeData: initialRecipeData,
@@ -53,5 +53,3 @@ const useCreateRecipe = create<CreateRecipeStore>()(
     { name: 'createRecipeStore', version: 1 },
   ),
 )
-
-export default useCreateRecipe

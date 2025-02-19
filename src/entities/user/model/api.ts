@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-import { accessTokenSchema, emailSchema, passwordSchema, userSchema } from '.'
+import { emailSchema, passwordSchema, userSchema } from './user'
+import { accessTokenSchema } from '@/shared/model'
 
 // -----
 // -----
@@ -75,12 +76,6 @@ export const authResponseSchema = z.object({
 export type AuthResponse = z.infer<typeof authResponseSchema>
 
 export type UserResponse = z.infer<typeof userSchema>
-
-export const refreshResponseSchema = z.object({
-  message: z.string(),
-  accessToken: accessTokenSchema,
-})
-export type RefreshResponse = z.infer<typeof refreshResponseSchema>
 
 export const forgotPasswordResponseSchema = z.object({
   message: z.string(),

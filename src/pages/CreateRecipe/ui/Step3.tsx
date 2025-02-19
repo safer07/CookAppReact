@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import useCreateRecipe from '../store/store'
-import { Ingredient } from '@/entities/recipe/model'
+import { useCreateRecipe } from '../store/createRecipeStore'
+import type { Ingredient } from '@/entities/recipe'
 import ListItem from '@/shared/ui/ListItem'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'

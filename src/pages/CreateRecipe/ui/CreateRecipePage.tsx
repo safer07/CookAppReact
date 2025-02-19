@@ -1,25 +1,21 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import useCreateRecipe from '../store/store'
+import { useCreateRecipe } from '../store/createRecipeStore'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
-import { CreateRecipeStatus } from '../model'
 import TopAppBar from '@/widgets/TopAppBar'
-import recipesService from '@/entities/recipe/api'
-import { createRecipeDTOSchema } from '@/entities/recipe/model'
+import { createRecipeDTOSchema, recipesService } from '@/entities/recipe'
 import Stepper from '@/shared/ui/Stepper'
 import Button from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import navigateBack from '@/shared/utils/navigateBack'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import formatZodError from '@/shared/utils/formatZodError'
+import { catchHttpError, formatZodError, navigateBack } from '@/shared/utils'
 import { API_PATHS } from '@/shared/config'
-import { CustomError } from '@/shared/model/customError'
 import { RECIPES_ROUTE } from '@/shared/routes'
+import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function CreateRecipePage(): React.JSX.Element {
   const navigate = useNavigate()
@@ -28,7 +24,7 @@ export default function CreateRecipePage(): React.JSX.Element {
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
-  const [status, setStatus] = useState<CreateRecipeStatus>('init')
+  const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
   const [newRecipeId, setNewRecipeId] = useState<string>('')
 

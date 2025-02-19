@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
 
 import RecipesList from '@/widgets/RecipesList'
-import recipesService from '@/entities/recipe/api'
-import { Recipe } from '@/entities/recipe/model'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import { CustomError } from '@/shared/model/customError'
+import { recipesService, type Recipe } from '@/entities/recipe'
+import { catchHttpError } from '@/shared/utils'
+import type { CustomError, HttpStatus } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 type SimilarRecipesProps = {
   excludeId: string
 }
 
-type Status = 'init' | 'loading' | 'success' | 'error'
-
 export default function SimilarRecipes({ excludeId }: SimilarRecipesProps): React.JSX.Element {
   const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [status, setStatus] = useState<Status>('init')
+  const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
 
   async function fetchRecipes() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { fetchCategories } from '@/app/api'
-import useRecipes from '../store/store'
+import { useRecipes } from '../store/recipesStore'
 import Categories from './Categories'
 import Filters from './Filters'
 import FeaturedRecipes from './FeaturedRecipes'
@@ -10,8 +10,8 @@ import useDebounce from '@/shared/hooks/debounce'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { CustomError } from '@/shared/model/customError'
-import catchHttpError from '@/shared/utils/catchHttpError'
+import { catchHttpError } from '@/shared/utils'
+import type { CustomError } from '@/shared/model'
 
 // TODO: убрать импорт из app
 
@@ -58,7 +58,7 @@ export default function Catalog(): React.JSX.Element {
 
   return (
     <>
-      <div className="flex gap-2 pb-1 pt-2">
+      <div className="flex gap-2 pt-2 pb-1">
         <form className="grow">
           <Input
             type="search"

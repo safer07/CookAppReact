@@ -1,4 +1,4 @@
-import useRecipes from '../store/store'
+import { useRecipes } from '../store/recipesStore'
 import RecipeCategoryCard from '@/entities/recipeCategory/ui/RecipeCategoryCard'
 
 type CategoryProps = {

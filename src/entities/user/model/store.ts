@@ -1,13 +1,12 @@
-import { User } from '.'
+import type { HttpStatus } from '@/shared/model'
+import { User } from './user'
 import { AuthUserDTO, UpdateProfileDTO } from './api'
-
-type Status = 'init' | 'loading' | 'success' | 'error'
 
 export type UserStore = {
   user: User | null
-  status: Status
+  status: HttpStatus
   setUser: (value: User) => void
-  setStatus: (value: Status) => void
+  setStatus: (value: HttpStatus) => void
   registration: (authUserDTO: AuthUserDTO) => Promise<void>
   login: (authUserDTO: AuthUserDTO) => Promise<void>
   logout: () => Promise<void>

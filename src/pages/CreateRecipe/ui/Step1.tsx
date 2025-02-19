@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import useCreateRecipe from '../store/store'
+import { useCreateRecipe } from '../store/createRecipeStore'
 import { categories } from '@/entities/recipeCategory/const/categories'
-import RecipeLimits from '@/entities/recipe/const/limits'
+import { RECIPE_LIMITS } from '@/entities/recipe'
 import Input from '@/shared/ui/Input'
 import TextArea from '@/shared/ui/TextArea'
 import Select from '@/shared/ui/Select'
@@ -31,7 +31,7 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
         placeholder="Введите название блюда"
         label="Название"
         showCount
-        maxLength={RecipeLimits.name.max}
+        maxLength={RECIPE_LIMITS.name.max}
       />
 
       <Select
@@ -47,7 +47,7 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
         onChange={(value) => setDescription(value)}
         label="Описание"
         showCount
-        maxLength={RecipeLimits.description.max}
+        maxLength={RECIPE_LIMITS.description.max}
       />
 
       <PhotoUpload image={img} onChange={(value) => setImg(value)} label="Главное фото" />

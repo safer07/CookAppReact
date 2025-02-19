@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import useCreateRecipe from '../store/store'
-import recipeDifficulties from '@/entities/recipe/const/recipeDifficulties'
+import { useCreateRecipe } from '../store/createRecipeStore'
+import { recipeDifficulties } from '@/entities/recipe'
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { fullRecipeSchema, recipeSchema } from '.'
+import { fullRecipeSchema, recipeSchema } from './recipe'
 
 export const recipesResponseSchema = z.array(recipeSchema)
 

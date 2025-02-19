@@ -3,11 +3,11 @@ import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import { RecipesStore } from '../model/store'
-import recipesService from '@/entities/recipe/api'
+import { recipesService } from '@/entities/recipe'
 
 const initialFilters = { categories: [], searchQuery: '' }
 
-const useRecipes = create<RecipesStore>()(
+export const useRecipes = create<RecipesStore>()(
   devtools(
     immer((set) => ({
       items: [],
@@ -36,5 +36,3 @@ const useRecipes = create<RecipesStore>()(
     })),
   ),
 )
-
-export default useRecipes

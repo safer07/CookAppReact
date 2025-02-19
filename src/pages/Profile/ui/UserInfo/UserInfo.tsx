@@ -1,5 +1,5 @@
 import UserInfoSkeleton from './UserInfoSkeleton'
-import useUser from '@/entities/user/store/store'
+import { useUser } from '@/entities/user'
 import Button from '@/shared/ui/Button'
 import { LOGIN_ROUTE } from '@/shared/routes'
 

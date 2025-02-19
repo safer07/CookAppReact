@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 
 import RecipesList from '@/widgets/RecipesList'
-import useFavorites from '@/features/favorites/store/store'
-import recipesService from '@/entities/recipe/api'
-import { Recipe } from '@/entities/recipe/model'
+import { useFavorites } from '@/features/favorites'
+import { recipesService, type Recipe } from '@/entities/recipe'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import { CustomError } from '@/shared/model/customError'
-
-type HttpStatus = 'init' | 'loading' | 'success' | 'error'
+import { catchHttpError } from '@/shared/utils'
+import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function Favorites(): React.JSX.Element {
   const favoriteRecipes = useFavorites((state) => state.favorites.recipes)

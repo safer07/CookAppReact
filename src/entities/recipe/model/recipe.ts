@@ -36,7 +36,7 @@ export const fullRecipeSchema = recipeSchema.extend({
 })
 export type FullRecipe = z.infer<typeof fullRecipeSchema>
 
-export type RecipesFilters = {
+export type RecipeFilters = {
   categories: string[]
   searchQuery?: string
 }

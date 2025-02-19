@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import useCreateRecipe, { emptyStep } from '../store/store'
-import RecipeLimits from '@/entities/recipe/const/limits'
-import { Ingredient } from '@/entities/recipe/model'
+import { emptyStep, useCreateRecipe } from '../store/createRecipeStore'
+import { RECIPE_LIMITS, type Ingredient } from '@/entities/recipe'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
@@ -158,7 +157,7 @@ export default function Step4(): React.JSX.Element {
           onChange={(value) => setTempStepDescription(value)}
           label={`Рецепт (шаг ${currentStepIndex + 1})`}
           showCount
-          maxLength={RecipeLimits.stepDescription.max}
+          maxLength={RECIPE_LIMITS.stepDescription.max}
         />
 
         <PhotoUpload

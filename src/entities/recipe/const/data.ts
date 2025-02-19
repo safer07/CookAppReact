@@ -1,6 +1,6 @@
 // TODO: удалить этот файл в production
 
-import { Recipe } from '../model'
+import { Recipe } from '../model/recipe'
 
 export const recipes: Recipe[] = [
   {

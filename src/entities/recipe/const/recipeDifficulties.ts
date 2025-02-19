@@ -14,7 +14,7 @@ export const errorRecipeDifficulty: RecipeDifficultyItem = {
   tagDifficultySurface: 'surface-red',
 }
 
-const recipeDifficulties: RecipeDifficultyItem[] = [
+export const recipeDifficulties: RecipeDifficultyItem[] = [
   {
     value: 1,
     difficultyText: 'Легко',
@@ -34,5 +34,3 @@ const recipeDifficulties: RecipeDifficultyItem[] = [
     tagDifficultySurface: 'surface-red',
   },
 ]
-
-export default recipeDifficulties

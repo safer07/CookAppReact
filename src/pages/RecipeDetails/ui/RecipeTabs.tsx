@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { FullRecipe } from '@/entities/recipe/model'
+import type { FullRecipe } from '@/entities/recipe'
 import SegmentedButton from '@/shared/ui/SegmentedButton'
 import ListItem from '@/shared/ui/ListItem'
 

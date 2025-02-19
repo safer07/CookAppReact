@@ -1,4 +1,4 @@
-import { CreateRecipeDTO, fullRecipeSchema, RecipesFilters } from '../model'
+import { fullRecipeSchema, type CreateRecipeDTO, type RecipeFilters } from '../model/recipe'
 import {
   createRecipeResponseSchema,
   deleteRecipeResponseSchema,
@@ -7,8 +7,8 @@ import {
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
-const recipesService = {
-  getRecipes: async (filters?: RecipesFilters) => {
+export const recipesService = {
+  getRecipes: async (filters?: RecipeFilters) => {
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
       params: { categories: filters?.categories, query: filters?.searchQuery },
     })
@@ -53,5 +53,3 @@ const recipesService = {
     return validatedData
   },
 }
-
-export default recipesService

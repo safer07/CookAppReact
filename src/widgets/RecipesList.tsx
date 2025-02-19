@@ -1,11 +1,10 @@
-import { RecipesStatus } from '@/pages/Recipes/model/store'
-import RecipeCard from '@/entities/recipe/ui/RecipeCard'
-import { Recipe } from '@/entities/recipe/model'
+import { RecipeCard, type Recipe } from '@/entities/recipe'
+import type { HttpStatus } from '@/shared/model'
 
 type RecipesListProps = {
   title: string
   recipes: Recipe[]
-  status: RecipesStatus
+  status: HttpStatus
   button?: { name: string; onClick: () => void }
 }
 

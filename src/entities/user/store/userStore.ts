@@ -2,9 +2,9 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import userService from '../api'
-import { UserStore } from '../model/store'
-import useFavorites from '@/features/favorites/store/store'
+import { userService } from '../api/userService'
+import type { UserStore } from '../model/store'
+import { useFavorites } from '@/features/favorites'
 import { ACCESS_TOKEN_KEY } from '@/shared/config'
 
 // TODO: не импортировать useFavorites (features) в entity

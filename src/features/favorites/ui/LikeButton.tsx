@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import useFavorites from '@/features/favorites/store/store'
+import { useFavorites } from '../store/favoritesStore'
 
 type LikeButtonProps = {
   itemId: string

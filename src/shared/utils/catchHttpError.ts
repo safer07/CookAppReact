@@ -4,7 +4,7 @@ import { ZodError } from 'zod'
 import { HttpErrorResponse, ZodErrorResponse } from '../model/httpError'
 import { CustomError } from '../model/customError'
 
-export default function catchHttpError(
+export function catchHttpError(
   error: unknown,
   setError: (value: React.SetStateAction<CustomError>) => CustomError | void = () => {},
 ) {

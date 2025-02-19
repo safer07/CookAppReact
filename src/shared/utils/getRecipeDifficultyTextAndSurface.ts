@@ -1,9 +1,7 @@
-import recipeDifficulties, {
-  errorRecipeDifficulty,
-} from '@/entities/recipe/const/recipeDifficulties'
+import { errorRecipeDifficulty, recipeDifficulties } from '@/entities/recipe'
 import { TagSurface } from '../ui/Tag'
 
-export default function getRecipeDifficultyTextAndSurface(
+export function getRecipeDifficultyTextAndSurface(
   recipeDifficulty: number | undefined,
 ): [string, TagSurface] {
   const difficultyItem = recipeDifficulties.find((item) => item.value === recipeDifficulty)

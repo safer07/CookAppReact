@@ -1,17 +1,17 @@
 import {
   authResponseSchema,
-  AuthUserDTO,
   changePasswordResponseSchema,
   forgotPasswordResponseSchema,
-  RegistrationUserDTO,
   resetPasswordResponseSchema,
-  UpdateProfileDTO,
+  type AuthUserDTO,
+  type RegistrationUserDTO,
+  type UpdateProfileDTO,
 } from '../model/api'
-import { userSchema } from '../model'
+import { userSchema } from '../model/user'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
-const userService = {
+export const userService = {
   registration: async (registrationUserDTO: RegistrationUserDTO) => {
     const { data } = await api.post<unknown>(API_PATHS.user.registration, registrationUserDTO)
     const validatedData = authResponseSchema.parse(data)
@@ -82,5 +82,3 @@ const userService = {
 //     this.setLoading(false)
 //   }
 // }
-
-export default userService

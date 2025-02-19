@@ -1,4 +1,3 @@
-export { BACKEND_URL } from './backend'
+export { ACCESS_TOKEN_KEY } from './accessToken'
 export { API_PATHS } from './apiPaths'
-
-export const ACCESS_TOKEN_KEY = 'accessToken'
+export { BACKEND_URL } from './backend'

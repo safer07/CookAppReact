@@ -1,12 +1,12 @@
-import useRecipes from '../store/store'
-import { RecipesStatus } from '../model/store'
+import { useRecipes } from '../store/recipesStore'
 import RecipesList from '@/widgets/RecipesList'
-import { Recipe } from '@/entities/recipe/model'
+import type { Recipe } from '@/entities/recipe'
+import type { HttpStatus } from '@/shared/model'
 
 type FeaturedRecipesProps = {
   categories: RecipeCategory[]
   recipes: Recipe[]
-  status: RecipesStatus
+  status: HttpStatus
 }
 
 export default function FeaturedRecipes({

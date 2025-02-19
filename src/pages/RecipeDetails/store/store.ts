@@ -1,14 +1,13 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import recipesService from '@/entities/recipe/api'
-import { FullRecipe } from '@/entities/recipe/model'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import { CustomError } from '@/shared/model/customError'
+import { recipesService, type FullRecipe } from '@/entities/recipe'
+import { catchHttpError } from '@/shared/utils'
+import type { CustomError, HttpStatus } from '@/shared/model'
 
 type FullRecipeStore = {
   recipe: FullRecipe | null
-  status: 'init' | 'loading' | 'success' | 'error'
+  status: HttpStatus
   fetchFullRecipe: (id: string) => Promise<void>
   error: CustomError
 }

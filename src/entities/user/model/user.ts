@@ -5,8 +5,6 @@ export const passwordSchema = z
   .string({ required_error: 'Введите пароль' })
   .min(5, 'Пароль должен состоять минимум из 5 символов')
 
-export const accessTokenSchema = z.string().jwt()
-
 export const userSchema = z.object({
   _id: z.string(),
   email: emailSchema,

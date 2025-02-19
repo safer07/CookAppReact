@@ -3,12 +3,12 @@ import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import favoritesService from '../api'
-import { FavoritesStore } from '../model'
-import useUser from '@/entities/user/store/store'
+import type { FavoritesStore } from '../model'
+import { useUser } from '@/entities/user'
 
 const emptyFavorites = { recipes: [] }
 
-const useFavorites = create<FavoritesStore>()(
+export const useFavorites = create<FavoritesStore>()(
   persist(
     devtools(
       immer((set) => ({
@@ -47,5 +47,3 @@ const useFavorites = create<FavoritesStore>()(
     { name: 'favoritesStore', version: 1 },
   ),
 )
-
-export default useFavorites

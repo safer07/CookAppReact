@@ -1,6 +1,4 @@
-import { Ingredient, RecipeStep } from '@/entities/recipe/model'
-
-export type CreateRecipeStatus = 'init' | 'loading' | 'error' | 'success'
+import type { Ingredient, RecipeStep } from '@/entities/recipe'
 
 export type CreateRecipeStore = {
   recipeData: {

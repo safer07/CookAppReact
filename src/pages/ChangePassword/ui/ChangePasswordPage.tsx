@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
-import useUser from '@/entities/user/store/store'
 import {
-  ChangePasswordFormData,
   changePasswordFormDataSchema,
   resetPasswordLinkSchema,
-} from '@/entities/user/model/api'
+  useUser,
+  type ChangePasswordFormData,
+} from '@/entities/user'
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import formatZodError from '@/shared/utils/formatZodError'
-import { CustomError } from '@/shared/model/customError'
+import { catchHttpError, formatZodError } from '@/shared/utils'
+import type { CustomError } from '@/shared/model'
 import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 
 const emptyFormData: ChangePasswordFormData = { password: '', passwordRepeat: '' }

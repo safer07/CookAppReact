@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react'
 
-import useUser from '@/entities/user/store/store'
-import RecipeCard from '@/entities/recipe/ui/RecipeCard'
-import recipesService from '@/entities/recipe/api'
-import { Recipe } from '@/entities/recipe/model'
+import { useUser } from '@/entities/user'
+import { RecipeCard, recipesService, type Recipe } from '@/entities/recipe'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import catchHttpError from '@/shared/utils/catchHttpError'
-import { CustomError } from '@/shared/model/customError'
+import { catchHttpError } from '@/shared/utils'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
-
-type Status = 'init' | 'loading' | 'success' | 'error'
+import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function MyRecipes() {
   const { user } = useUser()
   const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [status, setStatus] = useState<Status>('init')
+  const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
 
   const skeletonRecipes = [...new Array(4)].map((_, i) => <RecipeCard.Skeleton key={i} />)
