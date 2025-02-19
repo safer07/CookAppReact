@@ -14,8 +14,8 @@
   --text-5xl--line-height: 3.5rem; /* 56px */
 
   /* Цвета */
-  --color-primary-active: #2e7349;
   --color-primary: #42a66a;
+  --color-primary-active: #2e7349;
   --color-primary-highGradient: #38bda1;
   --color-primary-lowGradient: #90dc7b;
   --color-primary-bg: #edfaf2;
@@ -46,62 +46,6 @@
   --shadow-md: 0 2px 8px -2px rgb(0 0 0 / 0.2);
   --shadow-md-active: 0 2px 8px 0 rgb(0 0 0 / 0.2);
   --shadow-glow: 0 0 8px -2px rgb(0 0 0 / 0.2);
-
-  /* Анимации */
-  --animate-blink: blink 300ms ease-in-out forwards;
-  @keyframes blink {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.25);
-    }
-  }
-
-  --animate-showModal: showModal 300ms ease-in-out forwards;
-  @keyframes showModal {
-    0% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  --animate-hideModal: hideModal 300ms ease-in-out forwards;
-  @keyframes hideModal {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-  }
-
-  --animate-showBackdrop: showBackdrop 300ms ease-in-out forwards;
-  @keyframes showBackdrop {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  --animate-hideBackdrop: hideBackdrop 300ms ease-in-out forwards;
-  @keyframes hideBackdrop {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
 }
 
 @theme inline {
@@ -109,5 +53,4 @@
   --color-txt-main: var(--text-main-color);
   --color-txt-secondary: var(--text-secondary-color);
   --color-txt-tertiary: var(--text-tertiary-color);
-  --color-txt-accent: var(--text-accent-color);
 }

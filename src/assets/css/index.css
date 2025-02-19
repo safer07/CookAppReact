@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+@import './theme/animations.css' layer(theme);
 @import './theme/theme.css' layer(theme);
 
 @import './base/fonts.css' layer(base);
