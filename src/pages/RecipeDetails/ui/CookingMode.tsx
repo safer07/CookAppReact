@@ -23,7 +23,7 @@ export default function CookingMode(): React.JSX.Element {
   useEffect(() => {
     if (!id || recipe?._id === id) return
     fetchFullRecipe(id)
-  }, [id])
+  }, [id, recipe, fetchFullRecipe])
 
   function navigateToRecipe() {
     navigate(`/recipes/${id}`, { replace: true })
@@ -31,12 +31,12 @@ export default function CookingMode(): React.JSX.Element {
 
   function onClickBack() {
     if (stepIndex === 0) navigateToRecipe()
-    else setStepIndex((prev) => prev - 1)
+    else setStepIndex(prev => prev - 1)
   }
 
   function onClickNext() {
     if (stepIndex === stepsCount - 1) navigateToRecipe()
-    else setStepIndex((prev) => prev + 1)
+    else setStepIndex(prev => prev + 1)
   }
 
   return (

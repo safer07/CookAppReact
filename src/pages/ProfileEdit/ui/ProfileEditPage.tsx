@@ -28,16 +28,16 @@ export default function ProfileEditPage(): React.JSX.Element {
     lastName: user?.lastName,
     email: user?.email,
     gender: user?.gender,
-    birthDate: user?.birthDate?.split('T')[0] || '',
+    birthDate: user?.birthDate?.split('T')[0] ?? '',
   })
 
   useEffect(() => {
     if (!user) navigate(PROFILE_ROUTE, { replace: true })
-  }, [user])
+  }, [user, navigate])
 
   useEffect(() => {
     setStatus('init')
-  }, [])
+  }, [setStatus])
 
   async function onSubmit() {
     if (!user?._id) return
@@ -67,29 +67,29 @@ export default function ProfileEditPage(): React.JSX.Element {
           <form className="space-y-3">
             <Input
               value={formData.name || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, name: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, name: value }))}
               label="Имя"
             />
             <Input
               value={formData.lastName || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, lastName: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, lastName: value }))}
               label="Фамилия"
             />
             <Input
               value={formData.email || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, email: value }))}
               label="Email"
             />
             <Select
               value={formData.gender || ''}
               options={genderSelectOptions}
-              onChange={(value) => setFormData((prev) => ({ ...prev, gender: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, gender: value }))}
               label="Пол"
             />
             <Input
               type="date"
               value={formData.birthDate || ''}
-              onChange={(value) => setFormData((prev) => ({ ...prev, birthDate: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, birthDate: value }))}
               label="Дата рождения"
             />
           </form>

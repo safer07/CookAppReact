@@ -38,7 +38,7 @@ export default function MyRecipes() {
     return (
       <>
         <p className="mt-2">Войдите или зарегистрируйтесь, чтобы создать рецепт</p>
-        <Button className="mt-2" text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} />
+        <Button className="mt-2" text="Войти" icon="login" link={LOGIN_ROUTE} />
       </>
     )
   }
@@ -61,7 +61,7 @@ export default function MyRecipes() {
           <div className="mt-2 grid gap-2">
             {status === 'loading'
               ? skeletonRecipes
-              : recipes.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
+              : recipes.map(recipe => <RecipeCard key={recipe._id} recipe={recipe} />)}
           </div>
         )}
       </div>

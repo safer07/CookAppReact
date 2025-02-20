@@ -39,11 +39,11 @@ export default function ResetPasswordPage(): React.JSX.Element {
         })
       }
     }
-  }, [user, link])
+  }, [user, link, navigate, isReset])
 
   useEffect(() => {
     setStatus('init')
-  }, [])
+  }, [setStatus])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -82,13 +82,13 @@ export default function ResetPasswordPage(): React.JSX.Element {
         <div className="space-y-2">
           <Input
             value={formData.password}
-            onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
+            onChange={value => setFormData(prev => ({ ...prev, password: value }))}
             type="password"
             label="Пароль"
           />
           <Input
             value={formData.passwordRepeat}
-            onChange={(value) => setFormData((prev) => ({ ...prev, passwordRepeat: value }))}
+            onChange={value => setFormData(prev => ({ ...prev, passwordRepeat: value }))}
             type="password"
             label="Повторите пароль"
           />

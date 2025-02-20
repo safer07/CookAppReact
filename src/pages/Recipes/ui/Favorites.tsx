@@ -11,23 +11,24 @@ import type { CustomError, HttpStatus } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 export default function Favorites(): React.JSX.Element {
-  const favoriteRecipes = useFavorites((state) => state.favorites.recipes)
+  const favoriteRecipes = useFavorites(state => state.favorites.recipes)
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
 
-  async function fetchFavoriteRecipes() {
-    try {
-      setStatus('loading')
-      const response = await recipesService.getFavoriteRecipes(favoriteRecipes)
-      setStatus('success')
-      setRecipes(response)
-    } catch (error) {
-      setStatus('error')
-      catchHttpError(error, setError)
-    }
-  }
   useEffect(() => {
+    async function fetchFavoriteRecipes() {
+      try {
+        setStatus('loading')
+        const response = await recipesService.getFavoriteRecipes(favoriteRecipes)
+        setStatus('success')
+        setRecipes(response)
+      } catch (error) {
+        setStatus('error')
+        catchHttpError(error, setError)
+      }
+    }
+
     fetchFavoriteRecipes()
   }, [favoriteRecipes])
 

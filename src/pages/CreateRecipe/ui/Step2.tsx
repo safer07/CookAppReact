@@ -34,7 +34,7 @@ export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element 
   useEffect(() => {
     if (time && difficulty) setStepIsValid(true)
     else setStepIsValid(false)
-  }, [time, difficulty])
+  }, [time, difficulty, setStepIsValid])
 
   return (
     <form className="layout-grid flex flex-col gap-3">
@@ -45,14 +45,14 @@ export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element 
         <div className="mt-2 grid grid-cols-2 gap-2">
           <Input
             value={hours ? String(hours) : ''}
-            onChange={(value) => setHours(+value)}
+            onChange={value => setHours(+value)}
             type="number"
             label="Часы"
             min="0"
           />
           <Input
             value={minutes ? String(minutes) : ''}
-            onChange={(value) => setMinutes(+value)}
+            onChange={value => setMinutes(+value)}
             type="number"
             label="Минуты"
             min="0"
@@ -63,7 +63,7 @@ export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element 
       <div>
         <h3 className="headline-small">Сложность</h3>
         <ul className="layout-fullwidth mt-2 grid gap-1">
-          {RECIPE_DIFFICULTIES.map((item) => (
+          {RECIPE_DIFFICULTIES.map(item => (
             <ListItem
               key={item.value}
               text={item.difficultyText}

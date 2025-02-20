@@ -30,7 +30,7 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
       !newIngredientName ||
       !newIngredientAmount ||
       !newIngredientUnit ||
-      totalIngredients.some((ingredient) => ingredient.name === newIngredientName)
+      totalIngredients.some(ingredient => ingredient.name === newIngredientName)
     ) {
       return
     }
@@ -43,11 +43,11 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
 
   function deleteIngredient(deletedIngredient: Ingredient): void {
     const newTotalIngredients: Ingredient[] = totalIngredients.filter(
-      (ingredient) => ingredient !== deletedIngredient,
+      ingredient => ingredient !== deletedIngredient,
     )
-    steps.forEach((step) => {
+    steps.forEach(step => {
       step.ingredients = step.ingredients.filter(
-        (ingredient) => ingredient.name !== deletedIngredient.name,
+        ingredient => ingredient.name !== deletedIngredient.name,
       )
     })
 
@@ -58,7 +58,7 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
   useEffect(() => {
     if (totalIngredients.length > 0) setStepIsValid(true)
     else setStepIsValid(false)
-  }, [totalIngredients])
+  }, [totalIngredients, setStepIsValid])
 
   return (
     <>
@@ -67,7 +67,7 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
 
         {totalIngredients.length > 0 && (
           <ul className="layout-fullwidth">
-            {totalIngredients.map((i) => (
+            {totalIngredients.map(i => (
               <ListItem
                 key={i.name}
                 text={i.name}
@@ -97,7 +97,7 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
         <div className="mt-2">
           <Input
             value={newIngredientName}
-            onChange={(value) => setNewIngredientName(value)}
+            onChange={value => setNewIngredientName(value)}
             label="Введите название продукта"
           />
           <div className="mt-2 flex gap-2">
@@ -105,14 +105,14 @@ export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element 
               className="grow"
               type="number"
               value={String(newIngredientAmount)}
-              onChange={(value) => setNewIngredientAmount(+value)}
+              onChange={value => setNewIngredientAmount(+value)}
               min="0"
               label="Количество"
             />
             <Input
               className="w-[7.5rem] shrink-0"
               value={newIngredientUnit}
-              onChange={(value) => setNewIngredientUnit(value)}
+              onChange={value => setNewIngredientUnit(value)}
               label="Ед. измерения"
             />
           </div>

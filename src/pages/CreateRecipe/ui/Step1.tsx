@@ -16,20 +16,20 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
   const { recipeData, setName, setCategory, setDescription, setImg } = useCreateRecipe()
   const { name, category, description, img } = recipeData
 
-  const categoriesOptions = categories.map((category) => {
+  const categoriesOptions = categories.map(category => {
     return { value: category.id, label: category.fullName }
   })
 
   useEffect(() => {
     if (name && category && description) setStepIsValid(true)
     else setStepIsValid(false)
-  }, [name, category, description])
+  }, [name, category, description, setStepIsValid])
 
   return (
     <form className="layout-grid flex flex-col gap-3">
       <Input
         value={name}
-        onChange={(value) => setName(value)}
+        onChange={value => setName(value)}
         placeholder="Введите название блюда"
         label="Название"
         showCount
@@ -39,20 +39,20 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
       <Select
         value={category}
         options={categoriesOptions}
-        onChange={(value) => setCategory(value)}
+        onChange={value => setCategory(value)}
         placeholder="Выберите категорию"
         label="Категория"
       />
 
       <TextArea
         value={description}
-        onChange={(value) => setDescription(value)}
+        onChange={value => setDescription(value)}
         label="Описание"
         showCount
         maxLength={RECIPE_LIMITS.description.max}
       />
 
-      <PhotoUpload image={img} onChange={(value) => setImg(value)} label="Главное фото" />
+      <PhotoUpload image={img} onChange={value => setImg(value)} label="Главное фото" />
     </form>
   )
 }

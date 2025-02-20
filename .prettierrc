@@ -4,6 +4,7 @@
   "semi": false,
   "singleQuote": true,
   "printWidth": 100,
+  "arrowParens": "avoid",
   "importOrder": [
     "<THIRD_PARTY_MODULES>",
     "^@/app/(.*)$",

@@ -24,11 +24,11 @@ type DeleteElem = {
   onClick?: () => void
 }
 
-type ListItemSize = 'tiny' | 'small' | 'medium'
-type ListItemStatus = 'disabled' | 'selected' | ''
-type ListItemRightElem = IconElem | DeleteElem | EmptyIconElem
+export type ListItemSize = 'tiny' | 'small' | 'medium'
+export type ListItemStatus = 'disabled' | 'selected' | ''
+export type ListItemRightElem = IconElem | DeleteElem | EmptyIconElem
 
-type ListItemProps = {
+export type ListItemProps = {
   size?: ListItemSize
   text: string
   description?: string

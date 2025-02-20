@@ -4,10 +4,10 @@ import { type Ingredient, RECIPE_LIMITS } from '@/entities/recipe'
 
 import { useDebounce } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
-import ListItem from '@/shared/ui/ListItem'
+import ListItem, { type ListItemStatus } from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import PhotoUpload from '@/shared/ui/PhotoUpload'
-import Select from '@/shared/ui/Select'
+import Select, { type SelectOption } from '@/shared/ui/Select'
 import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
 
@@ -49,15 +49,15 @@ export default function Step4(): React.JSX.Element {
   function deleteStep(): void {
     const newSteps = steps.filter((_, index) => index !== currentStepIndex)
     setSteps(newSteps)
-    if (currentStepIndex !== 0) setCurrentStepIndex((prev) => prev - 1)
+    if (currentStepIndex !== 0) setCurrentStepIndex(prev => prev - 1)
   }
 
   function stepsHasIngredient(ingredientName: string): boolean {
-    return steps.some((step): boolean => step.ingredients.some((i) => i.name === ingredientName))
+    return steps.some((step): boolean => step.ingredients.some(i => i.name === ingredientName))
   }
 
   function findStepWithIngredient(ingredientName: string): number {
-    return steps.findIndex((step) => step.ingredients.some((i) => i.name === ingredientName)) + 1
+    return steps.findIndex(step => step.ingredients.some(i => i.name === ingredientName)) + 1
   }
 
   function stepIsEmpty(): boolean {
@@ -76,7 +76,7 @@ export default function Step4(): React.JSX.Element {
   }
 
   function deleteIngredient(deletedIngredientName: string): void {
-    setCurrentStepIngredientsNames((prev) => prev.filter((i) => i !== deletedIngredientName))
+    setCurrentStepIngredientsNames(prev => prev.filter(i => i !== deletedIngredientName))
   }
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Step4(): React.JSX.Element {
   }, [currentStepIndex, steps])
 
   useEffect(() => {
-    const stepIngredientsNames: string[] = steps[currentStepIndex].ingredients.map((i) => i.name)
+    const stepIngredientsNames: string[] = steps[currentStepIndex].ingredients.map(i => i.name)
 
     setCurrentStepIngredientsNames(stepIngredientsNames)
   }, [currentStepIndex, steps.length])
@@ -96,7 +96,7 @@ export default function Step4(): React.JSX.Element {
   useEffect(() => {
     // Нужно копировать массив и всё внутри него, так как нельзя использовать изначальные значения
     const newSteps = structuredClone(steps)
-    const filteredIngredients = totalIngredients.filter((i) =>
+    const filteredIngredients = totalIngredients.filter(i =>
       currentStepIngredientsNames.includes(i.name),
     )
     newSteps[currentStepIndex].ingredients = filteredIngredients
@@ -129,7 +129,7 @@ export default function Step4(): React.JSX.Element {
           <Select
             value={currentStepIngredientsNames}
             options={ingredientsOptions}
-            onChange={(value) => setCurrentStepIngredientsNames(value)}
+            onChange={value => setCurrentStepIngredientsNames(value)}
             label={`Ингредиенты (шаг ${currentStepIndex + 1})`}
             placeholder="Выберите ингредиенты"
             multiple
@@ -138,7 +138,7 @@ export default function Step4(): React.JSX.Element {
 
           {currentStepIngredients.length > 0 && (
             <ul className="layout-fullwidth">
-              {currentStepIngredients.map((i) => (
+              {currentStepIngredients.map(i => (
                 <ListItem
                   key={i.name}
                   text={i.name}
@@ -156,7 +156,7 @@ export default function Step4(): React.JSX.Element {
 
         <TextArea
           value={tempStepDescription}
-          onChange={(value) => setTempStepDescription(value)}
+          onChange={value => setTempStepDescription(value)}
           label={`Рецепт (шаг ${currentStepIndex + 1})`}
           showCount
           maxLength={RECIPE_LIMITS.stepDescription.max}
@@ -164,7 +164,7 @@ export default function Step4(): React.JSX.Element {
 
         <PhotoUpload
           image={steps[currentStepIndex].img}
-          onChange={(value) => setStepValue(value, 'img')}
+          onChange={value => setStepValue(value, 'img')}
           label={`Фото (шаг ${currentStepIndex + 1})`}
         />
       </form>

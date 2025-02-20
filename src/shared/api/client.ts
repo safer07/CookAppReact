@@ -10,7 +10,7 @@ const api = axios.create({
 })
 
 // Авторизация в исходящем запросе
-api.interceptors.request.use((request) => {
+api.interceptors.request.use(request => {
   const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)
   if (accessToken) request.headers.Authorization = `Bearer ${accessToken}`
   return request
@@ -18,8 +18,8 @@ api.interceptors.request.use((request) => {
 
 // Использовать refreshToken однократно при получении статуса 401
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  response => response,
+  async error => {
     const originalRequest = error.config
 
     if (error.response?.status === 401 && error.config && !error.config._isRetry) {
@@ -31,7 +31,7 @@ api.interceptors.response.use(
         const validatedData = refreshResponseSchema.parse(data)
         localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
         return api.request(originalRequest)
-      } catch (error) {
+      } catch {
         console.error('Пользователь не авторизован')
       }
     } else throw error

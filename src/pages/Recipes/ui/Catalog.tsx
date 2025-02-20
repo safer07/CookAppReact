@@ -4,6 +4,8 @@ import { fetchCategories } from '@/app/api'
 
 import RecipesList from '@/widgets/RecipesList'
 
+import type { RecipeCategory } from '@/entities/recipeCategory/const/categories'
+
 import { catchHttpError, useDebounce } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
@@ -22,22 +24,14 @@ export default function Catalog(): React.JSX.Element {
   const { categories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
-  const filtersCount = Object.values(filters).filter((value) => value.length !== 0).length
+  const filtersCount = Object.values(filters).filter(value => value.length !== 0).length
   const [recipeCategories, setRecipeCategories] = useState<RecipeCategory[]>([])
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debouncedSearchQuery: string =
     tempSearchQuery === '' ? useDebounce(tempSearchQuery, 0) : useDebounce(tempSearchQuery, 1000)
 
   function findCategoryById(id: string) {
-    return recipeCategories.find((category) => category.id === id)
-  }
-
-  async function onFetchRecipes() {
-    try {
-      await fetchRecipes({ categories, searchQuery })
-    } catch (error) {
-      catchHttpError(error, setError)
-    }
+    return recipeCategories.find(category => category.id === id)
   }
 
   // TODO: каждый раз загружаются категории, сохранить в store
@@ -51,12 +45,20 @@ export default function Catalog(): React.JSX.Element {
   }, [])
 
   useEffect(() => {
+    async function onFetchRecipes() {
+      try {
+        await fetchRecipes({ categories, searchQuery })
+      } catch (error) {
+        catchHttpError(error, setError)
+      }
+    }
+
     if (!filtersIsOpen) onFetchRecipes()
-  }, [categories, searchQuery, filtersIsOpen])
+  }, [categories, searchQuery, filtersIsOpen, fetchRecipes])
 
   useEffect(() => {
     setSearchQuery(debouncedSearchQuery)
-  }, [debouncedSearchQuery])
+  }, [debouncedSearchQuery, setSearchQuery])
 
   return (
     <>

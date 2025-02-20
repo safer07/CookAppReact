@@ -21,7 +21,7 @@ export default function ForgotPasswordPage(): React.JSX.Element {
 
   useEffect(() => {
     if (user) navigate(PROFILE_ROUTE, { replace: true })
-  }, [user])
+  }, [user, navigate])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -52,7 +52,7 @@ export default function ForgotPasswordPage(): React.JSX.Element {
       <TopAppBar title="Забыли пароль" back />
       <form className="mt-2 space-y-3" onSubmit={onSubmit}>
         <div className="space-y-2">
-          <Input value={email} onChange={(value) => setEmail(value)} type="email" label="Email" />
+          <Input value={email} onChange={value => setEmail(value)} type="email" label="Email" />
           <ErrorComponent error={error} />
           {status === 'success' && (
             <p className="text-system-positive">

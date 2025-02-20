@@ -19,7 +19,7 @@ export default function RecipeDetailsPage(): React.ReactNode {
   useEffect(() => {
     if (!id || recipe?._id === id) return
     fetchFullRecipe(id)
-  }, [id])
+  }, [id, recipe, fetchFullRecipe])
 
   if (!id) return null
 

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 
 import Chip from '../../Chip'
+import type { SelectProps } from '../model/types'
 import Options from './Options'
 import RightIcons from './RightIcons'
 
@@ -44,7 +45,7 @@ export default function Select(props: SelectProps): React.JSX.Element {
 
   let valueLabel: string | null = null
   if (typeof value === 'string' && value !== '') {
-    valueLabel = options.find((option) => option.value === value)?.label || null
+    valueLabel = options.find(option => option.value === value)?.label || null
   }
 
   const hasAvailableOptions = options.some((option): boolean => option.status !== 'disabled')
@@ -52,13 +53,13 @@ export default function Select(props: SelectProps): React.JSX.Element {
   if (!hasAvailableOptions) disabled = true
 
   function onClick(): void {
-    if (!disabled) setIsOpen((prev) => !prev)
+    if (!disabled) setIsOpen(prev => !prev)
   }
 
   function onChipClick(event: React.MouseEvent<HTMLElement, MouseEvent>, chipValue: string): void {
     event.stopPropagation()
     if (multiple) {
-      const filteredValue: string[] = value.filter((item) => item !== chipValue)
+      const filteredValue: string[] = value.filter(item => item !== chipValue)
       onChange(filteredValue)
     }
   }
@@ -76,12 +77,12 @@ export default function Select(props: SelectProps): React.JSX.Element {
       >
         {multiple && value.length ? (
           <span className="chips-list">
-            {value.map((item) => (
+            {value.map(item => (
               <Chip
                 key={item}
                 text={item}
                 variant="active"
-                onClick={(event) => onChipClick(event, item)}
+                onClick={event => onChipClick(event, item)}
                 del
               />
             ))}

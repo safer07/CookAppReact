@@ -17,22 +17,22 @@ export default function SimilarRecipes({ excludeId }: SimilarRecipesProps): Reac
   const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
 
-  async function fetchRecipes() {
-    setError(null)
-
-    try {
-      setError(null)
-      setStatus('loading')
-      const data = await recipesService.getSimilarRecipes(excludeId)
-      setStatus('success')
-      setRecipes(data)
-    } catch (error) {
-      setStatus('error')
-      catchHttpError(error, setError)
-    }
-  }
-
   useEffect(() => {
+    async function fetchRecipes() {
+      setError(null)
+
+      try {
+        setError(null)
+        setStatus('loading')
+        const data = await recipesService.getSimilarRecipes(excludeId)
+        setStatus('success')
+        setRecipes(data)
+      } catch (error) {
+        setStatus('error')
+        catchHttpError(error, setError)
+      }
+    }
+
     fetchRecipes()
   }, [excludeId])
 

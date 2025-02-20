@@ -1,3 +1,5 @@
+import type { SelectRightIconsProps } from '../model/types'
+
 export default function RightIcons({
   value,
   onChange,
@@ -7,7 +9,7 @@ export default function RightIcons({
 }: SelectRightIconsProps): React.JSX.Element {
   function onClickClear(): void {
     if (multiple) onChange([])
-    multiple ? onChange([]) : onChange('')
+    else onChange('')
     setIsOpen(false)
   }
 
@@ -17,7 +19,7 @@ export default function RightIcons({
         {clearButton && value.length > 0 && (
           <button
             className="clear-button"
-            onClick={(event) => {
+            onClick={event => {
               event.stopPropagation()
               onClickClear()
             }}

@@ -1,5 +1,6 @@
 import Radio from '../Radio'
 import Switch from '../Switch'
+import type { ListItemProps, ListItemStatus } from './types'
 
 export default function ListItem({
   size = 'small',
@@ -41,7 +42,7 @@ export default function ListItem({
   })()
 
   return (
-    <li className={`listItem ${sizeClass} ${statusClass}`} onClick={(event) => onItemClick(event)}>
+    <li className={`listItem ${sizeClass} ${statusClass}`} onClick={event => onItemClick(event)}>
       {leftElement?.element === 'radio' && <Radio checked={leftElement.checked} />}
       {leftElement?.element === 'switch' && (
         <Switch checked={leftElement.checked} onClick={leftElement.onClick} />

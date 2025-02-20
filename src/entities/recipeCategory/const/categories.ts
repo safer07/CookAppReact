@@ -1,3 +1,10 @@
+export type RecipeCategory = {
+  id: string
+  name: string
+  fullName: string
+  img: string
+}
+
 export const categories: RecipeCategory[] = [
   {
     id: 'rc1',

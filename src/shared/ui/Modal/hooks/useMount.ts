@@ -12,7 +12,7 @@ export default function useMount(open: boolean) {
         setMounted(false)
       }, ANIMATION_TIME)
     }
-  }, [open])
+  }, [open, mounted])
 
   return mounted
 }

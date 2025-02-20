@@ -12,36 +12,36 @@ const emptyFavorites = { recipes: [] }
 export const useFavorites = create<FavoritesStore>()(
   persist(
     devtools(
-      immer((set) => ({
+      immer(set => ({
         favorites: emptyFavorites,
-        addFavoriteRecipe: async (id) => {
+        addFavoriteRecipe: async id => {
           if (useUser.getState().user) {
             try {
               const favoriteRecipes = await favoritesService.addRecipe(id)
-              set((state) => {
+              set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch (error) {}
+            } catch {}
           } else
-            set((state) => {
+            set(state => {
               state.favorites.recipes.push(id)
             })
         },
-        removeFavoriteRecipe: async (id) => {
+        removeFavoriteRecipe: async id => {
           if (useUser.getState().user) {
             try {
               const favoriteRecipes = await favoritesService.removeRecipe(id)
-              set((state) => {
+              set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch (error) {}
+            } catch {}
           } else {
-            set((state) => {
-              state.favorites.recipes = state.favorites.recipes.filter((item) => item !== id)
+            set(state => {
+              state.favorites.recipes = state.favorites.recipes.filter(item => item !== id)
             })
           }
         },
-        setFavorites: (favorites) => set({ favorites }),
+        setFavorites: favorites => set({ favorites }),
         resetFavorites: () => set({ favorites: emptyFavorites }),
       })),
     ),

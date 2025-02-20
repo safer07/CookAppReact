@@ -1,4 +1,6 @@
 import ListItem from '../../ListItem'
+import type { ListItemRightElem, ListItemStatus } from '../../ListItem/types'
+import type { SelectOptionProps } from '../model/types'
 
 export default function Options({
   value,
@@ -19,7 +21,7 @@ export default function Options({
       if (!value.includes(optionValue)) {
         onChange([...value, optionValue])
       } else {
-        onChange(value.filter((o) => o !== optionValue))
+        onChange(value.filter(o => o !== optionValue))
       }
     } else {
       containerRef.current!.blur()
@@ -34,7 +36,7 @@ export default function Options({
 
   return (
     <ul className="select-options">
-      {options.map((option) => {
+      {options.map(option => {
         let optionStatus: ListItemStatus = ''
         let rightElement: ListItemRightElem | undefined
 

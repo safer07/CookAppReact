@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
+import type { RecipeCategory } from '@/entities/recipeCategory/const/categories'
+
 import Chip from '@/shared/ui/Chip'
 
 import { useRecipes } from '../store/recipesStore'
@@ -30,7 +32,7 @@ export default function Filters({
   }
 
   function toggleCategory(categoryId: string) {
-    if (categories.includes(categoryId)) setCategories(categories.filter((id) => id !== categoryId))
+    if (categories.includes(categoryId)) setCategories(categories.filter(id => id !== categoryId))
     else setCategories([...categories, categoryId])
   }
 
@@ -56,7 +58,7 @@ export default function Filters({
                   del
                 />
               )}
-              {categories.map((categoryId) => (
+              {categories.map(categoryId => (
                 <Chip
                   key={categoryId}
                   text={`Категория: ${findCategoryById(categoryId)?.name}`}
@@ -71,7 +73,7 @@ export default function Filters({
           <div>
             <div className="headline-medium">Категория</div>
             <ul className="mt-2 flex flex-wrap gap-1">
-              {recipeCategories.map((category) => (
+              {recipeCategories.map(category => (
                 <li key={category.name}>
                   <Chip
                     text={category.name}

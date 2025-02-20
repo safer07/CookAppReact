@@ -21,19 +21,19 @@ export default function ProfilePage(): React.JSX.Element {
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   useEffect(() => {
+    async function onFetchUser() {
+      setError(null)
+      try {
+        await fetchUser()
+      } catch (error) {
+        catchHttpError(error, setError)
+      }
+    }
+
     // TODO: зачем? или просто каждый раз делать fetch, или без условия (проверить на ошибки, когда не залогинен)
     if (!user) navigate(LOGIN_ROUTE, { replace: true })
     else onFetchUser()
-  }, [])
-
-  async function onFetchUser() {
-    setError(null)
-    try {
-      await fetchUser()
-    } catch (error) {
-      catchHttpError(error, setError)
-    }
-  }
+  }, [navigate, fetchUser])
 
   async function onLogout() {
     setError(null)

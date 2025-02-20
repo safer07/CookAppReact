@@ -1,4 +1,6 @@
-type SelectOption = {
+import type { ListItemSize, ListItemStatus } from '../../ListItem/types'
+
+export type SelectOption = {
   label: string
   value: string
   secondaryText?: string
@@ -26,14 +28,14 @@ type SelectMultipleProps = {
   onChange: (value: string[]) => void
 }
 
-type SelectProps = SelectBaseProps & (SelectSingleProps | SelectMultipleProps)
+export type SelectProps = SelectBaseProps & (SelectSingleProps | SelectMultipleProps)
 
-type SelectRightIconsProps = {
+export type SelectRightIconsProps = {
   clearButton?: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 } & (SelectSingleProps | SelectMultipleProps)
 
-type SelectOptionProps = {
+export type SelectOptionProps = {
   options: SelectOption[]
   optionSize?: ListItemSize
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>

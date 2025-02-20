@@ -43,11 +43,11 @@ export default function LoginPage(): React.JSX.Element {
     // TODO: Возвращать откуда пришёл, но navigate(-1) запирает при прямом логине, а другие решения не работали. нужно учитывать ссылки снизу и забыли пароль
     // if (user) navigate(-1)
     if (user) navigate(MAIN_ROUTE, { replace: true })
-  }, [user])
+  }, [user, navigate])
 
   useEffect(() => {
     setFormData(emptyFormData)
-  }, [location])
+  }, [location, emptyFormData])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -58,7 +58,8 @@ export default function LoginPage(): React.JSX.Element {
       : registrationFormDataSchema.safeParse(formData)
     if (result.success) {
       try {
-        isLogin ? await login(result.data) : await registration(result.data)
+        if (isLogin) await login(result.data)
+        else await registration(result.data)
       } catch (error) {
         catchHttpError(error, setError)
       }
@@ -76,14 +77,14 @@ export default function LoginPage(): React.JSX.Element {
         <div className="space-y-2">
           <Input
             value={formData.email}
-            onChange={(value) => setFormData((prev) => ({ ...prev, email: value }))}
+            onChange={value => setFormData(prev => ({ ...prev, email: value }))}
             type="email"
             label="Email"
           />
           <div className="flex flex-col gap-1">
             <Input
               value={formData.password}
-              onChange={(value) => setFormData((prev) => ({ ...prev, password: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, password: value }))}
               type="password"
               label="Пароль"
             />
@@ -99,7 +100,7 @@ export default function LoginPage(): React.JSX.Element {
           {!isLogin && (
             <Input
               value={formData.passwordRepeat}
-              onChange={(value) => setFormData((prev) => ({ ...prev, passwordRepeat: value }))}
+              onChange={value => setFormData(prev => ({ ...prev, passwordRepeat: value }))}
               type="password"
               label="Повторите пароль"
             />
