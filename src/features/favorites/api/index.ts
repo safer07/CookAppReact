@@ -1,6 +1,7 @@
-import { addRecipeResponseSchema, removeRecipeResponseSchema } from '../model/api'
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
+
+import { addRecipeResponseSchema, removeRecipeResponseSchema } from '../model/api'
 
 export const favoritesService = {
   addRecipe: async (id: string) => {

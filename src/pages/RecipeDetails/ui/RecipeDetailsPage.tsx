@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import useFullRecipe from '../store/store'
-import RecipeInfo from './RecipeInfo'
-import SimilarRecipes from './SimilarRecipes'
-import RecipeTabs from './RecipeTabs'
 import TopAppBar from '@/widgets/TopAppBar'
+
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
+
+import useFullRecipe from '../store/store'
+import RecipeInfo from './RecipeInfo'
+import RecipeTabs from './RecipeTabs'
+import SimilarRecipes from './SimilarRecipes'
 
 export default function RecipeDetailsPage(): React.ReactNode {
   const { id } = useParams<{ id: string }>()

@@ -1,7 +1,10 @@
-import { useRecipes } from '../store/recipesStore'
 import RecipesList from '@/widgets/RecipesList'
+
 import type { Recipe } from '@/entities/recipe'
+
 import type { HttpStatus } from '@/shared/model'
+
+import { useRecipes } from '../store/recipesStore'
 
 type FeaturedRecipesProps = {
   categories: RecipeCategory[]

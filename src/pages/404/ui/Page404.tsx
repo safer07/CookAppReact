@@ -1,5 +1,5 @@
-import Button from '@/shared/ui/Button'
 import { MAIN_ROUTE } from '@/shared/routes'
+import Button from '@/shared/ui/Button'
 
 export default function Page404(): React.JSX.Element {
   return (

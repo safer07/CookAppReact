@@ -1,4 +1,5 @@
 import { RECIPE_DIFFICULTIES } from '@/entities/recipe'
+
 import { TagSurface } from '@/shared/ui/Tag'
 
 export function getRecipeDifficultyTextAndSurface(

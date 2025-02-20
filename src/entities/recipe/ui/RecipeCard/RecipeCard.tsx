@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
 
-import RecipeCardSkeleton from './RecipeCardSkeleton'
-import type { Recipe } from '../../model/recipe'
-import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
 import { LikeButton } from '@/features/favorites'
+
 import { categories } from '@/entities/recipeCategory/const/categories'
 import { useUser } from '@/entities/user/@x/recipe'
+
 import Tag from '@/shared/ui/Tag'
+
+import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
+import type { Recipe } from '../../model/recipe'
+import RecipeCardSkeleton from './RecipeCardSkeleton'
 
 // TODO: не импортировать feature, а user импортировать через кросс-экспорт
 

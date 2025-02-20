@@ -1,11 +1,12 @@
-import { fullRecipeSchema, type CreateRecipeDTO, type RecipeFilters } from '../model/recipe'
+import api from '@/shared/api'
+import { API_PATHS } from '@/shared/config'
+
 import {
   createRecipeResponseSchema,
   deleteRecipeResponseSchema,
   recipesResponseSchema,
 } from '../model/api'
-import api from '@/shared/api'
-import { API_PATHS } from '@/shared/config'
+import { type CreateRecipeDTO, type RecipeFilters, fullRecipeSchema } from '../model/recipe'
 
 export const recipesService = {
   getRecipes: async (filters?: RecipeFilters) => {

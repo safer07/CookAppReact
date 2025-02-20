@@ -4,18 +4,18 @@
     @apply animate-showBackdrop pointer-events-auto absolute inset-0 -z-10 bg-black/60 transition-opacity duration-300;
   }
   & .modal-content {
-    @apply animate-showModal pointer-events-auto max-w-md overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-3 transition-all duration-300;
+    @apply animate-showModal pointer-events-auto max-w-md overflow-x-hidden overflow-y-auto rounded-2xl bg-white p-3 transition-all duration-300;
   }
 }
 
-.modal[data-open="false"] :is(.modal-backdrop, .modal-content) {
+.modal[data-open='false'] :is(.modal-backdrop, .modal-content) {
   @apply pointer-events-none;
 }
 
-.modal[data-open="false"] .modal-backdrop {
+.modal[data-open='false'] .modal-backdrop {
   @apply animate-hideBackdrop;
 }
 
-.modal[data-open="false"] .modal-content {
+.modal[data-open='false'] .modal-content {
   @apply animate-hideModal;
 }

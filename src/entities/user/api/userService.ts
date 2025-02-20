@@ -1,15 +1,16 @@
+import api from '@/shared/api'
+import { API_PATHS } from '@/shared/config'
+
 import {
+  type AuthUserDTO,
+  type RegistrationUserDTO,
+  type UpdateProfileDTO,
   authResponseSchema,
   changePasswordResponseSchema,
   forgotPasswordResponseSchema,
   resetPasswordResponseSchema,
-  type AuthUserDTO,
-  type RegistrationUserDTO,
-  type UpdateProfileDTO,
 } from '../model/api'
 import { userSchema } from '../model/user'
-import api from '@/shared/api'
-import { API_PATHS } from '@/shared/config'
 
 export const userService = {
   registration: async (registrationUserDTO: RegistrationUserDTO) => {

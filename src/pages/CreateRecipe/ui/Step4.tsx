@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { emptyStep, useCreateRecipe } from '../store/createRecipeStore'
-import { RECIPE_LIMITS, type Ingredient } from '@/entities/recipe'
+import { type Ingredient, RECIPE_LIMITS } from '@/entities/recipe'
+
+import { useDebounce } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
@@ -9,7 +10,8 @@ import PhotoUpload from '@/shared/ui/PhotoUpload'
 import Select from '@/shared/ui/Select'
 import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
-import useDebounce from '@/shared/hooks/debounce'
+
+import { emptyStep, useCreateRecipe } from '../store/createRecipeStore'
 
 export default function Step4(): React.JSX.Element {
   const { recipeData, setSteps, setHidden } = useCreateRecipe()

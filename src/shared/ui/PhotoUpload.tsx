@@ -40,11 +40,7 @@ export default function PhotoUpload({
     <div>
       {label && <div className="input-label">{label}</div>}
       <div className="relative">
-        <img
-          className="aspect-9/7 w-full object-cover"
-          src={image}
-          alt="Загруженное изображение"
-        />
+        <img className="aspect-9/7 w-full object-cover" src={image} alt="Загруженное изображение" />
         <div className="absolute right-2 top-2 flex gap-2">
           <ButtonIcon icon="camera" onClick={setImage} />
           <ButtonIcon icon="delete" onClick={() => onChange('')} />

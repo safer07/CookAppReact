@@ -1,8 +1,10 @@
 import ReactDOM from 'react-dom'
 
-import { useRecipes } from '../store/recipesStore'
 import TopAppBar from '@/widgets/TopAppBar'
+
 import Chip from '@/shared/ui/Chip'
+
+import { useRecipes } from '../store/recipesStore'
 
 type FilterProps = {
   open: boolean

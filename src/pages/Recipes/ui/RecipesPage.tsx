@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import Catalog from './Catalog'
-import MyRecipes from './MyRecipes'
-import Favorites from './Favorites'
 import TopAppBar from '@/widgets/TopAppBar'
+
 import SegmentedButton from '@/shared/ui/SegmentedButton'
+
+import Catalog from './Catalog'
+import Favorites from './Favorites'
+import MyRecipes from './MyRecipes'
 
 type RecipesPageTabId = 'catalog' | 'myrecipes' | 'favorites'
 

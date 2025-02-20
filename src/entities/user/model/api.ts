@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
-import { emailSchema, passwordSchema, userSchema } from './user'
 import { accessTokenSchema } from '@/shared/model'
+
+import { emailSchema, passwordSchema, userSchema } from './user'
 
 // -----
 // -----

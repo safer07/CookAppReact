@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
-import { emailSchema, userService, useUser } from '@/entities/user'
-import Button from '@/shared/ui/Button'
-import Input from '@/shared/ui/Input'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
+
+import { emailSchema, useUser, userService } from '@/entities/user'
+
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
 import { PROFILE_ROUTE } from '@/shared/routes'
+import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Input from '@/shared/ui/Input'
 
 export default function ForgotPasswordPage(): React.JSX.Element {
   const navigate = useNavigate()

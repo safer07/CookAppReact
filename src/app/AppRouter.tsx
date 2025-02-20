@@ -2,7 +2,7 @@ import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import RecipesPage from '@/pages/Recipes'
-import { FullScreenLayout, MainLayout } from '@/shared/ui/Layout'
+
 import {
   CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
@@ -14,6 +14,7 @@ import {
   REGISTRATION_ROUTE,
   RESET_PASSWORD_ROUTE,
 } from '@/shared/routes'
+import { FullScreenLayout, MainLayout } from '@/shared/ui/Layout'
 
 const RecipeDetails = lazy(() => import('@/pages/RecipeDetails'))
 const CookingMode = lazy(() => import('@/pages/RecipeDetails/ui/CookingMode'))

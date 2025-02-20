@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
 import type { FullRecipe } from '@/entities/recipe'
-import SegmentedButton from '@/shared/ui/SegmentedButton'
+
 import ListItem from '@/shared/ui/ListItem'
+import SegmentedButton from '@/shared/ui/SegmentedButton'
 
 type IRecipeTabs = { recipe: FullRecipe }
 

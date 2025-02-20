@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import useFullRecipe from '../store/store'
 import TopAppBar from '@/widgets/TopAppBar'
+
 import Button from '@/shared/ui/Button'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 import ListItem from '@/shared/ui/ListItem'
 import Loader from '@/shared/ui/Loader'
 import Stepper from '@/shared/ui/Stepper'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
+
+import useFullRecipe from '../store/store'
 
 export default function CookingMode(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()

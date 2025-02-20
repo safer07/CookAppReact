@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 
+import { type Recipe, RecipeCard, recipesService } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
-import { RecipeCard, recipesService, type Recipe } from '@/entities/recipe'
+
+import { catchHttpError } from '@/shared/lib'
+import type { CustomError, HttpStatus } from '@/shared/model'
+import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError } from '@/shared/lib'
-import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
-import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function MyRecipes() {
   const { user } = useUser()

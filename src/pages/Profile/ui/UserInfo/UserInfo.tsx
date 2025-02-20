@@ -1,7 +1,9 @@
-import UserInfoSkeleton from './UserInfoSkeleton'
 import { useUser } from '@/entities/user'
-import Button from '@/shared/ui/Button'
+
 import { LOGIN_ROUTE } from '@/shared/routes'
+import Button from '@/shared/ui/Button'
+
+import UserInfoSkeleton from './UserInfoSkeleton'
 
 export default function UserInfo(): React.JSX.Element {
   const { user } = useUser()

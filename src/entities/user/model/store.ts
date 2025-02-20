@@ -1,6 +1,7 @@
 import type { HttpStatus } from '@/shared/model'
-import { User } from './user'
+
 import { AuthUserDTO, UpdateProfileDTO } from './api'
+import { User } from './user'
 
 export type UserStore = {
   user: User | null

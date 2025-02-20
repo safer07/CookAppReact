@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
 
 import { fetchCategories } from '@/app/api'
+
+import RecipesList from '@/widgets/RecipesList'
+
+import { catchHttpError, useDebounce } from '@/shared/lib'
+import type { CustomError } from '@/shared/model'
+import ButtonIcon from '@/shared/ui/ButtonIcon'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Input from '@/shared/ui/Input'
+
 import { useRecipes } from '../store/recipesStore'
 import Categories from './Categories'
-import Filters from './Filters'
 import FeaturedRecipes from './FeaturedRecipes'
-import RecipesList from '@/widgets/RecipesList'
-import useDebounce from '@/shared/hooks/debounce'
-import ButtonIcon from '@/shared/ui/ButtonIcon'
-import Input from '@/shared/ui/Input'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError } from '@/shared/lib'
-import type { CustomError } from '@/shared/model'
+import Filters from './Filters'
 
 // TODO: убрать импорт из app
 

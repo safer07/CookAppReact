@@ -1,22 +1,25 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import RecipeInfoSkeleton from './RecipeInfoSkeleton'
 import { LikeButton } from '@/features/favorites'
-import { useUser } from '@/entities/user'
+
 import {
+  type FullRecipe,
   getRecipeDifficultyTextAndSurface,
   recipesService,
-  type FullRecipe,
 } from '@/entities/recipe'
 import { categories } from '@/entities/recipeCategory/const/categories'
+import { useUser } from '@/entities/user'
+
+import { catchHttpError, navigateBack } from '@/shared/lib'
+import type { CustomError } from '@/shared/model'
+import { RECIPES_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Modal from '@/shared/ui/Modal'
 import Tag from '@/shared/ui/Tag'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError, navigateBack } from '@/shared/lib'
-import { RECIPES_ROUTE } from '@/shared/routes'
-import type { CustomError } from '@/shared/model'
+
+import RecipeInfoSkeleton from './RecipeInfoSkeleton'
 
 type RecipeInfoProps = {
   recipe: FullRecipe

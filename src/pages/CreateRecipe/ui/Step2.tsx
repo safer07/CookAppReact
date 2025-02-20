@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 
-import { useCreateRecipe } from '../store/createRecipeStore'
 import { RECIPE_DIFFICULTIES } from '@/entities/recipe'
+
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
+
+import { useCreateRecipe } from '../store/createRecipeStore'
 
 type StepProps = { setStepIsValid: (status: boolean) => void }
 

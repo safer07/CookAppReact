@@ -1,4 +1,5 @@
-import { RecipeCard, type Recipe } from '@/entities/recipe'
+import { type Recipe, RecipeCard } from '@/entities/recipe'
+
 import type { HttpStatus } from '@/shared/model'
 
 type RecipesListProps = {

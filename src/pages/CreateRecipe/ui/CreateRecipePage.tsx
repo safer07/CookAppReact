@@ -1,21 +1,24 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import TopAppBar from '@/widgets/TopAppBar'
+
+import { createRecipeDTOSchema, recipesService } from '@/entities/recipe'
+
+import { API_PATHS } from '@/shared/config'
+import { catchHttpError, formatZodError, navigateBack } from '@/shared/lib'
+import type { CustomError, HttpStatus } from '@/shared/model'
+import { RECIPES_ROUTE } from '@/shared/routes'
+import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Modal from '@/shared/ui/Modal'
+import Stepper from '@/shared/ui/Stepper'
+
 import { useCreateRecipe } from '../store/createRecipeStore'
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
-import TopAppBar from '@/widgets/TopAppBar'
-import { createRecipeDTOSchema, recipesService } from '@/entities/recipe'
-import Stepper from '@/shared/ui/Stepper'
-import Button from '@/shared/ui/Button'
-import Modal from '@/shared/ui/Modal'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError, formatZodError, navigateBack } from '@/shared/lib'
-import { API_PATHS } from '@/shared/config'
-import { RECIPES_ROUTE } from '@/shared/routes'
-import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function CreateRecipePage(): React.JSX.Element {
   const navigate = useNavigate()

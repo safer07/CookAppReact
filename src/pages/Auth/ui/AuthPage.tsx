@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import PrivacyAccepting from './PrivacyAccepting'
 import TopAppBar from '@/widgets/TopAppBar'
+
 import {
+  type LoginFormData,
+  type RegistrationFormData,
   loginFormDataSchema,
   registrationFormDataSchema,
   useUser,
-  type LoginFormData,
-  type RegistrationFormData,
 } from '@/entities/user'
-import Button from '@/shared/ui/Button'
-import Input from '@/shared/ui/Input'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
+
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import { FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
+import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Input from '@/shared/ui/Input'
+
+import PrivacyAccepting from './PrivacyAccepting'
 
 const emptyLoginFormData: LoginFormData = { email: '', password: '' }
 const emptyRegistrationFormData: RegistrationFormData = {

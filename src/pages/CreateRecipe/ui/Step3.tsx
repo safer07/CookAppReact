@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { useCreateRecipe } from '../store/createRecipeStore'
 import type { Ingredient } from '@/entities/recipe'
-import ListItem from '@/shared/ui/ListItem'
+
 import Button from '@/shared/ui/Button'
-import Modal from '@/shared/ui/Modal'
 import Input from '@/shared/ui/Input'
+import ListItem from '@/shared/ui/ListItem'
+import Modal from '@/shared/ui/Modal'
+
+import { useCreateRecipe } from '../store/createRecipeStore'
 
 type StepProps = { setStepIsValid: (status: boolean) => void }
 

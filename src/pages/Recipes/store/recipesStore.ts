@@ -2,8 +2,9 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { RecipesStore } from '../model/store'
 import { recipesService } from '@/entities/recipe'
+
+import { RecipesStore } from '../model/store'
 
 const initialFilters = { categories: [], searchQuery: '' }
 

@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import UserInfo from './UserInfo'
 import { useUser } from '@/entities/user'
-import ListItem from '@/shared/ui/ListItem'
-import Modal from '@/shared/ui/Modal'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
+
 import { catchHttpError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
+import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
+import ListItem from '@/shared/ui/ListItem'
+import Modal from '@/shared/ui/Modal'
+
+import UserInfo from './UserInfo'
 
 export default function ProfilePage(): React.JSX.Element {
   const navigate = useNavigate()

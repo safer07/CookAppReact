@@ -1,4 +1,5 @@
 import type { Recipe, RecipeFilters } from '@/entities/recipe'
+
 import type { HttpStatus } from '@/shared/model'
 
 export type RecipesStore = {

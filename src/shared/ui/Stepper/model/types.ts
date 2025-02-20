@@ -18,7 +18,4 @@ export type StepperBigProps = {
   createStep: () => void
 } & BaseProps
 
-export type StepperProps =
-  | StepperSimpleProps
-  | StepperMediumProps
-  | StepperBigProps
+export type StepperProps = StepperSimpleProps | StepperMediumProps | StepperBigProps

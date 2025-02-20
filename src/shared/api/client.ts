@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { refreshResponseSchema } from './model'
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
+import { refreshResponseSchema } from './model'
 
 const api = axios.create({
   baseURL: BACKEND_URL,

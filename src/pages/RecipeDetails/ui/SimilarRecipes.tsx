@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import RecipesList from '@/widgets/RecipesList'
-import { recipesService, type Recipe } from '@/entities/recipe'
+
+import { type Recipe, recipesService } from '@/entities/recipe'
+
 import { catchHttpError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/ErrorComponent'

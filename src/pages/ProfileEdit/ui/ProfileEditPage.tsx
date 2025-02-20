@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
-import { updateProfileDTOSchema, useUser, type UpdateProfileDTO } from '@/entities/user'
+
+import { type UpdateProfileDTO, updateProfileDTOSchema, useUser } from '@/entities/user'
+
+import { catchHttpError, formatZodError } from '@/shared/lib'
+import type { CustomError } from '@/shared/model'
+import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
+import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError, formatZodError } from '@/shared/lib'
-import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
-import type { CustomError } from '@/shared/model'
 
 // TODO: в сущность user (config? model?)
 const genderSelectOptions = [

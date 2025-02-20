@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom'
 
-import useMount from './hooks/useMount'
 import Button from '../Button'
+import useMount from './hooks/useMount'
 
 type ModalProps = {
   title: string

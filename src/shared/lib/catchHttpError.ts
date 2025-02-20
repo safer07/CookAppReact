@@ -1,8 +1,8 @@
 import { isAxiosError } from 'axios'
 import { ZodError } from 'zod'
 
-import { HttpErrorResponse, ZodErrorResponse } from '../model/httpError'
 import { CustomError } from '../model/customError'
+import { HttpErrorResponse, ZodErrorResponse } from '../model/httpError'
 
 export function catchHttpError(
   error: unknown,

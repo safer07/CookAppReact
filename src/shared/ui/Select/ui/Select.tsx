@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 
 import Chip from '../../Chip'
-import RightIcons from './RightIcons'
 import Options from './Options'
+import RightIcons from './RightIcons'
 
 // {
 //   value,
