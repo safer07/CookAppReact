@@ -9,7 +9,7 @@ import { ACCESS_TOKEN_KEY } from '@/shared/config'
 
 // TODO: не импортировать useFavorites (features) в entity
 
-const useUser = create<UserStore>()(
+export const useUser = create<UserStore>()(
   persist(
     devtools(
       immer((set) => ({
@@ -106,5 +106,3 @@ const useUser = create<UserStore>()(
     { name: 'userStore', version: 1 },
   ),
 )
-
-export default useUser

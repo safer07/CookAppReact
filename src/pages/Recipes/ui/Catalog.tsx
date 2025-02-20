@@ -10,7 +10,7 @@ import useDebounce from '@/shared/hooks/debounce'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError } from '@/shared/utils'
+import { catchHttpError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 
 // TODO: убрать импорт из app

@@ -7,7 +7,7 @@ import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
-import { catchHttpError } from '@/shared/utils'
+import { catchHttpError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 
 export default function ProfilePage(): React.JSX.Element {

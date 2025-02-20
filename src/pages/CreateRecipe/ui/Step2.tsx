@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import { useCreateRecipe } from '../store/createRecipeStore'
-import { recipeDifficulties } from '@/entities/recipe'
+import { RECIPE_DIFFICULTIES } from '@/entities/recipe'
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 
@@ -61,7 +61,7 @@ export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element 
       <div>
         <h3 className="headline-small">Сложность</h3>
         <ul className="layout-fullwidth mt-2 grid gap-1">
-          {recipeDifficulties.map((item) => (
+          {RECIPE_DIFFICULTIES.map((item) => (
             <ListItem
               key={item.value}
               text={item.difficultyText}

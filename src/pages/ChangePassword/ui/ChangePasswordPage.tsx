@@ -11,7 +11,7 @@ import {
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError, formatZodError } from '@/shared/utils'
+import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 

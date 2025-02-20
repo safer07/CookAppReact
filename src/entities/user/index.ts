@@ -1,4 +1,4 @@
-export { default as useUser } from './store/userStore'
+export { useUser } from './store/userStore'
 export { userService } from './api/userService'
 export { emailSchema } from './model/user'
 export {

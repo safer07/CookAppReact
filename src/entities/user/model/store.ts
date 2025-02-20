@@ -5,7 +5,7 @@ import { AuthUserDTO, UpdateProfileDTO } from './api'
 export type UserStore = {
   user: User | null
   status: HttpStatus
-  setUser: (value: User) => void
+  setUser: (value: User | null) => void
   setStatus: (value: HttpStatus) => void
   registration: (authUserDTO: AuthUserDTO) => Promise<void>
   login: (authUserDTO: AuthUserDTO) => Promise<void>

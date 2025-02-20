@@ -1,4 +1,4 @@
-import { TagSurface } from '@/shared/ui/Tag'
+import type { TagSurface } from '@/shared/ui/Tag'
 
 type RecipeDifficultyItem = {
   value: number
@@ -7,14 +7,7 @@ type RecipeDifficultyItem = {
   tagDifficultySurface: TagSurface
 }
 
-export const errorRecipeDifficulty: RecipeDifficultyItem = {
-  value: 0,
-  difficultyText: '???',
-  description: '???',
-  tagDifficultySurface: 'surface-red',
-}
-
-export const recipeDifficulties: RecipeDifficultyItem[] = [
+export const RECIPE_DIFFICULTIES: RecipeDifficultyItem[] = [
   {
     value: 1,
     difficultyText: 'Легко',

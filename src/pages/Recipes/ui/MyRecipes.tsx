@@ -4,7 +4,7 @@ import { useUser } from '@/entities/user'
 import { RecipeCard, recipesService, type Recipe } from '@/entities/recipe'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError } from '@/shared/utils'
+import { catchHttpError } from '@/shared/lib'
 import { CREATE_RECIPE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
 import type { CustomError, HttpStatus } from '@/shared/model'
 

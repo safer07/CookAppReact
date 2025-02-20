@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { navigateBack } from '@/shared/utils'
+import { navigateBack } from '@/shared/lib'
 
 type Icon = {
   icon: string

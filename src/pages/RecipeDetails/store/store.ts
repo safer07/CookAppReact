@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
 import { recipesService, type FullRecipe } from '@/entities/recipe'
-import { catchHttpError } from '@/shared/utils'
+import { catchHttpError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
 
 type FullRecipeStore = {

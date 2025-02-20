@@ -4,7 +4,7 @@ import RecipesList from '@/widgets/RecipesList'
 import { useFavorites } from '@/features/favorites'
 import { recipesService, type Recipe } from '@/entities/recipe'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
-import { catchHttpError } from '@/shared/utils'
+import { catchHttpError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
 
 export default function Favorites(): React.JSX.Element {
