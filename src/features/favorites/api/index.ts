@@ -2,9 +2,9 @@ import { addRecipeResponseSchema, removeRecipeResponseSchema } from '../model/ap
 import api from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
 
-const favoritesService = {
+export const favoritesService = {
   addRecipe: async (id: string) => {
-    const { data } = await api.get<unknown>(`${API_PATHS.favorites.addRecipe}/${id}`)
+    const { data } = await api.post<unknown>(`${API_PATHS.favorites.addRecipe}/${id}`)
     const validatedData = addRecipeResponseSchema.parse(data)
     return validatedData
   },
@@ -15,5 +15,3 @@ const favoritesService = {
     return validatedData
   },
 }
-
-export default favoritesService

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import favoritesService from '../api'
+import { favoritesService } from '../api'
 import type { FavoritesStore } from '../model'
 import { useUser } from '@/entities/user'
 
