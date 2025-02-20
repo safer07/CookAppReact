@@ -21,7 +21,9 @@ export const useFavorites = create<FavoritesStore>()(
               set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch {}
+            } catch {
+              // TODO: toast уведомление?
+            }
           } else
             set(state => {
               state.favorites.recipes.push(id)
@@ -34,7 +36,9 @@ export const useFavorites = create<FavoritesStore>()(
               set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch {}
+            } catch {
+              // TODO: toast уведомление?
+            }
           } else {
             set(state => {
               state.favorites.recipes = state.favorites.recipes.filter(item => item !== id)

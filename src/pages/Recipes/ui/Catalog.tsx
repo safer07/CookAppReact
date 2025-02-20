@@ -27,8 +27,8 @@ export default function Catalog(): React.JSX.Element {
   const filtersCount = Object.values(filters).filter(value => value.length !== 0).length
   const [recipeCategories, setRecipeCategories] = useState<RecipeCategory[]>([])
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
-  const debouncedSearchQuery: string =
-    tempSearchQuery === '' ? useDebounce(tempSearchQuery, 0) : useDebounce(tempSearchQuery, 1000)
+  const debounceDelay = tempSearchQuery === '' ? 0 : 1000
+  const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
 
   function findCategoryById(id: string) {
     return recipeCategories.find(category => category.id === id)

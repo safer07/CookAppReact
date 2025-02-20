@@ -5,7 +5,7 @@ import { useUser } from '@/entities/user'
 
 import { catchHttpError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
-import { EDIT_PROFILE_ROUTE, LOGIN_ROUTE } from '@/shared/routes'
+import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
@@ -17,8 +17,18 @@ export default function ProfilePage(): React.JSX.Element {
   const { user, status, logout, fetchUser } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
+  const isAuth: boolean = user !== null
 
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
+
+  async function onLogout() {
+    setError(null)
+    try {
+      await logout()
+    } catch (error) {
+      catchHttpError(error, setError)
+    }
+  }
 
   useEffect(() => {
     async function onFetchUser() {
@@ -30,19 +40,8 @@ export default function ProfilePage(): React.JSX.Element {
       }
     }
 
-    // TODO: зачем? или просто каждый раз делать fetch, или без условия (проверить на ошибки, когда не залогинен)
-    if (!user) navigate(LOGIN_ROUTE, { replace: true })
-    else onFetchUser()
-  }, [navigate, fetchUser])
-
-  async function onLogout() {
-    setError(null)
-    try {
-      await logout()
-    } catch (error) {
-      catchHttpError(error, setError)
-    }
-  }
+    if (isAuth) onFetchUser()
+  }, [navigate, fetchUser, isAuth])
 
   return (
     <>

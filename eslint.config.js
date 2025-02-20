@@ -28,7 +28,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-empty': ['error', { allowEmptyCatch: true }],
+      // 'no-empty': ['error', { allowEmptyCatch: true }],
     },
   },
 )

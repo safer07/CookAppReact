@@ -79,7 +79,7 @@ export default function Input({
           type={type}
           value={value}
           placeholder={placeholder}
-          onChange={(event) => onChange(event.target.value)}
+          onChange={event => onChange(event.target.value)}
           maxLength={maxLength}
           min={min}
           max={max}

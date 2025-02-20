@@ -20,7 +20,7 @@ export default function Step4(): React.JSX.Element {
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])
   const [tempStepDescription, setTempStepDescription] = useState<string>('')
-  const debouncedStepDescription: string = useDebounce(tempStepDescription, 300)
+  const debouncedStepDescription: string = useDebounce(tempStepDescription)
 
   const currentStepIngredients: Ingredient[] = steps[currentStepIndex].ingredients
 
@@ -65,9 +65,9 @@ export default function Step4(): React.JSX.Element {
       !currentStepIngredients.length &&
       !steps[currentStepIndex].img &&
       !steps[currentStepIndex].description
-    )
+    ) {
       return true
-    else return false
+    } else return false
   }
 
   function onClickDeleteStep(): void {
