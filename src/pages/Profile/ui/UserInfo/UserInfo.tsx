@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom'
+
 import { useUser } from '@/entities/user'
 
 import { LOGIN_ROUTE } from '@/shared/routes'
@@ -6,6 +8,7 @@ import Button from '@/shared/ui/Button'
 import UserInfoSkeleton from './UserInfoSkeleton'
 
 export default function UserInfo(): React.JSX.Element {
+  const location = useLocation()
   const { user } = useUser()
   const name = user?.name || ''
   const lastName = user?.lastName || ''
@@ -23,7 +26,9 @@ export default function UserInfo(): React.JSX.Element {
       {user && (
         <img className="size-10 rounded-full" src="/images/avatar.jpg" alt="Аватар пользователя" />
       )}
-      {!user && <Button text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} />}
+      {!user && (
+        <Button text="Войти" icon="login" fullWidth link={LOGIN_ROUTE} state={{ from: location }} />
+      )}
       {user && (
         <div className="space-y-0.5">
           <p className="headline-small">{userName}</p>

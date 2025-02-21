@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
@@ -7,7 +6,7 @@ import { type UpdateProfileDTO, updateProfileDTOSchema, useUser } from '@/entiti
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
-import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
+import { CHANGE_PASSWORD_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
@@ -20,7 +19,6 @@ const genderSelectOptions = [
 ]
 
 export default function ProfileEditPage(): React.JSX.Element {
-  const navigate = useNavigate()
   const { user, status, setStatus, updateProfile } = useUser()
   const [error, setError] = useState<CustomError>(null)
   const [formData, setFormData] = useState<UpdateProfileDTO>({
@@ -30,10 +28,6 @@ export default function ProfileEditPage(): React.JSX.Element {
     gender: user?.gender,
     birthDate: user?.birthDate?.split('T')[0] ?? '',
   })
-
-  useEffect(() => {
-    if (!user) navigate(PROFILE_ROUTE, { replace: true })
-  }, [user, navigate])
 
   useEffect(() => {
     setStatus('init')

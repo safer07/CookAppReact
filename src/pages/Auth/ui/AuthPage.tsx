@@ -12,7 +12,7 @@ import {
 } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
-import type { CustomError } from '@/shared/model'
+import type { CustomError, LocationState } from '@/shared/model'
 import { FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
@@ -38,12 +38,11 @@ export default function LoginPage(): React.JSX.Element {
     formData: LoginFormData | RegistrationFormData,
   ): formData is RegistrationFormData => 'passwordRepeat' in formData)(formData)
   const isLogin = !isRegistration
+  const { from } = (location.state as LocationState) ?? { from: { pathname: MAIN_ROUTE } }
 
   useEffect(() => {
-    // TODO: Возвращать откуда пришёл, но navigate(-1) запирает при прямом логине, а другие решения не работали. нужно учитывать ссылки снизу и забыли пароль
-    // if (user) navigate(-1)
-    if (user) navigate(MAIN_ROUTE, { replace: true })
-  }, [user, navigate])
+    if (user) navigate(from, { replace: true })
+  }, [user, from, navigate])
 
   useEffect(() => {
     setFormData(emptyFormData)
@@ -124,6 +123,7 @@ export default function LoginPage(): React.JSX.Element {
         <Link
           to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}
           className="text-primary hover:text-primary-active font-bold"
+          state={{ from }}
         >
           {isLogin ? 'Регистрация' : 'Вход'}
         </Link>

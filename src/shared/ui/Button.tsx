@@ -10,6 +10,7 @@ type BaseProps = {
 
 type LinkProps = {
   link: string
+  state?: object
 } & BaseProps
 
 type ButtonProps = {
@@ -22,9 +23,10 @@ type ButtonProps = {
 
 export default function Button(props: ButtonProps | LinkProps) {
   const { text, icon, className = '', variant, fullWidth } = props
-  let link, onClick, disabled, type, loading
+  let link, onClick, disabled, type, loading, state
   if (props?.link !== undefined) {
     link = props.link
+    state = props.state
   } else {
     onClick = props.onClick
     disabled = props.disabled
@@ -51,6 +53,7 @@ export default function Button(props: ButtonProps | LinkProps) {
         <Link
           to={link}
           className={`button ${className} ${variantClass} ${fullWidth ? 'w-full' : ''}`}
+          state={state}
         >
           {icon && (
             <svg>

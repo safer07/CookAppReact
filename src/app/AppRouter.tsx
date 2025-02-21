@@ -16,6 +16,8 @@ import {
 } from '@/shared/routes'
 import { FullScreenLayout, MainLayout } from '@/shared/ui/Layout'
 
+import { PrivateRoutes } from './PrivateRoutes'
+
 const RecipeDetails = lazy(() => import('@/pages/RecipeDetails'))
 const CookingMode = lazy(() => import('@/pages/RecipeDetails/ui/CookingMode'))
 const CreateRecipe = lazy(() => import('@/pages/CreateRecipe'))
@@ -36,11 +38,13 @@ export default function AppRouter() {
         <Route path="*" element={<Page404 />} />
       </Route>
       <Route element={<FullScreenLayout />}>
+        <Route element={<PrivateRoutes />}>
+          <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
+        </Route>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
         <Route path={CREATE_RECIPE_ROUTE} element={<CreateRecipe />} />
         <Route path={LOGIN_ROUTE} element={<Auth />} />
         <Route path={REGISTRATION_ROUTE} element={<Auth />} />
-        <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgotPassword />} />
         <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
         <Route path={CHANGE_PASSWORD_ROUTE} element={<ChangePassword />} />
