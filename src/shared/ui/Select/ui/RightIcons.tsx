@@ -2,17 +2,10 @@ import type { SelectRightIconsProps } from '../model/types'
 
 export default function RightIcons({
   value,
-  onChange,
-  clearButton = true,
+  clearButton,
   multiple,
-  setIsOpen,
+  onClickClear,
 }: SelectRightIconsProps): React.JSX.Element {
-  function onClickClear(): void {
-    if (multiple) onChange([])
-    else onChange('')
-    setIsOpen(false)
-  }
-
   return (
     <div className="input-right-icons">
       <>

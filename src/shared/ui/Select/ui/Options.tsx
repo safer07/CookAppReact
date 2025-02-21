@@ -1,16 +1,9 @@
-import ListItem from '../../ListItem'
-import type { ListItemRightElem, ListItemStatus } from '../../ListItem/types'
+import ListItem, { type ListItemRightElem, type ListItemStatus } from '../../ListItem'
 import type { SelectOptionProps } from '../model/types'
 
-export default function Options({
-  value,
-  onChange,
-  options,
-  multiple,
-  optionSize = 'small',
-  setIsOpen,
-  containerRef,
-}: SelectOptionProps): React.JSX.Element {
+export default function Options(props: SelectOptionProps): React.JSX.Element {
+  const { value, onChange, options, multiple, optionSize, setIsOpen, containerRef } = props
+
   function isSelectedOption(optionValue: string): boolean {
     if (multiple) return value.includes(optionValue)
     else return optionValue === value

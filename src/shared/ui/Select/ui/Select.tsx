@@ -1,46 +1,51 @@
 import { useRef, useState } from 'react'
 
 import Chip from '../../Chip'
-import type { SelectProps } from '../model/types'
+import type { SelectMultipleProps, SelectSingleProps } from '../model/types'
 import Options from './Options'
 import RightIcons from './RightIcons'
 
-// {
+// export default function Select({
 //   value,
 //   options,
 //   onChange,
 //   placeholder,
-//   disabled,
 //   label,
 //   clearButton = true,
 //   multiple = false,
 //   optionSize = "small",
-// }
-
-export default function Select(props: SelectProps): React.JSX.Element {
+// }: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
+export default function Select(props: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Все props
-  //   const {
-  //   value,
-  //   options,
-  //   onChange,
-  //   placeholder,
-  //   disabled,
-  //   label,
-  //   clearButton = true,
-  //   multiple = false,
-  //   optionSize = "small",
-  // } = props
+  const {
+    value,
+    options,
+    onChange,
+    placeholder,
+    label,
+    multiple,
+    clearButton = true,
+    optionSize = 'small',
+  } = props
 
-  const { value, options, onChange, placeholder, label, multiple } = props
-  let disabled: boolean = false
+  // const isMultiple = ((
+  //   props: SelectSingleProps | SelectMultipleProps,
+  // ): props is SelectMultipleProps => props.multiple === true)(props)
 
-  // const {multiple = false} = props;
+  // const isMultiple = ((
+  //   value: string | string[],
+  // ): value is string[] => Array.isArray(value))(value)
 
   // if (multiple) {
-  //   value;
+  //   value
+  // }
+
+  // if (isMultiple) {
+  //   value
+  //   props.value
+  //   props.onChange
   // }
 
   let valueLabel: string | null = null
@@ -48,8 +53,8 @@ export default function Select(props: SelectProps): React.JSX.Element {
     valueLabel = options.find(option => option.value === value)?.label || null
   }
 
+  let disabled: boolean = false
   const hasAvailableOptions = options.some((option): boolean => option.status !== 'disabled')
-
   if (!hasAvailableOptions) disabled = true
 
   function onClick(): void {
@@ -62,6 +67,12 @@ export default function Select(props: SelectProps): React.JSX.Element {
       const filteredValue: string[] = value.filter(item => item !== chipValue)
       onChange(filteredValue)
     }
+  }
+
+  function onClickClear(): void {
+    if (multiple) onChange([])
+    else onChange('')
+    setIsOpen(false)
   }
 
   return (
@@ -94,19 +105,19 @@ export default function Select(props: SelectProps): React.JSX.Element {
         )}
 
         <RightIcons
-          // value={props.value}
-          // onChange={props.onChange}
-          // clearButton={props.clearButton}
-          // multiple={props.multiple}
+          value={value}
+          clearButton={clearButton}
+          multiple={multiple}
+          onClickClear={onClickClear}
           setIsOpen={setIsOpen}
-          {...props}
         />
 
         <Options
-          // value={props.value}
-          // options={props.options}
-          // multiple={props.multiple}
-          // optionSize={props.optionSize}
+          // value={value}
+          // onChange={onChange}
+          // options={options}
+          // multiple={multiple}
+          optionSize={optionSize}
           setIsOpen={setIsOpen}
           containerRef={containerRef}
           {...props}

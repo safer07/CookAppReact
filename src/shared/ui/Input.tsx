@@ -18,8 +18,6 @@ type InputTextProps = {
   type?: 'text' | 'search' | 'email' | 'password'
   showCount?: boolean
   maxLength?: number
-  min?: never
-  max?: never
 }
 
 type InputDateProps = {
@@ -42,7 +40,6 @@ export default function Input({
   value,
   onChange,
   type = 'text',
-  placeholder,
   className = '',
   iconLeft,
   iconRight,
@@ -51,9 +48,7 @@ export default function Input({
   showCount,
   maxLength,
   clearButton,
-  name,
-  min,
-  max,
+  ...rest
 }: InputProps): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -78,13 +73,10 @@ export default function Input({
           className="textfield"
           type={type}
           value={value}
-          placeholder={placeholder}
           onChange={event => onChange(event.target.value)}
           maxLength={maxLength}
-          min={min}
-          max={max}
           autoComplete="off"
-          name={name}
+          {...rest}
         />
 
         {(clearButton || iconRight) && (
