@@ -25,9 +25,7 @@ export const userService = {
     return validatedData
   },
 
-  logout: async (): Promise<void> => {
-    return api.get(API_PATHS.user.logout)
-  },
+  logout: async (): Promise<void> => api.get(API_PATHS.user.logout),
 
   getProfile: async () => {
     const { data } = await api.get<unknown>(API_PATHS.user.getProfile)
@@ -36,10 +34,7 @@ export const userService = {
   },
 
   updateProfile: async (id: string, updateProfileDTO: UpdateProfileDTO) => {
-    const { data } = await api.patch<unknown>(
-      `${API_PATHS.user.updateProfile}/${id}`,
-      updateProfileDTO,
-    )
+    const { data } = await api.patch<unknown>(API_PATHS.user.updateProfile, updateProfileDTO)
     const validatedData = userSchema.parse(data)
     return validatedData
   },

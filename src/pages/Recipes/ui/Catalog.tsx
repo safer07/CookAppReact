@@ -30,7 +30,7 @@ export default function Catalog(): React.JSX.Element {
   const debounceDelay = tempSearchQuery === '' ? 0 : 1000
   const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
 
-  function findCategoryById(id: string) {
+  function findCategoryById(id: number) {
     return recipeCategories.find(category => category.id === id)
   }
 

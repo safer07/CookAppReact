@@ -3,7 +3,7 @@ import type { Ingredient, RecipeStep } from '@/entities/recipe'
 export type CreateRecipeStore = {
   recipeData: {
     name: string
-    category: string
+    categoryId: number
     img: string
     time: number | null
     difficulty: number
@@ -14,7 +14,7 @@ export type CreateRecipeStore = {
   }
 
   setName: (value: string) => void
-  setCategory: (value: string) => void
+  setCategoryId: (value: string) => void
   setImg: (value: string) => void
   setTime: (value: number) => void
   setDifficulty: (value: number) => void

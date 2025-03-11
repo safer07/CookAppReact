@@ -19,5 +19,9 @@ export const API_PATHS = {
     favorite: '/recipes/favorite',
     myRecipes: '/recipes/my-recipes',
   },
-  favorites: { addRecipe: '/favorites/recipes', removeRecipe: '/favorites/recipes' },
+  favorites: {
+    getFavorites: '/favorites',
+    addRecipe: '/favorites/recipes',
+    removeRecipe: '/favorites/recipes',
+  },
 }

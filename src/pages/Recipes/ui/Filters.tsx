@@ -13,7 +13,7 @@ type FilterProps = {
   setClose: () => void
   setTempSearchQuery: (value: string) => void
   recipeCategories: RecipeCategory[]
-  findCategoryById: (id: string) => RecipeCategory | undefined
+  findCategoryById: (id: number) => RecipeCategory | undefined
 }
 
 export default function Filters({
@@ -31,7 +31,7 @@ export default function Filters({
     setTempSearchQuery('')
   }
 
-  function toggleCategory(categoryId: string) {
+  function toggleCategory(categoryId: number) {
     if (categories.includes(categoryId)) setCategories(categories.filter(id => id !== categoryId))
     else setCategories([...categories, categoryId])
   }

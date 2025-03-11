@@ -13,4 +13,5 @@ export type {
   LoginFormData,
   RegistrationFormData,
   UpdateProfileDTO,
+  UpdateProfileFormData,
 } from './model/api'

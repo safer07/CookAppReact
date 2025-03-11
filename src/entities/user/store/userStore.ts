@@ -14,32 +14,32 @@ import type { UserStore } from '../model/store'
 export const useUser = create<UserStore>()(
   persist(
     devtools(
-      immer((set) => ({
+      immer(set => ({
         user: null,
         status: 'init',
-        setUser: (value) => set({ user: value }),
-        setStatus: (value) => set({ status: value }),
-        registration: async (authUserDTO) => {
+        setUser: value => set({ user: value }),
+        setStatus: value => set({ status: value }),
+        registration: async authUserDTO => {
           try {
             const payload = { ...authUserDTO, favorites: useFavorites.getState().favorites }
             set({ status: 'loading' })
             const response = await userService.registration(payload)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
-            useFavorites.getState().setFavorites(response.user.favorites)
+            useFavorites.getState().getFavorites()
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
             throw error
           }
         },
-        login: async (authUserDTO) => {
+        login: async authUserDTO => {
           try {
             set({ status: 'loading' })
             const response = await userService.login(authUserDTO)
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
-            useFavorites.getState().setFavorites(response.user.favorites)
+            useFavorites.getState().getFavorites()
             set({ status: 'success' })
           } catch (error) {
             set({ status: 'error' })
@@ -93,7 +93,7 @@ export const useUser = create<UserStore>()(
             throw error
           }
         },
-        changePassword: async (password) => {
+        changePassword: async password => {
           try {
             set({ status: 'loading' })
             await userService.changePassword(password)

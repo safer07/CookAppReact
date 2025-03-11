@@ -16,10 +16,10 @@ export const recipeStepSchema = z.object({
 export type RecipeStep = z.infer<typeof recipeStepSchema>
 
 export const recipeSchema = z.object({
-  _id: z.string(),
+  id: z.string(),
   name: z.string(),
-  category: z.string(),
-  author: z.string(),
+  categoryId: z.number(),
+  authorId: z.string().uuid(),
   img: z.string(),
   // TODO: когда фотки будут загружены на сервер
   // img: z.string().url(),
@@ -37,13 +37,13 @@ export const fullRecipeSchema = recipeSchema.extend({
 export type FullRecipe = z.infer<typeof fullRecipeSchema>
 
 export type RecipeFilters = {
-  categories: string[]
+  categories: number[]
   searchQuery?: string
 }
 
 export const createRecipeDTOSchema = z.object({
   name: z.string({ required_error: 'Введите название рецепта' }),
-  category: z.string({ required_error: 'Выберите категорию рецепта' }),
+  categoryId: z.number({ required_error: 'Выберите категорию рецепта' }),
   // TODO: когда категории будут в БД
   // category: z
   //   .string()

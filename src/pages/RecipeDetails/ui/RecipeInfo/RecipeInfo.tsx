@@ -28,19 +28,19 @@ type RecipeInfoProps = {
 export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
-  const isAuthor = user?._id === recipe.author
+  const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe?.difficulty,
   )
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
 
-  const recipeCategory = categories.find((category) => category.id === recipe?.category)
+  const recipeCategory = categories.find(category => category.id === recipe?.categoryId)
 
   async function onDelete() {
     try {
       setError(null)
-      await recipesService.delete(recipe._id)
+      await recipesService.delete(recipe.id)
       navigate(RECIPES_ROUTE, { replace: true })
     } catch (error) {
       catchHttpError(error, setError)
@@ -64,7 +64,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
             <ButtonIcon icon="delete" onClick={() => setModalDeleteIsOpen(true)} size="small" />
           </div>
         ) : (
-          <LikeButton itemId={recipe._id} className="absolute top-2 right-2" />
+          <LikeButton itemId={recipe.id} className="absolute top-2 right-2" />
         )}
       </div>
 
@@ -79,7 +79,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">
-              <use href="/images/icons.svg#clock"></use>
+              <use href="/images/icons.svg#clock" />
             </svg>
             <div className="label-small text-txt-secondary">{recipe.time} минут</div>
           </div>

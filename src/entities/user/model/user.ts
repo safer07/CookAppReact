@@ -6,23 +6,12 @@ export const passwordSchema = z
   .min(5, 'Пароль должен состоять минимум из 5 символов')
 
 export const userSchema = z.object({
-  _id: z.string(),
+  id: z.string(),
   email: emailSchema,
-  name: z.string().optional(),
-  lastName: z.string().optional(),
-  avatarUrl: z.string().url().optional(),
-  gender: z.string().optional(),
-  // В БД ISO '2012-01-26T13:51:50.417-07:00', а в форме '2012-01-26' (z.string().datetime() vs z.string().date())
-  birthDate: z.string().datetime().nullish(),
-  favorites: z.object({ recipes: z.array(z.string()) }),
+  name: z.string().nullable(),
+  lastName: z.string().nullable(),
+  avatarUrl: z.string().url().nullable(),
+  gender: z.string().nullable(),
+  birthDate: z.string().date().nullable(),
 })
-
-export type User = {
-  _id: string
-  email: string
-  name?: string
-  lastName?: string
-  avatarUrl?: string
-  gender?: string
-  birthDate?: string | null
-}
+export type User = z.infer<typeof userSchema>

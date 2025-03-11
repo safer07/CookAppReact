@@ -21,7 +21,7 @@ export default function CookingMode(): React.JSX.Element {
   const step = recipe?.steps[stepIndex]
 
   useEffect(() => {
-    if (!id || recipe?._id === id) return
+    if (!id || recipe?.id === id) return
     fetchFullRecipe(id)
   }, [id, recipe, fetchFullRecipe])
 

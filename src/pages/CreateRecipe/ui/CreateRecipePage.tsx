@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
@@ -35,12 +35,12 @@ export default function CreateRecipePage(): React.JSX.Element {
 
   function onClickBack(): void {
     if (step === 1) navigateBack(navigate)
-    else setStep((prev) => prev - 1)
+    else setStep(prev => prev - 1)
   }
 
   function onClickNext(): void {
     if (step === stepsCount) onSubmit()
-    else setStep((prev) => prev + 1)
+    else setStep(prev => prev + 1)
   }
 
   function onDelete(): void {
@@ -59,7 +59,7 @@ export default function CreateRecipePage(): React.JSX.Element {
         const response = await recipesService.create(result.data)
         setStatus('success')
         resetCreateRecipe()
-        setNewRecipeId(response.recipe._id)
+        setNewRecipeId(response.recipe.id)
         setModalFinishIsOpen(true)
       } catch (error) {
         setStatus('error')
@@ -71,6 +71,10 @@ export default function CreateRecipePage(): React.JSX.Element {
       })
     }
   }
+
+  useEffect(() => {
+    setError(null)
+  }, [step])
 
   return (
     <div className="flex h-svh flex-col">

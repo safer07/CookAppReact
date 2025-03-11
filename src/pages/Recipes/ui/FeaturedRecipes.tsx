@@ -28,7 +28,7 @@ export default function FeaturedRecipes({
         <div className="mt-3" key={category.id}>
           <RecipesList
             title={category.fullName}
-            recipes={recipes.filter(recipe => recipe.category === category.id)}
+            recipes={recipes.filter(recipe => recipe.categoryId === category.id)}
             status={status}
             button={{
               name: 'Смотреть все',

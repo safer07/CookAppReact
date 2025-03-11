@@ -31,22 +31,28 @@ export const registrationFormDataSchema = loginFormDataSchema
   .extend({
     passwordRepeat: passwordSchema,
   })
-  .refine((data) => data.password === data.passwordRepeat, {
+  .refine(data => data.password === data.passwordRepeat, {
     message: 'Пароли не совпадают',
     path: ['passwordRepeat'],
   })
 export type RegistrationFormData = z.infer<typeof registrationFormDataSchema>
 
-export const updateProfileDTOSchema = z
-  .object({
-    name: z.string(),
-    lastName: z.string(),
-    email: emailSchema,
-    // avatarUrl: z.string().url(),
-    gender: z.string(),
-    birthDate: z.union([z.string().date(), z.literal('')]),
+const updateProfileFormDataSchema = z.object({
+  name: z.string(),
+  lastName: z.string(),
+  email: emailSchema,
+  // avatarUrl: z.string().url(),
+  gender: z.string(),
+  birthDate: z.union([z.string().date(), z.literal('')]),
+})
+export type UpdateProfileFormData = z.infer<typeof updateProfileFormDataSchema>
+
+export const updateProfileDTOSchema = updateProfileFormDataSchema
+  .omit({ gender: true, birthDate: true })
+  .extend({
+    gender: z.enum(['male', 'female']).or(z.null()),
+    birthDate: z.string().date().or(z.null()),
   })
-  .partial()
 export type UpdateProfileDTO = z.infer<typeof updateProfileDTOSchema>
 
 export const resetPasswordLinkSchema = z
@@ -58,7 +64,7 @@ export const changePasswordFormDataSchema = z
     password: passwordSchema,
     passwordRepeat: passwordSchema,
   })
-  .refine((data) => data.password === data.passwordRepeat, {
+  .refine(data => data.password === data.passwordRepeat, {
     message: 'Пароли не совпадают',
     path: ['passwordRepeat'],
   })

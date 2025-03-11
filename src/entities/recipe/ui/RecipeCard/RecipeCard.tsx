@@ -19,16 +19,16 @@ type RecipeCardProps = {
 
 export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Element {
   const { user } = useUser()
-  const isAuthor = user?._id === recipe.author
+  const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe?.difficulty,
   )
 
-  const recipeCategory = categories.find((category) => category.id === recipe.category)
+  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
 
   return (
     <Link
-      to={`/recipes/${recipe._id}`}
+      to={`/recipes/${recipe.id}`}
       className="surface-default group hover:shadow-glow hover:shadow-primary overflow-hidden rounded-2xl shadow-sm transition-all duration-300"
     >
       <div className="relative">
@@ -39,7 +39,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
             alt={recipe.name}
           />
         </div>
-        {!isAuthor && <LikeButton itemId={recipe._id} className="absolute top-1.5 right-1.5" />}
+        {!isAuthor && <LikeButton itemId={recipe.id} className="absolute top-1.5 right-1.5" />}
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300">
@@ -49,7 +49,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">
-              <use href="/images/icons.svg#clock"></use>
+              <use href="/images/icons.svg#clock" />
             </svg>
             <div className="label-small text-txt-secondary">{recipe.time} минут</div>
           </div>

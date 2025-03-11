@@ -14,6 +14,16 @@ export const useFavorites = create<FavoritesStore>()(
     devtools(
       immer(set => ({
         favorites: emptyFavorites,
+        getFavorites: async () => {
+          try {
+            const favorites = await favoritesService.getFavorites()
+            set(state => {
+              state.favorites = favorites
+            })
+          } catch {
+            // TODO: toast уведомление?
+          }
+        },
         addFavoriteRecipe: async id => {
           if (useUser.getState().user) {
             try {
@@ -45,7 +55,6 @@ export const useFavorites = create<FavoritesStore>()(
             })
           }
         },
-        setFavorites: favorites => set({ favorites }),
         resetFavorites: () => set({ favorites: emptyFavorites }),
       })),
     ),

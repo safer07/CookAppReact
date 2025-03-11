@@ -61,7 +61,7 @@ export default function MyRecipes() {
           <div className="mt-2 grid gap-2">
             {status === 'loading'
               ? skeletonRecipes
-              : recipes.map(recipe => <RecipeCard key={recipe._id} recipe={recipe} />)}
+              : recipes.map(recipe => <RecipeCard key={recipe.id} recipe={recipe} />)}
           </div>
         )}
       </div>

@@ -10,11 +10,11 @@ const initialFilters = { categories: [], searchQuery: '' }
 
 export const useRecipes = create<RecipesStore>()(
   devtools(
-    immer((set) => ({
+    immer(set => ({
       items: [],
       status: 'init',
       filters: initialFilters,
-      fetchRecipes: async (filters) => {
+      fetchRecipes: async filters => {
         try {
           set({ status: 'loading' })
           const recipes = await recipesService.getRecipes(filters)
@@ -25,12 +25,12 @@ export const useRecipes = create<RecipesStore>()(
           throw error
         }
       },
-      setCategories: (categories) =>
-        set((state) => {
+      setCategories: categories =>
+        set(state => {
           state.filters.categories = categories
         }),
-      setSearchQuery: (query) =>
-        set((state) => {
+      setSearchQuery: query =>
+        set(state => {
           state.filters.searchQuery = query
         }),
       resetFilters: () => set({ filters: initialFilters }),

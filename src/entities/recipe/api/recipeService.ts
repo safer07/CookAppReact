@@ -11,7 +11,7 @@ import { type CreateRecipeDTO, type RecipeFilters, fullRecipeSchema } from '../m
 export const recipesService = {
   getRecipes: async (filters?: RecipeFilters) => {
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
-      params: { categories: filters?.categories, query: filters?.searchQuery },
+      params: { category: filters?.categories, query: filters?.searchQuery },
     })
     const validatedData = recipesResponseSchema.parse(data)
     return validatedData

@@ -7,7 +7,7 @@ export const emptyStep = { description: '', ingredients: [], img: '' }
 
 const initialRecipeData = {
   name: '',
-  category: '',
+  categoryId: 0,
   img: '',
   time: null,
   difficulty: 0,
@@ -19,34 +19,34 @@ const initialRecipeData = {
 
 export const useCreateRecipe = create<CreateRecipeStore>()(
   persist(
-    devtools((set) => ({
+    devtools(set => ({
       recipeData: initialRecipeData,
 
-      setName: (value) =>
+      setName: value =>
         set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, name: value } })),
-      setCategory: (value) =>
+      setCategoryId: value =>
         set((state: CreateRecipeStore) => ({
-          recipeData: { ...state.recipeData, category: value },
+          recipeData: { ...state.recipeData, categoryId: +value },
         })),
-      setImg: (value) =>
+      setImg: value =>
         set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, img: value } })),
-      setTime: (value) =>
+      setTime: value =>
         set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, time: value } })),
-      setDifficulty: (value) =>
+      setDifficulty: value =>
         set((state: CreateRecipeStore) => ({
           recipeData: { ...state.recipeData, difficulty: value },
         })),
-      setDescription: (value) =>
+      setDescription: value =>
         set((state: CreateRecipeStore) => ({
           recipeData: { ...state.recipeData, description: value },
         })),
-      setTotalIngredients: (value) =>
+      setTotalIngredients: value =>
         set((state: CreateRecipeStore) => ({
           recipeData: { ...state.recipeData, totalIngredients: value },
         })),
-      setSteps: (value) =>
+      setSteps: value =>
         set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, steps: value } })),
-      setHidden: (value) =>
+      setHidden: value =>
         set((state: CreateRecipeStore) => ({ recipeData: { ...state.recipeData, hidden: value } })),
       resetCreateRecipe: () => set({ recipeData: initialRecipeData }),
     })),

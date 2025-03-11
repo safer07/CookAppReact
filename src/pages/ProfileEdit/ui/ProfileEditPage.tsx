@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { type UpdateProfileDTO, updateProfileDTOSchema, useUser } from '@/entities/user'
+import { type UpdateProfileFormData, updateProfileDTOSchema, useUser } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
@@ -21,11 +21,11 @@ const genderSelectOptions = [
 export default function ProfileEditPage(): React.JSX.Element {
   const { user, status, setStatus, updateProfile } = useUser()
   const [error, setError] = useState<CustomError>(null)
-  const [formData, setFormData] = useState<UpdateProfileDTO>({
-    name: user?.name,
-    lastName: user?.lastName,
-    email: user?.email,
-    gender: user?.gender,
+  const [formData, setFormData] = useState<UpdateProfileFormData>({
+    name: user?.name ?? '',
+    lastName: user?.lastName ?? '',
+    email: user?.email ?? '',
+    gender: user?.gender ?? '',
     birthDate: user?.birthDate?.split('T')[0] ?? '',
   })
 
@@ -34,13 +34,19 @@ export default function ProfileEditPage(): React.JSX.Element {
   }, [setStatus])
 
   async function onSubmit() {
-    if (!user?._id) return
+    if (!user?.id) return
     setError(null)
 
-    const result = updateProfileDTOSchema.safeParse(formData)
+    const DTO = {
+      ...formData,
+      gender: formData.gender === '' ? null : formData.gender,
+      birthDate: formData.birthDate === '' ? null : formData.birthDate,
+    }
+    const result = updateProfileDTOSchema.safeParse(DTO)
+
     if (result.success) {
       try {
-        await updateProfile(user._id, formData)
+        await updateProfile(user.id, result.data)
       } catch (error) {
         catchHttpError(error, setError)
       }

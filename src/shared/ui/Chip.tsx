@@ -19,7 +19,7 @@ export default function Chip({
       {text}
       {del && (
         <svg>
-          <use href="/images/icons.svg#cross"></use>
+          <use href="/images/icons.svg#cross" />
         </svg>
       )}
     </button>

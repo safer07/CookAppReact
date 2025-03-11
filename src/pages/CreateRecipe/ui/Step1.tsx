@@ -13,17 +13,18 @@ import { useCreateRecipe } from '../store/createRecipeStore'
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
 export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element {
-  const { recipeData, setName, setCategory, setDescription, setImg } = useCreateRecipe()
-  const { name, category, description, img } = recipeData
+  const { recipeData, setName, setCategoryId, setDescription, setImg } = useCreateRecipe()
+  const { name, categoryId, description, img } = recipeData
 
-  const categoriesOptions = categories.map(category => {
-    return { value: category.id, label: category.fullName }
-  })
+  const categoriesOptions = categories.map(category => ({
+    value: category.id.toString(),
+    label: category.fullName,
+  }))
 
   useEffect(() => {
-    if (name && category && description) setStepIsValid(true)
+    if (name && categoryId && description) setStepIsValid(true)
     else setStepIsValid(false)
-  }, [name, category, description, setStepIsValid])
+  }, [name, categoryId, description, setStepIsValid])
 
   return (
     <form className="layout-grid flex flex-col gap-3">
@@ -37,9 +38,9 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
       />
 
       <Select
-        value={category}
+        value={categoryId.toString()}
         options={categoriesOptions}
-        onChange={value => setCategory(value)}
+        onChange={value => setCategoryId(value)}
         placeholder="Выберите категорию"
         label="Категория"
       />

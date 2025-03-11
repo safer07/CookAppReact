@@ -7,7 +7,7 @@ export type RecipesStore = {
   status: HttpStatus
   filters: RecipeFilters
   fetchRecipes: (filters?: RecipeFilters) => Promise<void>
-  setCategories: (categories: string[]) => void
+  setCategories: (categories: number[]) => void
   setSearchQuery: (query: string) => void
   resetFilters: () => void
 }

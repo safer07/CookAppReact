@@ -1,7 +1,8 @@
-import { SpeedInsights } from '@vercel/speed-insights/react'
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+
+import { SpeedInsights } from '@vercel/speed-insights/react'
+import ReactDOM from 'react-dom/client'
 
 import '../assets/css/index.css'
 import AppRouter from './AppRouter'

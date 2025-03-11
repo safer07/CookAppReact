@@ -46,6 +46,7 @@ export default function LoginPage(): React.JSX.Element {
 
   useEffect(() => {
     setFormData(emptyFormData)
+    setError(null)
   }, [location, emptyFormData])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -91,6 +92,7 @@ export default function LoginPage(): React.JSX.Element {
               <Link
                 to={FORGOT_PASSWORD_ROUTE}
                 className="text-primary hover:text-primary-active self-end font-bold"
+                replace
               >
                 Забыли пароль?
               </Link>
@@ -124,6 +126,7 @@ export default function LoginPage(): React.JSX.Element {
           to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}
           className="text-primary hover:text-primary-active font-bold"
           state={{ from }}
+          replace
         >
           {isLogin ? 'Регистрация' : 'Вход'}
         </Link>
