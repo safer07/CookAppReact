@@ -90,7 +90,7 @@ export default function Input({
                     </svg>
                   </button>
                 )}
-                {clearButton && iconRight && <span className="input-icons-divider"></span>}
+                {clearButton && iconRight && <span className="input-icons-divider" />}
               </>
             )}
             {iconRight && (

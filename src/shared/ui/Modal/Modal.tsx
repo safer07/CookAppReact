@@ -53,7 +53,7 @@ export default function Modal({
 
   return ReactDOM.createPortal(
     <div className="modal" data-open={open} role="dialog">
-      <div className="modal-backdrop" onClick={onBackDropClick} tabIndex={0} role="button"></div>
+      <div className="modal-backdrop" onClick={onBackDropClick} tabIndex={0} role="button" />
       <div className={`modal-content ${textAlignClass}`}>
         <p className="headline-medium">{title}</p>
         {text && <p className="text-txt-secondary mt-2">{text}</p>}

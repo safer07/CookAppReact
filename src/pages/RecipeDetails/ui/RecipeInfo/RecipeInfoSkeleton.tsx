@@ -9,7 +9,7 @@ export default function RecipeInfoSkeleton() {
   return (
     <>
       <div className="layout-fullwidth relative">
-        <div className="skeleton aspect-9/7"></div>
+        <div className="skeleton aspect-9/7" />
         <ButtonIcon
           className="absolute top-2 left-2"
           icon="arrow_left"

@@ -2,14 +2,12 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { useFavorites } from '@/features/favorites'
+import { useFavorites } from '@/entities/favorites/@x/user'
 
 import { ACCESS_TOKEN_KEY } from '@/shared/config'
 
 import { userService } from '../api/userService'
 import type { UserStore } from '../model/store'
-
-// TODO: не импортировать useFavorites (features) в entity
 
 export const useUser = create<UserStore>()(
   persist(

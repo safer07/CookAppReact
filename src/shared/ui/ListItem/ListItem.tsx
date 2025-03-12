@@ -65,7 +65,7 @@ export default function ListItem({
           <use href={`/images/icons.svg#${rightElement.icon}`} />
         </svg>
       )}
-      {rightElement?.element === 'emptyIcon' && <div className="empty-icon"></div>}
+      {rightElement?.element === 'emptyIcon' && <div className="empty-icon" />}
       {rightElement?.element === 'delete' && (
         <button className="text-txt-tertiary" onClick={rightElement.onClick}>
           <svg className="size-3">

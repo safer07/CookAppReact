@@ -10,7 +10,7 @@ export default function StepperSimple({
         <li
           key={index}
           className={`h-0.5 grow rounded-full ${currentIndex === index ? 'bg-primary' : 'bg-base-borders'}`}
-        ></li>
+         />
       ))}
     </ol>
   )

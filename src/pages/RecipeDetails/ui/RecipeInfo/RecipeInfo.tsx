@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { LikeButton } from '@/features/favorites'
-
+import { LikeButton } from '@/entities/favorites'
 import {
   type FullRecipe,
   getRecipeDifficultyTextAndSurface,

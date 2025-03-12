@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 
 import RecipesList from '@/widgets/RecipesList'
 
-import { useFavorites } from '@/features/favorites'
-
+import { useFavorites } from '@/entities/favorites'
 import { type Recipe, recipesService } from '@/entities/recipe'
 
 import { catchHttpError } from '@/shared/lib'

@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer'
 import { useUser } from '@/entities/user'
 
 import { favoritesService } from '../api'
-import type { FavoritesStore } from '../model'
+import type { FavoritesStore } from '../model/store'
 
 const emptyFavorites = { recipes: [] }
 

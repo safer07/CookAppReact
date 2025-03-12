@@ -22,7 +22,7 @@ export default function RightIcons({
             </svg>
           </button>
         )}
-        {(multiple || clearButton) && <span className="input-icons-divider"></span>}
+        {(multiple || clearButton) && <span className="input-icons-divider" />}
       </>
       <svg className="icon-right">
         <use href="/images/icons.svg#chevron_down" />

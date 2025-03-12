@@ -1,7 +1,7 @@
-export type UserFavorites = { recipes: string[] }
+type Favorites = { recipes: string[] }
 
 export type FavoritesStore = {
-  favorites: UserFavorites
+  favorites: Favorites
   getFavorites: () => Promise<void>
   addFavoriteRecipe: (id: string) => Promise<void>
   removeFavoriteRecipe: (id: string) => Promise<void>
