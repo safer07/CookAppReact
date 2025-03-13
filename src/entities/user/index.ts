@@ -1,4 +1,3 @@
-export { useUser } from './store/userStore'
 export { userService } from './api/userService'
 export { emailSchema } from './model/user'
 export {
@@ -15,3 +14,4 @@ export type {
   UpdateProfileDTO,
   UpdateProfileFormData,
 } from './model/api'
+export { useUser } from './store/userStore'

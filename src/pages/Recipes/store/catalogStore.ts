@@ -4,11 +4,11 @@ import { immer } from 'zustand/middleware/immer'
 
 import { recipesService } from '@/entities/recipe'
 
-import { RecipesStore } from '../model/store'
+import type { CatalogStore } from '../model/store'
 
 const initialFilters = { categories: [], searchQuery: '' }
 
-export const useRecipes = create<RecipesStore>()(
+export const useCatalog = create<CatalogStore>()(
   devtools(
     immer(set => ({
       items: [],
@@ -25,7 +25,7 @@ export const useRecipes = create<RecipesStore>()(
           throw error
         }
       },
-      setCategories: categories =>
+      setFilteredCategories: categories =>
         set(state => {
           state.filters.categories = categories
         }),

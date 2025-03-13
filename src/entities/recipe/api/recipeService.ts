@@ -4,6 +4,7 @@ import { API_PATHS } from '@/shared/config'
 import {
   createRecipeResponseSchema,
   deleteRecipeResponseSchema,
+  getCategoriesResponseSchema,
   recipesResponseSchema,
 } from '../model/api'
 import { type CreateRecipeDTO, type RecipeFilters, fullRecipeSchema } from '../model/recipe'
@@ -51,6 +52,12 @@ export const recipesService = {
   delete: async (id: string) => {
     const { data } = await api.delete<unknown>(`${API_PATHS.recipes.delete}/${id}`)
     const validatedData = deleteRecipeResponseSchema.parse(data)
+    return validatedData
+  },
+
+  getCategories: async () => {
+    const { data } = await api.get<unknown>(API_PATHS.recipes.getCategories)
+    const validatedData = getCategoriesResponseSchema.parse(data)
     return validatedData
   },
 }

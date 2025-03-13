@@ -2,28 +2,25 @@ import ReactDOM from 'react-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import type { RecipeCategory } from '@/entities/recipeCategory/const/categories'
+import { findCategoryById, useCategories } from '@/entities/recipe'
 
 import Chip from '@/shared/ui/Chip'
 
-import { useRecipes } from '../store/recipesStore'
+import { useCatalog } from '../store/catalogStore'
 
 type FilterProps = {
   open: boolean
   setClose: () => void
   setTempSearchQuery: (value: string) => void
-  recipeCategories: RecipeCategory[]
-  findCategoryById: (id: number) => RecipeCategory | undefined
 }
 
 export default function Filters({
   open,
   setClose,
   setTempSearchQuery,
-  recipeCategories,
-  findCategoryById,
 }: FilterProps): React.JSX.Element {
-  const { filters, setCategories, setSearchQuery, resetFilters } = useRecipes()
+  const { categories: recipeCategories } = useCategories()
+  const { filters, setFilteredCategories, setSearchQuery, resetFilters } = useCatalog()
   const { categories, searchQuery } = filters
 
   function resetHandle() {
@@ -32,8 +29,9 @@ export default function Filters({
   }
 
   function toggleCategory(categoryId: number) {
-    if (categories.includes(categoryId)) setCategories(categories.filter(id => id !== categoryId))
-    else setCategories([...categories, categoryId])
+    if (categories.includes(categoryId))
+      setFilteredCategories(categories.filter(id => id !== categoryId))
+    else setFilteredCategories([...categories, categoryId])
   }
 
   return ReactDOM.createPortal(
@@ -61,7 +59,7 @@ export default function Filters({
               {categories.map(categoryId => (
                 <Chip
                   key={categoryId}
-                  text={`Категория: ${findCategoryById(categoryId)?.name}`}
+                  text={`Категория: ${findCategoryById(categoryId, recipeCategories)?.name}`}
                   onClick={() => toggleCategory(categoryId)}
                   del
                 />

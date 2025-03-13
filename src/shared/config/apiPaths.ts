@@ -18,6 +18,7 @@ export const API_PATHS = {
     getSimilar: '/recipes/similar',
     favorite: '/recipes/favorite',
     myRecipes: '/recipes/my-recipes',
+    getCategories: '/recipes/categories',
   },
   favorites: {
     getFavorites: '/favorites',

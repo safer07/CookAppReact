@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { LikeButton } from '@/entities/favorites'
@@ -6,8 +6,8 @@ import {
   type FullRecipe,
   getRecipeDifficultyTextAndSurface,
   recipesService,
+  useCategories,
 } from '@/entities/recipe'
-import { categories } from '@/entities/recipeCategory/const/categories'
 import { useUser } from '@/entities/user'
 
 import { catchHttpError, navigateBack } from '@/shared/lib'
@@ -26,6 +26,7 @@ type RecipeInfoProps = {
 
 export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Element {
   const navigate = useNavigate()
+  const { categories, getCategories } = useCategories()
   const { user } = useUser()
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
@@ -45,6 +46,10 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
       catchHttpError(error, setError)
     }
   }
+
+  useEffect(() => {
+    if (!categories.length) getCategories()
+  }, [categories, getCategories])
 
   return (
     <>

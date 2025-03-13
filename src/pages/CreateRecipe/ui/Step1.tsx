@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
-import { RECIPE_LIMITS } from '@/entities/recipe'
-import { categories } from '@/entities/recipeCategory/const/categories'
+import { RECIPE_LIMITS, useCategories } from '@/entities/recipe'
 
 import Input from '@/shared/ui/Input'
 import PhotoUpload from '@/shared/ui/PhotoUpload'
@@ -13,6 +12,7 @@ import { useCreateRecipe } from '../store/createRecipeStore'
 type StepProps = { setStepIsValid: (status: boolean) => void }
 
 export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element {
+  const { categories, getCategories } = useCategories()
   const { recipeData, setName, setCategoryId, setDescription, setImg } = useCreateRecipe()
   const { name, categoryId, description, img } = recipeData
 
@@ -20,6 +20,10 @@ export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element 
     value: category.id.toString(),
     label: category.fullName,
   }))
+
+  useEffect(() => {
+    if (!categories.length) getCategories()
+  }, [categories, getCategories])
 
   useEffect(() => {
     if (name && categoryId && description) setStepIsValid(true)
