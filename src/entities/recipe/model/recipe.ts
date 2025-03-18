@@ -8,7 +8,7 @@ export const ingredientSchema = z.object({
 export type Ingredient = z.infer<typeof ingredientSchema>
 
 export const recipeStepSchema = z.object({
-  description: z.string().min(5, { message: 'Описание шага рецепта слишком короткое' }),
+  description: z.string().trim().min(5, { message: 'Описание шага рецепта слишком короткое' }),
   ingredients: z.array(ingredientSchema),
   img: z.string(),
   // img: z.string().url(),
@@ -42,7 +42,10 @@ export type RecipeFilters = {
 }
 
 export const createRecipeDTOSchema = z.object({
-  name: z.string({ required_error: 'Введите название рецепта' }),
+  name: z
+    .string({ required_error: 'Введите название рецепта' })
+    .trim()
+    .min(3, 'Название рецепта слишком короткое'),
   categoryId: z.number({ required_error: 'Выберите категорию рецепта' }),
   img: z.string({ required_error: 'Не выбрано главное изображение рецепта' }),
   // TODO: когда фотки будут загружены на сервер
@@ -52,7 +55,10 @@ export const createRecipeDTOSchema = z.object({
     .positive('Время должно быть больше 0')
     .step(1),
   difficulty: z.number({ required_error: 'Укажите сложность рецепта' }),
-  description: z.string({ required_error: 'Введите описание рецепта' }),
+  description: z
+    .string({ required_error: 'Введите описание рецепта' })
+    .trim()
+    .min(10, 'Описание рецепта должно состоять минимум из 10 символов'),
   totalIngredients: z.array(ingredientSchema).nonempty('Список ингредиентов пуст'),
   steps: z.array(recipeStepSchema).nonempty('Не указаны шаги приготовления рецепта'),
   hidden: z.boolean(),
