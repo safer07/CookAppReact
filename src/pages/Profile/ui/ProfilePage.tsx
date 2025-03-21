@@ -22,7 +22,6 @@ export default function ProfilePage(): React.JSX.Element {
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
   async function onLogout() {
-    setError(null)
     try {
       await logout()
     } catch (error) {
@@ -42,6 +41,10 @@ export default function ProfilePage(): React.JSX.Element {
 
     if (isAuth) onFetchUser()
   }, [navigate, fetchUser, isAuth])
+
+  useEffect(() => {
+    setError(null)
+  }, [user])
 
   return (
     <>

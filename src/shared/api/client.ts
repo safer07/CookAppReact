@@ -1,7 +1,11 @@
 import axios from 'axios'
 
+import { useUser } from '@/entities/user'
+
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
 import { refreshResponseSchema } from './model'
+
+// TODO: не импортировать из entities
 
 const api = axios.create({
   baseURL: BACKEND_URL,
@@ -21,20 +25,28 @@ api.interceptors.response.use(
   response => response,
   async error => {
     const originalRequest = error.config
+    const status = error.response?.status ?? null
 
-    if (error.response?.status === 401 && error.config && !error.config._isRetry) {
-      originalRequest._isRetry = true
-      try {
-        const { data } = await axios.get<unknown>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
-          withCredentials: true,
-        })
-        const validatedData = refreshResponseSchema.parse(data)
-        localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
+    if (status === 401) {
+      if (!originalRequest._isRetry) {
+        originalRequest._isRetry = true
+        try {
+          const { data } = await axios.get<unknown>(`${BACKEND_URL}${API_PATHS.user.refresh}`, {
+            withCredentials: true,
+          })
+          const validatedData = refreshResponseSchema.parse(data)
+          localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
+        } catch {
+          console.error('Пользователь не авторизован')
+        }
         return api.request(originalRequest)
-      } catch {
-        console.error('Пользователь не авторизован')
+      } else {
+        localStorage.removeItem(ACCESS_TOKEN_KEY)
+        useUser.setState({ user: null })
       }
-    } else throw error
+    }
+
+    return Promise.reject(error)
   },
 )
 
