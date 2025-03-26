@@ -14,6 +14,7 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Modal from '@/shared/ui/Modal'
 import Stepper from '@/shared/ui/Stepper'
 
+import allIngredientsDistributed from '../lib/all-ingredients-distributed'
 import { useCreateRecipe } from '../store/createRecipeStore'
 import Step1 from './Step1'
 import Step2 from './Step2'
@@ -53,6 +54,10 @@ export default function CreateRecipePage(): React.JSX.Element {
 
     const result = createRecipeDTOSchema.safeParse(recipeData)
     if (result.success) {
+      if (!allIngredientsDistributed(result.data)) {
+        return setError({ message: 'Распределите все указанные ингредиенты по шагам рецепта' })
+      }
+
       try {
         setError(null)
         setStatus('loading')

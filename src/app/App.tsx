@@ -8,7 +8,7 @@ import AppRouter from './AppRouter'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter>
       <AppRouter />
     </BrowserRouter>
   </React.StrictMode>,

@@ -60,21 +60,3 @@ export const userService = {
     return validatedData
   },
 }
-
-// export async function checkAuth() {
-//   this.setLoading(true)
-//   // Отдельный axios, чтобы не использовать кастомный, чтобы не срабатывал interceptor на 401
-//   try {
-//     const response = await axios.get<AuthResponse>(`${BACKEND_URL}/refresh`, {
-//       withCredentials: true,
-//     })
-//     console.log(response)
-//     localStorage.setItem('token', response.data.accessToken)
-//     this.setAuth(true)
-//     this.setUser(response.data.user)
-//   } catch (error) {
-//     console.log(error.response?.data?.message)
-//   } finally {
-//     this.setLoading(false)
-//   }
-// }
