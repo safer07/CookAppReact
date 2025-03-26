@@ -41,26 +41,36 @@ export type RecipeFilters = {
   searchQuery?: string
 }
 
-export const createRecipeDTOSchema = z.object({
-  name: z
-    .string({ required_error: 'Введите название рецепта' })
-    .trim()
-    .min(3, 'Название рецепта слишком короткое'),
-  categoryId: z.number({ required_error: 'Выберите категорию рецепта' }),
-  img: z.string({ required_error: 'Не выбрано главное изображение рецепта' }),
-  // TODO: когда фотки будут загружены на сервер
-  // img: z.string().url(),
-  time: z
-    .number({ required_error: 'Укажите время приготовления рецепта' })
-    .positive('Время должно быть больше 0')
-    .step(1),
-  difficulty: z.number({ required_error: 'Укажите сложность рецепта' }),
-  description: z
-    .string({ required_error: 'Введите описание рецепта' })
-    .trim()
-    .min(10, 'Описание рецепта должно состоять минимум из 10 символов'),
-  totalIngredients: z.array(ingredientSchema).nonempty('Список ингредиентов пуст'),
-  steps: z.array(recipeStepSchema).nonempty('Не указаны шаги приготовления рецепта'),
-  hidden: z.boolean(),
-})
+export const createRecipeDTOSchema = z
+  .object({
+    name: z
+      .string({ required_error: 'Введите название рецепта' })
+      .trim()
+      .min(3, 'Название рецепта слишком короткое'),
+    categoryId: z.number({ required_error: 'Выберите категорию рецепта' }),
+    img: z.string({ required_error: 'Не выбрано главное изображение рецепта' }),
+    // TODO: когда фотки будут загружены на сервер
+    // img: z.string().url(),
+    time: z
+      .number({ required_error: 'Укажите время приготовления рецепта' })
+      .positive('Время должно быть больше 0')
+      .step(1),
+    difficulty: z.number({ required_error: 'Укажите сложность рецепта' }),
+    description: z
+      .string({ required_error: 'Введите описание рецепта' })
+      .trim()
+      .min(10, 'Описание рецепта должно состоять минимум из 10 символов'),
+    totalIngredients: z.array(ingredientSchema).nonempty('Список ингредиентов пуст'),
+    steps: z.array(recipeStepSchema).nonempty('Не указаны шаги приготовления рецепта'),
+    hidden: z.boolean(),
+  })
+  .refine(
+    data =>
+      data.totalIngredients.length ===
+      data.steps.reduce((sum, current) => sum + current.ingredients.length, 0),
+    {
+      message: 'Распределите все указанные ингредиенты по шагам рецепта',
+      path: ['totalIngredients'],
+    },
+  )
 export type CreateRecipeDTO = z.infer<typeof createRecipeDTOSchema>
