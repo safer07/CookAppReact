@@ -13,8 +13,8 @@ import FilteredRecipes from './FilteredRecipes'
 import Filters from './Filters'
 
 export default function Catalog(): React.JSX.Element {
-  const { categories, getCategories } = useCategories()
-  const { status, filters, setSearchQuery } = useCatalog()
+  const { categories, getCategories, status } = useCategories()
+  const { filters, setSearchQuery } = useCatalog()
   const { categories: filteredCategories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const filtersCount = Object.values(filters).filter(value => value.length !== 0).length

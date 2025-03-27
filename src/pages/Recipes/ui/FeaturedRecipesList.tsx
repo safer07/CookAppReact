@@ -19,7 +19,7 @@ export default function FeaturedRecipesList({
   const [status, setStatus] = useState<HttpStatus>('init')
 
   useEffect(() => {
-    async function onFetchRecipes() {
+    async function fetchRecipes() {
       try {
         setStatus('loading')
         const recipes = await recipesService.getRecipes({ categories: [category.id] }, 5)
@@ -30,7 +30,7 @@ export default function FeaturedRecipesList({
       }
     }
 
-    onFetchRecipes()
+    fetchRecipes()
   }, [category])
 
   return (
