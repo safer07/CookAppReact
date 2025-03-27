@@ -7,12 +7,14 @@ import {
   getCategoriesResponseSchema,
   recipesResponseSchema,
 } from '../model/api'
-import { type CreateRecipeDTO, type RecipeFilters, fullRecipeSchema } from '../model/recipe'
+import { fullRecipeSchema } from '../model/recipe'
+import type { CreateRecipeDTO, RecipeFilters } from '../model/recipe'
 
 export const recipesService = {
-  getRecipes: async (filters?: RecipeFilters) => {
+  getRecipes: async (filters?: RecipeFilters, limit?: number) => {
+    const query = filters?.searchQuery || null
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
-      params: { category: filters?.categories, query: filters?.searchQuery },
+      params: { category: filters?.categories, query, limit },
     })
     const validatedData = recipesResponseSchema.parse(data)
     return validatedData

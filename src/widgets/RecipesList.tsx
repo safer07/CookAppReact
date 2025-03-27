@@ -6,7 +6,7 @@ type RecipesListProps = {
   title: string
   recipes: Recipe[]
   status: HttpStatus
-  button?: { name: string; onClick: () => void }
+  button?: { text: string; onClick: () => void }
 }
 
 export default function RecipesList({
@@ -29,7 +29,7 @@ export default function RecipesList({
         <div className="flex items-baseline justify-between">
           <h2 className="headline-medium">{title}</h2>
           <button className="text-primary hover:text-primary-active" onClick={button?.onClick}>
-            {button?.name}
+            {button?.text}
           </button>
         </div>
       )}

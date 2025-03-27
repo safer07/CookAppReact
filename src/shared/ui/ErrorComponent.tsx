@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 import { CustomError } from '../model/customError'
 
 type ErrorComponentProps = {
@@ -9,10 +11,16 @@ export default function ErrorComponent({
   error,
   className = '',
 }: ErrorComponentProps): React.ReactNode {
+  const ref = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [error])
+
   if (!error) return null
 
   return (
-    <div className={`space-y-1 ${className}`}>
+    <div className={`space-y-1 ${className}`} ref={ref}>
       {error?.message && (
         <p className="text-system-error">
           {error.message}
