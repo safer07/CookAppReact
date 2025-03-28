@@ -93,7 +93,6 @@ export default function ResetPasswordPage(): React.JSX.Element {
             label="Повторите пароль"
           />
           <ErrorComponent error={error} />
-          {status === 'success' && <p className="text-system-positive">Пароль изменён</p>}
         </div>
 
         <Button

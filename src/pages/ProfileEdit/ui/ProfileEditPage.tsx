@@ -95,7 +95,6 @@ export default function ProfileEditPage(): React.JSX.Element {
           </form>
           <Button text="Изменить пароль" link={CHANGE_PASSWORD_ROUTE} />
           <ErrorComponent error={error} />
-          {status === 'success' && <p className="text-system-positive">Профиль обновлён</p>}
         </div>
       </div>
 

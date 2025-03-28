@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
@@ -25,11 +26,9 @@ export default function CreateRecipePage(): React.JSX.Element {
   const { recipeData, resetCreateRecipe } = useCreateRecipe()
   const [step, setStep] = useState<number>(1)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
-  const [modalFinishIsOpen, setModalFinishIsOpen] = useState<boolean>(false)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
   const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
-  const [newRecipeId, setNewRecipeId] = useState<string>('')
 
   const stepsCount = 4
 
@@ -59,8 +58,8 @@ export default function CreateRecipePage(): React.JSX.Element {
         const response = await recipesService.create(result.data)
         setStatus('success')
         resetCreateRecipe()
-        setNewRecipeId(response.recipe.id)
-        setModalFinishIsOpen(true)
+        navigate(`${API_PATHS.recipes.getOne}/${response.recipe.id}`, { replace: true })
+        toast.success('Рецепт создан')
       } catch (error) {
         setStatus('error')
         catchHttpError(error, setError)
@@ -118,15 +117,6 @@ export default function CreateRecipePage(): React.JSX.Element {
         text="Очистить поля рецепта? Все внесённые данные будут утеряны."
         type="negative"
         cancellable
-      />
-
-      <Modal
-        open={modalFinishIsOpen}
-        setOpen={setModalFinishIsOpen}
-        onOk={() => navigate(`${API_PATHS.recipes.getOne}/${newRecipeId}`, { replace: true })}
-        okText="Готово"
-        title="Рецепт создан"
-        text="Рецепт сохранён в базе данных"
       />
     </div>
   )

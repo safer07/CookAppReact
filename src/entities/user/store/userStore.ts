@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
@@ -74,6 +76,7 @@ export const useUser = create<UserStore>()(
             const user = await userService.updateProfile(id, updateProfileDTO)
             set({ user })
             set({ status: 'success' })
+            toast.success('Профиль обновлён')
           } catch (error) {
             set({ status: 'error' })
             throw error
@@ -86,6 +89,7 @@ export const useUser = create<UserStore>()(
             localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
             set({ user: response.user })
             set({ status: 'success' })
+            toast.success('Пароль изменён')
           } catch (error) {
             set({ status: 'error' })
             throw error
@@ -96,6 +100,7 @@ export const useUser = create<UserStore>()(
             set({ status: 'loading' })
             await userService.changePassword(password)
             set({ status: 'success' })
+            toast.success('Пароль изменён')
           } catch (error) {
             set({ status: 'error' })
             throw error

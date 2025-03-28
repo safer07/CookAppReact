@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
@@ -21,7 +23,7 @@ export const useFavorites = create<FavoritesStore>()(
               state.favorites = favorites
             })
           } catch {
-            // TODO: toast уведомление?
+            toast.error('Не удалось загрузить избранное')
           }
         },
         addFavoriteRecipe: async id => {
@@ -32,7 +34,7 @@ export const useFavorites = create<FavoritesStore>()(
                 state.favorites.recipes = favoriteRecipes
               })
             } catch {
-              // TODO: toast уведомление?
+              toast.error('Не удалось добавить рецепт в избранное')
             }
           } else
             set(state => {
@@ -47,7 +49,7 @@ export const useFavorites = create<FavoritesStore>()(
                 state.favorites.recipes = favoriteRecipes
               })
             } catch {
-              // TODO: toast уведомление?
+              toast.error('Не удалось удалить рецепт из избранного')
             }
           } else {
             set(state => {

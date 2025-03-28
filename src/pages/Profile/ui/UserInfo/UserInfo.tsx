@@ -10,8 +10,8 @@ import UserInfoSkeleton from './UserInfoSkeleton'
 export default function UserInfo(): React.JSX.Element {
   const location = useLocation()
   const { user } = useUser()
-  const name = user?.name || ''
-  const lastName = user?.lastName || ''
+  const name = user?.name ?? ''
+  const lastName = user?.lastName ?? ''
   const userName = name || lastName ? `${name} ${lastName}`.trim() : 'Имя не указано'
 
   return (

@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
@@ -26,8 +28,7 @@ export const useCategories = create<CategoriesStore>()(
           set({ status: 'success' })
         } catch {
           set({ status: 'error' })
-          // TODO: toast?
-          alert('Не удалось загрузить категории рецептов')
+          toast.error('Не удалось загрузить категории рецептов')
         }
       },
     })),
