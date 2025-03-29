@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import { cn } from '../lib'
+
 type BaseProps = {
   text: string
   icon?: string
@@ -52,7 +54,7 @@ export default function Button(props: ButtonProps | LinkProps) {
       {link ? (
         <Link
           to={link}
-          className={`button ${className} ${variantClass} ${fullWidth ? 'w-full' : ''}`}
+          className={cn('button', className, variantClass, { 'w-full': fullWidth })}
           state={state}
         >
           {icon && (
@@ -64,7 +66,7 @@ export default function Button(props: ButtonProps | LinkProps) {
         </Link>
       ) : (
         <button
-          className={`button ${className} ${variantClass} ${fullWidth ? 'w-full' : ''}`}
+          className={cn('button', className, variantClass, { 'w-full': fullWidth })}
           onClick={disabled ? () => {} : onClick}
           disabled={disabled}
           type={type}

@@ -1,3 +1,5 @@
+import { cn } from '../lib'
+
 type SegmentedButtonProps = {
   buttons: string[]
   handleClick: (value: number) => void
@@ -14,7 +16,7 @@ export default function SegmentedButton({
       {buttons.map((tab, index) => (
         <button
           key={tab}
-          className={`segment ${activeTabIndex === index ? 'active' : ''}`}
+          className={cn('segment', { active: activeTabIndex === index })}
           onClick={() => handleClick(index)}
         >
           {tab}

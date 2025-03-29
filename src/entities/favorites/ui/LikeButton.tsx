@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { cn } from '@/shared/lib'
+
 import { useFavorites } from '../store/favoritesStore'
 
 type LikeButtonProps = {
@@ -23,16 +25,13 @@ export default function LikeButton({ itemId, className = '' }: LikeButtonProps):
   }
 
   return (
-    <button className={`like-button ${className} ${isActive ? 'active' : ''}`} onClick={onClick}>
+    <button className={cn('like-button', className, { active: isActive })} onClick={onClick}>
       {!isActive ? (
         <svg>
           <use href="/images/icons.svg#heart" />
         </svg>
       ) : (
-        <img
-          className={`${animation ? 'animate-blink' : ''}`}
-          src="/images/icons/heart_filled.svg"
-        />
+        <img className={cn({ 'animate-blink': animation })} src="/images/icons/heart_filled.svg" />
       )}
     </button>
   )

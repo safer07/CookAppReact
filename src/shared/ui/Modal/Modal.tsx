@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom'
 
+import { cn } from '@/shared/lib'
+
 import Button from '../Button'
 import useMount from './hooks/useMount'
 
@@ -60,7 +62,7 @@ export default function Modal({
 
         {children}
 
-        <div className={`mt-3 grid ${cancellable ? 'grid-cols-2' : ''} gap-2`}>
+        <div className={cn('mt-3 grid gap-2', { 'grid-cols-2': cancellable })}>
           {cancellable && (
             <Button text="Отмена" onClick={() => setOpen(false)} variant="tertiary" fullWidth />
           )}

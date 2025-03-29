@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib'
+
 import Radio from '../Radio'
 import Switch from '../Switch'
 import type { ListItemProps, ListItemStatus } from './types'
@@ -48,7 +50,7 @@ export default function ListItem({
         <Switch checked={leftElement.checked} onClick={leftElement.onClick} />
       )}
       {leftElement?.element === 'icon' && (
-        <svg className={`left-icon ${leftElement.className ? leftElement.className : ''}`}>
+        <svg className={cn('left-icon', leftElement.className)}>
           <use href={`/images/icons.svg#${leftElement.icon}`} />
         </svg>
       )}

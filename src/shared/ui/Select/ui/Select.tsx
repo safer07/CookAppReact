@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 
+import { cn } from '@/shared/lib'
+
 import Chip from '../../Chip'
 import type { SelectMultipleProps, SelectSingleProps } from '../model/types'
 import Options from './Options'
@@ -81,7 +83,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
       <div
         ref={containerRef}
         tabIndex={disabled ? -1 : 0}
-        className={`select ${isOpen ? 'open' : ''} ${multiple && value.length > 0 ? 'select-multiple' : ''}`}
+        className={cn('select', { open: isOpen, 'select-multiple': multiple && value.length > 0 })}
         onClick={onClick}
         onBlur={() => setIsOpen(false)}
         data-disabled={disabled}
@@ -99,7 +101,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
             ))}
           </span>
         ) : (
-          <span className={`textfield ${value.length > 0 ? '' : 'placeholder'}`}>
+          <span className={cn('textfield', { placeholder: value.length === 0 })}>
             {value.length > 0 ? valueLabel : placeholder}
           </span>
         )}

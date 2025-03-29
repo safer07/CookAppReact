@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { PROFILE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 
+import { cn } from '../lib'
+
 type NavBarTabs = 'recipes' | 'profile'
 
 type NavBarTab = {
@@ -44,7 +46,10 @@ export default function NavBar(): React.JSX.Element {
           <Link
             key={index}
             to={tab.link}
-            className={`flex flex-col items-center py-1 transition-colors duration-300 ${activeTab === tab.id ? 'text-primary cursor-default' : 'text-txt-secondary hover:text-primary'}`}
+            className={cn('flex flex-col items-center py-1 transition-colors duration-300', {
+              'text-primary cursor-default': activeTab === tab.id,
+              'text-txt-secondary hover:text-primary': activeTab !== tab.id,
+            })}
           >
             <svg className="size-3">
               <use href={`/images/icons.svg#${tab.icon}`} />

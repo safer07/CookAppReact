@@ -1,3 +1,5 @@
+import { cn } from '../lib'
+
 type ChipProps = {
   text: string
   onClick?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
@@ -13,7 +15,7 @@ export default function Chip({
 }: ChipProps): React.JSX.Element {
   return (
     <button
-      className={`chip ${variant === 'active' ? 'active' : ''} ${del ? 'chip-delete' : ''}`}
+      className={cn('chip', { active: variant === 'active', 'chip-delete': del })}
       onClick={onClick}
     >
       {text}

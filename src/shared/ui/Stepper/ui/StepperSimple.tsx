@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib'
+
 import { StepperSimpleProps } from '../model/types'
 
 export default function StepperSimple({
@@ -9,8 +11,11 @@ export default function StepperSimple({
       {[...new Array(stepsCount)].map((_, index) => (
         <li
           key={index}
-          className={`h-0.5 grow rounded-full ${currentIndex === index ? 'bg-primary' : 'bg-base-borders'}`}
-         />
+          className={cn('h-0.5 grow rounded-full', {
+            'bg-primary': currentIndex === index,
+            'bg-base-borders': currentIndex !== index,
+          })}
+        />
       ))}
     </ol>
   )

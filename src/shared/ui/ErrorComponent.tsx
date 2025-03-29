@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 
+import { cn } from '../lib'
 import { CustomError } from '../model/customError'
 
 type ErrorComponentProps = {
@@ -20,7 +21,7 @@ export default function ErrorComponent({
   if (!error) return null
 
   return (
-    <div className={`space-y-1 ${className}`} ref={ref}>
+    <div className={cn('space-y-1', className)} ref={ref}>
       {error?.message && (
         <p className="text-system-error">
           {error.message}

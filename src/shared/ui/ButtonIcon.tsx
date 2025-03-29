@@ -1,3 +1,5 @@
+import { cn } from '../lib'
+
 type ButtonIconProps = {
   icon: string
   onClick: () => void
@@ -32,7 +34,11 @@ export default function ButtonIcon({
 
   return (
     <button
-      className={`button-icon ${className} ${variantClass} ${size === 'medium' ? 'button-icon-medium' : 'button-icon-small'} ${square === true ? 'button-icon-square' : ''}`}
+      className={cn('button-icon', className, variantClass, {
+        'button-icon-medium': size === 'medium',
+        'button-icon-small': size !== 'medium',
+        'button-icon-square': square,
+      })}
       onClick={onClick}
     >
       <svg>
