@@ -1,4 +1,5 @@
-import ListItem, { type ListItemRightElem, type ListItemStatus } from '../../ListItem'
+import ListItem from '../../ListItem'
+import type { ListItemRightElem } from '../../ListItem'
 import type { SelectOptionProps } from '../model/types'
 
 export default function Options(props: SelectOptionProps): React.JSX.Element {
@@ -30,26 +31,17 @@ export default function Options(props: SelectOptionProps): React.JSX.Element {
   return (
     <ul className="select-options">
       {options.map(option => {
-        let optionStatus: ListItemStatus = ''
+        const disabled = option.disabled
+        const selected = isSelectedOption(option.value)
         let rightElement: ListItemRightElem | undefined
 
-        if (option.status === 'disabled') optionStatus = 'disabled'
-        else if (isSelectedOption(option.value)) optionStatus = 'selected'
-
         if (multiple) {
-          const rightElementType =
-            optionStatus === 'disabled' || optionStatus === 'selected' ? 'icon' : 'emptyIcon'
+          const rightElementType = disabled || selected ? 'icon' : 'emptyIcon'
 
           const rightElementIcon = (() => {
-            switch (optionStatus) {
-              case 'disabled':
-                return 'cross_small'
-              case 'selected':
-                return 'check'
-              case '':
-              default:
-                return 'dash'
-            }
+            if (disabled) return 'cross_small'
+            else if (selected) return 'check'
+            return 'dash'
           })()
 
           rightElement = {
@@ -66,7 +58,8 @@ export default function Options(props: SelectOptionProps): React.JSX.Element {
             secondaryText={option.secondaryText}
             size={`${option.description ? 'medium' : optionSize}`}
             onClick={() => onOptionClick(option.value)}
-            status={optionStatus}
+            disabled={disabled}
+            selected={selected}
             rightElement={rightElement}
           />
         )

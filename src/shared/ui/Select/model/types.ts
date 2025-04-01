@@ -1,10 +1,11 @@
-import type { ListItemSize, ListItemStatus } from '../../ListItem'
+import type { ListItemSize } from '../../ListItem'
 
 export type SelectOption = {
   label: string
   value: string
   secondaryText?: string
-  status?: ListItemStatus
+  selected?: boolean
+  disabled?: boolean
   description?: string
 }
 

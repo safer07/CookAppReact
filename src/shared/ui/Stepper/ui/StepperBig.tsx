@@ -25,7 +25,7 @@ export default function StepperBig({
         </li>
       ))}
       <li className="grid aspect-3/4 w-full place-content-center">
-        <button onClick={createStep}>
+        <button onClick={createStep} type="button">
           <svg className="text-primary hover:text-primary-active size-4">
             <use href="/images/icons.svg#plus_circle" />
           </svg>

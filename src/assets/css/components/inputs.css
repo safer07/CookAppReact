@@ -45,21 +45,6 @@
   }
   & .select-options {
     @apply surface-default border-primary shadow-glow shadow-primary/50 absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border;
-    & > .selected {
-      @apply surface-accent-light;
-      & .right-icon {
-        @apply text-primary;
-      }
-    }
-    & > :not(.disabled) {
-      @apply hover:surface-accent-light;
-    }
-    & > .disabled {
-      @apply surface-low text-txt-tertiary cursor-default;
-      & :is(.list-item-secondary-text, .list-item-description, .right-icon) {
-        @apply text-txt-tertiary;
-      }
-    }
   }
   &.open {
     @apply rounded-b-none;

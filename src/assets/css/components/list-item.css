@@ -1,5 +1,5 @@
 .listItem {
-  @apply flex min-h-7 items-center gap-2 px-(--body-padding-inline) py-0.5;
+  @apply flex items-center gap-2 px-(--body-padding-inline) py-0.5;
   &:not(:has(.list-item-description)) .list-item-text {
     @apply line-clamp-2;
   }
@@ -12,18 +12,7 @@
   & .list-item-secondary-text {
     @apply text-txt-secondary w-9 shrink-0 text-right;
   }
-  & :is(.left-icon, .right-icon, .empty-icon) {
-    @apply size-3 shrink-0;
-  }
   &:has(.list-item-description) .list-item-text {
     @apply block truncate;
   }
-}
-
-.list-item-tiny {
-  @apply min-h-4;
-}
-
-.list-item-small {
-  @apply min-h-5;
 }

@@ -1,3 +1,7 @@
+import { VariantProps } from 'class-variance-authority'
+
+import { listItemVariants } from './listItemVariants'
+
 type RadioElem = {
   element: 'radio'
   checked: boolean
@@ -24,17 +28,13 @@ type DeleteElem = {
   onClick?: () => void
 }
 
-export type ListItemSize = 'tiny' | 'small' | 'medium'
-export type ListItemStatus = 'disabled' | 'selected' | ''
 export type ListItemRightElem = IconElem | DeleteElem | EmptyIconElem
 
 export type ListItemProps = {
-  size?: ListItemSize
   text: string
   description?: string
   secondaryText?: string
   leftElement?: RadioElem | SwitchElem | IconElem
   rightElement?: ListItemRightElem
   onClick?: () => void
-  status?: ListItemStatus
-}
+} & Omit<VariantProps<typeof listItemVariants>, '_clickable'>

@@ -8,10 +8,7 @@ type ErrorComponentProps = {
   className?: string
 }
 
-export default function ErrorComponent({
-  error,
-  className = '',
-}: ErrorComponentProps): React.ReactNode {
+export default function ErrorComponent({ error, className }: ErrorComponentProps): React.ReactNode {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { type Ingredient, RECIPE_LIMITS } from '@/entities/recipe'
 
 import { useDebounce } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
-import ListItem, { type ListItemStatus } from '@/shared/ui/ListItem'
+import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 import PhotoUpload from '@/shared/ui/PhotoUpload'
 import Select, { type SelectOption } from '@/shared/ui/Select'
@@ -26,16 +26,15 @@ export default function Step4(): React.JSX.Element {
 
   const ingredientsOptions: SelectOption[] = totalIngredients.map((ingredient): SelectOption => {
     const usedIngredient: boolean = stepsHasIngredient(ingredient.name)
-    let optionStatus: ListItemStatus = ''
-    if (currentStepIngredientsNames.includes(ingredient.name)) {
-      optionStatus = 'selected'
-    } else if (usedIngredient) optionStatus = 'disabled'
+    const selected = currentStepIngredientsNames.includes(ingredient.name)
+    const disabled = usedIngredient && !selected
 
     return {
       value: ingredient.name,
       label: ingredient.name,
       secondaryText: `${ingredient.amount} ${ingredient.unit}`,
-      status: optionStatus,
+      selected,
+      disabled,
       description: usedIngredient ? `Шаг ${findStepWithIngredient(ingredient.name)}` : '',
     }
   })

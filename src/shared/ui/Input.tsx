@@ -1,5 +1,7 @@
 import { useRef } from 'react'
 
+import { cn } from '../lib'
+
 type InputProps = {
   value: string
   onChange: (value: string) => void
@@ -40,7 +42,7 @@ export default function Input({
   value,
   onChange,
   type = 'text',
-  className = '',
+  className,
   iconLeft,
   iconRight,
   label,
@@ -58,7 +60,7 @@ export default function Input({
   }
 
   return (
-    <div className={className}>
+    <div className={cn(className)}>
       {label && <div className="input-label">{label}</div>}
 
       <div className="input">
