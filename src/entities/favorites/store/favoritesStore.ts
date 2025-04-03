@@ -33,8 +33,9 @@ export const useFavorites = create<FavoritesStore>()(
               set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch {
+            } catch (error) {
               toast.error('Не удалось добавить рецепт в избранное')
+              throw error
             }
           } else
             set(state => {
@@ -48,8 +49,9 @@ export const useFavorites = create<FavoritesStore>()(
               set(state => {
                 state.favorites.recipes = favoriteRecipes
               })
-            } catch {
+            } catch (error) {
               toast.error('Не удалось удалить рецепт из избранного')
+              throw error
             }
           } else {
             set(state => {

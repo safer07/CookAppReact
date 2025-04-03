@@ -85,6 +85,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
             <svg className="fill-primary size-2">
               <use href="/images/icons.svg#clock" />
             </svg>
+            {/* TODO: пересчитать часов и минут? */}
             <div className="label-small text-txt-secondary">{recipe.time} минут</div>
           </div>
           <Tag text={difficultyText} surface={tagDifficultySurface} />

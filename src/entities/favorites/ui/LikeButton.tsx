@@ -29,23 +29,27 @@ export default function LikeButton({ itemId, className }: LikeButtonProps): Reac
   const favoriteRecipes = favorites.recipes
   const [animation, setAnimation] = useState<boolean>(false)
   const isActive: boolean = favoriteRecipes.includes(itemId)
+  const [isOptimistic, setIsOptimistic] = useState<boolean>(isActive)
 
-  function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+  async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
-
-    if (favoriteRecipes.includes(itemId)) removeFavoriteRecipe(itemId)
-    else addFavoriteRecipe(itemId)
-
+    setIsOptimistic(prev => !prev)
     setAnimation(true)
+    try {
+      if (isActive) await removeFavoriteRecipe(itemId)
+      else await addFavoriteRecipe(itemId)
+    } catch {
+      setIsOptimistic(isActive)
+    }
   }
 
   return (
     <button
-      className={cn(likeButtonVariants({ active: isActive }), className)}
+      className={cn(likeButtonVariants({ active: isOptimistic }), className)}
       onClick={onClick}
-      aria-label={isActive ? 'Удалить из избранного' : 'Добавить в избранное'}
+      aria-label={isOptimistic ? 'Удалить из избранного' : 'Добавить в избранное'}
     >
-      {!isActive ? (
+      {!isOptimistic ? (
         <svg className="size-3" aria-hidden="true">
           <use href="/images/icons.svg#heart" />
         </svg>
