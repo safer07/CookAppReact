@@ -7,11 +7,5 @@ export {
   resetPasswordLinkSchema,
   updateProfileDTOSchema,
 } from './model/api'
-export type {
-  ChangePasswordFormData,
-  LoginFormData,
-  RegistrationFormData,
-  UpdateProfileDTO,
-  UpdateProfileFormData,
-} from './model/api'
+export type { UpdateProfileDTO, UpdateProfileFormData } from './model/api'
 export { useUser } from './store/userStore'

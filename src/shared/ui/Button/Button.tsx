@@ -23,7 +23,7 @@ type ButtonProps = {
   loading?: boolean
 } & BaseProps
 
-function ButtonIcon({ icon, className }: { icon: string; className?: string }) {
+function ButtonIcon({ icon, className }: { icon: string; className?: string }): React.JSX.Element {
   return (
     <svg className={cn('size-3', className)} aria-hidden="true">
       <use href={`/images/icons.svg#${icon}`} />

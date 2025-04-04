@@ -56,7 +56,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
   }
 
   let disabled: boolean = false
-  const hasAvailableOptions = options.some((option): boolean => option.status !== 'disabled')
+  const hasAvailableOptions = options.some((option): boolean => option.disabled !== true)
   if (!hasAvailableOptions) disabled = true
 
   function onClick(): void {

@@ -1,6 +1,6 @@
 {
   "content": ["./src/**/*.{js,jsx,ts,tsx}"],
-  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
   "semi": false,
   "singleQuote": true,
   "printWidth": 100,

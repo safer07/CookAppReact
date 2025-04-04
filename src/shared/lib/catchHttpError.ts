@@ -6,7 +6,7 @@ import { HttpErrorResponse, ZodErrorResponse } from '../model/httpError'
 
 export function catchHttpError(
   error: unknown,
-  setError: (value: React.SetStateAction<CustomError>) => CustomError | void = () => {},
+  setError?: (value: React.SetStateAction<CustomError>) => CustomError | void,
 ) {
   console.error(error)
 
@@ -15,7 +15,7 @@ export function catchHttpError(
   if (isAxiosError<HttpErrorResponse | ZodErrorResponse>(error)) {
     const data = error.response?.data
     if (data) {
-      setError(data)
+      if (setError) setError(data)
       return data
     } else {
       const errorData =
@@ -23,7 +23,7 @@ export function catchHttpError(
           ? { message: 'Ошибка подключения к серверу' }
           : { message: error.message }
 
-      setError(errorData)
+      if (setError) setError(errorData)
       return errorData
     }
   }
@@ -31,11 +31,11 @@ export function catchHttpError(
   if (error instanceof ZodError) {
     const errorData = {
       message: 'Ошибка валидации входящих данных от сервера',
-      errors: error.errors.map((issue) => ({
+      errors: error.errors.map(issue => ({
         message: `${issue.path.join('.')}: ${issue.message}`,
       })),
     }
-    setError(errorData)
+    if (setError) setError(errorData)
     return errorData
   }
 

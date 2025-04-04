@@ -2,9 +2,19 @@ import { useRef } from 'react'
 
 import { cn } from '../lib'
 
-type InputProps = {
+type ControlledInput = {
   value: string
   onChange: (value: string) => void
+  name?: string
+}
+
+type UncontrolledInput = {
+  value?: never
+  onChange?: never
+  name: string
+}
+
+type InputProps = {
   placeholder?: string
   className?: string
   iconLeft?: string
@@ -12,8 +22,9 @@ type InputProps = {
   label?: string
   helper?: string
   clearButton?: boolean
-  name?: string
-} & (InputTextProps | InputDateProps | InputNumberProps)
+  defaultValue?: string
+} & (ControlledInput | UncontrolledInput) &
+  (InputTextProps | InputDateProps | InputNumberProps)
 
 // TODO: есть ли вариант сделать это без never?
 type InputTextProps = {
@@ -50,12 +61,14 @@ export default function Input({
   showCount,
   maxLength,
   clearButton,
+  defaultValue,
   ...rest
 }: InputProps): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
   function onClickClear() {
-    onChange('')
+    if (onChange) onChange('')
+    else value = ''
     inputRef.current?.focus()
   }
 
@@ -75,7 +88,8 @@ export default function Input({
           className="textfield"
           type={type}
           value={value}
-          onChange={event => onChange(event.target.value)}
+          onChange={onChange ? event => onChange(event.target.value) : undefined}
+          defaultValue={defaultValue}
           maxLength={maxLength}
           autoComplete="off"
           {...rest}
@@ -108,7 +122,7 @@ export default function Input({
         <div className="input-helper-block">
           {helper && <div className="input-helper">{helper}</div>}
           <div className="input-right-helper">
-            {value.length} / {maxLength}
+            {value?.length ?? 0} / {maxLength}
           </div>
         </div>
       )}

@@ -1,30 +1,24 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import {
-  type ChangePasswordFormData,
-  changePasswordFormDataSchema,
-  resetPasswordLinkSchema,
-  useUser,
-} from '@/entities/user'
+import { changePasswordFormDataSchema, resetPasswordLinkSchema, useUser } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
-import type { CustomError } from '@/shared/model'
+import type { CustomError, HttpStatus } from '@/shared/model'
 import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
 
-const emptyFormData: ChangePasswordFormData = { password: '', passwordRepeat: '' }
-
 export default function ResetPasswordPage(): React.JSX.Element {
   const location = useLocation()
   const { link } = useParams<{ link: string }>()
   const navigate = useNavigate()
-  const { user, status, setStatus, resetPassword, changePassword } = useUser()
-  const [formData, setFormData] = useState<ChangePasswordFormData>(emptyFormData)
+  const { user, resetPassword, changePassword } = useUser()
+  const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
   const isReset = location.pathname !== CHANGE_PASSWORD_ROUTE
 
@@ -41,15 +35,14 @@ export default function ResetPasswordPage(): React.JSX.Element {
     }
   }, [user, link, navigate, isReset])
 
-  useEffect(() => {
-    setStatus('init')
-  }, [setStatus])
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function onSubmit(formData: FormData) {
     setError(null)
 
-    const result = changePasswordFormDataSchema.safeParse(formData)
+    const data = {
+      password: formData.get('password'),
+      passwordRepeat: formData.get('passwordRepeat'),
+    }
+    const result = changePasswordFormDataSchema.safeParse(data)
 
     if (!result.success) {
       setError({
@@ -67,10 +60,16 @@ export default function ResetPasswordPage(): React.JSX.Element {
           })
           return
         }
+        setStatus('loading')
         await resetPassword(linkResult.data, result.data.password)
-      } else await changePassword(result.data.password)
-      setFormData(emptyFormData)
+      } else {
+        setStatus('loading')
+        await changePassword(result.data.password)
+      }
+      setStatus('success')
+      toast.success('Пароль изменён')
     } catch (error) {
+      setStatus('error')
       catchHttpError(error, setError)
     }
   }
@@ -78,20 +77,10 @@ export default function ResetPasswordPage(): React.JSX.Element {
   return (
     <>
       <TopAppBar title="Смена пароля" back />
-      <form className="mt-2 space-y-3" onSubmit={onSubmit}>
+      <form className="mt-2 space-y-3" action={onSubmit}>
         <div className="space-y-2">
-          <Input
-            value={formData.password}
-            onChange={value => setFormData(prev => ({ ...prev, password: value }))}
-            type="password"
-            label="Пароль"
-          />
-          <Input
-            value={formData.passwordRepeat}
-            onChange={value => setFormData(prev => ({ ...prev, passwordRepeat: value }))}
-            type="password"
-            label="Повторите пароль"
-          />
+          <Input type="password" label="Пароль" name="password" />
+          <Input type="password" label="Повторите пароль" name="passwordRepeat" />
           <ErrorComponent error={error} />
         </div>
 

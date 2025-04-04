@@ -1,5 +1,3 @@
-import toast from 'react-hot-toast'
-
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
@@ -71,40 +69,15 @@ export const useUser = create<UserStore>()(
           }
         },
         updateProfile: async (id, updateProfileDTO) => {
-          try {
-            set({ status: 'loading' })
-            const user = await userService.updateProfile(id, updateProfileDTO)
-            set({ user })
-            set({ status: 'success' })
-            toast.success('Профиль обновлён')
-          } catch (error) {
-            set({ status: 'error' })
-            throw error
-          }
+          set({ user: await userService.updateProfile(id, updateProfileDTO) })
         },
         resetPassword: async (link, password) => {
-          try {
-            set({ status: 'loading' })
-            const response = await userService.resetPassword(link, password)
-            localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
-            set({ user: response.user })
-            set({ status: 'success' })
-            toast.success('Пароль изменён')
-          } catch (error) {
-            set({ status: 'error' })
-            throw error
-          }
+          const response = await userService.resetPassword(link, password)
+          localStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken)
+          set({ user: response.user })
         },
         changePassword: async password => {
-          try {
-            set({ status: 'loading' })
-            await userService.changePassword(password)
-            set({ status: 'success' })
-            toast.success('Пароль изменён')
-          } catch (error) {
-            set({ status: 'error' })
-            throw error
-          }
+          await userService.changePassword(password)
         },
       })),
     ),

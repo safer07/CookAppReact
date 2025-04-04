@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useActionState, useState } from 'react'
+import toast from 'react-hot-toast'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { type UpdateProfileFormData, updateProfileDTOSchema, useUser } from '@/entities/user'
+import { updateProfileDTOSchema, useUser } from '@/entities/user'
+import type { UpdateProfileDTO, UpdateProfileFormData } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
@@ -18,96 +20,81 @@ const genderSelectOptions = [
   { value: 'female', label: 'Женский' },
 ]
 
+type ActionStateData = Omit<UpdateProfileFormData, 'gender'>
+
+type FormState = {
+  data: ActionStateData
+  error?: CustomError | null
+}
+
 export default function ProfileEditPage(): React.JSX.Element {
-  const { user, status, setStatus, updateProfile } = useUser()
-  const [error, setError] = useState<CustomError>(null)
-  const [formData, setFormData] = useState<UpdateProfileFormData>({
-    name: user?.name ?? '',
-    lastName: user?.lastName ?? '',
-    email: user?.email ?? '',
-    gender: user?.gender ?? '',
-    birthDate: user?.birthDate?.split('T')[0] ?? '',
+  const { user, updateProfile } = useUser()
+  const [gender, setGender] = useState<string>(user?.gender ?? '')
+  const [actionState, action, isPending] = useActionState<FormState, FormData>(onSubmit, {
+    data: {
+      name: user?.name ?? '',
+      lastName: user?.lastName ?? '',
+      email: user?.email ?? '',
+      birthDate: user?.birthDate?.split('T')[0] ?? '',
+    },
   })
 
-  useEffect(() => {
-    setStatus('init')
-  }, [setStatus])
+  async function onSubmit(prevState: FormState, formData: FormData) {
+    if (!user?.id) return { ...prevState, error: { message: 'Не найден ID пользователя' } }
 
-  async function onSubmit() {
-    if (!user?.id) return
-    setError(null)
-
+    const data = Object.fromEntries(formData.entries()) as ActionStateData
     const DTO = {
-      ...formData,
-      gender: formData.gender === '' ? null : formData.gender,
-      birthDate: formData.birthDate === '' ? null : formData.birthDate,
-    }
+      ...data,
+      gender: gender === '' ? null : gender,
+      birthDate: data.birthDate === '' ? null : data.birthDate,
+    } as UpdateProfileDTO
     const result = updateProfileDTOSchema.safeParse(DTO)
 
     if (result.success) {
       try {
         await updateProfile(user.id, result.data)
+        toast.success('Профиль обновлён')
+        return { data }
       } catch (error) {
-        catchHttpError(error, setError)
+        return { data, error: catchHttpError(error) }
       }
-    } else {
-      setError({
-        errors: formatZodError(result),
-      })
-    }
+    } else return { data, error: { errors: formatZodError(result) } }
   }
 
   return (
     <>
       <TopAppBar title="Редактировать профиль" back />
 
-      {/* TODO: переверстать, чтобы было внутри формы (а лучше создать layout) */}
-      <div className="layout-fullwidth my-2 grow overflow-y-auto">
-        <div className="layout-grid space-y-3">
-          <form className="space-y-3">
+      <form className="grid h-full overflow-y-auto py-2" action={action}>
+        <div className="mb-2 overflow-y-auto">
+          <div className="space-y-2">
+            <Input defaultValue={actionState.data.name} label="Имя" name="name" />
+            <Input defaultValue={actionState.data.lastName} label="Фамилия" name="lastName" />
+            <Input defaultValue={actionState.data.email} label="Email" name="email" />
+            <Select value={gender} options={genderSelectOptions} onChange={setGender} label="Пол" />
             <Input
-              value={formData.name || ''}
-              onChange={value => setFormData(prev => ({ ...prev, name: value }))}
-              label="Имя"
-            />
-            <Input
-              value={formData.lastName || ''}
-              onChange={value => setFormData(prev => ({ ...prev, lastName: value }))}
-              label="Фамилия"
-            />
-            <Input
-              value={formData.email || ''}
-              onChange={value => setFormData(prev => ({ ...prev, email: value }))}
-              label="Email"
-            />
-            <Select
-              value={formData.gender || ''}
-              options={genderSelectOptions}
-              onChange={value => setFormData(prev => ({ ...prev, gender: value }))}
-              label="Пол"
-            />
-            <Input
+              defaultValue={actionState?.data?.birthDate}
               type="date"
-              value={formData.birthDate || ''}
-              onChange={value => setFormData(prev => ({ ...prev, birthDate: value }))}
               label="Дата рождения"
+              name="birthDate"
             />
-          </form>
-          <Button text="Изменить пароль" link={CHANGE_PASSWORD_ROUTE} />
-          <ErrorComponent error={error} />
+          </div>
+          <Button className="mt-3" text="Изменить пароль" link={CHANGE_PASSWORD_ROUTE} />
+          <ErrorComponent
+            className="mt-2"
+            error={(isPending ? null : actionState?.error) ?? null}
+          />
         </div>
-      </div>
 
-      <div className="mt-auto shrink-0 py-2">
         <Button
+          className="mt-auto"
           text={'Сохранить изменения'}
-          onClick={onSubmit}
+          type="submit"
           variant="primary"
-          fullWidth
-          disabled={status === 'loading'}
-          loading={status === 'loading'}
+          disabled={isPending}
+          loading={isPending}
         />
-      </div>
+      </form>
     </>
   )
 }

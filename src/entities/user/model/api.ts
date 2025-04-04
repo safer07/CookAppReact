@@ -25,7 +25,6 @@ export const registrationUserDTOSchema = authUserDTOSchema.extend({
 export type RegistrationUserDTO = z.infer<typeof registrationUserDTOSchema>
 
 export const loginFormDataSchema = authUserDTOSchema
-export type LoginFormData = z.infer<typeof loginFormDataSchema>
 
 export const registrationFormDataSchema = loginFormDataSchema
   .extend({
@@ -35,7 +34,6 @@ export const registrationFormDataSchema = loginFormDataSchema
     message: 'Пароли не совпадают',
     path: ['passwordRepeat'],
   })
-export type RegistrationFormData = z.infer<typeof registrationFormDataSchema>
 
 const updateProfileFormDataSchema = z.object({
   name: z.string(),
@@ -68,7 +66,6 @@ export const changePasswordFormDataSchema = z
     message: 'Пароли не совпадают',
     path: ['passwordRepeat'],
   })
-export type ChangePasswordFormData = z.infer<typeof changePasswordFormDataSchema>
 
 // -----
 // -----

@@ -3,13 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import {
-  type LoginFormData,
-  type RegistrationFormData,
-  loginFormDataSchema,
-  registrationFormDataSchema,
-  useUser,
-} from '@/entities/user'
+import { loginFormDataSchema, registrationFormDataSchema, useUser } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError, LocationState } from '@/shared/model'
@@ -20,23 +14,19 @@ import Input from '@/shared/ui/Input'
 
 import PrivacyAccepting from './PrivacyAccepting'
 
-const emptyLoginFormData: LoginFormData = { email: '', password: '' }
-const emptyRegistrationFormData: RegistrationFormData = {
-  ...emptyLoginFormData,
-  passwordRepeat: '',
+type State = {
+  email: string
+  password: string
+  passwordRepeat: string
 }
 
 export default function LoginPage(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, status, login, registration } = useUser()
-  const emptyFormData =
-    location.pathname === LOGIN_ROUTE ? emptyLoginFormData : emptyRegistrationFormData
-  const [formData, setFormData] = useState<LoginFormData | RegistrationFormData>(emptyFormData)
   const [error, setError] = useState<CustomError>(null)
-  const isRegistration = ((
-    formData: LoginFormData | RegistrationFormData,
-  ): formData is RegistrationFormData => 'passwordRepeat' in formData)(formData)
+  const [state, setState] = useState<State>({ email: '', password: '', passwordRepeat: '' })
+  const isRegistration = location.pathname === REGISTRATION_ROUTE
   const isLogin = !isRegistration
   const { from } = (location.state as LocationState) ?? { from: { pathname: MAIN_ROUTE } }
 
@@ -45,17 +35,22 @@ export default function LoginPage(): React.JSX.Element {
   }, [user, from, navigate])
 
   useEffect(() => {
-    setFormData(emptyFormData)
     setError(null)
-  }, [location, emptyFormData])
+  }, [location])
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function onSubmit(formData: FormData) {
     setError(null)
+
+    const data = {
+      email: (formData.get('email') as string | null) ?? '',
+      password: (formData.get('password') as string | null) ?? '',
+      passwordRepeat: (formData.get('passwordRepeat') as string | null) ?? '',
+    }
+    setState(data)
 
     const result = isLogin
-      ? loginFormDataSchema.safeParse(formData)
-      : registrationFormDataSchema.safeParse(formData)
+      ? loginFormDataSchema.safeParse(data)
+      : registrationFormDataSchema.safeParse(data)
     if (result.success) {
       try {
         if (isLogin) await login(result.data)
@@ -73,21 +68,11 @@ export default function LoginPage(): React.JSX.Element {
   return (
     <>
       <TopAppBar title={isLogin ? 'Вход' : 'Регистрация'} back />
-      <form className="mt-2 space-y-3" onSubmit={onSubmit}>
+      <form className="mt-2 space-y-3" action={onSubmit}>
         <div className="space-y-2">
-          <Input
-            value={formData.email}
-            onChange={value => setFormData(prev => ({ ...prev, email: value }))}
-            type="email"
-            label="Email"
-          />
+          <Input defaultValue={state.email} type="email" label="Email" name="email" />
           <div className="flex flex-col gap-1">
-            <Input
-              value={formData.password}
-              onChange={value => setFormData(prev => ({ ...prev, password: value }))}
-              type="password"
-              label="Пароль"
-            />
+            <Input defaultValue={state.password} type="password" label="Пароль" name="password" />
             {isLogin && (
               <Link
                 to={FORGOT_PASSWORD_ROUTE}
@@ -100,10 +85,10 @@ export default function LoginPage(): React.JSX.Element {
           </div>
           {!isLogin && (
             <Input
-              value={formData.passwordRepeat}
-              onChange={value => setFormData(prev => ({ ...prev, passwordRepeat: value }))}
+              defaultValue={state.passwordRepeat}
               type="password"
               label="Повторите пароль"
+              name="passwordRepeat"
             />
           )}
           <ErrorComponent error={error} />
