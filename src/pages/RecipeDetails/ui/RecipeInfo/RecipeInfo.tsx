@@ -10,7 +10,7 @@ import {
 } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
 
-import { catchHttpError, navigateBack } from '@/shared/lib'
+import { catchHttpError, minsToHoursAndMins, navigateBack } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import { EDIT_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
@@ -59,7 +59,6 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
         />
         {isAuthor ? (
           <div className="absolute top-2 right-2 flex gap-2">
-            {/* TODO: ссылка на редактирование рецепта */}
             <ButtonIcon
               icon="edit"
               onClick={() => navigate(`${EDIT_RECIPE_ROUTE}/${recipe.id}`)}
@@ -85,8 +84,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
             <svg className="fill-primary size-2">
               <use href="/images/icons.svg#clock" />
             </svg>
-            {/* TODO: пересчитать часов и минут? */}
-            <div className="label-small text-txt-secondary">{recipe.time} минут</div>
+            <div className="label-small text-txt-secondary">{minsToHoursAndMins(recipe.time)}</div>
           </div>
           <Tag text={difficultyText} surface={tagDifficultySurface} />
         </div>

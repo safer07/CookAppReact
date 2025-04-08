@@ -9,7 +9,7 @@ export const listItemVariants = cva('listItem', {
     },
     _clickable: {
       false: null,
-      true: null,
+      true: 'hover:surface-accent-light cursor-pointer',
     },
     selected: {
       false: null,
@@ -17,16 +17,9 @@ export const listItemVariants = cva('listItem', {
     },
     disabled: {
       false: null,
-      true: 'surface-low text-txt-tertiary cursor-default [&_:is(.list-item-secondary-text,_.list-item-description,_.right-icon)]:text-txt-tertiary',
+      true: 'surface-low! text-txt-tertiary cursor-default! [&_:is(.list-item-secondary-text,_.list-item-description,_.right-icon)]:text-txt-tertiary',
     },
   },
-  compoundVariants: [
-    {
-      _clickable: true,
-      disabled: false,
-      class: 'hover:surface-accent-light cursor-pointer',
-    },
-  ],
   defaultVariants: { size: 'small', _clickable: false },
 })
 

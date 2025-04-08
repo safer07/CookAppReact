@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { LikeButton } from '@/entities/favorites/@x/recipe'
 import { useUser } from '@/entities/user/@x/recipe'
 
+import { minsToHoursAndMins } from '@/shared/lib'
 import Tag from '@/shared/ui/Tag'
 
 import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
@@ -49,7 +50,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
             <svg className="fill-primary size-2">
               <use href="/images/icons.svg#clock" />
             </svg>
-            <div className="label-small text-txt-secondary">{recipe.time} минут</div>
+            <div className="label-small text-txt-secondary">{minsToHoursAndMins(recipe.time)}</div>
           </div>
           <Tag text={difficultyText} surface={tagDifficultySurface} />
         </div>
