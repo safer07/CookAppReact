@@ -13,7 +13,7 @@ import FilteredRecipes from './FilteredRecipes'
 import Filters from './Filters'
 
 export default function Catalog(): React.JSX.Element {
-  const { categories, getCategories, status } = useCategories()
+  const { categories, status } = useCategories()
   const { filters, setSearchQuery } = useCatalog()
   const { categories: filteredCategories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
@@ -21,10 +21,6 @@ export default function Catalog(): React.JSX.Element {
   const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
   const debounceDelay = tempSearchQuery === '' ? 0 : 1000
   const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
-
-  useEffect(() => {
-    if (!categories.length) getCategories()
-  }, [categories, getCategories])
 
   useEffect(() => {
     setSearchQuery(debouncedSearchQuery)

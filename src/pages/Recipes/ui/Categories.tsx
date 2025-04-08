@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { RecipeCategoryCard, useCategories } from '@/entities/recipe'
 
 import ErrorComponent from '@/shared/ui/ErrorComponent'
@@ -7,12 +5,8 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { useCatalog } from '../store/catalogStore'
 
 export default function Categories(): React.JSX.Element {
-  const { categories, getCategories, status } = useCategories()
+  const { categories, status } = useCategories()
   const setFilteredCategories = useCatalog(state => state.setFilteredCategories)
-
-  useEffect(() => {
-    if (!categories.length) getCategories()
-  }, [categories, getCategories])
 
   return (
     <>

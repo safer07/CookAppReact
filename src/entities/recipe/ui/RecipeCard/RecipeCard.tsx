@@ -6,8 +6,8 @@ import { useUser } from '@/entities/user/@x/recipe'
 import Tag from '@/shared/ui/Tag'
 
 import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
+import { useCategories } from '../../lib/useCategories'
 import type { Recipe } from '../../model/recipe'
-import { useCategories } from '../../store/categoriesStore'
 import RecipeCardSkeleton from './RecipeCardSkeleton'
 
 type RecipeCardProps = {
@@ -15,7 +15,7 @@ type RecipeCardProps = {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Element {
-  const categories = useCategories(state => state.categories)
+  const { categories } = useCategories()
   const { user } = useUser()
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(

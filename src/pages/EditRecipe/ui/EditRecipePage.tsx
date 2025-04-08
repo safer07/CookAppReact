@@ -46,7 +46,8 @@ export default function EditRecipePage(): React.JSX.Element {
   async function onSaveRecipe() {
     const response = await saveRecipe()
     if (response?.id) {
-      navigate(`${API_PATHS.recipes.getOne}/${response.id}`, { replace: true })
+      if (isEdit) navigateBack(navigate)
+      else navigate(`${API_PATHS.recipes.getOne}/${response.id}`, { replace: true })
       toast.success(`Рецепт ${isEdit ? 'обновлён' : 'создан'}`)
     }
   }

@@ -16,7 +16,7 @@ type StepProps = {
 }
 
 export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.Element {
-  const { categories, getCategories } = useCategories()
+  const { categories } = useCategories()
   const { recipe, setName, setCategoryId, setDescription, setImg } = store()
   const { name, categoryId, description, img } = recipe
 
@@ -24,10 +24,6 @@ export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.E
     value: category.id.toString(),
     label: category.fullName,
   }))
-
-  useEffect(() => {
-    if (!categories.length) getCategories()
-  }, [categories, getCategories])
 
   useEffect(() => {
     if (name && categoryId && description) setStepIsValid(true)
