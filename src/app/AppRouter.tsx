@@ -7,6 +7,7 @@ import {
   CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
   EDIT_PROFILE_ROUTE,
+  EDIT_RECIPE_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   LOGIN_ROUTE,
   PROFILE_ROUTE,
@@ -20,7 +21,7 @@ import { PrivateRoutes } from './PrivateRoutes'
 
 const RecipeDetails = lazy(() => import('@/pages/RecipeDetails'))
 const CookingMode = lazy(() => import('@/pages/RecipeDetails/ui/CookingMode'))
-const CreateRecipe = lazy(() => import('@/pages/CreateRecipe'))
+const EditRecipe = lazy(() => import('@/pages/EditRecipe'))
 const Profile = lazy(() => import('@/pages/Profile'))
 const Auth = lazy(() => import('@/pages/Auth'))
 const Page404 = lazy(() => import('@/pages/404'))
@@ -42,7 +43,8 @@ export default function AppRouter() {
           <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
         </Route>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
-        <Route path={CREATE_RECIPE_ROUTE} element={<CreateRecipe />} />
+        <Route path={CREATE_RECIPE_ROUTE} element={<EditRecipe />} />
+        <Route path={`${EDIT_RECIPE_ROUTE}/:id`} element={<EditRecipe />} />
         <Route path={LOGIN_ROUTE} element={<Auth />} />
         <Route path={REGISTRATION_ROUTE} element={<Auth />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgotPassword />} />

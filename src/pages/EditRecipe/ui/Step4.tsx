@@ -11,11 +11,16 @@ import Select, { type SelectOption } from '@/shared/ui/Select'
 import Stepper from '@/shared/ui/Stepper'
 import TextArea from '@/shared/ui/TextArea'
 
-import { emptyStep, useCreateRecipe } from '../store/createRecipeStore'
+import type { CreateRecipeStore } from '../store/createRecipeStore'
+import { type EditRecipeStore, emptyStep } from '../store/editRecipeStore'
 
-export default function Step4(): React.JSX.Element {
-  const { recipeData, setSteps, setHidden } = useCreateRecipe()
-  const { totalIngredients, steps, hidden } = recipeData
+type StepProps = {
+  store: CreateRecipeStore | EditRecipeStore
+}
+
+export default function Step4({ store }: StepProps): React.JSX.Element {
+  const { recipe, setSteps, setHidden } = store()
+  const { totalIngredients, steps, hidden } = recipe
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])

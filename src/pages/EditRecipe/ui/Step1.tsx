@@ -7,14 +7,18 @@ import PhotoUpload from '@/shared/ui/PhotoUpload'
 import Select from '@/shared/ui/Select'
 import TextArea from '@/shared/ui/TextArea'
 
-import { useCreateRecipe } from '../store/createRecipeStore'
+import type { CreateRecipeStore } from '../store/createRecipeStore'
+import type { EditRecipeStore } from '../store/editRecipeStore'
 
-type StepProps = { setStepIsValid: (status: boolean) => void }
+type StepProps = {
+  setStepIsValid: (status: boolean) => void
+  store: CreateRecipeStore | EditRecipeStore
+}
 
-export default function Step1({ setStepIsValid }: StepProps): React.JSX.Element {
+export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.Element {
   const { categories, getCategories } = useCategories()
-  const { recipeData, setName, setCategoryId, setDescription, setImg } = useCreateRecipe()
-  const { name, categoryId, description, img } = recipeData
+  const { recipe, setName, setCategoryId, setDescription, setImg } = store()
+  const { name, categoryId, description, img } = recipe
 
   const categoriesOptions = categories.map(category => ({
     value: category.id.toString(),

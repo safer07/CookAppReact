@@ -5,13 +5,17 @@ import { RECIPE_DIFFICULTIES } from '@/entities/recipe'
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 
-import { useCreateRecipe } from '../store/createRecipeStore'
+import type { CreateRecipeStore } from '../store/createRecipeStore'
+import type { EditRecipeStore } from '../store/editRecipeStore'
 
-type StepProps = { setStepIsValid: (status: boolean) => void }
+type StepProps = {
+  setStepIsValid: (status: boolean) => void
+  store: CreateRecipeStore | EditRecipeStore
+}
 
-export default function Step2({ setStepIsValid }: StepProps): React.JSX.Element {
-  const { recipeData, setDifficulty, setTime } = useCreateRecipe()
-  const { time, difficulty } = recipeData
+export default function Step2({ setStepIsValid, store }: StepProps): React.JSX.Element {
+  const { recipe, setDifficulty, setTime } = store()
+  const { time, difficulty } = recipe
 
   let hours: number | null = null
   let minutes: number | null = null

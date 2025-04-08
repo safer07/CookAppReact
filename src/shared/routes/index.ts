@@ -10,6 +10,7 @@ export const CHANGE_PASSWORD_ROUTE = '/change-password'
 // Recipes router
 export const RECIPES_ROUTE = '/'
 export const CREATE_RECIPE_ROUTE = '/create-recipe'
+export const EDIT_RECIPE_ROUTE = '/edit-recipe'
 // TODO: сделать маршруты для отдельного рецепта
 // export const RECIPE_ROUTE = '/recipes/:id'
 // export const RECIPE_COOKING_MODE_ROUTE = '/recipes/:id/cooking-mode'

@@ -12,7 +12,7 @@ import { useUser } from '@/entities/user'
 
 import { catchHttpError, navigateBack } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
-import { RECIPES_ROUTE } from '@/shared/routes'
+import { EDIT_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Modal from '@/shared/ui/Modal'
@@ -30,12 +30,12 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
   const { user } = useUser()
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
-    recipe?.difficulty,
+    recipe.difficulty,
   )
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const [error, setError] = useState<CustomError>(null)
 
-  const recipeCategory = categories.find(category => category.id === recipe?.categoryId)
+  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
 
   async function onDelete() {
     try {
@@ -54,7 +54,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
   return (
     <>
       <div className="layout-fullwidth relative">
-        <img className="aspect-9/7 w-full object-cover" src={recipe?.img} alt={recipe?.name} />
+        <img className="aspect-9/7 w-full object-cover" src={recipe.img} alt={recipe.name} />
         <ButtonIcon
           className="absolute top-2 left-2"
           icon="arrow_left"
@@ -64,7 +64,11 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
         {isAuthor ? (
           <div className="absolute top-2 right-2 flex gap-2">
             {/* TODO: ссылка на редактирование рецепта */}
-            <ButtonIcon icon="edit" onClick={() => {}} size="small" />
+            <ButtonIcon
+              icon="edit"
+              onClick={() => navigate(`${EDIT_RECIPE_ROUTE}/${recipe.id}`)}
+              size="small"
+            />
             <ButtonIcon icon="delete" onClick={() => setModalDeleteIsOpen(true)} size="small" />
           </div>
         ) : (
@@ -76,7 +80,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
 
       <div className="grid gap-1 pt-1 pb-2">
         <div>
-          <h1 className="headline-large">{recipe?.name}</h1>
+          <h1 className="headline-large">{recipe.name}</h1>
           <p className="text-txt-secondary pt-0.5">{recipeCategory?.fullName}</p>
         </div>
         <p className="text-txt-secondary">{recipe.description}</p>

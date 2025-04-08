@@ -10,8 +10,6 @@ export const createRecipeResponseSchema = z.object({
   recipe: fullRecipeSchema,
 })
 
-export const deleteRecipeResponseSchema = z.object({
-  message: z.string(),
-})
+export const deleteRecipeResponseSchema = z.string()
 
 export const getCategoriesResponseSchema = z.array(recipeCategorySchema)

@@ -17,9 +17,9 @@ export default function RecipeDetailsPage(): React.ReactNode {
   const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
 
   useEffect(() => {
-    if (!id || recipe?.id === id) return
+    if (!id) return
     fetchFullRecipe(id)
-  }, [id, recipe, fetchFullRecipe])
+  }, [id, fetchFullRecipe])
 
   if (!id) return null
 

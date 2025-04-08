@@ -7,13 +7,17 @@ import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 
-import { useCreateRecipe } from '../store/createRecipeStore'
+import type { CreateRecipeStore } from '../store/createRecipeStore'
+import type { EditRecipeStore } from '../store/editRecipeStore'
 
-type StepProps = { setStepIsValid: (status: boolean) => void }
+type StepProps = {
+  setStepIsValid: (status: boolean) => void
+  store: CreateRecipeStore | EditRecipeStore
+}
 
-export default function Step3({ setStepIsValid }: StepProps): React.JSX.Element {
-  const { recipeData, setSteps, setTotalIngredients } = useCreateRecipe()
-  const { steps, totalIngredients } = recipeData
+export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.Element {
+  const { recipe, setSteps, setTotalIngredients } = store()
+  const { steps, totalIngredients } = recipe
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [newIngredientName, setNewIngredientName] = useState<string>('')
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0)
