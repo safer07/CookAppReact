@@ -51,6 +51,7 @@ export default function Catalog(): React.JSX.Element {
       <Filters
         open={filtersIsOpen}
         setClose={() => setFiltersIsOpen(false)}
+        tempSearchQuery={tempSearchQuery}
         setTempSearchQuery={setTempSearchQuery}
       />
 

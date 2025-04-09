@@ -4,6 +4,7 @@ import { LikeButton } from '@/entities/favorites/@x/recipe'
 import { useUser } from '@/entities/user/@x/recipe'
 
 import { minsToHoursAndMins } from '@/shared/lib'
+import Image from '@/shared/ui/Image'
 import Tag from '@/shared/ui/Tag'
 
 import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
@@ -32,7 +33,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
     >
       <div className="relative">
         <div className="aspect-video overflow-hidden">
-          <img
+          <Image
             className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
             src={recipe.img}
             alt={recipe.name}

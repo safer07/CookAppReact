@@ -1,27 +1,34 @@
+import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
 import { findCategoryById, useCategories } from '@/entities/recipe'
 
+import { useDebounce } from '@/shared/lib'
 import Chip from '@/shared/ui/Chip'
+import Input from '@/shared/ui/Input'
 
 import { useCatalog } from '../store/catalogStore'
 
 type FilterProps = {
   open: boolean
   setClose: () => void
+  tempSearchQuery: string
   setTempSearchQuery: (value: string) => void
 }
 
 export default function Filters({
   open,
   setClose,
+  tempSearchQuery,
   setTempSearchQuery,
 }: FilterProps): React.JSX.Element {
   const { categories: recipeCategories } = useCategories()
   const { filters, setFilteredCategories, setSearchQuery, resetFilters } = useCatalog()
   const { categories, searchQuery } = filters
+  const debounceDelay = tempSearchQuery === '' ? 0 : 1000
+  const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
 
   function resetHandle() {
     resetFilters()
@@ -33,6 +40,10 @@ export default function Filters({
       setFilteredCategories(categories.filter(id => id !== categoryId))
     else setFilteredCategories([...categories, categoryId])
   }
+
+  useEffect(() => {
+    setSearchQuery(debouncedSearchQuery)
+  }, [debouncedSearchQuery, setSearchQuery])
 
   return ReactDOM.createPortal(
     <div
@@ -69,7 +80,19 @@ export default function Filters({
           )}
 
           <div>
-            <div className="headline-medium">Категория</div>
+            <form className="grow">
+              <Input
+                type="search"
+                value={tempSearchQuery}
+                placeholder="Поиск..."
+                iconLeft="search"
+                onChange={setTempSearchQuery}
+                clearButton
+                label="Поиск по названию"
+              />
+            </form>
+
+            <div className="headline-medium mt-3">Категория</div>
             <ul className="mt-2 flex flex-wrap gap-1">
               {recipeCategories.map(category => (
                 <li key={category.name}>

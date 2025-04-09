@@ -15,6 +15,7 @@ import type { CustomError } from '@/shared/model'
 import { EDIT_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Image from '@/shared/ui/Image'
 import Modal from '@/shared/ui/Modal'
 import Tag from '@/shared/ui/Tag'
 
@@ -50,7 +51,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
   return (
     <>
       <div className="layout-fullwidth relative">
-        <img className="aspect-9/7 w-full object-cover" src={recipe.img} alt={recipe.name} />
+        <Image className="aspect-9/7 w-full object-cover" src={recipe.img} alt={recipe.name} />
         <ButtonIcon
           className="absolute top-2 left-2"
           icon="arrow_left"

@@ -6,6 +6,7 @@ import TopAppBar from '@/widgets/TopAppBar'
 import Button from '@/shared/ui/Button'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
+import Image from '@/shared/ui/Image'
 import ListItem from '@/shared/ui/ListItem'
 import Loader from '@/shared/ui/Loader'
 import Stepper from '@/shared/ui/Stepper'
@@ -58,9 +59,10 @@ export default function CookingMode(): React.JSX.Element {
         <div className="layout-fullwidth flex h-svh flex-col">
           <div className="grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
-              <img
+              <Image
                 className="aspect-9/7 w-full object-cover"
                 src={step.img}
+                key={step.img}
                 alt={`Шаг ${stepIndex + 1}`}
               />
               <ButtonIcon

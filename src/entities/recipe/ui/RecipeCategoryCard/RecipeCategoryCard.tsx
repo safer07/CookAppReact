@@ -1,3 +1,5 @@
+import Image from '@/shared/ui/Image'
+
 import RecipeCategoryCardSkeleton from './RecipeCategoryCardSkeleton'
 
 type RecipeCategoryCardProps = {
@@ -12,7 +14,7 @@ export default function RecipeCategoryCard({ category, onClick }: RecipeCategory
       onClick={onClick}
     >
       <div className="aspect-3/2 overflow-hidden">
-        <img
+        <Image
           className="w-full object-cover transition-transform duration-300 group-hover:scale-110"
           src={category.img}
           alt={category.name}
