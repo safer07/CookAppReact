@@ -19,6 +19,7 @@
 @import './components/switch.css' layer(components);
 
 @import './utilities/headings.css';
+@import './utilities/scroll.css';
 @import './utilities/surface.css';
 
 @layer base {

@@ -1,0 +1,8 @@
+@media (hover: none) {
+  .mobile-no-scroll {
+    scrollbar-width: none;
+  }
+  .mobile-no-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}

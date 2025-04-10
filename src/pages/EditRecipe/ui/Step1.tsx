@@ -31,7 +31,7 @@ export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.E
   }, [name, categoryId, description, setStepIsValid])
 
   return (
-    <form className="space-y-3">
+    <form>
       <Input
         value={name}
         onChange={value => setName(value)}
@@ -55,6 +55,7 @@ export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.E
         label="Описание"
         showCount
         maxLength={RECIPE_LIMITS.description.max}
+        className="mt-2"
       />
 
       <PhotoUpload image={img} onChange={value => setImg(value)} label="Главное фото" />

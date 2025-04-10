@@ -6,6 +6,7 @@ type TextAreaProps = {
   helper?: string
   showCount?: boolean
   maxLength?: number
+  className?: string
 }
 
 export default function TextArea({
@@ -16,15 +17,16 @@ export default function TextArea({
   helper,
   showCount,
   maxLength,
+  className,
 }: TextAreaProps) {
   return (
-    <div>
+    <div className={className}>
       {label && <div className="input-label">{label}</div>}
       <textarea
         className="textarea"
         value={value}
         placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={event => onChange(event.target.value)}
         maxLength={maxLength}
         rows={5}
       />

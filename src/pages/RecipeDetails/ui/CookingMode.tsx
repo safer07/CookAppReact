@@ -57,7 +57,7 @@ export default function CookingMode(): React.JSX.Element {
 
       {status === 'success' && step && (
         <div className="flex h-svh flex-col">
-          <div className="grow overflow-y-auto">
+          <div className="mobile-no-scroll grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
               <Image
                 className="aspect-9/7 w-full object-cover"

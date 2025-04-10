@@ -8,7 +8,7 @@ export default function MainLayout() {
   return (
     <div className="grid h-svh grid-rows-[1fr_auto]">
       <Suspense fallback={<Loader />}>
-        <div className="layout-grid overflow-y-auto">
+        <div className="layout-grid mobile-no-scroll overflow-y-auto">
           <Outlet />
         </div>
       </Suspense>

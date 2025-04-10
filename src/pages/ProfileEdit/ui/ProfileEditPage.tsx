@@ -65,8 +65,8 @@ export default function ProfileEditPage(): React.JSX.Element {
     <>
       <TopAppBar title="Редактировать профиль" back />
 
-      <form className="grid h-full overflow-y-auto py-2" action={action}>
-        <div className="mb-2 overflow-y-auto">
+      <form className="mobile-no-scroll grid h-full overflow-y-auto py-2" action={action}>
+        <div className="mobile-no-scroll mb-2 overflow-y-auto">
           <div className="space-y-2">
             <Input defaultValue={actionState.data.name} label="Имя" name="name" />
             <Input defaultValue={actionState.data.lastName} label="Фамилия" name="lastName" />

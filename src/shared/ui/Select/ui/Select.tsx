@@ -28,6 +28,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
     placeholder,
     label,
     multiple,
+    className,
     clearButton = true,
     optionSize = 'small',
   } = props
@@ -78,7 +79,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
   }
 
   return (
-    <div>
+    <div className={className}>
       {label && <div className="input-label">{label}</div>}
       <div
         ref={containerRef}

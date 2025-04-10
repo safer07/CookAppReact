@@ -69,7 +69,7 @@ export default function EditRecipePage(): React.JSX.Element {
   return (
     <>
       <div className="grid h-svh grid-rows-[1fr_auto]">
-        <div className="overflow-y-auto">
+        <div className="mobile-no-scroll overflow-y-auto">
           <TopAppBar
             title={`${isEdit ? 'Редактировать' : 'Создать'} рецепт`}
             back

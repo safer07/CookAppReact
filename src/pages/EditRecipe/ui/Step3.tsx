@@ -86,7 +86,12 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
           </ul>
         )}
 
-        <Button text="Добавить ингредиент" icon="plus" onClick={() => setModalIsOpen(true)} />
+        <Button
+          text="Добавить ингредиент"
+          icon="plus"
+          onClick={() => setModalIsOpen(true)}
+          fullWidth
+        />
       </form>
 
       <Modal
