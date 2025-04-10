@@ -5,9 +5,11 @@ import Loader from '@/shared/ui/Loader'
 
 export default function FullScreenLayout() {
   return (
-    <div className="layout-grid flex h-svh flex-col">
+    <div className="h-svh">
       <Suspense fallback={<Loader />}>
-        <Outlet />
+        <div className="layout-grid">
+          <Outlet />
+        </div>
       </Suspense>
     </div>
   )

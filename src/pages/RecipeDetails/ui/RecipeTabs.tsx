@@ -20,7 +20,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
       />
 
       {activeTabIndex === 0 && (
-        <ul className="layout-fullwidth mt-1">
+        <ul className="layout-wide mt-1">
           {recipe.totalIngredients.map((item, index) => (
             <ListItem
               key={index}
@@ -38,7 +38,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
             <li key={index} className="grid gap-1">
               <div className="headline-medium">Шаг {index + 1}</div>
               {step.ingredients.length > 0 && (
-                <ul className="layout-fullwidth">
+                <ul className="layout-wide">
                   {step.ingredients.map((item, index) => (
                     <ListItem
                       key={index}

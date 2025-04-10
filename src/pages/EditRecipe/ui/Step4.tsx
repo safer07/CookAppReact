@@ -141,7 +141,7 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
           />
 
           {currentStepIngredients.length > 0 && (
-            <ul className="layout-fullwidth">
+            <ul className="layout-wide">
               {currentStepIngredients.map(i => (
                 <ListItem
                   key={i.name}
@@ -173,7 +173,7 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
         />
       </form>
 
-      <ul className="mt-2">
+      <ul className="layout-wide mt-2">
         <ListItem
           text="Опубликовать рецепт"
           size="medium"

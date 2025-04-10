@@ -66,11 +66,11 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
 
   return (
     <>
-      <form className="layout-grid flex flex-col gap-3">
+      <form className="space-y-3">
         <h2 className="headline-medium">Ингредиенты</h2>
 
         {totalIngredients.length > 0 && (
-          <ul className="layout-fullwidth">
+          <ul className="layout-wide">
             {totalIngredients.map(i => (
               <ListItem
                 key={i.name}

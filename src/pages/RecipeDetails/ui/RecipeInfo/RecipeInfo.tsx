@@ -50,7 +50,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
 
   return (
     <>
-      <div className="layout-fullwidth relative">
+      <div className="layout-wide relative">
         <Image className="aspect-9/7 w-full object-cover" src={recipe.img} alt={recipe.name} />
         <ButtonIcon
           className="absolute top-2 left-2"

@@ -1,6 +1,7 @@
 :root {
   --body-padding-inline: --spacing(2);
-  --container-max-width: 32rem; /* 512px */
+  --breakout-size: --spacing(2);
+  --container-max-width: 28rem; /* 448px */
 
   /* Текст */
   /* Размер текста */

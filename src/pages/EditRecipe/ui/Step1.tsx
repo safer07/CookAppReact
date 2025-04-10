@@ -31,7 +31,7 @@ export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.E
   }, [name, categoryId, description, setStepIsValid])
 
   return (
-    <form className="layout-grid flex flex-col gap-3">
+    <form className="space-y-3">
       <Input
         value={name}
         onChange={value => setName(value)}

@@ -56,7 +56,7 @@ export default function CookingMode(): React.JSX.Element {
       )}
 
       {status === 'success' && step && (
-        <div className="layout-fullwidth flex h-svh flex-col">
+        <div className="flex h-svh flex-col">
           <div className="grow overflow-y-auto">
             <div className="relative min-h-[4.5rem]">
               <Image
@@ -82,7 +82,7 @@ export default function CookingMode(): React.JSX.Element {
                   type="medium"
                 />
                 {step.ingredients.length > 0 && (
-                  <ul className="layout-fullwidth">
+                  <ul>
                     {step.ingredients.map((item, index) => (
                       <ListItem
                         key={index}

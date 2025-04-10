@@ -50,7 +50,7 @@ export default function ProfilePage(): React.JSX.Element {
     <>
       {status !== 'loading' ? <UserInfo /> : <UserInfo.Skeleton />}
       <ErrorComponent error={error} />
-      <ul className="layout-fullwidth py-1">
+      <ul className="layout-wide py-1">
         {user && (
           <ListItem
             text="Редактировать профиль"

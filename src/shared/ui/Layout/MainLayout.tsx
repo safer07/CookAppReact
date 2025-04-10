@@ -6,12 +6,12 @@ import NavBar from '@/shared/ui/Navbar'
 
 export default function MainLayout() {
   return (
-    <div className="flex h-svh flex-col">
-      <div className="layout-grid grow overflow-y-auto">
-        <Suspense fallback={<Loader />}>
+    <div className="grid h-svh grid-rows-[1fr_auto]">
+      <Suspense fallback={<Loader />}>
+        <div className="layout-grid overflow-y-auto">
           <Outlet />
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
       <NavBar />
     </div>
   )

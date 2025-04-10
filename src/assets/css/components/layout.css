@@ -1,35 +1,32 @@
-/* .container {
-  width: min(100% - var(--body-padding-inline) * 2, var(--container-max-width));
-  @apply mx-auto;
-} */
-
-.layout-grid {
-  /* grid auto-rows-max */
-  @apply mx-auto flex w-full flex-col items-start;
-  max-width: var(--container-max-width);
-  /* grid-template-columns:
+:is(.layout-grid, .layout-fullwidth):not(.no-grid) {
+  @apply mx-auto grid w-full content-start;
+  grid-template-columns:
     [fullwidth-start] minmax(var(--body-padding-inline), 1fr)
-    [content-start] min(
-      100% - (var(--body-padding-inline) * 2),
-      var(--container-max-width)
-    )
-    [content-end] minmax(var(--body-padding-inline), 1fr)
-    [fullwidth-end]; */
-  & > :not(.layout-fullwidth) {
-    width: calc(100% - var(--body-padding-inline) * 2);
-    @apply mx-auto;
-  }
-  & > .layout-fullwidth {
-    @apply mx-0 w-full;
-  }
+    [breakout-start] minmax(0, var(--breakout-size))
+    [content-start] min(100% - (var(--body-padding-inline) * 2), var(--container-max-width))
+    [content-end] minmax(0, var(--breakout-size))
+    [breakout-end] minmax(var(--body-padding-inline), 1fr)
+    [fullwidth-end];
 }
 
-/* :where(.layout-grid, .layout-fullwidth) > :not(.layout-fullwidth, .no-grid) {
+:where(.layout-grid, .layout-fullwidth) > :not(.no-grid) {
   @apply col-[content];
-} */
+}
 
 .layout-fullwidth {
-  /* @apply col-[fullwidth]; */
-  width: calc(100% + var(--body-padding-inline) * 2);
+  @apply col-[fullwidth];
+}
+
+.layout-breakout {
+  @apply col-[breakout];
+}
+
+/* :has(.layout-wide) {
+  @apply overflow-visible;
+} */
+:has(> .layout-wide) {
+  @apply overflow-x-clip;
+}
+.layout-wide {
   @apply -mx-(--body-padding-inline);
 }

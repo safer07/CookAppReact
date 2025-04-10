@@ -40,8 +40,8 @@ export default function NavBar(): React.JSX.Element {
   // ({isActive}) => getClass(isActive)
 
   return (
-    <div className="layout-grid">
-      <nav className="layout-fullwidth border-base-borders grid grid-cols-2 border-y">
+    <div className="layout-grid border-base-borders border-y">
+      <nav className="layout-wide grid grid-cols-2">
         {tabs.map((tab, index) => (
           <Link
             key={index}
