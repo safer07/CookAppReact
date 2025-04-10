@@ -29,6 +29,7 @@
 }
 
 html {
+  interpolate-size: allow-keywords;
   @apply max-w-full scroll-pt-10 bg-transparent motion-safe:scroll-smooth;
 }
 

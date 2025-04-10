@@ -56,9 +56,9 @@ export default function CookingMode(): React.JSX.Element {
       )}
 
       {status === 'success' && step && (
-        <div className="flex h-svh flex-col">
-          <div className="mobile-no-scroll grow overflow-y-auto">
-            <div className="relative min-h-[4.5rem]">
+        <div className="layout-fullwidth h-svh grid-rows-[1fr_auto]">
+          <div className="mobile-no-scroll layout-wide overflow-y-auto">
+            <div className="relative aspect-9/7 min-h-[4.5rem]">
               <Image
                 className="aspect-9/7 w-full object-cover"
                 src={step.img}
@@ -97,16 +97,14 @@ export default function CookingMode(): React.JSX.Element {
               </div>
             </div>
           </div>
-          <div className="layout-grid">
-            <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
-              <Button text="Назад" onClick={onClickBack} fullWidth />
-              <Button
-                text={stepIndex !== stepsCount - 1 ? 'Далее' : 'Готово'}
-                onClick={onClickNext}
-                variant="primary"
-                fullWidth
-              />
-            </div>
+          <div className="mt-auto grid shrink-0 grid-cols-2 gap-2 py-2">
+            <Button text="Назад" onClick={onClickBack} fullWidth />
+            <Button
+              text={stepIndex !== stepsCount - 1 ? 'Далее' : 'Готово'}
+              onClick={onClickNext}
+              variant="primary"
+              fullWidth
+            />
           </div>
         </div>
       )}

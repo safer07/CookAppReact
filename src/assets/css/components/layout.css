@@ -21,11 +21,8 @@
   @apply col-[breakout];
 }
 
-/* :has(.layout-wide) {
-  @apply overflow-visible;
-} */
 :has(> .layout-wide) {
-  @apply overflow-x-clip;
+  @apply overflow-x-visible;
 }
 .layout-wide {
   @apply -mx-(--body-padding-inline);

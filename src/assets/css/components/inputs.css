@@ -30,6 +30,8 @@
   }
 }
 .select {
+  transition: border-radius 0ms;
+  transition-delay: 500ms;
   @apply relative z-0 cursor-pointer outline-none;
   &.select-multiple {
     @apply pl-1;
@@ -44,12 +46,15 @@
     @apply flex grow flex-wrap gap-1;
   }
   & .select-options {
-    @apply surface-default border-primary shadow-glow shadow-primary/50 absolute -inset-x-px top-full -z-10 hidden max-h-30 overflow-y-auto rounded-b-lg border;
+    @apply surface-default border-primary shadow-glow shadow-primary/50 invisible absolute -inset-x-px top-full -z-10 h-0 max-h-30 overflow-y-auto rounded-b-lg border duration-500;
+  }
+  & .icon-right {
+    @apply transition-transform duration-500;
   }
   &.open {
-    @apply rounded-b-none;
+    @apply z-10 rounded-b-none delay-0;
     & .select-options {
-      @apply surface-default block;
+      @apply surface-default visible h-auto;
     }
     & .icon-right {
       @apply rotate-180;

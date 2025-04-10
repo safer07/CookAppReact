@@ -68,56 +68,59 @@ export default function EditRecipePage(): React.JSX.Element {
 
   return (
     <>
-      <div className="grid h-svh grid-rows-[1fr_auto]">
+      <div className="layout-wide grid h-svh grid-rows-[1fr_auto]">
         <div className="mobile-no-scroll overflow-y-auto">
-          <TopAppBar
-            title={`${isEdit ? 'Редактировать' : 'Создать'} рецепт`}
-            back
-            backOnClick={onClickBack}
-            rightIcon={
-              !isEdit
-                ? {
-                    icon: 'delete',
-                    onClick: () => setModalDeleteIsOpen(true),
-                  }
-                : undefined
-            }
-          />
+          <div className="layout-grid">
+            <TopAppBar
+              title={`${isEdit ? 'Редактировать' : 'Создать'} рецепт`}
+              back
+              backOnClick={onClickBack}
+              rightIcon={
+                !isEdit
+                  ? {
+                      icon: 'delete',
+                      onClick: () => setModalDeleteIsOpen(true),
+                    }
+                  : undefined
+              }
+            />
+            <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
 
-          <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
-
-          <div className="mt-3 overflow-y-auto pb-2">
-            {step === 1 && (
-              <Step1
-                setStepIsValid={setStepIsValid}
-                store={isEdit ? editRecipeStore : createRecipeStore}
-              />
-            )}
-            {step === 2 && (
-              <Step2
-                setStepIsValid={setStepIsValid}
-                store={isEdit ? editRecipeStore : createRecipeStore}
-              />
-            )}
-            {step === 3 && (
-              <Step3
-                setStepIsValid={setStepIsValid}
-                store={isEdit ? editRecipeStore : createRecipeStore}
-              />
-            )}
-            {step === 4 && <Step4 store={isEdit ? editRecipeStore : createRecipeStore} />}
-            <ErrorComponent className="layout-grid mt-3" error={error} />
+            <div className="mt-3 pb-2">
+              {step === 1 && (
+                <Step1
+                  setStepIsValid={setStepIsValid}
+                  store={isEdit ? editRecipeStore : createRecipeStore}
+                />
+              )}
+              {step === 2 && (
+                <Step2
+                  setStepIsValid={setStepIsValid}
+                  store={isEdit ? editRecipeStore : createRecipeStore}
+                />
+              )}
+              {step === 3 && (
+                <Step3
+                  setStepIsValid={setStepIsValid}
+                  store={isEdit ? editRecipeStore : createRecipeStore}
+                />
+              )}
+              {step === 4 && <Step4 store={isEdit ? editRecipeStore : createRecipeStore} />}
+              <ErrorComponent className="layout-grid mt-3" error={error} />
+            </div>
           </div>
         </div>
-        <div className="mt-auto grid grid-cols-2 gap-2 py-2">
-          <Button text="Назад" onClick={onClickBack} fullWidth />
-          <Button
-            text={step !== stepsCount ? 'Далее' : 'Сохранить'}
-            onClick={onClickNext}
-            variant="primary"
-            fullWidth
-            disabled={!stepIsValid || status === 'loading'}
-          />
+        <div className="layout-grid">
+          <div className="grid grid-cols-2 gap-2 py-2">
+            <Button text="Назад" onClick={onClickBack} fullWidth />
+            <Button
+              text={step !== stepsCount ? 'Далее' : 'Сохранить'}
+              onClick={onClickNext}
+              variant="primary"
+              fullWidth
+              disabled={!stepIsValid || status === 'loading'}
+            />
+          </div>
         </div>
 
         {!isEdit && (
