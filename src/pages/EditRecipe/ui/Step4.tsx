@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { type Ingredient, RECIPE_LIMITS } from '@/entities/recipe'
 
-import { useDebounce } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
@@ -24,8 +23,7 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])
-  const [tempStepDescription, setTempStepDescription] = useState<string>('')
-  const debouncedStepDescription: string = useDebounce(tempStepDescription)
+  const [inputStepDescription, setInputStepDescription] = useState<string>('')
 
   const currentStepIngredients: Ingredient[] = steps[currentStepIndex].ingredients
 
@@ -84,11 +82,11 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
   }
 
   useEffect(() => {
-    setStepValue(debouncedStepDescription, 'description')
-  }, [debouncedStepDescription])
+    setStepValue(inputStepDescription, 'description')
+  }, [inputStepDescription])
 
   useEffect(() => {
-    setTempStepDescription(steps[currentStepIndex].description)
+    setInputStepDescription(steps[currentStepIndex].description)
   }, [currentStepIndex, steps])
 
   useEffect(() => {
@@ -159,8 +157,8 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
         </div>
 
         <TextArea
-          value={tempStepDescription}
-          onChange={value => setTempStepDescription(value)}
+          value={inputStepDescription}
+          onChange={value => setInputStepDescription(value)}
           label={`Рецепт (шаг ${currentStepIndex + 1})`}
           showCount
           maxLength={RECIPE_LIMITS.stepDescription.max}

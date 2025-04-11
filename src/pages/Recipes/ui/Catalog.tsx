@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useCategories } from '@/entities/recipe'
 
@@ -18,13 +18,10 @@ export default function Catalog(): React.JSX.Element {
   const { categories: filteredCategories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const filtersCount = Object.values(filters).filter(value => value.length !== 0).length
-  const [tempSearchQuery, setTempSearchQuery] = useState<string>('')
-  const debounceDelay = tempSearchQuery === '' ? 0 : 1000
-  const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
+  const [inputSearchQuery, setInputSearchQuery] = useState<string>('')
+  const debounceDelay = inputSearchQuery === '' ? 0 : 1000
 
-  useEffect(() => {
-    setSearchQuery(debouncedSearchQuery)
-  }, [debouncedSearchQuery, setSearchQuery])
+  useDebounce(() => setSearchQuery(inputSearchQuery), [inputSearchQuery], debounceDelay)
 
   return (
     <>
@@ -32,10 +29,10 @@ export default function Catalog(): React.JSX.Element {
         <form className="grow">
           <Input
             type="search"
-            value={tempSearchQuery}
+            value={inputSearchQuery}
             placeholder="Поиск..."
             iconLeft="search"
-            onChange={setTempSearchQuery}
+            onChange={setInputSearchQuery}
             clearButton
           />
         </form>
@@ -51,8 +48,8 @@ export default function Catalog(): React.JSX.Element {
       <Filters
         open={filtersIsOpen}
         setClose={() => setFiltersIsOpen(false)}
-        tempSearchQuery={tempSearchQuery}
-        setTempSearchQuery={setTempSearchQuery}
+        inputSearchQuery={inputSearchQuery}
+        setInputSearchQuery={setInputSearchQuery}
       />
 
       <div className="py-2">

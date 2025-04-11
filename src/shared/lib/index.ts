@@ -1,7 +1,6 @@
 export { catchHttpError } from './catchHttpError'
 export { cn } from './cn'
 export { formatZodError } from './formatZodError'
-// export { debounce } from './debounce'
 export { minsToHoursAndMins } from './minsToHoursAndMins'
 export { navigateBack } from './navigateBack'
 export { useDebounce } from './useDebounce'

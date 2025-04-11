@@ -27,7 +27,7 @@ api.interceptors.response.use(
     const originalRequest = error.config
     const status = error.response?.status ?? null
 
-    if (status === 401) {
+    if (status === 401 || status === 403) {
       if (!originalRequest._isRetry) {
         originalRequest._isRetry = true
         try {
@@ -37,12 +37,15 @@ api.interceptors.response.use(
           const validatedData = refreshResponseSchema.parse(data)
           localStorage.setItem(ACCESS_TOKEN_KEY, validatedData.accessToken)
         } catch {
-          console.error('Пользователь не авторизован')
+          if (status === 401) console.error('Пользователь не авторизован')
+          if (status === 403) console.error('Нет доступа')
         }
         return api.request(originalRequest)
       } else {
-        localStorage.removeItem(ACCESS_TOKEN_KEY)
-        useUser.setState({ user: null })
+        if (status === 401) {
+          localStorage.removeItem(ACCESS_TOKEN_KEY)
+          useUser.setState({ user: null })
+        }
       }
     }
 

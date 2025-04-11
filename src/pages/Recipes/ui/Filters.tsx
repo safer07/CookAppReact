@@ -1,11 +1,9 @@
-import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
 import { findCategoryById, useCategories } from '@/entities/recipe'
 
-import { useDebounce } from '@/shared/lib'
 import Chip from '@/shared/ui/Chip'
 import Input from '@/shared/ui/Input'
 
@@ -14,25 +12,23 @@ import { useCatalog } from '../store/catalogStore'
 type FilterProps = {
   open: boolean
   setClose: () => void
-  tempSearchQuery: string
-  setTempSearchQuery: (value: string) => void
+  inputSearchQuery: string
+  setInputSearchQuery: (value: string) => void
 }
 
 export default function Filters({
   open,
   setClose,
-  tempSearchQuery,
-  setTempSearchQuery,
+  inputSearchQuery,
+  setInputSearchQuery,
 }: FilterProps): React.JSX.Element {
   const { categories: recipeCategories } = useCategories()
   const { filters, setFilteredCategories, setSearchQuery, resetFilters } = useCatalog()
   const { categories, searchQuery } = filters
-  const debounceDelay = tempSearchQuery === '' ? 0 : 1000
-  const debouncedSearchQuery = useDebounce(tempSearchQuery, debounceDelay)
 
   function resetHandle() {
     resetFilters()
-    setTempSearchQuery('')
+    setInputSearchQuery('')
   }
 
   function toggleCategory(categoryId: number) {
@@ -40,10 +36,6 @@ export default function Filters({
       setFilteredCategories(categories.filter(id => id !== categoryId))
     else setFilteredCategories([...categories, categoryId])
   }
-
-  useEffect(() => {
-    setSearchQuery(debouncedSearchQuery)
-  }, [debouncedSearchQuery, setSearchQuery])
 
   return ReactDOM.createPortal(
     <div
@@ -62,7 +54,7 @@ export default function Filters({
                   text={`Поиск: ${searchQuery}`}
                   onClick={() => {
                     setSearchQuery('')
-                    setTempSearchQuery('')
+                    setInputSearchQuery('')
                   }}
                   del
                 />
@@ -83,10 +75,10 @@ export default function Filters({
             <form className="grow">
               <Input
                 type="search"
-                value={tempSearchQuery}
+                value={inputSearchQuery}
                 placeholder="Поиск..."
                 iconLeft="search"
-                onChange={setTempSearchQuery}
+                onChange={setInputSearchQuery}
                 clearButton
                 label="Поиск по названию"
               />

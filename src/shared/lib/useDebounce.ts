@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-export function useDebounce(value: string, delay: number = 300): string {
-  const [debounced, setDebounced] = useState(value)
-
+export const useDebounce = (
+  debounceFunction: () => void,
+  monitoringVariables: React.DependencyList = [],
+  debounceTime = 500,
+) => {
   useEffect(() => {
-    const handler = setTimeout(() => setDebounced(value), delay)
-    return () => clearTimeout(handler)
-  }, [value, delay])
-
-  return debounced
+    const timer = setTimeout(debounceFunction, debounceTime)
+    return () => clearTimeout(timer)
+  }, [...monitoringVariables, debounceFunction, debounceTime])
 }
