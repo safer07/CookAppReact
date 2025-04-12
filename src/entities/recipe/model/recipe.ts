@@ -39,6 +39,7 @@ export type FullRecipe = z.infer<typeof fullRecipeSchema>
 export type RecipeFilters = {
   categories: number[]
   searchQuery?: string
+  difficulties: number[]
 }
 
 const createRecipeBaseSchema = z.object({

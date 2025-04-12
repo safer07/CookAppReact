@@ -70,6 +70,9 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
         ) : (
           <LikeButton itemId={recipe.id} className="absolute top-2 right-2" />
         )}
+        {recipe.hidden && (
+          <Tag className="absolute right-2 bottom-2" text="Рецепт скрыт" surface="surface-yellow" />
+        )}
       </div>
 
       <ErrorComponent error={error} className="mt-2" />

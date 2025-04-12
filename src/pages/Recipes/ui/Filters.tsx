@@ -1,12 +1,14 @@
+import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { findCategoryById, useCategories } from '@/entities/recipe'
+import { RECIPE_DIFFICULTIES, findCategoryById, useCategories } from '@/entities/recipe'
 
 import Chip from '@/shared/ui/Chip'
 import Input from '@/shared/ui/Input'
 
+import { getFiltersCount } from '../lib/getFiltersCount'
 import { useCatalog } from '../store/catalogStore'
 
 type FilterProps = {
@@ -22,20 +24,30 @@ export default function Filters({
   inputSearchQuery,
   setInputSearchQuery,
 }: FilterProps): React.JSX.Element {
-  const { categories: recipeCategories } = useCategories()
-  const { filters, setFilteredCategories, setSearchQuery, resetFilters } = useCatalog()
-  const { categories, searchQuery } = filters
+  const { categories } = useCategories()
+  const { filters, setCategories, setSearchQuery, setDifficulties, resetFilters } = useCatalog()
+  const { categories: filteredCategories, searchQuery, difficulties } = filters
+  const filtersCount = getFiltersCount(filters)
 
   function resetHandle() {
     resetFilters()
     setInputSearchQuery('')
   }
 
-  function toggleCategory(categoryId: number) {
-    if (categories.includes(categoryId))
-      setFilteredCategories(categories.filter(id => id !== categoryId))
-    else setFilteredCategories([...categories, categoryId])
+  function toggleValue(value: number, array: number[], set: (value: number[]) => void) {
+    if (array.includes(value)) set(array.filter(v => v !== value))
+    else set([...array, value])
   }
+
+  useEffect(() => {
+    if (!categories.length) return
+    if (filteredCategories.length === categories.length) setCategories([])
+  }, [filteredCategories, categories, setCategories])
+
+  useEffect(() => {
+    if (!RECIPE_DIFFICULTIES.length) return
+    if (difficulties.length === RECIPE_DIFFICULTIES.length) setDifficulties([])
+  }, [difficulties, setDifficulties])
 
   return ReactDOM.createPortal(
     <div
@@ -47,7 +59,7 @@ export default function Filters({
 
         <div className="mt-2">
           {/* Чипы */}
-          {(categories.length > 0 || searchQuery) && (
+          {filtersCount > 0 && (
             <div className="mb-3 flex flex-wrap gap-1">
               {searchQuery && (
                 <Chip
@@ -59,11 +71,19 @@ export default function Filters({
                   del
                 />
               )}
-              {categories.map(categoryId => (
+              {filteredCategories.map(categoryId => (
                 <Chip
                   key={categoryId}
-                  text={`Категория: ${findCategoryById(categoryId, recipeCategories)?.name}`}
-                  onClick={() => toggleCategory(categoryId)}
+                  text={`Категория: ${findCategoryById(categoryId, categories)?.name}`}
+                  onClick={() => toggleValue(categoryId, filteredCategories, setCategories)}
+                  del
+                />
+              ))}
+              {difficulties.map(value => (
+                <Chip
+                  key={value}
+                  text={`Сложность: ${RECIPE_DIFFICULTIES.find(difficulty => difficulty.value === value)?.text}`}
+                  onClick={() => toggleValue(value, difficulties, setDifficulties)}
                   del
                 />
               ))}
@@ -85,13 +105,26 @@ export default function Filters({
             </form>
 
             <div className="headline-medium mt-3">Категория</div>
-            <ul className="mt-2 flex flex-wrap gap-1">
-              {recipeCategories.map(category => (
+            <ul className="mt-1 flex flex-wrap gap-1">
+              {categories.map(category => (
                 <li key={category.name}>
                   <Chip
                     text={category.name}
-                    onClick={() => toggleCategory(category.id)}
-                    variant={categories.includes(category.id) ? 'active' : 'default'}
+                    onClick={() => toggleValue(category.id, filteredCategories, setCategories)}
+                    variant={filteredCategories.includes(category.id) ? 'active' : 'default'}
+                  />
+                </li>
+              ))}
+            </ul>
+
+            <div className="headline-medium mt-3">Сложность</div>
+            <ul className="mt-1 flex flex-wrap gap-1">
+              {RECIPE_DIFFICULTIES.map(difficulty => (
+                <li key={difficulty.value}>
+                  <Chip
+                    text={difficulty.text}
+                    onClick={() => toggleValue(difficulty.value, difficulties, setDifficulties)}
+                    variant={difficulties.includes(difficulty.value) ? 'active' : 'default'}
                   />
                 </li>
               ))}

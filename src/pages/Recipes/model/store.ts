@@ -2,7 +2,8 @@ import type { RecipeFilters } from '@/entities/recipe'
 
 export type CatalogStore = {
   filters: RecipeFilters
-  setFilteredCategories: (categories: number[]) => void
+  setCategories: (categories: number[]) => void
   setSearchQuery: (query: string) => void
+  setDifficulties: (difficulties: number[]) => void
   resetFilters: () => void
 }

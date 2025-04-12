@@ -14,7 +14,7 @@ export default function FeaturedRecipesList({
 }: {
   category: RecipeCategory
 }): React.JSX.Element {
-  const setFilteredCategories = useCatalog(state => state.setFilteredCategories)
+  const setCategories = useCatalog(state => state.setCategories)
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [status, setStatus] = useState<HttpStatus>('init')
 
@@ -41,7 +41,7 @@ export default function FeaturedRecipesList({
         status={status}
         button={{
           text: 'Смотреть все',
-          onClick: () => setFilteredCategories([category.id]),
+          onClick: () => setCategories([category.id]),
         }}
       />
     </div>

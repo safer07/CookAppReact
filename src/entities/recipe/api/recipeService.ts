@@ -11,10 +11,10 @@ import { fullRecipeSchema } from '../model/recipe'
 import type { CreateRecipeDTO, RecipeFilters, UpdateRecipeDTO } from '../model/recipe'
 
 export const recipesService = {
-  getRecipes: async (filters?: RecipeFilters, limit?: number) => {
+  getRecipes: async (filters?: Partial<RecipeFilters>, limit?: number) => {
     const query = filters?.searchQuery || null
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
-      params: { category: filters?.categories, query, limit },
+      params: { query, limit, category: filters?.categories, difficulty: filters?.difficulties },
       paramsSerializer: { indexes: null },
     })
     const validatedData = recipesResponseSchema.parse(data)

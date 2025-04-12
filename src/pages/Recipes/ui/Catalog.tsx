@@ -6,6 +6,7 @@ import { useDebounce } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Input from '@/shared/ui/Input'
 
+import { getFiltersCount } from '../lib/getFiltersCount'
 import { useCatalog } from '../store/catalogStore'
 import Categories from './Categories'
 import FeaturedRecipesList from './FeaturedRecipesList'
@@ -15,9 +16,8 @@ import Filters from './Filters'
 export default function Catalog(): React.JSX.Element {
   const { categories, status } = useCategories()
   const { filters, setSearchQuery } = useCatalog()
-  const { categories: filteredCategories, searchQuery } = filters
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
-  const filtersCount = Object.values(filters).filter(value => value.length !== 0).length
+  const filtersCount = getFiltersCount(filters)
   const [inputSearchQuery, setInputSearchQuery] = useState<string>('')
   const debounceDelay = inputSearchQuery === '' ? 0 : 1000
 
@@ -54,7 +54,7 @@ export default function Catalog(): React.JSX.Element {
 
       <div className="py-2">
         {/* Каталог по умолчанию - категории + каждая отдельно */}
-        {filteredCategories.length === 0 && !searchQuery && (
+        {filtersCount === 0 && (
           <>
             <Categories />
 
@@ -71,9 +71,7 @@ export default function Catalog(): React.JSX.Element {
         )}
 
         {/* Показ результатов поиска или выбранной категории */}
-        {(filteredCategories.length > 0 || searchQuery) && (
-          <FilteredRecipes filtersIsOpen={filtersIsOpen} />
-        )}
+        {filtersCount > 0 && <FilteredRecipes filtersIsOpen={filtersIsOpen} />}
       </div>
     </>
   )

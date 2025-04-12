@@ -40,6 +40,13 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
           />
         </div>
         {!isAuthor && <LikeButton itemId={recipe.id} className="absolute top-1.5 right-1.5" />}
+        {recipe.hidden && (
+          <Tag
+            className="absolute right-1.5 bottom-1.5"
+            text="Рецепт скрыт"
+            surface="surface-yellow"
+          />
+        )}
       </div>
       <div className="mx-2 my-1.5 grid gap-0.5">
         <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300">

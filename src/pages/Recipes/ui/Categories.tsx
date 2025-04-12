@@ -6,7 +6,7 @@ import { useCatalog } from '../store/catalogStore'
 
 export default function Categories(): React.JSX.Element {
   const { categories, status } = useCategories()
-  const setFilteredCategories = useCatalog(state => state.setFilteredCategories)
+  const setCategories = useCatalog(state => state.setCategories)
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function Categories(): React.JSX.Element {
                 <RecipeCategoryCard
                   key={category.id}
                   category={category}
-                  onClick={() => setFilteredCategories([category.id])}
+                  onClick={() => setCategories([category.id])}
                 />
               ))}
         </div>

@@ -2,7 +2,7 @@ import type { TagSurface } from '@/shared/ui/Tag'
 
 type RecipeDifficultyItem = {
   value: number
-  difficultyText: string
+  text: string
   description: string
   tagDifficultySurface: TagSurface
 }
@@ -10,19 +10,19 @@ type RecipeDifficultyItem = {
 export const RECIPE_DIFFICULTIES: RecipeDifficultyItem[] = [
   {
     value: 1,
-    difficultyText: 'Легко',
+    text: 'Легко',
     description: 'Справится даже ребёнок',
     tagDifficultySurface: 'surface-green',
   },
   {
     value: 2,
-    difficultyText: 'Средне',
+    text: 'Средне',
     description: 'Может не получиться с первого раза',
     tagDifficultySurface: 'surface-yellow',
   },
   {
     value: 3,
-    difficultyText: 'Трудно',
+    text: 'Трудно',
     description: 'Требуется большой кулинарный опыт',
     tagDifficultySurface: 'surface-red',
   },
