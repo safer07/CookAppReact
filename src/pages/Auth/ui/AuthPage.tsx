@@ -3,10 +3,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { loginFormDataSchema, registrationFormDataSchema, useUser } from '@/entities/user'
+import { useFavorites } from '@/entities/favorites'
+import {
+  afterLogin,
+  loginFormDataSchema,
+  registrationFormDataSchema,
+  userService,
+} from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
-import type { CustomError, LocationState } from '@/shared/model'
+import type { CustomError, HttpStatus, LocationState } from '@/shared/model'
 import { FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
@@ -23,16 +29,12 @@ type State = {
 export default function LoginPage(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
-  const { user, status, login, registration } = useUser()
+  const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
   const [state, setState] = useState<State>({ email: '', password: '', passwordRepeat: '' })
   const isRegistration = location.pathname === REGISTRATION_ROUTE
   const isLogin = !isRegistration
   const { from } = (location.state as LocationState) ?? { from: { pathname: MAIN_ROUTE } }
-
-  useEffect(() => {
-    if (user) navigate(from, { replace: true })
-  }, [user, from, navigate])
 
   useEffect(() => {
     setError(null)
@@ -53,9 +55,18 @@ export default function LoginPage(): React.JSX.Element {
       : registrationFormDataSchema.safeParse(data)
     if (result.success) {
       try {
-        if (isLogin) await login(result.data)
-        else await registration(result.data)
+        const payload = isLogin
+          ? result.data
+          : { ...result.data, favorites: useFavorites.getState().favorites }
+        setStatus('loading')
+        const response = isLogin
+          ? await userService.login(payload)
+          : await userService.registration(payload)
+        afterLogin(response)
+        setStatus('success')
+        navigate(from, { replace: true })
       } catch (error) {
+        setStatus('error')
         catchHttpError(error, setError)
       }
     } else {

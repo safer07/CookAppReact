@@ -1,4 +1,6 @@
 export { userService } from './api/userService'
+export { afterLogin } from './lib/afterLogin'
+export { afterLogout } from './lib/afterLogout'
 export { emailSchema } from './model/user'
 export {
   changePasswordFormDataSchema,

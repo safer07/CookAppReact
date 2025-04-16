@@ -4,7 +4,12 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { changePasswordFormDataSchema, resetPasswordLinkSchema, useUser } from '@/entities/user'
+import {
+  afterLogin,
+  changePasswordFormDataSchema,
+  resetPasswordLinkSchema,
+  userService,
+} from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
@@ -17,14 +22,11 @@ export default function ResetPasswordPage(): React.JSX.Element {
   const location = useLocation()
   const { link } = useParams<{ link: string }>()
   const navigate = useNavigate()
-  const { user, resetPassword, changePassword } = useUser()
   const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
   const isReset = location.pathname !== CHANGE_PASSWORD_ROUTE
 
   useEffect(() => {
-    if (user && link) navigate(PROFILE_ROUTE, { replace: true })
-
     if (isReset) {
       const result = resetPasswordLinkSchema.safeParse(link)
       if (!result.success) {
@@ -33,7 +35,7 @@ export default function ResetPasswordPage(): React.JSX.Element {
         })
       }
     }
-  }, [user, link, navigate, isReset])
+  }, [link, isReset])
 
   async function onSubmit(formData: FormData) {
     setError(null)
@@ -61,13 +63,15 @@ export default function ResetPasswordPage(): React.JSX.Element {
           return
         }
         setStatus('loading')
-        await resetPassword(linkResult.data, result.data.password)
+        const response = await userService.resetPassword(linkResult.data, result.data.password)
+        afterLogin(response)
       } else {
         setStatus('loading')
-        await changePassword(result.data.password)
+        await userService.changePassword(result.data.password)
       }
       setStatus('success')
       toast.success('Пароль изменён')
+      navigate(PROFILE_ROUTE, { replace: true })
     } catch (error) {
       setStatus('error')
       catchHttpError(error, setError)

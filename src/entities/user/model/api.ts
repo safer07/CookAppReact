@@ -86,9 +86,6 @@ export const forgotPasswordResponseSchema = z.object({
 })
 export type ForgotPasswordResponse = z.infer<typeof forgotPasswordResponseSchema>
 
-export const resetPasswordResponseSchema = authResponseSchema
-export type resetPasswordResponse = AuthResponse
-
 export const changePasswordResponseSchema = z.object({
   message: z.string(),
 })

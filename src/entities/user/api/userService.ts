@@ -8,7 +8,6 @@ import {
   authResponseSchema,
   changePasswordResponseSchema,
   forgotPasswordResponseSchema,
-  resetPasswordResponseSchema,
 } from '../model/api'
 import { userSchema } from '../model/user'
 
@@ -50,7 +49,7 @@ export const userService = {
       link: forgotPasswordLink,
       password,
     })
-    const validatedData = resetPasswordResponseSchema.parse(data)
+    const validatedData = authResponseSchema.parse(data)
     return validatedData
   },
 

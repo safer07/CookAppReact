@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import { useQueryClient } from '@tanstack/react-query'
+
 import TopAppBar from '@/widgets/TopAppBar'
+
+import { useUser } from '@/entities/user'
 
 import { API_PATHS } from '@/shared/config'
 import { navigateBack } from '@/shared/lib'
@@ -20,6 +24,7 @@ import Step3 from './Step3'
 import Step4 from './Step4'
 
 export default function EditRecipePage(): React.JSX.Element {
+  const { user } = useUser()
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
   const navigate = useNavigate()
@@ -30,7 +35,7 @@ export default function EditRecipePage(): React.JSX.Element {
   const [step, setStep] = useState<number>(1)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
-
+  const queryClient = useQueryClient()
   const stepsCount = 4
 
   function onClickBack(): void {
@@ -45,11 +50,13 @@ export default function EditRecipePage(): React.JSX.Element {
 
   async function onSaveRecipe() {
     const response = await saveRecipe()
-    if (response?.id) {
-      if (isEdit) navigateBack(navigate)
-      else navigate(`${API_PATHS.recipes.getOne}/${response.id}`, { replace: true })
-      toast.success(`Рецепт ${isEdit ? 'обновлён' : 'создан'}`)
-    }
+    queryClient.invalidateQueries({ queryKey: ['my_recipes', user?.id] })
+    if (isEdit) {
+      // TODO: не инвалидировать, а перезаписать
+      queryClient.invalidateQueries({ queryKey: ['recipe', id] })
+      navigateBack(navigate)
+    } else navigate(`${API_PATHS.recipes.getOne}/${response.id}`, { replace: true })
+    toast.success(`Рецепт ${isEdit ? 'обновлён' : 'создан'}`)
   }
 
   function onDelete(): void {
@@ -106,7 +113,7 @@ export default function EditRecipePage(): React.JSX.Element {
                 />
               )}
               {step === 4 && <Step4 store={isEdit ? editRecipeStore : createRecipeStore} />}
-              <ErrorComponent className="layout-grid mt-3" error={error} />
+              <ErrorComponent className="mt-3" error={error} />
             </div>
           </div>
         </div>

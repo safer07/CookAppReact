@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { updateProfileDTOSchema, useUser } from '@/entities/user'
+import { updateProfileDTOSchema, useUser, userService } from '@/entities/user'
 import type { UpdateProfileDTO, UpdateProfileFormData } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
@@ -28,7 +28,7 @@ type FormState = {
 }
 
 export default function ProfileEditPage(): React.JSX.Element {
-  const { user, updateProfile } = useUser()
+  const { user, setUser } = useUser()
   const [gender, setGender] = useState<string>(user?.gender ?? '')
   const [actionState, action, isPending] = useActionState<FormState, FormData>(onSubmit, {
     data: {
@@ -52,7 +52,8 @@ export default function ProfileEditPage(): React.JSX.Element {
 
     if (result.success) {
       try {
-        await updateProfile(user.id, result.data)
+        const updatedUser = await userService.updateProfile(user.id, result.data)
+        setUser(updatedUser)
         toast.success('Профиль обновлён')
         return { data }
       } catch (error) {

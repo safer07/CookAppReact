@@ -5,18 +5,19 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { useCatalog } from '../store/catalogStore'
 
 export default function Categories(): React.JSX.Element {
-  const { categories, status } = useCategories()
+  const { categories, isPending, isError } = useCategories()
   const setCategories = useCatalog(state => state.setCategories)
 
   return (
     <>
       <h2 className="headline-medium">Категории</h2>
 
-      {status !== 'error' ? (
+      {!isError ? (
         <div className="mt-2 grid grid-cols-3 gap-2">
-          {status === 'loading'
+          {isPending
             ? [...new Array(9)].map((_, i) => <RecipeCategoryCard.Skeleton key={i} />)
-            : categories.map(category => (
+            : categories &&
+              categories.map(category => (
                 <RecipeCategoryCard
                   key={category.id}
                   category={category}

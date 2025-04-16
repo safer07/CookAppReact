@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
+import { catchHttpError } from '@/shared/lib'
 import Button from '@/shared/ui/Button'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
@@ -11,20 +12,16 @@ import ListItem from '@/shared/ui/ListItem'
 import Loader from '@/shared/ui/Loader'
 import Stepper from '@/shared/ui/Stepper'
 
-import useFullRecipe from '../store/store'
+import { useFullRecipe } from '../lib/useFullRecipe'
 
 export default function CookingMode(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
+  const { recipe, error: fetchError, isPending, isError } = useFullRecipe(id)
+  const error = catchHttpError(fetchError)
   const [stepIndex, setStepIndex] = useState<number>(0)
   const stepsCount = recipe?.steps.length || 1
   const step = recipe?.steps[stepIndex]
-
-  useEffect(() => {
-    if (!id || recipe?.id === id) return
-    fetchFullRecipe(id)
-  }, [id, recipe, fetchFullRecipe])
 
   function navigateToRecipe() {
     navigate(`/recipes/${id}`, { replace: true })
@@ -42,20 +39,20 @@ export default function CookingMode(): React.JSX.Element {
 
   return (
     <>
-      {status === 'loading' && (
+      {isPending && (
         <div className="h-svh">
           <Loader />
         </div>
       )}
 
-      {status === 'error' && (
+      {isError && (
         <>
           <TopAppBar title="Не удалось загрузить рецепт" back />
           <ErrorComponent className="mt-1" error={error} />
         </>
       )}
 
-      {status === 'success' && step && (
+      {!isError && step && (
         <div className="layout-fullwidth h-svh grid-rows-[1fr_auto]">
           <div className="mobile-no-scroll layout-wide overflow-y-auto">
             <div className="relative aspect-9/7 min-h-[4.5rem]">
@@ -82,7 +79,7 @@ export default function CookingMode(): React.JSX.Element {
                   type="medium"
                 />
                 {step.ingredients.length > 0 && (
-                  <ul>
+                  <ul className="layout-wide">
                     {step.ingredients.map((item, index) => (
                       <ListItem
                         key={index}

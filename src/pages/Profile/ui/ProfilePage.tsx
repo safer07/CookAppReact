@@ -1,54 +1,40 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-import { useUser } from '@/entities/user'
+import { afterLogout, useUser, userService } from '@/entities/user'
 
 import { catchHttpError } from '@/shared/lib'
-import type { CustomError } from '@/shared/model'
 import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 
+import { useFetchUser } from '../lib/useFetchUser'
 import UserInfo from './UserInfo'
+
+async function logout() {
+  try {
+    await userService.logout()
+    afterLogout()
+  } catch {
+    toast.error('Не удалось выйти из профиля')
+  }
+}
 
 export default function ProfilePage(): React.JSX.Element {
   const navigate = useNavigate()
-  const { user, status, logout, fetchUser } = useUser()
+  const { user } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
-  const [error, setError] = useState<CustomError>(null)
   const isAuth: boolean = user !== null
+  const { error: fetchError, isLoading } = useFetchUser(isAuth, user?.id)
+  const error = catchHttpError(fetchError)
 
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
-  async function onLogout() {
-    try {
-      await logout()
-    } catch (error) {
-      catchHttpError(error, setError)
-    }
-  }
-
-  useEffect(() => {
-    async function onFetchUser() {
-      setError(null)
-      try {
-        await fetchUser()
-      } catch (error) {
-        catchHttpError(error, setError)
-      }
-    }
-
-    if (isAuth) onFetchUser()
-  }, [navigate, fetchUser, isAuth])
-
-  useEffect(() => {
-    setError(null)
-  }, [user])
-
   return (
     <>
-      {status !== 'loading' ? <UserInfo /> : <UserInfo.Skeleton />}
+      {isLoading ? <UserInfo.Skeleton /> : <UserInfo />}
       <ErrorComponent error={error} />
       <ul className="layout-wide py-1">
         {user && (
@@ -95,7 +81,7 @@ export default function ProfilePage(): React.JSX.Element {
       <Modal
         open={modalLogoutIsOpen}
         setOpen={setModalLogoutIsOpen}
-        onOk={onLogout}
+        onOk={logout}
         okText="Выйти"
         title="Выход"
         text="Вы уверены, что хотите выйти из учётной записи?"

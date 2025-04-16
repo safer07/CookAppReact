@@ -8,6 +8,7 @@ export function catchHttpError(
   error: unknown,
   setError?: (value: React.SetStateAction<CustomError>) => CustomError | void,
 ) {
+  if (!error) return null
   console.error(error)
 
   // TODO: возможно ли это переписать?

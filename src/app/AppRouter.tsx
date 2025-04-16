@@ -41,15 +41,15 @@ export default function AppRouter() {
       <Route element={<FullScreenLayout />}>
         <Route element={<PrivateRoutes />}>
           <Route path={EDIT_PROFILE_ROUTE} element={<ProfileEdit />} />
+          <Route path={CREATE_RECIPE_ROUTE} element={<EditRecipe />} />
+          <Route path={`${EDIT_RECIPE_ROUTE}/:id`} element={<EditRecipe />} />
+          <Route path={CHANGE_PASSWORD_ROUTE} element={<ChangePassword />} />
         </Route>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
-        <Route path={CREATE_RECIPE_ROUTE} element={<EditRecipe />} />
-        <Route path={`${EDIT_RECIPE_ROUTE}/:id`} element={<EditRecipe />} />
         <Route path={LOGIN_ROUTE} element={<Auth />} />
         <Route path={REGISTRATION_ROUTE} element={<Auth />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgotPassword />} />
         <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
-        <Route path={CHANGE_PASSWORD_ROUTE} element={<ChangePassword />} />
       </Route>
     </Routes>
   )

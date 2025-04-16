@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { useUser } from '@/entities/user'
+import { afterLogout } from '@/entities/user'
 
 import { ACCESS_TOKEN_KEY, API_PATHS, BACKEND_URL } from '../config'
 import { refreshResponseSchema } from './model'
@@ -42,10 +42,7 @@ api.interceptors.response.use(
         }
         return api.request(originalRequest)
       } else {
-        if (status === 401) {
-          localStorage.removeItem(ACCESS_TOKEN_KEY)
-          useUser.setState({ user: null })
-        }
+        if (status === 401) afterLogout()
       }
     }
 

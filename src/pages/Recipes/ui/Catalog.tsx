@@ -14,7 +14,7 @@ import FilteredRecipes from './FilteredRecipes'
 import Filters from './Filters'
 
 export default function Catalog(): React.JSX.Element {
-  const { categories, status } = useCategories()
+  const { categories, isError } = useCategories()
   const { filters, setSearchQuery } = useCatalog()
   const [filtersIsOpen, setFiltersIsOpen] = useState<boolean>(false)
   const filtersCount = getFiltersCount(filters)
@@ -58,7 +58,7 @@ export default function Catalog(): React.JSX.Element {
           <>
             <Categories />
 
-            {status === 'error' ? (
+            {isError ? (
               <p className="headline-medium mt-3">Не удалось загрузить рецепты</p>
             ) : (
               <>

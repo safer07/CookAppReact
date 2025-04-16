@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import prettierPlugin from 'eslint-plugin-prettier'
 import eslintReact from 'eslint-plugin-react'
@@ -19,6 +20,7 @@ export default tseslint.config(
     },
     plugins: {
       '@typescript-eslint': tseslint.plugin,
+      '@tanstack/query': pluginQuery,
       react: eslintReact,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,

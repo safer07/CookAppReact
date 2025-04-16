@@ -12,6 +12,7 @@ import type { CreateRecipeDTO, RecipeFilters, UpdateRecipeDTO } from '../model/r
 
 export const recipesService = {
   getRecipes: async (filters?: Partial<RecipeFilters>, limit?: number) => {
+    // TODO: filters передавать целиком, а query разворачивать отдельно?
     const query = filters?.searchQuery || null
     const { data } = await api.get<unknown>(API_PATHS.recipes.getAll, {
       params: { query, limit, category: filters?.categories, difficulty: filters?.difficulties },

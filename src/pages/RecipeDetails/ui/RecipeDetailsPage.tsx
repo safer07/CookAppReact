@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
+import { catchHttpError } from '@/shared/lib'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
-import useFullRecipe from '../store/store'
+import { useFullRecipe } from '../lib/useFullRecipe'
 import RecipeInfo from './RecipeInfo'
 import RecipeTabs from './RecipeTabs'
 import SimilarRecipes from './SimilarRecipes'
@@ -14,25 +14,21 @@ import SimilarRecipes from './SimilarRecipes'
 export default function RecipeDetailsPage(): React.ReactNode {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { recipe, status, error, fetchFullRecipe } = useFullRecipe()
-
-  useEffect(() => {
-    if (!id) return
-    fetchFullRecipe(id)
-  }, [id, fetchFullRecipe])
+  const { recipe, error: fetchError, isPending, isError } = useFullRecipe(id)
+  const error = catchHttpError(fetchError)
 
   if (!id) return null
 
   return (
     <>
-      {status === 'loading' && <RecipeInfo.Skeleton />}
-      {status === 'error' && (
+      {isPending && <RecipeInfo.Skeleton />}
+      {isError && (
         <>
           <TopAppBar title="Не удалось загрузить рецепт" back />
           <ErrorComponent className="mt-1" error={error} />
         </>
       )}
-      {status === 'success' && recipe && (
+      {recipe && (
         <>
           <RecipeInfo recipe={recipe} />
           <RecipeTabs recipe={recipe} />
@@ -47,7 +43,7 @@ export default function RecipeDetailsPage(): React.ReactNode {
           </div>
         </>
       )}
-      {status !== 'loading' && <SimilarRecipes excludeId={id} />}
+      {!isPending && <SimilarRecipes excludeId={id} />}
     </>
   )
 }

@@ -17,7 +17,7 @@ type RecipeCardProps = {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Element {
-  const { categories } = useCategories()
+  const { categories, isPending } = useCategories()
   const { user } = useUser()
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
@@ -52,7 +52,11 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
         <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300">
           {recipe.name}
         </h3>
-        <p className="text-txt-secondary">{recipeCategory?.fullName}</p>
+        {isPending ? (
+          <span className="skeleton h-3 w-10 rounded" />
+        ) : (
+          <p className="text-txt-secondary">{recipeCategory?.fullName}</p>
+        )}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">
