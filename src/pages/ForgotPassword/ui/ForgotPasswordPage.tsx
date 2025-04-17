@@ -1,11 +1,7 @@
-import { useActionState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useActionState } from 'react'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { useUser } from '@/entities/user'
-
-import { PROFILE_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
@@ -14,13 +10,7 @@ import { onSubmit } from './onSubmit'
 import type { FormState } from './onSubmit'
 
 export default function ForgotPasswordPage(): React.JSX.Element {
-  const navigate = useNavigate()
-  const { user } = useUser()
   const [actionState, action, isPending] = useActionState<FormState, FormData>(onSubmit, {})
-
-  useEffect(() => {
-    if (user) navigate(PROFILE_ROUTE, { replace: true })
-  }, [user, navigate])
 
   return (
     <>

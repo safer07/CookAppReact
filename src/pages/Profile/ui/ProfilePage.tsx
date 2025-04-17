@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-import { afterLogout, useUser, userService } from '@/entities/user'
+import { useUser } from '@/entities/user'
 
 import { catchHttpError } from '@/shared/lib'
 import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
@@ -10,17 +9,9 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
 
+import { logout } from '../lib/logout'
 import { useFetchUser } from '../lib/useFetchUser'
 import UserInfo from './UserInfo'
-
-async function logout() {
-  try {
-    await userService.logout()
-    afterLogout()
-  } catch {
-    toast.error('Не удалось выйти из профиля')
-  }
-}
 
 export default function ProfilePage(): React.JSX.Element {
   const navigate = useNavigate()
