@@ -13,7 +13,7 @@ import {
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError, HttpStatus } from '@/shared/model'
-import { CHANGE_PASSWORD_ROUTE, PROFILE_ROUTE } from '@/shared/routes'
+import { CHANGE_PASSWORD_ROUTE, SETTINGS_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
@@ -71,7 +71,7 @@ export default function ResetPasswordPage(): React.JSX.Element {
       }
       setStatus('success')
       toast.success('Пароль изменён')
-      navigate(PROFILE_ROUTE, { replace: true })
+      navigate(SETTINGS_ROUTE, { replace: true })
     } catch (error) {
       setStatus('error')
       catchHttpError(error, setError)

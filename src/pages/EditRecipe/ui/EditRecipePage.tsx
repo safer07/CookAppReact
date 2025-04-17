@@ -50,7 +50,7 @@ export default function EditRecipePage(): React.JSX.Element {
 
   async function onSaveRecipe() {
     const response = await saveRecipe()
-    queryClient.invalidateQueries({ queryKey: ['my_recipes', user?.id] })
+    queryClient.invalidateQueries({ queryKey: ['recipes', 'my_recipes', user?.id] })
     if (isEdit) {
       // TODO: не инвалидировать, а перезаписать
       queryClient.invalidateQueries({ queryKey: ['recipe', id] })

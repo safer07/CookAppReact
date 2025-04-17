@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import { PROFILE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
+import { RECIPES_ROUTE, SETTINGS_ROUTE } from '@/shared/routes'
 
 import { cn } from '../lib'
 
-type NavBarTabs = 'recipes' | 'profile'
+type NavBarTabs = 'recipes' | 'settings'
 
 type NavBarTab = {
   name: string
@@ -20,16 +20,16 @@ export default function NavBar(): React.JSX.Element {
   const tabs: NavBarTab[] = [
     { name: 'Рецепты', id: 'recipes', link: RECIPES_ROUTE, icon: 'fork' },
     {
-      name: 'Профиль',
-      id: 'profile',
-      link: PROFILE_ROUTE,
-      icon: 'user',
+      name: 'Настройки',
+      id: 'settings',
+      link: SETTINGS_ROUTE,
+      icon: 'settings',
     },
   ]
 
   useEffect(() => {
     if (pathname === RECIPES_ROUTE || pathname.startsWith('/recipes')) setActiveTab('recipes')
-    else if (pathname.startsWith(PROFILE_ROUTE)) setActiveTab('profile')
+    else if (pathname.startsWith(SETTINGS_ROUTE)) setActiveTab('settings')
   }, [pathname])
 
   // TODO:

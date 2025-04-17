@@ -37,7 +37,7 @@ export default function Catalog(): React.JSX.Element {
           />
         </form>
         <ButtonIcon
-          icon="settings"
+          icon="filters"
           onClick={() => setFiltersIsOpen(true)}
           variant="tertiary"
           square

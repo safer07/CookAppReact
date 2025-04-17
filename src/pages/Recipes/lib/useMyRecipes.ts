@@ -9,7 +9,7 @@ export function useMyRecipes(userId: string | undefined) {
     isPending,
     isError,
   } = useQuery({
-    queryKey: ['my_recipes', userId],
+    queryKey: ['recipes', 'my_recipes', userId],
     queryFn: () => recipesService.getUserRecipes(),
     staleTime: 1000 * 60 * 60, // 60 минут
     enabled: !!userId,

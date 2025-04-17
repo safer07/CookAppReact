@@ -28,6 +28,7 @@ export const editRecipeStore = create<EditRecipeStoreState>()(
     status: 'init',
     error: null,
 
+    // TODO: брать из query
     fetchRecipe: async id => {
       try {
         set({ status: 'loading' })

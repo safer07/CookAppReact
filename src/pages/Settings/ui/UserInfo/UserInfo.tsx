@@ -16,7 +16,19 @@ export default function UserInfo(): React.JSX.Element {
 
   return (
     <div className="flex items-center gap-2 py-2">
-      {!user && (
+      {user ? (
+        <>
+          <img
+            className="size-10 rounded-full"
+            src="/images/avatar.jpg"
+            alt="Аватар пользователя"
+          />
+          <div className="space-y-0.5">
+            <p className="headline-small">{userName}</p>
+            <p className="text-txt-secondary">{user?.email}</p>
+          </div>
+        </>
+      ) : (
         <>
           <div className="surface-low grid size-10 shrink-0 place-content-center rounded-full">
             <svg className="size-5">
@@ -30,20 +42,6 @@ export default function UserInfo(): React.JSX.Element {
             link={LOGIN_ROUTE}
             state={{ from: location }}
           />
-        </>
-      )}
-
-      {user && (
-        <>
-          <img
-            className="size-10 rounded-full"
-            src="/images/avatar.jpg"
-            alt="Аватар пользователя"
-          />
-          <div className="space-y-0.5">
-            <p className="headline-small">{userName}</p>
-            <p className="text-txt-secondary">{user?.email}</p>
-          </div>
         </>
       )}
     </div>

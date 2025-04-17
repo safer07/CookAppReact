@@ -13,7 +13,7 @@ import { logout } from '../lib/logout'
 import { useFetchUser } from '../lib/useFetchUser'
 import UserInfo from './UserInfo'
 
-export default function ProfilePage(): React.JSX.Element {
+export default function SettingsPage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
