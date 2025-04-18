@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 import { useMutation } from '@tanstack/react-query'
@@ -7,16 +6,17 @@ import { createRecipeDTOSchema, recipesService } from '@/entities/recipe'
 
 import { queryClient } from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
-import { formatZodError } from '@/shared/lib'
-import { CustomError } from '@/shared/model'
+import { catchHttpError, formatZodError } from '@/shared/lib'
+import type { CustomError } from '@/shared/model'
 
 import { createRecipeStore } from '../store/createRecipeStore'
 
 export function useCreateRecipe(setError: (value: React.SetStateAction<CustomError>) => void) {
   const { recipe, resetRecipe } = createRecipeStore()
   const navigate = useNavigate()
-  const { mutate, error, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: async () => {
+      setError(null)
       const result = createRecipeDTOSchema.safeParse(recipe)
       if (!result.success) {
         setError({
@@ -29,9 +29,9 @@ export function useCreateRecipe(setError: (value: React.SetStateAction<CustomErr
       resetRecipe()
       queryClient.invalidateQueries({ queryKey: ['recipes'] })
       navigate(`${API_PATHS.recipes.getOne}/${data.recipe.id}`, { replace: true })
-      toast.success('Рецепт создан')
     },
+    onError: data => setError(catchHttpError(data)),
   })
 
-  return { mutate, error, isPending }
+  return { mutateAsync, isPending }
 }

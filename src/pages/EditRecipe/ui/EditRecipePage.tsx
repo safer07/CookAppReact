@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
-import { catchHttpError, navigateBack } from '@/shared/lib'
-import { CustomError } from '@/shared/model'
+import { navigateBack } from '@/shared/lib'
+import type { CustomError } from '@/shared/model'
 import { CREATE_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
@@ -25,23 +26,14 @@ export default function EditRecipePage(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const isEdit = location.pathname !== CREATE_RECIPE_ROUTE
-  const [formError, setFormError] = useState<CustomError>(null)
-  const {
-    mutate: createRecipe,
-    error: createError,
-    isPending: isCreatePending,
-  } = useCreateRecipe(setFormError)
-  const {
-    mutate: updateRecipe,
-    error: updateError,
-    isPending: isUpdatePending,
-  } = useUpdateRecipe(setFormError)
+  const [error, setFormError] = useState<CustomError>(null)
+  const { mutateAsync: createRecipe, isPending: isCreatePending } = useCreateRecipe(setFormError)
+  const { mutateAsync: updateRecipe, isPending: isUpdatePending } = useUpdateRecipe(setFormError)
   const resetRecipe = createRecipeStore().resetRecipe
   const fetchRecipe = editRecipeStore().fetchRecipe
   const [step, setStep] = useState<number>(1)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
-  const error = formError || catchHttpError(createError || updateError)
   const isLoading = isCreatePending || isUpdatePending
   const stepsCount = 4
 
@@ -52,8 +44,19 @@ export default function EditRecipePage(): React.JSX.Element {
 
   function onClickNext(): void {
     if (step === stepsCount) {
-      if (isEdit) updateRecipe()
-      else createRecipe()
+      if (isEdit) {
+        toast.promise(updateRecipe(), {
+          loading: 'Загрузка...',
+          success: 'Рецепт обновлён',
+          error: 'Не удалось обновить рецепт',
+        })
+      } else {
+        toast.promise(createRecipe(), {
+          loading: 'Создание рецепта...',
+          success: 'Рецепт создан',
+          error: 'Не удалось создать рецепт',
+        })
+      }
     } else setStep(prev => prev + 1)
   }
 
