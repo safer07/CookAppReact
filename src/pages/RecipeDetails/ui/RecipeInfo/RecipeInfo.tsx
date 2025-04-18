@@ -20,7 +20,7 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
   const navigate = useNavigate()
   const { categories } = useCategories()
   const { user } = useUser()
-  const { deleteRecipe } = useDeleteRecipe({ recipeId: recipe.id, userId: user?.id })
+  const { deleteRecipe } = useDeleteRecipe({ recipeId: recipe.id })
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe.difficulty,

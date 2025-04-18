@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 
 import { createRecipeDTOSchema, recipesService } from '@/entities/recipe'
-import { useUser } from '@/entities/user'
 
 import { queryClient } from '@/shared/api'
 import { API_PATHS } from '@/shared/config'
@@ -14,8 +13,7 @@ import { CustomError } from '@/shared/model'
 import { createRecipeStore } from '../store/createRecipeStore'
 
 export function useCreateRecipe(setError: (value: React.SetStateAction<CustomError>) => void) {
-  const { user } = useUser()
-  const { recipe, resetCreateRecipe } = createRecipeStore()
+  const { recipe, resetRecipe } = createRecipeStore()
   const navigate = useNavigate()
   const { mutate, error, isPending } = useMutation({
     mutationFn: async () => {
@@ -28,8 +26,8 @@ export function useCreateRecipe(setError: (value: React.SetStateAction<CustomErr
       } else return await recipesService.create(result.data)
     },
     onSuccess: data => {
-      resetCreateRecipe()
-      queryClient.invalidateQueries({ queryKey: ['recipes', 'my_recipes', user?.id] })
+      resetRecipe()
+      queryClient.invalidateQueries({ queryKey: ['recipes'] })
       navigate(`${API_PATHS.recipes.getOne}/${data.recipe.id}`, { replace: true })
       toast.success('Рецепт создан')
     },

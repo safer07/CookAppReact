@@ -60,7 +60,6 @@ export const editRecipeStore = create<EditRecipeStoreState>()(
       set((state: EditRecipeStoreState) => ({ recipe: { ...state.recipe, steps: value } })),
     setHidden: value =>
       set((state: EditRecipeStoreState) => ({ recipe: { ...state.recipe, hidden: value } })),
-    resetCreateRecipe: () => {},
   })),
 )
 

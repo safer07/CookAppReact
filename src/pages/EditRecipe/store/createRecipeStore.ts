@@ -22,7 +22,6 @@ export const createRecipeStore = create<CreateRecipeStoreState>()(
     devtools(set => ({
       recipe: initialRecipeData,
 
-      fetchRecipe: () => {},
       setName: value =>
         set((state: CreateRecipeStoreState) => ({ recipe: { ...state.recipe, name: value } })),
       setCategoryId: value =>
@@ -49,7 +48,7 @@ export const createRecipeStore = create<CreateRecipeStoreState>()(
         set((state: CreateRecipeStoreState) => ({ recipe: { ...state.recipe, steps: value } })),
       setHidden: value =>
         set((state: CreateRecipeStoreState) => ({ recipe: { ...state.recipe, hidden: value } })),
-      resetCreateRecipe: () => set({ recipe: initialRecipeData }),
+      resetRecipe: () => set({ recipe: initialRecipeData }),
     })),
     { name: 'createRecipeStore', version: 1 },
   ),

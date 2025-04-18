@@ -1,35 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import RecipesList from '@/widgets/RecipesList'
 
 import { useFavorites } from '@/entities/favorites'
-import { type Recipe, recipesService } from '@/entities/recipe'
+import { recipesService } from '@/entities/recipe'
+import { useUser } from '@/entities/user'
 
 import { catchHttpError } from '@/shared/lib'
-import type { CustomError, HttpStatus } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 export default function Favorites(): React.JSX.Element {
+  const { user } = useUser()
   const favoriteRecipes = useFavorites(state => state.favorites.recipes)
-  const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [status, setStatus] = useState<HttpStatus>('init')
-  const [error, setError] = useState<CustomError>(null)
-
-  useEffect(() => {
-    async function fetchFavoriteRecipes() {
-      try {
-        setStatus('loading')
-        const response = await recipesService.getFavoriteRecipes(favoriteRecipes)
-        setStatus('success')
-        setRecipes(response)
-      } catch (error) {
-        setStatus('error')
-        catchHttpError(error, setError)
-      }
-    }
-
-    fetchFavoriteRecipes()
-  }, [favoriteRecipes])
+  const {
+    data: recipes = [],
+    error: fetchError,
+    status,
+  } = useQuery({
+    queryKey: ['recipes', 'favorites', user?.id],
+    queryFn: () => recipesService.getFavoriteRecipes(favoriteRecipes),
+    staleTime: 1000 * 60 * 60, // 60 минут
+  })
+  const error = catchHttpError(fetchError)
 
   return (
     <div className="py-2">

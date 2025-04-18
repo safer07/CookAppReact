@@ -1,11 +1,9 @@
 import { type Recipe, RecipeCard } from '@/entities/recipe'
 
-import type { HttpStatus } from '@/shared/model'
-
 type RecipesListProps = {
   title: string
   recipes: Recipe[]
-  status: HttpStatus
+  status: 'error' | 'success' | 'pending'
   button?: { text: string; onClick: () => void }
 }
 
@@ -36,7 +34,7 @@ export default function RecipesList({
 
       {status !== 'error' && (
         <div className="mt-2 grid gap-2">
-          {status === 'loading'
+          {status === 'pending'
             ? skeletonRecipes
             : recipes.map(recipe => <RecipeCard key={recipe.id} recipe={recipe} />)}
           {status === 'success' && recipes.length === 0 && 'Рецепты не найдены'}

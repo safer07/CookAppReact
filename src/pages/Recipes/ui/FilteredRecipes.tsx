@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import RecipesList from '@/widgets/RecipesList'
 
-import { Recipe, findCategoryById, recipesService, useCategories } from '@/entities/recipe'
+import { findCategoryById, recipesService, useCategories } from '@/entities/recipe'
 
 import { catchHttpError } from '@/shared/lib'
-import type { CustomError, HttpStatus } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 
 import { useCatalog } from '../store/catalogStore'
@@ -18,25 +17,17 @@ export default function FilteredRecipes({
   const { filters } = useCatalog()
   const { categories: filteredCategories, searchQuery } = filters
   const { categories } = useCategories()
-  const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [status, setStatus] = useState<HttpStatus>('init')
-  const [error, setError] = useState<CustomError>(null)
-
-  useEffect(() => {
-    async function fetchRecipes() {
-      try {
-        setStatus('loading')
-        const recipes = await recipesService.getRecipes(filters)
-        setRecipes(recipes)
-        setStatus('success')
-      } catch (error) {
-        setStatus('error')
-        catchHttpError(error, setError)
-      }
-    }
-
-    if (!filtersIsOpen) fetchRecipes()
-  }, [filters, filtersIsOpen])
+  const {
+    data: recipes = [],
+    status,
+    error: fetchError,
+  } = useQuery({
+    queryKey: ['recipes', filters],
+    queryFn: () => recipesService.getRecipes(filters),
+    staleTime: 1000 * 60 * 60, // 60 минут
+    enabled: !filtersIsOpen,
+  })
+  const error = catchHttpError(fetchError)
 
   return (
     <>

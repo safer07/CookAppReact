@@ -24,5 +24,4 @@ export type EditRecipeStoreState = {
   setTotalIngredients: (value: Ingredient[]) => void
   setSteps: (value: RecipeStep[]) => void
   setHidden: (value: boolean) => void
-  resetCreateRecipe: () => void
 }

@@ -36,7 +36,8 @@ export default function EditRecipePage(): React.JSX.Element {
     error: updateError,
     isPending: isUpdatePending,
   } = useUpdateRecipe(setFormError)
-  const { fetchRecipe, resetCreateRecipe } = isEdit ? editRecipeStore() : createRecipeStore()
+  const resetRecipe = createRecipeStore().resetRecipe
+  const fetchRecipe = editRecipeStore().fetchRecipe
   const [step, setStep] = useState<number>(1)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
@@ -57,7 +58,7 @@ export default function EditRecipePage(): React.JSX.Element {
   }
 
   function onDelete(): void {
-    resetCreateRecipe()
+    resetRecipe()
     navigate(RECIPES_ROUTE)
   }
 

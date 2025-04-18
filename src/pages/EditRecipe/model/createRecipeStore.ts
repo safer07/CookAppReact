@@ -13,7 +13,6 @@ export type CreateRecipeStoreState = {
     hidden: boolean
   }
 
-  fetchRecipe: () => void
   setName: (value: string) => void
   setCategoryId: (value: string) => void
   setImg: (value: string) => void
@@ -23,5 +22,5 @@ export type CreateRecipeStoreState = {
   setTotalIngredients: (value: Ingredient[]) => void
   setSteps: (value: RecipeStep[]) => void
   setHidden: (value: boolean) => void
-  resetCreateRecipe: () => void
+  resetRecipe: () => void
 }

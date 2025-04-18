@@ -9,18 +9,12 @@ import { queryClient } from '@/shared/api'
 import { catchHttpError } from '@/shared/lib'
 import { RECIPES_ROUTE } from '@/shared/routes'
 
-export function useDeleteRecipe({
-  recipeId,
-  userId,
-}: {
-  recipeId: string
-  userId: string | undefined
-}) {
+export function useDeleteRecipe({ recipeId }: { recipeId: string }) {
   const navigate = useNavigate()
   const { mutate } = useMutation({
     mutationFn: () => recipesService.delete(recipeId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recipes', 'my_recipes', userId] })
+      queryClient.invalidateQueries({ queryKey: ['recipes'] })
       navigate(RECIPES_ROUTE, { replace: true })
       toast.success('Рецепт удалён')
     },

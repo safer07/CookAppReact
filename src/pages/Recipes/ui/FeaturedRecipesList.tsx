@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import RecipesList from '@/widgets/RecipesList'
 
 import { recipesService } from '@/entities/recipe'
-import type { Recipe, RecipeCategory } from '@/entities/recipe'
-
-import type { HttpStatus } from '@/shared/model'
+import type { RecipeCategory } from '@/entities/recipe'
 
 import { useCatalog } from '../store/catalogStore'
 
@@ -15,23 +13,12 @@ export default function FeaturedRecipesList({
   category: RecipeCategory
 }): React.JSX.Element {
   const setCategories = useCatalog(state => state.setCategories)
-  const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [status, setStatus] = useState<HttpStatus>('init')
-
-  useEffect(() => {
-    async function fetchRecipes() {
-      try {
-        setStatus('loading')
-        const recipes = await recipesService.getRecipes({ categories: [category.id] }, 5)
-        setRecipes(recipes)
-        setStatus('success')
-      } catch {
-        setStatus('error')
-      }
-    }
-
-    fetchRecipes()
-  }, [category])
+  // TODO: сделать нормальные параметры
+  const { data: recipes = [], status } = useQuery({
+    queryKey: ['recipes', { categories: [category.id] }, { limit: 5 }],
+    queryFn: () => recipesService.getRecipes({ categories: [category.id] }, 5),
+    staleTime: 1000 * 60 * 60, // 60 минут
+  })
 
   return (
     <div className="mt-3" key={category.id}>
