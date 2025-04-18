@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-import { recipesService, updateRecipeDTOSchema } from '@/entities/recipe'
+import { recipesService } from '@/entities/recipe'
 
-import { catchHttpError, formatZodError } from '@/shared/lib'
+import { queryClient } from '@/shared/api'
 
 import type { EditRecipeStoreState } from '../model/editRecipeStore'
 
@@ -23,38 +23,16 @@ const initialRecipeData = {
 }
 
 export const editRecipeStore = create<EditRecipeStoreState>()(
-  devtools((set, get) => ({
+  devtools(set => ({
     recipe: initialRecipeData,
-    status: 'init',
-    error: null,
 
-    // TODO: брать из query
     fetchRecipe: async id => {
-      try {
-        set({ status: 'loading' })
-        set({ error: null })
-        const recipe = await recipesService.getFullRecipe(id)
-        set({ recipe: { ...recipe, hidden: recipe.hidden ?? false } })
-        set({ status: 'success' })
-      } catch (error) {
-        set({ status: 'error' })
-        set({ error: catchHttpError(error) })
-      }
-    },
-    saveRecipe: async () => {
-      set({ error: null })
-      const result = updateRecipeDTOSchema.safeParse(get().recipe)
-      if (!result.success) return set({ error: { errors: formatZodError(result) } })
-
-      try {
-        set({ status: 'loading' })
-        const response = await recipesService.update(result.data)
-        set({ status: 'success' })
-        return response.recipe
-      } catch (error) {
-        set({ status: 'error' })
-        set({ error: catchHttpError(error) })
-      }
+      const recipe = await queryClient.fetchQuery({
+        queryKey: ['recipe', id],
+        queryFn: () => recipesService.getFullRecipe(id),
+        meta: { errorMessage: 'Не удалось загрузить параметры рецепта' },
+      })
+      set({ recipe: { ...recipe, hidden: recipe.hidden ?? false } })
     },
     setName: value =>
       set((state: EditRecipeStoreState) => ({ recipe: { ...state.recipe, name: value } })),
@@ -82,7 +60,6 @@ export const editRecipeStore = create<EditRecipeStoreState>()(
       set((state: EditRecipeStoreState) => ({ recipe: { ...state.recipe, steps: value } })),
     setHidden: value =>
       set((state: EditRecipeStoreState) => ({ recipe: { ...state.recipe, hidden: value } })),
-    setError: value => set({ error: value }),
     resetCreateRecipe: () => {},
   })),
 )

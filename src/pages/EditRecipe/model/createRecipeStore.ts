@@ -1,6 +1,4 @@
-import type { FullRecipe, Ingredient, RecipeStep } from '@/entities/recipe'
-
-import { CustomError, HttpStatus } from '@/shared/model'
+import type { Ingredient, RecipeStep } from '@/entities/recipe'
 
 export type CreateRecipeStoreState = {
   recipe: {
@@ -14,11 +12,8 @@ export type CreateRecipeStoreState = {
     steps: RecipeStep[]
     hidden: boolean
   }
-  status: HttpStatus
-  error: CustomError
 
   fetchRecipe: () => void
-  saveRecipe: () => Promise<FullRecipe>
   setName: (value: string) => void
   setCategoryId: (value: string) => void
   setImg: (value: string) => void
@@ -28,6 +23,5 @@ export type CreateRecipeStoreState = {
   setTotalIngredients: (value: Ingredient[]) => void
   setSteps: (value: RecipeStep[]) => void
   setHidden: (value: boolean) => void
-  setError: (value: CustomError) => void
   resetCreateRecipe: () => void
 }

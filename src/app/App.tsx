@@ -6,7 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactDOM from 'react-dom/client'
 
-import { queryClient } from '@/shared/api/query-client'
+import { queryClient } from '@/shared/api'
 
 import '../assets/css/index.css'
 import AppRouter from './AppRouter'

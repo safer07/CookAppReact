@@ -50,9 +50,9 @@ export default function AppRouter() {
           <Route path={LOGIN_ROUTE} element={<Auth />} />
           <Route path={REGISTRATION_ROUTE} element={<Auth />} />
           <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgotPassword />} />
+          <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
         </Route>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
-        <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
       </Route>
     </Routes>
   )

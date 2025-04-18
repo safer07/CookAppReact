@@ -2,51 +2,31 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { LikeButton } from '@/entities/favorites'
-import {
-  type FullRecipe,
-  getRecipeDifficultyTextAndSurface,
-  recipesService,
-  useCategories,
-} from '@/entities/recipe'
+import { getRecipeDifficultyTextAndSurface, useCategories } from '@/entities/recipe'
+import type { FullRecipe } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
 
-import { catchHttpError, minsToHoursAndMins, navigateBack } from '@/shared/lib'
-import type { CustomError } from '@/shared/model'
-import { EDIT_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
+import { minsToHoursAndMins, navigateBack } from '@/shared/lib'
+import { EDIT_RECIPE_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
-import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Image from '@/shared/ui/Image'
 import Modal from '@/shared/ui/Modal'
 import Tag from '@/shared/ui/Tag'
 
+import { useDeleteRecipe } from '../../lib/useDeleteRecipe'
 import RecipeInfoSkeleton from './RecipeInfoSkeleton'
 
-type RecipeInfoProps = {
-  recipe: FullRecipe
-}
-
-export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Element {
+export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JSX.Element {
   const navigate = useNavigate()
   const { categories } = useCategories()
   const { user } = useUser()
+  const { deleteRecipe } = useDeleteRecipe({ recipeId: recipe.id, userId: user?.id })
   const isAuthor = user?.id === recipe.authorId
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe.difficulty,
   )
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
-  const [error, setError] = useState<CustomError>(null)
-
   const recipeCategory = categories.find(category => category.id === recipe.categoryId)
-
-  async function onDelete() {
-    try {
-      setError(null)
-      await recipesService.delete(recipe.id)
-      navigate(RECIPES_ROUTE, { replace: true })
-    } catch (error) {
-      catchHttpError(error, setError)
-    }
-  }
 
   return (
     <>
@@ -75,8 +55,6 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
         )}
       </div>
 
-      <ErrorComponent error={error} className="mt-2" />
-
       <div className="grid gap-1 pt-1 pb-2">
         <div>
           <h1 className="headline-large">{recipe.name}</h1>
@@ -97,7 +75,7 @@ export default function RecipeInfo({ recipe }: RecipeInfoProps): React.JSX.Eleme
       <Modal
         open={modalDeleteIsOpen}
         setOpen={setModalDeleteIsOpen}
-        onOk={onDelete}
+        onOk={deleteRecipe}
         okText="Удалить"
         title="Удалить рецепт?"
         text="Восстановить его будет невозможно."

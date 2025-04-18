@@ -70,7 +70,7 @@ export default function Step2({ setStepIsValid, store }: StepProps): React.JSX.E
           {RECIPE_DIFFICULTIES.map(item => (
             <ListItem
               key={item.value}
-              text={item.difficultyText}
+              text={item.text}
               description={item.description}
               leftElement={{
                 element: 'radio',
