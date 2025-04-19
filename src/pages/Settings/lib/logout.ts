@@ -2,7 +2,7 @@ import toast from 'react-hot-toast'
 
 import { afterLogout, userService } from '@/entities/user'
 
-export async function logout() {
+export function logout() {
   toast.promise(
     async () => {
       await userService.logout()

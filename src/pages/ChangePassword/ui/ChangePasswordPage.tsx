@@ -18,6 +18,12 @@ import Button from '@/shared/ui/Button'
 import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
 
+const toastParams = {
+  loading: 'Загрузка...',
+  success: 'Пароль изменён',
+  error: 'Не удалось изменить пароль',
+}
+
 export default function ResetPasswordPage(): React.JSX.Element {
   const location = useLocation()
   const { link } = useParams<{ link: string }>()
@@ -26,16 +32,16 @@ export default function ResetPasswordPage(): React.JSX.Element {
   const [error, setError] = useState<CustomError>(null)
   const isReset = location.pathname !== CHANGE_PASSWORD_ROUTE
 
-  useEffect(() => {
-    if (isReset) {
-      const result = resetPasswordLinkSchema.safeParse(link)
-      if (!result.success) {
-        setError({
-          errors: formatZodError(result),
-        })
-      }
-    }
-  }, [link, isReset])
+  function afterSuccess() {
+    setStatus('success')
+    navigate(SETTINGS_ROUTE, { replace: true })
+  }
+
+  function afterError(error: unknown) {
+    setStatus('error')
+    catchHttpError(error, setError)
+    throw new Error()
+  }
 
   async function onSubmit(formData: FormData) {
     setError(null)
@@ -53,30 +59,48 @@ export default function ResetPasswordPage(): React.JSX.Element {
       return
     }
 
-    try {
-      if (isReset) {
-        const linkResult = resetPasswordLinkSchema.safeParse(link)
-        if (!linkResult.success) {
-          setError({
-            errors: formatZodError(linkResult),
-          })
-          return
-        }
-        setStatus('loading')
-        const response = await userService.resetPassword(linkResult.data, result.data.password)
-        afterLogin(response)
-      } else {
-        setStatus('loading')
-        await userService.changePassword(result.data.password)
+    if (isReset) {
+      const linkResult = resetPasswordLinkSchema.safeParse(link)
+      if (!linkResult.success) {
+        setError({
+          errors: formatZodError(linkResult),
+        })
+        return
       }
-      setStatus('success')
-      toast.success('Пароль изменён')
-      navigate(SETTINGS_ROUTE, { replace: true })
-    } catch (error) {
-      setStatus('error')
-      catchHttpError(error, setError)
+
+      setStatus('loading')
+      toast.promise(async () => {
+        try {
+          const response = await userService.resetPassword(linkResult.data, result.data.password)
+          afterLogin(response)
+          afterSuccess()
+        } catch (error) {
+          afterError(error)
+        }
+      }, toastParams)
+    } else {
+      setStatus('loading')
+      toast.promise(async () => {
+        try {
+          await userService.changePassword(result.data.password)
+          afterSuccess()
+        } catch (error) {
+          afterError(error)
+        }
+      }, toastParams)
     }
   }
+
+  useEffect(() => {
+    if (isReset) {
+      const result = resetPasswordLinkSchema.safeParse(link)
+      if (!result.success) {
+        setError({
+          errors: formatZodError(result),
+        })
+      }
+    }
+  }, [link, isReset])
 
   return (
     <>

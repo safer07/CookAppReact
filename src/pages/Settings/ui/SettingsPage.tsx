@@ -17,8 +17,7 @@ export default function SettingsPage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
   const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
-  const isAuth: boolean = user !== null
-  const { error: fetchError, isLoading } = useFetchUser(isAuth, user?.id)
+  const { error: fetchError, isLoading } = useFetchUser(user?.id)
   const error = catchHttpError(fetchError)
 
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)

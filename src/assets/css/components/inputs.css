@@ -3,7 +3,7 @@
 }
 
 .input {
-  @apply h-6;
+  @apply h-6 py-1.5;
 }
 .input,
 .textarea,
@@ -17,7 +17,7 @@
 }
 .input,
 .select {
-  @apply px-2 py-1.5 has-[.clear-button]:pr-1.5 has-[.icon-left]:pl-1.5 has-[.icon-right]:pr-1.5;
+  @apply px-2 has-[.clear-button]:pr-1.5 has-[.icon-left]:pl-1.5 has-[.icon-right]:pr-1.5;
   & .textfield {
     @apply truncate;
   }
@@ -32,7 +32,7 @@
 .select {
   transition: border-radius 0ms;
   transition-delay: 500ms;
-  @apply relative z-0 cursor-pointer outline-none;
+  @apply relative z-0 cursor-pointer py-[0.6875rem] outline-none;
   &.select-multiple {
     @apply py-1 pl-1;
   }

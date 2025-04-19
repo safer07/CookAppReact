@@ -13,7 +13,6 @@ import MyRecipes from './MyRecipes'
 export default function RecipesPage() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<RecipesPageTabId>('catalog')
-
   const activeTabIndex: number = tabs.findIndex(item => item.id === activeTab)
 
   useEffect(() => {

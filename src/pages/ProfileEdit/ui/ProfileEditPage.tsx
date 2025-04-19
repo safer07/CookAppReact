@@ -6,6 +6,7 @@ import TopAppBar from '@/widgets/TopAppBar'
 import { updateProfileDTOSchema, useUser, userService } from '@/entities/user'
 import type { UpdateProfileDTO, UpdateProfileFormData } from '@/entities/user'
 
+import { queryClient } from '@/shared/api'
 import { catchHttpError, formatZodError } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import { CHANGE_PASSWORD_ROUTE } from '@/shared/routes'
@@ -14,11 +15,7 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import Input from '@/shared/ui/Input'
 import Select from '@/shared/ui/Select'
 
-// TODO: в сущность user (config? model?)
-const genderSelectOptions = [
-  { value: 'male', label: 'Мужской' },
-  { value: 'female', label: 'Женский' },
-]
+import { GENDER_SELECT_OPTIONS } from '../const/genderSelectOptions'
 
 type ActionStateData = Omit<UpdateProfileFormData, 'gender'>
 
@@ -54,9 +51,11 @@ export default function ProfileEditPage(): React.JSX.Element {
       try {
         const updatedUser = await userService.updateProfile(user.id, result.data)
         setUser(updatedUser)
+        queryClient.setQueryData(['user', user.id], updatedUser)
         toast.success('Профиль обновлён')
         return { data }
       } catch (error) {
+        toast.error('Не удалось обновить профиль')
         return { data, error: catchHttpError(error) }
       }
     } else return { data, error: { errors: formatZodError(result) } }
@@ -72,7 +71,12 @@ export default function ProfileEditPage(): React.JSX.Element {
             <Input defaultValue={actionState.data.name} label="Имя" name="name" />
             <Input defaultValue={actionState.data.lastName} label="Фамилия" name="lastName" />
             <Input defaultValue={actionState.data.email} label="Email" name="email" />
-            <Select value={gender} options={genderSelectOptions} onChange={setGender} label="Пол" />
+            <Select
+              value={gender}
+              options={GENDER_SELECT_OPTIONS}
+              onChange={setGender}
+              label="Пол"
+            />
             <Input
               defaultValue={actionState?.data?.birthDate}
               type="date"

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 import { LikeButton } from '@/entities/favorites'
@@ -6,7 +7,7 @@ import { getRecipeDifficultyTextAndSurface, useCategories } from '@/entities/rec
 import type { FullRecipe } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
 
-import { minsToHoursAndMins, navigateBack } from '@/shared/lib'
+import { catchHttpError, minsToHoursAndMins, navigateBack } from '@/shared/lib'
 import { EDIT_RECIPE_ROUTE } from '@/shared/routes'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import Image from '@/shared/ui/Image'
@@ -27,6 +28,15 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
   )
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
   const recipeCategory = categories.find(category => category.id === recipe.categoryId)
+
+  function onDelete() {
+    toast.promise(deleteRecipe(), {
+      loading: 'Удаление...',
+      success: 'Рецепт удалён',
+      error: error => `Не удалось удалить рецепт:
+              ${catchHttpError(error)?.message}`,
+    })
+  }
 
   return (
     <>
@@ -75,7 +85,7 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
       <Modal
         open={modalDeleteIsOpen}
         setOpen={setModalDeleteIsOpen}
-        onOk={deleteRecipe}
+        onOk={onDelete}
         okText="Удалить"
         title="Удалить рецепт?"
         text="Восстановить его будет невозможно."

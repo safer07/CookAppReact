@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { cn } from '@/shared/lib'
 
 import Chip from '../../Chip'
-import type { SelectMultipleProps, SelectSingleProps } from '../model/types'
+import type { SelectMultipleProps, SelectSingleProps } from '../model/selectTypes'
 import Options from './Options'
 import RightIcons from './RightIcons'
 

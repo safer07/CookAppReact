@@ -36,10 +36,6 @@ export default function LoginPage(): React.JSX.Element {
   const isLogin = !isRegistration
   const { from } = (location.state as LocationState) ?? { from: { pathname: MAIN_ROUTE } }
 
-  useEffect(() => {
-    setError(null)
-  }, [location])
-
   async function onSubmit(formData: FormData) {
     setError(null)
 
@@ -75,6 +71,10 @@ export default function LoginPage(): React.JSX.Element {
       })
     }
   }
+
+  useEffect(() => {
+    setError(null)
+  }, [location])
 
   return (
     <>

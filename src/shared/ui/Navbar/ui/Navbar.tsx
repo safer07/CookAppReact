@@ -1,31 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+import { cn } from '@/shared/lib'
 import { RECIPES_ROUTE, SETTINGS_ROUTE } from '@/shared/routes'
 
-import { cn } from '../lib'
-
-type NavBarTabs = 'recipes' | 'settings'
-
-type NavBarTab = {
-  name: string
-  id: NavBarTabs
-  link: string
-  icon: string
-}
+import { NAVBAR_TABS } from '../const/navbarTabs'
+import type { NavBarTabIds } from '../model/navbarTypes'
 
 export default function NavBar(): React.JSX.Element {
   const pathname: string = useLocation().pathname
-  const [activeTab, setActiveTab] = useState('')
-  const tabs: NavBarTab[] = [
-    { name: 'Рецепты', id: 'recipes', link: RECIPES_ROUTE, icon: 'fork' },
-    {
-      name: 'Настройки',
-      id: 'settings',
-      link: SETTINGS_ROUTE,
-      icon: 'settings',
-    },
-  ]
+  const [activeTab, setActiveTab] = useState<NavBarTabIds | null>(null)
 
   useEffect(() => {
     if (pathname === RECIPES_ROUTE || pathname.startsWith('/recipes')) setActiveTab('recipes')
@@ -42,7 +26,7 @@ export default function NavBar(): React.JSX.Element {
   return (
     <div className="layout-grid border-base-borders border-y">
       <nav className="layout-wide grid grid-cols-2">
-        {tabs.map((tab, index) => (
+        {NAVBAR_TABS.map((tab, index) => (
           <Link
             key={index}
             to={tab.link}

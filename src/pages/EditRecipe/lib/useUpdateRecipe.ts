@@ -26,8 +26,7 @@ export function useUpdateRecipe(setError: (value: React.SetStateAction<CustomErr
     },
     onSuccess: data => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] })
-      // TODO: не инвалидировать, а перезаписать
-      queryClient.invalidateQueries({ queryKey: ['recipe', data.recipe.id] })
+      queryClient.setQueryData(['recipe', data.recipe.id], data.recipe)
       navigateBack(navigate)
     },
     onError: data => setError(catchHttpError(data)),

@@ -1,4 +1,4 @@
-import type { SelectRightIconsProps } from '../model/types'
+import type { SelectRightIconsProps } from '../model/selectTypes'
 
 export default function RightIcons({
   value,

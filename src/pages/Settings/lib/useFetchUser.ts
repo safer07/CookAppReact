@@ -8,12 +8,12 @@ async function fetchUser() {
   return user
 }
 
-export function useFetchUser(isAuth: boolean, id: string | undefined) {
+export function useFetchUser(id: string | undefined) {
   const { isLoading, error } = useQuery({
     queryKey: ['user', id],
     queryFn: fetchUser,
     staleTime: 1000 * 60 * 30, // 30 минут
-    enabled: isAuth && !!id,
+    enabled: !!id,
   })
 
   return { error, isLoading }
