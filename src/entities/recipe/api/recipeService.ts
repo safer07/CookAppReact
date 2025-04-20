@@ -40,7 +40,13 @@ export const recipesService = {
     return validatedData
   },
 
-  getFavoriteRecipes: async (ids: string[]) => {
+  getUserFavoriteRecipes: async () => {
+    const { data } = await api.get<unknown>(API_PATHS.recipes.favorite)
+    const validatedData = recipesResponseSchema.parse(data)
+    return validatedData
+  },
+
+  getPublicFavoriteRecipes: async (ids: string[]) => {
     const { data } = await api.post<unknown>(API_PATHS.recipes.favorite, ids)
     const validatedData = recipesResponseSchema.parse(data)
     return validatedData

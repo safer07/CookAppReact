@@ -26,7 +26,7 @@ type State = {
   passwordRepeat: string
 }
 
-export default function LoginPage(): React.JSX.Element {
+export default function AuthPage(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const [status, setStatus] = useState<HttpStatus>('init')
@@ -59,6 +59,7 @@ export default function LoginPage(): React.JSX.Element {
           ? await userService.login(payload)
           : await userService.registration(payload)
         afterLogin(response)
+        useFavorites.getState().resetFavorites()
         setStatus('success')
         navigate(from, { replace: true })
       } catch (error) {
