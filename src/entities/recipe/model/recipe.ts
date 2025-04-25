@@ -1,15 +1,14 @@
 import { z } from 'zod'
 
-export const ingredientSchema = z.object({
-  name: z.string(),
+export const recipeIngredientSchema = z.object({
   amount: z.number(),
-  unit: z.string(),
+  unitId: z.number(),
 })
-export type Ingredient = z.infer<typeof ingredientSchema>
+export type RecipeIngredient = z.infer<typeof recipeIngredientSchema>
 
 export const recipeStepSchema = z.object({
   description: z.string().trim().min(5, { message: 'Описание шага рецепта слишком короткое' }),
-  ingredients: z.array(ingredientSchema),
+  ingredients: z.array(recipeIngredientSchema),
   img: z.string(),
   // img: z.string().url(),
 })
@@ -31,7 +30,7 @@ export type Recipe = z.infer<typeof recipeSchema>
 
 export const fullRecipeSchema = recipeSchema.extend({
   description: z.string(),
-  totalIngredients: z.array(ingredientSchema),
+  totalIngredients: z.array(recipeIngredientSchema),
   steps: z.array(recipeStepSchema),
 })
 export type FullRecipe = z.infer<typeof fullRecipeSchema>
@@ -60,7 +59,7 @@ const createRecipeBaseSchema = z.object({
     .string({ required_error: 'Введите описание рецепта' })
     .trim()
     .min(10, 'Описание рецепта должно состоять минимум из 10 символов'),
-  totalIngredients: z.array(ingredientSchema).nonempty('Список ингредиентов пуст'),
+  totalIngredients: z.array(recipeIngredientSchema).nonempty('Список ингредиентов пуст'),
   steps: z.array(recipeStepSchema).nonempty('Не указаны шаги приготовления рецепта'),
   hidden: z.boolean(),
 })

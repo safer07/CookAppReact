@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import type { Ingredient } from '@/entities/recipe'
+import { getIngredientNameByUnitId, getUnitNameByUnitId, useIngredients } from '@/entities/recipe'
+import type { RecipeIngredient } from '@/entities/recipe'
 
 import Button from '@/shared/ui/Button'
 import Input from '@/shared/ui/Input'
 import ListItem from '@/shared/ui/ListItem'
 import Modal from '@/shared/ui/Modal'
+import Select from '@/shared/ui/Select'
 
 import type { CreateRecipeStore } from '../store/createRecipeStore'
 import type { EditRecipeStore } from '../store/editRecipeStore'
@@ -18,23 +20,36 @@ type StepProps = {
 export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.Element {
   const { recipe, setSteps, setTotalIngredients } = store()
   const { steps, totalIngredients } = recipe
+  const { ingredients } = useIngredients()
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [newIngredientName, setNewIngredientName] = useState<string>('')
   const [newIngredientAmount, setNewIngredientAmount] = useState<number>(0)
   const [newIngredientUnit, setNewIngredientUnit] = useState<string>('')
 
-  const newIngredient: Ingredient = {
-    name: newIngredientName,
-    amount: newIngredientAmount,
-    unit: newIngredientUnit,
-  }
+  const ingredientOptions = ingredients.map(ingredient => ({
+    label: ingredient.name,
+    value: ingredient.name,
+  }))
+
+  const ingredientUnitOptions =
+    ingredients
+      .find(ingredient => ingredient.name === newIngredientName)
+      ?.units.map(unit => ({
+        label: unit.name,
+        value: String(unit.id),
+      })) ?? []
 
   function onAddIngredient(): void {
+    const newIngredient: RecipeIngredient = {
+      amount: newIngredientAmount,
+      unitId: +newIngredientUnit,
+    }
+
     if (
       !newIngredientName ||
       !newIngredientAmount ||
       !newIngredientUnit ||
-      totalIngredients.some(ingredient => ingredient.name === newIngredientName)
+      totalIngredients.some(ingredient => ingredient.unitId === +newIngredientUnit)
     ) {
       return
     }
@@ -45,13 +60,13 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
     setNewIngredientUnit('')
   }
 
-  function deleteIngredient(deletedIngredient: Ingredient): void {
-    const newTotalIngredients: Ingredient[] = totalIngredients.filter(
+  function deleteIngredient(deletedIngredient: RecipeIngredient): void {
+    const newTotalIngredients: RecipeIngredient[] = totalIngredients.filter(
       ingredient => ingredient !== deletedIngredient,
     )
     steps.forEach(step => {
       step.ingredients = step.ingredients.filter(
-        ingredient => ingredient.name !== deletedIngredient.name,
+        ingredient => ingredient.unitId !== deletedIngredient.unitId,
       )
     })
 
@@ -73,9 +88,9 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
           <ul className="layout-wide">
             {totalIngredients.map(i => (
               <ListItem
-                key={i.name}
-                text={i.name}
-                secondaryText={`${i.amount} ${i.unit}`}
+                key={i.unitId}
+                text={getIngredientNameByUnitId(i.unitId, ingredients) ?? '???'}
+                secondaryText={`${i.amount} ${getUnitNameByUnitId(i.unitId, ingredients) ?? '???'}`}
                 size="medium"
                 rightElement={{
                   element: 'delete',
@@ -104,10 +119,11 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
         cancellable
       >
         <div className="mt-2">
-          <Input
+          <Select
             value={newIngredientName}
             onChange={value => setNewIngredientName(value)}
-            label="Введите название продукта"
+            options={ingredientOptions}
+            label="Выберите продукт"
           />
           <div className="mt-2 flex gap-2">
             <Input
@@ -118,10 +134,11 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
               min="0"
               label="Количество"
             />
-            <Input
+            <Select
               className="w-[7.5rem] shrink-0"
               value={newIngredientUnit}
               onChange={value => setNewIngredientUnit(value)}
+              options={ingredientUnitOptions}
               label="Ед. измерения"
             />
           </div>

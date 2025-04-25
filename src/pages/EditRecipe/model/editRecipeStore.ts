@@ -1,4 +1,4 @@
-import type { Ingredient, RecipeStep } from '@/entities/recipe'
+import type { RecipeIngredient, RecipeStep } from '@/entities/recipe'
 
 export type EditRecipeStoreState = {
   recipe: {
@@ -9,7 +9,7 @@ export type EditRecipeStoreState = {
     time: number | null
     difficulty: number
     description: string
-    totalIngredients: Ingredient[]
+    totalIngredients: RecipeIngredient[]
     steps: RecipeStep[]
     hidden: boolean
   }
@@ -21,7 +21,7 @@ export type EditRecipeStoreState = {
   setTime: (value: number) => void
   setDifficulty: (value: number) => void
   setDescription: (value: string) => void
-  setTotalIngredients: (value: Ingredient[]) => void
+  setTotalIngredients: (value: RecipeIngredient[]) => void
   setSteps: (value: RecipeStep[]) => void
   setHidden: (value: boolean) => void
 }

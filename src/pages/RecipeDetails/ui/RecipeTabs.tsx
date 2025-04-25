@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { getIngredientNameByUnitId, getUnitNameByUnitId, useIngredients } from '@/entities/recipe'
 import type { FullRecipe } from '@/entities/recipe'
 
 import ListItem from '@/shared/ui/ListItem'
@@ -8,6 +9,7 @@ import SegmentedButton from '@/shared/ui/SegmentedButton'
 type IRecipeTabs = { recipe: FullRecipe }
 
 export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
+  const { ingredients } = useIngredients()
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const tabs = ['Ингредиенты', 'Рецепт']
 
@@ -25,8 +27,8 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
             <ListItem
               key={index}
               size="small"
-              text={item.name}
-              secondaryText={`${item.amount} ${item.unit}`}
+              text={getIngredientNameByUnitId(item.unitId, ingredients) ?? '???'}
+              secondaryText={`${item.amount} ${getUnitNameByUnitId(item.unitId, ingredients) ?? '???'}`}
             />
           ))}
         </ul>
@@ -43,8 +45,8 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
                     <ListItem
                       key={index}
                       size="small"
-                      text={item.name}
-                      secondaryText={`${item.amount} ${item.unit}`}
+                      text={getIngredientNameByUnitId(item.unitId, ingredients) ?? ''}
+                      secondaryText={`${item.amount} ${getUnitNameByUnitId(item.unitId, ingredients) ?? '???'}`}
                     />
                   ))}
                 </ul>

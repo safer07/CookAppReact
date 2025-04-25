@@ -31,8 +31,8 @@
 }
 .select {
   transition: border-radius 0ms;
-  transition-delay: 500ms;
-  @apply relative z-0 cursor-pointer py-[0.6875rem] outline-none;
+  transition-delay: 300ms;
+  @apply relative cursor-pointer py-[0.6875rem] outline-none;
   &.select-multiple {
     @apply py-1 pl-1;
   }
@@ -46,13 +46,13 @@
     @apply flex grow flex-wrap gap-1;
   }
   & .select-options {
-    @apply surface-default border-primary shadow-glow shadow-primary/50 invisible absolute -inset-x-px top-full -z-10 h-0 max-h-30 overflow-y-auto rounded-b-lg border duration-500;
+    @apply surface-default border-primary shadow-glow shadow-primary/50 invisible absolute -inset-x-px top-full z-10 h-0 max-h-30 overflow-y-auto overscroll-contain rounded-b-lg border duration-300;
   }
   & .icon-right {
     @apply transition-transform duration-500;
   }
   &.open {
-    @apply z-10 rounded-b-none delay-0;
+    @apply rounded-b-none delay-0;
     & .select-options {
       @apply surface-default visible h-auto;
     }

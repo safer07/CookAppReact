@@ -20,6 +20,7 @@ export const API_PATHS = {
     favorite: '/recipes/favorite',
     myRecipes: '/recipes/my-recipes',
     getCategories: '/recipes/categories',
+    getIngredients: '/recipes/ingredients',
   },
   favorites: {
     getFavoriteRecipes: '/favorites/recipes',

@@ -78,6 +78,10 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
     setIsOpen(false)
   }
 
+  function getLabelByValue(value: string) {
+    return options.find(option => option.value === value)?.label ?? value
+  }
+
   return (
     <div className={className}>
       {label && <div className="input-label">{label}</div>}
@@ -94,7 +98,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
             {value.map(item => (
               <Chip
                 key={item}
-                text={item}
+                text={getLabelByValue(item)}
                 variant="active"
                 onClick={event => onChipClick(event, item)}
                 del

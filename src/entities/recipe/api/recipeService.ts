@@ -5,6 +5,7 @@ import {
   createRecipeResponseSchema,
   deleteRecipeResponseSchema,
   getCategoriesResponseSchema,
+  getIngredientsResponseSchema,
   recipesResponseSchema,
 } from '../model/api'
 import { fullRecipeSchema } from '../model/recipe'
@@ -78,6 +79,12 @@ export const recipesService = {
   getCategories: async () => {
     const { data } = await api.get<unknown>(API_PATHS.recipes.getCategories)
     const validatedData = getCategoriesResponseSchema.parse(data)
+    return validatedData
+  },
+
+  getIngredients: async () => {
+    const { data } = await api.get<unknown>(API_PATHS.recipes.getIngredients)
+    const validatedData = getIngredientsResponseSchema.parse(data)
     return validatedData
   },
 }

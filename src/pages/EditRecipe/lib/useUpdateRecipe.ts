@@ -10,6 +10,8 @@ import type { CustomError } from '@/shared/model'
 
 import { editRecipeStore } from '../store/editRecipeStore'
 
+const userErrorMessage = 'Ошибка ввода данных пользователя'
+
 export function useUpdateRecipe(setError: (value: React.SetStateAction<CustomError>) => void) {
   const { recipe } = editRecipeStore()
   const navigate = useNavigate()
@@ -21,7 +23,7 @@ export function useUpdateRecipe(setError: (value: React.SetStateAction<CustomErr
         setError({
           errors: formatZodError(result),
         })
-        throw new Error('Ошибка ввода данных пользователя')
+        throw new Error(userErrorMessage)
       } else return await recipesService.update(result.data)
     },
     onSuccess: data => {
@@ -29,7 +31,9 @@ export function useUpdateRecipe(setError: (value: React.SetStateAction<CustomErr
       queryClient.setQueryData(['recipe', data.recipe.id], data.recipe)
       navigateBack(navigate)
     },
-    onError: data => setError(catchHttpError(data)),
+    onError: data => {
+      if (data.message !== userErrorMessage) setError(catchHttpError(data))
+    },
   })
 
   return { mutateAsync, isPending }

@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { type Ingredient, RECIPE_LIMITS } from '@/entities/recipe'
+import {
+  RECIPE_LIMITS,
+  RecipeIngredient,
+  getIngredientNameByUnitId,
+  getUnitNameByUnitId,
+  useIngredients,
+} from '@/entities/recipe'
 
 import ButtonIcon from '@/shared/ui/ButtonIcon'
 import ListItem from '@/shared/ui/ListItem'
@@ -20,25 +26,26 @@ type StepProps = {
 export default function Step4({ store }: StepProps): React.JSX.Element {
   const { recipe, setSteps, setHidden } = store()
   const { totalIngredients, steps, hidden } = recipe
+  const { ingredients } = useIngredients()
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-  const [currentStepIngredientsNames, setCurrentStepIngredientsNames] = useState<string[]>([])
+  const [currentStepUnitIds, setCurrentStepUnitIds] = useState<string[]>([])
   const [inputStepDescription, setInputStepDescription] = useState<string>('')
 
-  const currentStepIngredients: Ingredient[] = steps[currentStepIndex].ingredients
+  const currentStepIngredients: RecipeIngredient[] = steps[currentStepIndex]?.ingredients
 
   const ingredientsOptions: SelectOption[] = totalIngredients.map((ingredient): SelectOption => {
-    const usedIngredient: boolean = stepsHasIngredient(ingredient.name)
-    const selected = currentStepIngredientsNames.includes(ingredient.name)
+    const usedIngredient: boolean = stepsHasIngredient(ingredient.unitId)
+    const selected = currentStepUnitIds.includes(String(ingredient.unitId))
     const disabled = usedIngredient && !selected
 
     return {
-      value: ingredient.name,
-      label: ingredient.name,
-      secondaryText: `${ingredient.amount} ${ingredient.unit}`,
+      value: String(ingredient.unitId),
+      label: getIngredientNameByUnitId(ingredient.unitId, ingredients) ?? '',
+      secondaryText: `${ingredient.amount} ${getUnitNameByUnitId(ingredient.unitId, ingredients)}`,
       selected,
       disabled,
-      description: usedIngredient ? `Шаг ${findStepWithIngredient(ingredient.name)}` : '',
+      description: usedIngredient ? `Шаг ${findStepWithIngredient(ingredient.unitId)}` : '',
     }
   })
 
@@ -54,12 +61,12 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
     if (currentStepIndex !== 0) setCurrentStepIndex(prev => prev - 1)
   }
 
-  function stepsHasIngredient(ingredientName: string): boolean {
-    return steps.some((step): boolean => step.ingredients.some(i => i.name === ingredientName))
+  function stepsHasIngredient(unitId: number): boolean {
+    return steps.some((step): boolean => step.ingredients.some(i => i.unitId === unitId))
   }
 
-  function findStepWithIngredient(ingredientName: string): number {
-    return steps.findIndex(step => step.ingredients.some(i => i.name === ingredientName)) + 1
+  function findStepWithIngredient(unitId: number): number {
+    return steps.findIndex(step => step.ingredients.some(i => i.unitId === unitId)) + 1
   }
 
   function stepIsEmpty(): boolean {
@@ -77,8 +84,8 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
     else setModalIsOpen(true)
   }
 
-  function deleteIngredient(deletedIngredientName: string): void {
-    setCurrentStepIngredientsNames(prev => prev.filter(i => i !== deletedIngredientName))
+  function deleteIngredient(deletedIngredientUnitId: number): void {
+    setCurrentStepUnitIds(prev => prev.filter(i => i !== String(deletedIngredientUnitId)))
   }
 
   useEffect(() => {
@@ -90,20 +97,20 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
   }, [currentStepIndex, steps])
 
   useEffect(() => {
-    const stepIngredientsNames: string[] = steps[currentStepIndex].ingredients.map(i => i.name)
+    const stepUnitIds: string[] = steps[currentStepIndex].ingredients.map(i => String(i.unitId))
 
-    setCurrentStepIngredientsNames(stepIngredientsNames)
+    setCurrentStepUnitIds(stepUnitIds)
   }, [currentStepIndex, steps.length])
 
   useEffect(() => {
     // Нужно копировать массив и всё внутри него, так как нельзя использовать изначальные значения
     const newSteps = structuredClone(steps)
     const filteredIngredients = totalIngredients.filter(i =>
-      currentStepIngredientsNames.includes(i.name),
+      currentStepUnitIds.includes(String(i.unitId)),
     )
     newSteps[currentStepIndex].ingredients = filteredIngredients
     setSteps(newSteps)
-  }, [currentStepIngredientsNames])
+  }, [currentStepUnitIds])
 
   return (
     <>
@@ -129,9 +136,9 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
           <h3 className="headline-small">Ингредиенты в шаге</h3>
 
           <Select
-            value={currentStepIngredientsNames}
+            value={currentStepUnitIds}
             options={ingredientsOptions}
-            onChange={value => setCurrentStepIngredientsNames(value)}
+            onChange={value => setCurrentStepUnitIds(value)}
             label={`Ингредиенты (шаг ${currentStepIndex + 1})`}
             placeholder="Выберите ингредиенты"
             multiple
@@ -142,13 +149,13 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
             <ul className="layout-wide">
               {currentStepIngredients.map(i => (
                 <ListItem
-                  key={i.name}
-                  text={i.name}
-                  secondaryText={`${i.amount} ${i.unit}`}
+                  key={i.unitId}
+                  text={getIngredientNameByUnitId(i.unitId, ingredients) ?? '???'}
+                  secondaryText={`${i.amount} ${getUnitNameByUnitId(i.unitId, ingredients) ?? '???'}`}
                   size="medium"
                   rightElement={{
                     element: 'delete',
-                    onClick: () => deleteIngredient(i.name),
+                    onClick: () => deleteIngredient(i.unitId),
                   }}
                 />
               ))}
