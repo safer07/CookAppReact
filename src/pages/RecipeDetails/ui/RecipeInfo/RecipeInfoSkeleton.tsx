@@ -15,6 +15,7 @@ export default function RecipeInfoSkeleton() {
           icon="arrow_left"
           onClick={() => navigateBack(navigate)}
           size="small"
+          ariaLabel="Назад"
         />
         <div className="surface-default absolute top-2 right-2 size-5 rounded-full" />
       </div>

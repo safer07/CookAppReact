@@ -47,6 +47,7 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
           icon="arrow_left"
           onClick={() => navigateBack(navigate)}
           size="small"
+          ariaLabel="Назад"
         />
         {isAuthor ? (
           <div className="absolute top-2 right-2 flex gap-2">
@@ -54,8 +55,14 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
               icon="edit"
               onClick={() => navigate(`${EDIT_RECIPE_ROUTE}/${recipe.id}`)}
               size="small"
+              ariaLabel="Редактировать рецепт"
             />
-            <ButtonIcon icon="delete" onClick={() => setModalDeleteIsOpen(true)} size="small" />
+            <ButtonIcon
+              icon="delete"
+              onClick={() => setModalDeleteIsOpen(true)}
+              size="small"
+              ariaLabel="Удалить рецепт"
+            />
           </div>
         ) : (
           <LikeButton itemId={recipe.id} className="absolute top-2 right-2" />

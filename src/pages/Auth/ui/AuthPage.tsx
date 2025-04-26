@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
@@ -28,7 +28,6 @@ type State = {
 
 export default function AuthPage(): React.JSX.Element {
   const location = useLocation()
-  const navigate = useNavigate()
   const [status, setStatus] = useState<HttpStatus>('init')
   const [error, setError] = useState<CustomError>(null)
   const [state, setState] = useState<State>({ email: '', password: '', passwordRepeat: '' })
@@ -61,7 +60,6 @@ export default function AuthPage(): React.JSX.Element {
         afterLogin(response)
         useFavorites.getState().resetFavorites()
         setStatus('success')
-        navigate(from, { replace: true })
       } catch (error) {
         setStatus('error')
         catchHttpError(error, setError)

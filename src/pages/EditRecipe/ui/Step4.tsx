@@ -130,7 +130,12 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
           <div className="flex h-6 items-center justify-between gap-2">
             <h2 className="headline-medium">Шаг {currentStepIndex + 1}</h2>
             {steps.length > 1 && (
-              <ButtonIcon icon="delete" onClick={onClickDeleteStep} variant="tertiary" />
+              <ButtonIcon
+                icon="delete"
+                onClick={onClickDeleteStep}
+                variant="tertiary"
+                ariaLabel="Удалить ингредиент"
+              />
             )}
           </div>
           <h3 className="headline-small">Ингредиенты в шаге</h3>

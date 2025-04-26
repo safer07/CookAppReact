@@ -45,7 +45,7 @@ export default function RecipeTabs({ recipe }: IRecipeTabs): React.JSX.Element {
                     <ListItem
                       key={index}
                       size="small"
-                      text={getIngredientNameByUnitId(item.unitId, ingredients) ?? ''}
+                      text={getIngredientNameByUnitId(item.unitId, ingredients) ?? '???'}
                       secondaryText={`${item.amount} ${getUnitNameByUnitId(item.unitId, ingredients) ?? '???'}`}
                     />
                   ))}

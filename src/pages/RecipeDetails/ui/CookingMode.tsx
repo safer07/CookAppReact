@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/TopAppBar'
 
+import { getIngredientNameByUnitId, getUnitNameByUnitId, useIngredients } from '@/entities/recipe'
+
 import { catchHttpError } from '@/shared/lib'
 import Button from '@/shared/ui/Button'
 import ButtonIcon from '@/shared/ui/ButtonIcon'
@@ -17,6 +19,7 @@ import { useFullRecipe } from '../lib/useFullRecipe'
 export default function CookingMode(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { ingredients } = useIngredients()
   const { recipe, error: fetchError, isPending, isError } = useFullRecipe(id)
   const error = catchHttpError(fetchError)
   const [stepIndex, setStepIndex] = useState<number>(0)
@@ -67,6 +70,7 @@ export default function CookingMode(): React.JSX.Element {
                 icon="cross"
                 onClick={() => navigateToRecipe()}
                 size="small"
+                ariaLabel="Закрыть режим приготовления"
               />
             </div>
             <div className="layout-grid">
@@ -84,8 +88,8 @@ export default function CookingMode(): React.JSX.Element {
                       <ListItem
                         key={index}
                         size="small"
-                        text={item.name}
-                        secondaryText={`${item.amount} ${item.unit}`}
+                        text={getIngredientNameByUnitId(item.unitId, ingredients) ?? '???'}
+                        secondaryText={`${item.amount} ${getUnitNameByUnitId(item.unitId, ingredients) ?? '???'}`}
                       />
                     ))}
                   </ul>

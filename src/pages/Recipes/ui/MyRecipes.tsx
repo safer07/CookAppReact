@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom'
+
 import { RecipeCard } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
 
@@ -9,6 +11,7 @@ import ErrorComponent from '@/shared/ui/ErrorComponent'
 import { useMyRecipes } from '../lib/useMyRecipes'
 
 export default function MyRecipes() {
+  const location = useLocation()
   const { user } = useUser()
   const { recipes, error: fetchError, isPending, isError } = useMyRecipes(user?.id)
   const skeletonRecipes = [...new Array(4)].map((_, i) => <RecipeCard.Skeleton key={i} />)
@@ -18,7 +21,13 @@ export default function MyRecipes() {
     return (
       <>
         <p className="mt-2">Войдите или зарегистрируйтесь, чтобы создать рецепт</p>
-        <Button className="mt-2" text="Войти" icon="login" link={LOGIN_ROUTE} />
+        <Button
+          className="mt-2"
+          text="Войти"
+          icon="login"
+          link={LOGIN_ROUTE}
+          state={{ from: location }}
+        />
       </>
     )
   }

@@ -22,7 +22,7 @@ export default function PhotoUpload({
     return (
       <div>
         {label && <div className="input-label">{label}</div>}
-        <div className="surface-low flex flex-col items-center gap-3 rounded-lg border border-base-borders px-2 pb-3 pt-5 text-center">
+        <div className="surface-low border-base-borders flex flex-col items-center gap-3 rounded-lg border px-2 pt-5 pb-3 text-center">
           <svg className="size-5">
             <use href="/images/icons.svg#camera" />
           </svg>
@@ -41,9 +41,9 @@ export default function PhotoUpload({
       {label && <div className="input-label">{label}</div>}
       <div className="relative">
         <img className="aspect-9/7 w-full object-cover" src={image} alt="Загруженное изображение" />
-        <div className="absolute right-2 top-2 flex gap-2">
-          <ButtonIcon icon="camera" onClick={setImage} />
-          <ButtonIcon icon="delete" onClick={() => onChange('')} />
+        <div className="absolute top-2 right-2 flex gap-2">
+          <ButtonIcon icon="camera" onClick={setImage} ariaLabel="Выбрать изображение" />
+          <ButtonIcon icon="delete" onClick={() => onChange('')} ariaLabel="Удалить изображение" />
         </div>
       </div>
     </div>

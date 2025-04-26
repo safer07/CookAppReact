@@ -42,6 +42,7 @@ export default function Catalog(): React.JSX.Element {
           variant="tertiary"
           square
           badge={filtersCount}
+          ariaLabel="Фильтры рецептов"
         />
       </div>
 

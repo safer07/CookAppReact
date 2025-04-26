@@ -6,6 +6,7 @@ import { cn } from '../lib'
 type ButtonIconProps = {
   icon: string
   onClick: () => void
+  ariaLabel: string
   className?: string
   badge?: number
 } & VariantProps<typeof buttonIconVariants>
@@ -36,6 +37,7 @@ const buttonIconVariants = cva(
 export default function ButtonIcon({
   icon,
   onClick,
+  ariaLabel,
   className,
   variant,
   size,
@@ -46,8 +48,7 @@ export default function ButtonIcon({
     <button
       className={cn(buttonIconVariants({ variant, size, square }), className)}
       onClick={onClick}
-      // TODO: aria-label
-      aria-label={icon}
+      aria-label={ariaLabel}
       type="button"
     >
       <svg className="size-3" aria-hidden="true">
