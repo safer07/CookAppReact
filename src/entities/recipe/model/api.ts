@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { ingredientSchema } from './ingredient'
 import { fullRecipeSchema, recipeSchema } from './recipe'
-import { recipeCategorySchema } from './recipeCategory'
+import { recipeCategorySchema } from './recipe-category'
 
 export const recipesResponseSchema = z.array(recipeSchema)
 

@@ -1,13 +1,13 @@
 export { default as RecipeCard } from './ui/RecipeCard'
 export { default as RecipeCategoryCard } from './ui/RecipeCategoryCard'
-export { recipesService } from './api/recipeService'
+export { recipesService } from './api/recipe-service'
 export { RECIPE_LIMITS } from './const/limits'
-export { RECIPE_DIFFICULTIES } from './const/recipeDifficulties'
-export { findCategoryById } from './lib/findCategoryById'
-export { getIngredientNameByUnitId } from './lib/getIngredientNameByUnitId'
-export { getRecipeDifficultyTextAndSurface } from './lib/getRecipeDifficultyTextAndSurface'
-export { getUnitNameByUnitId } from './lib/getUnitNameByUnitId'
-export { useIngredients } from './lib/useIngredients'
+export { RECIPE_DIFFICULTIES } from './const/recipe-difficulties'
+export { findCategoryById } from './lib/find-category-by-id'
+export { getIngredientNameByUnitId } from './lib/get-ingredient-name-by-unit-id'
+export { getRecipeDifficultyTextAndSurface } from './lib/get-recipe-difficulty-text-and-surface'
+export { getUnitNameByUnitId } from './lib/get-unit-name-by-unit-id'
+export { useIngredients } from './lib/use-ingredients'
 export { createRecipeDTOSchema, updateRecipeDTOSchema } from './model/recipe'
 export type {
   FullRecipe,
@@ -17,5 +17,5 @@ export type {
   RecipeStep,
 } from './model/recipe'
 export type { Ingredient } from './model/ingredient'
-export type { RecipeCategory } from './model/recipeCategory'
-export { useCategories } from './lib/useCategories'
+export type { RecipeCategory } from './model/recipe-category'
+export { useCategories } from './lib/use-categories'

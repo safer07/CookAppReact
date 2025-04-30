@@ -1,2 +1,2 @@
-export { default as LikeButton } from './ui/LikeButton'
-export { useFavorites } from './store/favoritesStore'
+export { default as LikeButton } from './ui/like-button'
+export { useFavorites } from './store/favorites-store'

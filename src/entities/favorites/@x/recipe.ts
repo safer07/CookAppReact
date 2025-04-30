@@ -1,1 +1,1 @@
-export { default as LikeButton } from '../ui/LikeButton'
+export { default as LikeButton } from '../ui/like-button'

@@ -4,11 +4,11 @@ import { LikeButton } from '@/entities/favorites/@x/recipe'
 import { useUser } from '@/entities/user/@x/recipe'
 
 import { minsToHoursAndMins } from '@/shared/lib'
-import Image from '@/shared/ui/Image'
-import Tag from '@/shared/ui/Tag'
+import Image from '@/shared/ui/image'
+import Tag from '@/shared/ui/tag'
 
-import { getRecipeDifficultyTextAndSurface } from '../../lib/getRecipeDifficultyTextAndSurface'
-import { useCategories } from '../../lib/useCategories'
+import { getRecipeDifficultyTextAndSurface } from '../../lib/get-recipe-difficulty-text-and-surface'
+import { useCategories } from '../../lib/use-categories'
 import type { Recipe } from '../../model/recipe'
 import RecipeCardSkeleton from './RecipeCardSkeleton'
 

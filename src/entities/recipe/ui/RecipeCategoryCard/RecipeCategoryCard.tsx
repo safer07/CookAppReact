@@ -1,4 +1,4 @@
-import Image from '@/shared/ui/Image'
+import Image from '@/shared/ui/image'
 
 import RecipeCategoryCardSkeleton from './RecipeCategoryCardSkeleton'
 

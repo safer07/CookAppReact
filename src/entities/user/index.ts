@@ -1,6 +1,6 @@
-export { userService } from './api/userService'
-export { afterLogin } from './lib/afterLogin'
-export { afterLogout } from './lib/afterLogout'
+export { userService } from './api/user-service'
+export { afterLogin } from './lib/after-login'
+export { afterLogout } from './lib/after-logout'
 export { emailSchema } from './model/user'
 export {
   changePasswordFormDataSchema,
@@ -10,4 +10,4 @@ export {
   updateProfileDTOSchema,
 } from './model/api'
 export type { UpdateProfileDTO, UpdateProfileFormData } from './model/api'
-export { useUser } from './store/userStore'
+export { useUser } from './store/user-store'
