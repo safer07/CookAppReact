@@ -124,6 +124,7 @@ export default function Step3({ setStepIsValid, store }: StepProps): React.JSX.E
             onChange={value => setNewIngredientName(value)}
             options={ingredientOptions}
             label="Выберите продукт"
+            search
           />
           <div className="mt-2 flex gap-2">
             <Input

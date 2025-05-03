@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/shared/lib'
 
 import Chip from '../../chip'
-import type { SelectMultipleProps, SelectSingleProps } from '../model/select-types'
+import type { SelectMultipleProps, SelectOption, SelectSingleProps } from '../model/select-types'
 import Options from './options'
 import RightIcons from './right-icons'
 
@@ -19,7 +19,9 @@ import RightIcons from './right-icons'
 // }: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
 export default function Select(props: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [searchValue, setSearchValue] = useState<string>('')
   const containerRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
 
   const {
     value,
@@ -29,9 +31,11 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
     label,
     multiple,
     className,
+    search = false,
     clearButton = true,
     optionSize = 'small',
   } = props
+  const [filteredOptions, setFilteredOptions] = useState<SelectOption[]>(options)
 
   // const isMultiple = ((
   //   props: SelectSingleProps | SelectMultipleProps,
@@ -82,6 +86,20 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
     return options.find(option => option.value === value)?.label ?? value
   }
 
+  useEffect(() => {
+    const filtered = options.filter(option =>
+      option.label.toLocaleLowerCase().includes(searchValue.toLowerCase()),
+    )
+    setFilteredOptions(filtered)
+  }, [searchValue, options])
+
+  useEffect(() => {
+    if (searchRef.current && isOpen) {
+      searchRef.current.focus()
+      setIsOpen(true)
+    }
+  }, [isOpen])
+
   return (
     <div className={className}>
       {label && <div className="input-label">{label}</div>}
@@ -93,7 +111,15 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
         onBlur={() => setIsOpen(false)}
         data-disabled={disabled}
       >
-        {multiple && value.length ? (
+        {search && (value === '' || isOpen) ? (
+          <input
+            ref={searchRef}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            className="grow outline-none"
+            type="search"
+          />
+        ) : multiple && value.length ? (
           <span className="chips-list">
             {value.map(item => (
               <Chip
@@ -128,6 +154,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
           setIsOpen={setIsOpen}
           containerRef={containerRef}
           {...props}
+          options={filteredOptions}
         />
       </div>
     </div>

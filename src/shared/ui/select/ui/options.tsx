@@ -30,40 +30,44 @@ export default function Options(props: SelectOptionProps): React.JSX.Element {
 
   return (
     <ul className="select-options">
-      {options.map(option => {
-        const disabled = option.disabled
-        const selected = isSelectedOption(option.value)
-        let rightElement: ListItemRightElem | undefined
+      {options.length > 0 ? (
+        options.map(option => {
+          const disabled = option.disabled
+          const selected = isSelectedOption(option.value)
+          let rightElement: ListItemRightElem | undefined
 
-        if (multiple) {
-          const rightElementType = disabled || selected ? 'icon' : 'emptyIcon'
+          if (multiple) {
+            const rightElementType = disabled || selected ? 'icon' : 'emptyIcon'
 
-          const rightElementIcon = (() => {
-            if (disabled) return 'cross_small'
-            else if (selected) return 'check'
-            return 'dash'
-          })()
+            const rightElementIcon = (() => {
+              if (disabled) return 'cross_small'
+              else if (selected) return 'check'
+              return 'dash'
+            })()
 
-          rightElement = {
-            element: rightElementType,
-            icon: rightElementIcon,
+            rightElement = {
+              element: rightElementType,
+              icon: rightElementIcon,
+            }
           }
-        }
 
-        return (
-          <ListItem
-            key={option.value}
-            text={option.label}
-            description={option.description}
-            secondaryText={option.secondaryText}
-            size={`${option.description ? 'medium' : optionSize}`}
-            onClick={() => onOptionClick(option.value)}
-            disabled={disabled}
-            selected={selected}
-            rightElement={rightElement}
-          />
-        )
-      })}
+          return (
+            <ListItem
+              key={option.value}
+              text={option.label}
+              description={option.description}
+              secondaryText={option.secondaryText}
+              size={`${option.description ? 'medium' : optionSize}`}
+              onClick={() => onOptionClick(option.value)}
+              disabled={disabled}
+              selected={selected}
+              rightElement={rightElement}
+            />
+          )
+        })
+      ) : (
+        <ListItem text="Ничего не найдено" size="small" />
+      )}
     </ul>
   )
 }

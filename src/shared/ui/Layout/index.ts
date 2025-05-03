@@ -1,2 +1,0 @@
-export { default as FullScreenLayout } from './full-screen-layout'
-export { default as MainLayout } from './main-layout'

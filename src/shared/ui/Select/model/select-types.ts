@@ -16,6 +16,7 @@ type SelectBaseProps = {
   clearButton?: boolean
   optionSize?: ListItemSize
   className?: string
+  search?: boolean
 }
 
 export type SelectSingleProps = {
