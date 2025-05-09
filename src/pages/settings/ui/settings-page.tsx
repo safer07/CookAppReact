@@ -1,24 +1,33 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useUser } from '@/entities/user'
 
-import { catchHttpError } from '@/shared/lib'
+import { catchHttpError, useConfirm } from '@/shared/lib'
 import { EDIT_PROFILE_ROUTE } from '@/shared/routes'
 import ErrorComponent from '@/shared/ui/error-component'
 import ListItem from '@/shared/ui/list-item'
-import Modal from '@/shared/ui/modal'
 
 import { logout } from '../lib/logout'
 import { useFetchUser } from '../lib/use-fetch-user'
 import UserInfo from './user-info'
 
+const confirmLogoutProps = {
+  okText: 'Выйти',
+  title: 'Выход',
+  text: 'Вы уверены, что хотите выйти из учётной записи?',
+}
+
 export default function SettingsPage(): React.JSX.Element {
   const navigate = useNavigate()
   const { user } = useUser()
-  const [modalLogoutIsOpen, setModalLogoutIsOpen] = useState<boolean>(false)
+  const [ConfirmLogoutModal, confirmLogout] = useConfirm(confirmLogoutProps)
   const { error: fetchError, isLoading } = useFetchUser(user?.id)
   const error = catchHttpError(fetchError)
+
+  async function handleLogout(): Promise<void> {
+    const ok = await confirmLogout()
+    if (ok) logout()
+  }
 
   // TODO: создать массив для ListItem, чтобы делать их через map (для авторизованных и обычные ссылки)
 
@@ -63,21 +72,12 @@ export default function SettingsPage(): React.JSX.Element {
               icon: 'logout',
               className: 'text-system-error',
             }}
-            onClick={() => setModalLogoutIsOpen(true)}
+            onClick={handleLogout}
           />
         )}
       </ul>
 
-      <Modal
-        open={modalLogoutIsOpen}
-        setOpen={setModalLogoutIsOpen}
-        onOk={logout}
-        okText="Выйти"
-        title="Выход"
-        text="Вы уверены, что хотите выйти из учётной записи?"
-        type="negative"
-        cancellable
-      />
+      <ConfirmLogoutModal />
     </>
   )
 }

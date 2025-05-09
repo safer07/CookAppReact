@@ -4,12 +4,11 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import TopAppBar from '@/widgets/top-app-bar'
 
-import { navigateBack } from '@/shared/lib'
+import { navigateBack, useConfirm } from '@/shared/lib'
 import type { CustomError } from '@/shared/model'
 import { CREATE_RECIPE_ROUTE, RECIPES_ROUTE } from '@/shared/routes'
 import Button from '@/shared/ui/button'
 import ErrorComponent from '@/shared/ui/error-component'
-import Modal from '@/shared/ui/modal'
 import Stepper from '@/shared/ui/stepper'
 
 import { useCreateRecipe } from '../lib/use-create-recipe'
@@ -20,6 +19,12 @@ import Step1 from './step-1'
 import Step2 from './step-2'
 import Step3 from './step-3'
 import Step4 from './step-4'
+
+const confirmDeleteProps = {
+  okText: 'Удалить',
+  title: 'Удалить рецепт?',
+  text: 'Очистить поля рецепта? Все внесённые данные будут утеряны.',
+}
 
 export default function EditRecipePage(): React.JSX.Element {
   const { id } = useParams<{ id: string }>()
@@ -33,7 +38,7 @@ export default function EditRecipePage(): React.JSX.Element {
   const fetchRecipe = editRecipeStore().fetchRecipe
   const [step, setStep] = useState<number>(1)
   const [stepIsValid, setStepIsValid] = useState<boolean>(false)
-  const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
+  const [ConfirmDeleteModal, confirmDelete] = useConfirm(confirmDeleteProps)
   const isLoading = isCreatePending || isUpdatePending
   const stepsCount = 4
 
@@ -60,9 +65,12 @@ export default function EditRecipePage(): React.JSX.Element {
     } else setStep(prev => prev + 1)
   }
 
-  function onDelete(): void {
-    resetRecipe()
-    navigate(RECIPES_ROUTE)
+  async function handleDelete(): Promise<void> {
+    const ok = await confirmDelete()
+    if (ok) {
+      resetRecipe()
+      navigate(RECIPES_ROUTE)
+    }
   }
 
   useEffect(() => {
@@ -83,14 +91,7 @@ export default function EditRecipePage(): React.JSX.Element {
               title={`${isEdit ? 'Редактировать' : 'Создать'} рецепт`}
               back
               backOnClick={onClickBack}
-              rightIcon={
-                !isEdit
-                  ? {
-                      icon: 'delete',
-                      onClick: () => setModalDeleteIsOpen(true),
-                    }
-                  : undefined
-              }
+              rightIcon={!isEdit ? { icon: 'delete', onClick: handleDelete } : undefined}
             />
             <Stepper stepsCount={stepsCount} currentIndex={step - 1} type="simple" />
 
@@ -130,20 +131,8 @@ export default function EditRecipePage(): React.JSX.Element {
             />
           </div>
         </div>
-
-        {!isEdit && (
-          <Modal
-            open={modalDeleteIsOpen}
-            setOpen={setModalDeleteIsOpen}
-            onOk={onDelete}
-            okText="Удалить"
-            title="Удалить рецепт?"
-            text="Очистить поля рецепта? Все внесённые данные будут утеряны."
-            type="negative"
-            cancellable
-          />
-        )}
       </div>
+      <ConfirmDeleteModal />
     </>
   )
 }

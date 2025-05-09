@@ -8,9 +8,9 @@ import {
   useIngredients,
 } from '@/entities/recipe'
 
+import { useConfirm } from '@/shared/lib'
 import ButtonIcon from '@/shared/ui/button-icon'
 import ListItem from '@/shared/ui/list-item'
-import Modal from '@/shared/ui/modal'
 import PhotoUpload from '@/shared/ui/photo-upload'
 import Select, { type SelectOption } from '@/shared/ui/select'
 import Stepper from '@/shared/ui/stepper'
@@ -23,14 +23,20 @@ type StepProps = {
   store: CreateRecipeStore | EditRecipeStore
 }
 
+const confirmDeleteProps = {
+  okText: 'Удалить',
+  title: 'Удалить шаг рецепта?',
+  text: 'В удаляемом шаге рецепта есть заполненные поля. Удалить этот рецепта? Все внесённые данные будут утеряны.',
+}
+
 export default function Step4({ store }: StepProps): React.JSX.Element {
   const { recipe, setSteps, setHidden } = store()
   const { totalIngredients, steps, hidden } = recipe
   const { ingredients } = useIngredients()
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
   const [currentStepUnitIds, setCurrentStepUnitIds] = useState<string[]>([])
   const [inputStepDescription, setInputStepDescription] = useState<string>('')
+  const [ConfirmDeleteStepModal, confirmDelete] = useConfirm(confirmDeleteProps)
 
   const currentStepIngredients: RecipeIngredient[] = steps[currentStepIndex]?.ingredients
 
@@ -79,9 +85,12 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
     } else return false
   }
 
-  function onClickDeleteStep(): void {
-    if (stepIsEmpty()) deleteStep()
-    else setModalIsOpen(true)
+  async function onClickDeleteStep(): Promise<void> {
+    if (!stepIsEmpty()) {
+      const ok = await confirmDelete()
+      if (!ok) return
+    }
+    deleteStep()
   }
 
   function deleteIngredient(deletedIngredientUnitId: number): void {
@@ -195,16 +204,7 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
         />
       </ul>
 
-      <Modal
-        open={modalIsOpen}
-        setOpen={setModalIsOpen}
-        onOk={deleteStep}
-        okText="Удалить"
-        title="Удалить шаг рецепта?"
-        text="В удаляемом шаге рецепта есть заполненные поля. Удалить этот рецепта? Все внесённые данные будут утеряны."
-        type="negative"
-        cancellable
-      />
+      <ConfirmDeleteStepModal />
     </>
   )
 }

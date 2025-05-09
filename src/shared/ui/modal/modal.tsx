@@ -9,8 +9,9 @@ type ModalProps = {
   title: string
   text?: string
   open: boolean
-  setOpen: (status: boolean) => void
+  setOpen?: (status: boolean) => void
   onOk: () => void
+  onCancel?: () => void
   okText?: string
   type?: 'negative'
   children?: React.ReactNode
@@ -24,6 +25,7 @@ export default function Modal({
   open,
   setOpen,
   onOk,
+  onCancel,
   okText = 'ОК',
   type,
   children,
@@ -42,12 +44,17 @@ export default function Modal({
   })()
 
   function onClickOk(): void {
-    setOpen(false)
+    if (setOpen) setOpen(false)
     onOk()
   }
 
+  function handleCancel(): void {
+    if (setOpen) setOpen(false)
+    if (onCancel) onCancel()
+  }
+
   function onBackDropClick(): void {
-    if (cancellable) setOpen(false)
+    if (cancellable) handleCancel()
     else onOk()
   }
 
@@ -64,7 +71,7 @@ export default function Modal({
 
         <div className={cn('mt-3 grid gap-2', { 'grid-cols-2': cancellable })}>
           {cancellable && (
-            <Button text="Отмена" onClick={() => setOpen(false)} variant="tertiary" fullWidth />
+            <Button text="Отмена" onClick={handleCancel} variant="tertiary" fullWidth />
           )}
           <Button
             text={okText}
