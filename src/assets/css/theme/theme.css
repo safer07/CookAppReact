@@ -2,8 +2,8 @@
   --spacing: 0.5rem; /* 8px (default 4px) */
 
   /* Шрифты */
-  --font-title: Nunito, sans-serif;
-  --font-body: Nunito, sans-serif;
+  --font-title: Nunito, system-ui;
+  --font-body: Nunito, system-ui;
 
   /* Размеры текста */
   --text-3xl: 2rem; /* 32px */

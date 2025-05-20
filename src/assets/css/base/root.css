@@ -10,7 +10,7 @@
   --headline-medium-font-size: var(--text-xl);
   --headline-medium-line-height: var(--text-xl--line-height);
   --headline-small-font-size: var(--text-lg);
-  --headline-small-line-height: var(--text-lg--line-height);
+  --headline-small-line-height: calc(var(--spacing) * 3);
 
   /* Цвет текста */
   --text-title-color: var(--color-base-800);

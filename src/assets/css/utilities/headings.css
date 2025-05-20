@@ -2,17 +2,17 @@
 @utility headline-large {
   font-size: var(--headline-large-font-size);
   line-height: var(--headline-large-line-height);
-  @apply font-title text-txt-title text-lg font-semibold;
+  @apply font-title text-txt-title font-semibold;
 }
 @utility headline-medium {
   font-size: var(--headline-medium-font-size);
   line-height: var(--headline-medium-line-height);
-  @apply font-title text-txt-title text-lg font-semibold;
+  @apply font-title text-txt-title font-semibold;
 }
 @utility headline-small {
   font-size: var(--headline-small-font-size);
   line-height: var(--headline-small-line-height);
-  @apply font-title text-txt-title text-lg font-semibold;
+  @apply font-title text-txt-title font-semibold;
 }
 
 /* Label */

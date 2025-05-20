@@ -47,16 +47,20 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
             surface="surface-yellow"
           />
         )}
+        {isPending ? (
+          <div className="surface-default absolute bottom-0 left-0 flex h-4 items-center rounded-tr-xl px-2 py-0.5">
+            <span className="skeleton flex h-2.5 w-10 rounded" />
+          </div>
+        ) : (
+          <span className="surface-default text-txt-secondary absolute bottom-0 left-0 rounded-tr-xl px-2 py-0.5">
+            {recipeCategory?.fullName}
+          </span>
+        )}
       </div>
-      <div className="mx-2 my-1.5 grid gap-0.5">
-        <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--h3-line-height)*2)] transition-colors duration-300">
+      <div className="mx-2 my-1.5 grid gap-1">
+        <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--headline-small-line-height)*2)] text-balance transition-colors duration-300">
           {recipe.name}
         </h3>
-        {isPending ? (
-          <span className="skeleton h-3 w-10 rounded" />
-        ) : (
-          <p className="text-txt-secondary">{recipeCategory?.fullName}</p>
-        )}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">
