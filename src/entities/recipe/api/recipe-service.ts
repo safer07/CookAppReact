@@ -55,7 +55,7 @@ export const recipesService = {
 
   create: async (recipeData: CreateRecipeDTO) => {
     // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
-    const { data } = await api.post<unknown>(API_PATHS.recipes.createRecipe, recipeData)
+    const { data } = await api.post<unknown>(API_PATHS.recipes.create, recipeData)
     const validatedData = createRecipeResponseSchema.parse(data)
     return validatedData
   },
@@ -63,7 +63,7 @@ export const recipesService = {
   update: async (recipeData: UpdateRecipeDTO) => {
     // TODO: 'Content-Type': formdata когда будет загрузка фото, сейчас как json
     const { data } = await api.put<unknown>(
-      `${API_PATHS.recipes.updateRecipe}/${recipeData.id}`,
+      `${API_PATHS.recipes.update}/${recipeData.id}`,
       recipeData,
     )
     const validatedData = createRecipeResponseSchema.parse(data)

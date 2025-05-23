@@ -15,4 +15,7 @@ export const EDIT_RECIPE_ROUTE = '/edit-recipe'
 // export const RECIPE_ROUTE = '/recipes/:id'
 // export const RECIPE_COOKING_MODE_ROUTE = '/recipes/:id/cooking-mode'
 
+// Dashboard router
+export const DASHBOARD_ROUTE = '/dashboard'
+
 export const MAIN_ROUTE = RECIPES_ROUTE

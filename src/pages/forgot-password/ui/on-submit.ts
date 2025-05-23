@@ -1,7 +1,7 @@
 import { emailSchema, userService } from '@/entities/user'
 
 import { catchHttpError, formatZodError } from '@/shared/lib'
-import { CustomError } from '@/shared/model'
+import type { CustomError } from '@/shared/model'
 
 export type FormState = {
   email?: string

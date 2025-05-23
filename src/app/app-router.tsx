@@ -6,6 +6,7 @@ import RecipesPage from '@/pages/recipes'
 import {
   CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
+  DASHBOARD_ROUTE,
   EDIT_PROFILE_ROUTE,
   EDIT_RECIPE_ROUTE,
   FORGOT_PASSWORD_ROUTE,
@@ -15,8 +16,9 @@ import {
   RESET_PASSWORD_ROUTE,
   SETTINGS_ROUTE,
 } from '@/shared/routes'
-import { FullScreenLayout, MainLayout } from '@/shared/ui/layout'
+import { DashboardLayout, FullScreenLayout, MainLayout } from '@/shared/ui/layout'
 
+import { ModeratorRoutes } from './moderator-routes'
 import { PrivateRoutes } from './private-routes'
 import { PublicOnlyRoutes } from './public-only-routes'
 
@@ -29,6 +31,8 @@ const Page404 = lazy(() => import('@/pages/404'))
 const ProfileEdit = lazy(() => import('@/pages/profile-edit'))
 const ForgotPassword = lazy(() => import('@/pages/forgot-password'))
 const ChangePassword = lazy(() => import('@/pages/change-password'))
+const Dashboard = lazy(() => import('@/pages/dashboard'))
+const DashboardRecipePage = lazy(() => import('@/pages/dashboard-recipe'))
 
 export default function AppRouter() {
   return (
@@ -53,6 +57,12 @@ export default function AppRouter() {
           <Route path={`${RESET_PASSWORD_ROUTE}/:link`} element={<ChangePassword />} />
         </Route>
         <Route path="recipes/:id/cooking-mode" element={<CookingMode />} />
+      </Route>
+      <Route element={<ModeratorRoutes />}>
+        <Route element={<DashboardLayout />}>
+          <Route path={DASHBOARD_ROUTE} element={<Dashboard />} />
+          <Route path={'/dashboard/recipes/:id'} element={<DashboardRecipePage />} />
+        </Route>
       </Route>
     </Routes>
   )

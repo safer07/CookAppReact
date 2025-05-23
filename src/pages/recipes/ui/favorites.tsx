@@ -8,7 +8,7 @@ import { useUser } from '@/entities/user'
 
 import { queryClient } from '@/shared/api'
 import { catchHttpError } from '@/shared/lib'
-import { CustomError } from '@/shared/model'
+import type { CustomError } from '@/shared/model'
 import ErrorComponent from '@/shared/ui/error-component'
 
 export default function Favorites(): React.JSX.Element {

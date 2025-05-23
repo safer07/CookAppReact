@@ -1,0 +1,3 @@
+.link {
+  @apply text-primary hover:text-primary-active;
+}

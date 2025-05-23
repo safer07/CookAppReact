@@ -84,11 +84,7 @@ export default function AuthPage(): React.JSX.Element {
           <div className="flex flex-col gap-1">
             <Input defaultValue={state.password} type="password" label="Пароль" name="password" />
             {isLogin && (
-              <Link
-                to={FORGOT_PASSWORD_ROUTE}
-                className="text-primary hover:text-primary-active self-end font-bold"
-                replace
-              >
+              <Link to={FORGOT_PASSWORD_ROUTE} className="link self-end font-bold" replace>
                 Забыли пароль?
               </Link>
             )}
@@ -119,7 +115,7 @@ export default function AuthPage(): React.JSX.Element {
         <span>{isLogin ? 'Нет аккаунта?' : 'Уже есть аккаунт?'} </span>
         <Link
           to={isLogin ? REGISTRATION_ROUTE : LOGIN_ROUTE}
-          className="text-primary hover:text-primary-active font-bold"
+          className="link font-bold"
           state={{ from }}
           replace
         >

@@ -11,6 +11,7 @@
 @import './components/chip.css' layer(components);
 @import './components/inputs.css' layer(components);
 @import './components/layout.css' layer(components);
+@import './components/link.css' layer(components);
 @import './components/list-item.css' layer(components);
 @import './components/loader.css' layer(components);
 @import './components/modal.css' layer(components);

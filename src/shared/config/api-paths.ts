@@ -13,8 +13,8 @@ export const API_PATHS = {
   recipes: {
     getAll: '/recipes',
     getOne: '/recipes',
-    createRecipe: '/recipes',
-    updateRecipe: '/recipes',
+    create: '/recipes',
+    update: '/recipes',
     delete: '/recipes',
     getSimilar: '/recipes/similar',
     favorite: '/recipes/favorite',
@@ -26,5 +26,13 @@ export const API_PATHS = {
     getFavoriteRecipes: '/favorites/recipes',
     likeRecipe: '/favorites/recipes',
     unlikeRecipe: '/favorites/recipes',
+  },
+  dashboard: {
+    getDashboard: '/dashboard',
+    getPendingRecipes: '/dashboard/recipes-pending',
+    recipes: {
+      getOne: '/dashboard/recipes',
+      update: '/dashboard/recipes',
+    },
   },
 }

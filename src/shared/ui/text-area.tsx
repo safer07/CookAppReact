@@ -1,13 +1,24 @@
-type TextAreaProps = {
+type ControlledInput = {
   value: string
   onChange: (value: string) => void
+  name?: string
+}
+
+type UncontrolledInput = {
+  value?: never
+  onChange?: never
+  name: string
+}
+
+type TextAreaProps = {
   placeholder?: string
   label?: string
   helper?: string
   showCount?: boolean
   maxLength?: number
   className?: string
-}
+  defaultValue?: string
+} & (ControlledInput | UncontrolledInput)
 
 export default function TextArea({
   value,
@@ -18,6 +29,7 @@ export default function TextArea({
   showCount,
   maxLength,
   className,
+  ...rest
 }: TextAreaProps) {
   return (
     <div className={className}>
@@ -26,16 +38,17 @@ export default function TextArea({
         className="textarea"
         value={value}
         placeholder={placeholder}
-        onChange={event => onChange(event.target.value)}
+        onChange={onChange ? event => onChange(event.target.value) : undefined}
         maxLength={maxLength}
         rows={5}
+        {...rest}
       />
       {(helper || showCount) && (
         <div className="input-helper-block">
           {helper && <div className="input-helper">{helper}</div>}
           {showCount && (
             <div className="input-right-helper">
-              {value.length} / {maxLength}
+              {value?.length ?? 0} / {maxLength}
             </div>
           )}
         </div>

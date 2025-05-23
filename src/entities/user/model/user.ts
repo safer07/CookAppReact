@@ -19,5 +19,6 @@ export const userSchema = z.object({
   avatarUrl: z.string().url().nullable(),
   gender: z.string().nullable(),
   birthDate: z.string().date().nullable(),
+  role: z.enum(['admin', 'moderator', 'user']),
 })
 export type User = z.infer<typeof userSchema>
