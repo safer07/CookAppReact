@@ -8,7 +8,7 @@ import type { CustomError } from '@/shared/model'
 import Button from '@/shared/ui/button'
 import ErrorComponent from '@/shared/ui/error-component'
 import Select from '@/shared/ui/select'
-import TextArea from '@/shared/ui/text-area'
+import Textarea from '@/shared/ui/textarea'
 
 import { dashboardRecipeService } from '../api/dashboard-recipe-service'
 import { STATUS_OPTIONS } from '../const/status-options'
@@ -75,7 +75,7 @@ export default function DashboardRecipePage(): React.JSX.Element {
                 onChange={setModerationStatus}
                 label="Статус"
               />
-              <TextArea
+              <Textarea
                 defaultValue={actionState.data.moderationMessage}
                 label="Причина отказа"
                 name="message"

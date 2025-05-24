@@ -6,6 +6,7 @@ import RecipesPage from '@/pages/recipes'
 import {
   CHANGE_PASSWORD_ROUTE,
   CREATE_RECIPE_ROUTE,
+  DASHBOARD_RECIPES_ROUTE,
   DASHBOARD_ROUTE,
   EDIT_PROFILE_ROUTE,
   EDIT_RECIPE_ROUTE,
@@ -32,7 +33,8 @@ const ProfileEdit = lazy(() => import('@/pages/profile-edit'))
 const ForgotPassword = lazy(() => import('@/pages/forgot-password'))
 const ChangePassword = lazy(() => import('@/pages/change-password'))
 const Dashboard = lazy(() => import('@/pages/dashboard'))
-const DashboardRecipePage = lazy(() => import('@/pages/dashboard-recipe'))
+const DashboardRecipes = lazy(() => import('@/pages/dashboard-recipes'))
+const DashboardRecipe = lazy(() => import('@/pages/dashboard-recipe'))
 
 export default function AppRouter() {
   return (
@@ -61,7 +63,8 @@ export default function AppRouter() {
       <Route element={<ModeratorRoutes />}>
         <Route element={<DashboardLayout />}>
           <Route path={DASHBOARD_ROUTE} element={<Dashboard />} />
-          <Route path={'/dashboard/recipes/:id'} element={<DashboardRecipePage />} />
+          <Route path={DASHBOARD_RECIPES_ROUTE} element={<DashboardRecipes />} />
+          <Route path={'/dashboard/recipes/:id'} element={<DashboardRecipe />} />
         </Route>
       </Route>
     </Routes>

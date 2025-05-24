@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { cn } from '../lib'
 
@@ -65,6 +65,13 @@ export default function Input({
   ...rest
 }: InputProps): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [inputLength, setInputLength] = useState(inputRef.current?.value.length ?? 0)
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value
+    setInputLength(value.length)
+    if (onChange) onChange(value)
+  }
 
   function onClickClear() {
     if (onChange) onChange('')
@@ -88,7 +95,7 @@ export default function Input({
           className="textfield"
           type={type}
           value={value}
-          onChange={onChange ? event => onChange(event.target.value) : undefined}
+          onChange={handleChange}
           defaultValue={defaultValue}
           maxLength={maxLength}
           autoComplete="off"
@@ -121,9 +128,11 @@ export default function Input({
       {(helper || showCount) && (
         <div className="input-helper-block">
           {helper && <div className="input-helper">{helper}</div>}
-          <div className="input-right-helper">
-            {value?.length ?? 0} / {maxLength}
-          </div>
+          {showCount && (
+            <div className="input-right-helper">
+              {inputLength} / {maxLength}
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -14,7 +14,7 @@ import ListItem from '@/shared/ui/list-item'
 import PhotoUpload from '@/shared/ui/photo-upload'
 import Select, { type SelectOption } from '@/shared/ui/select'
 import Stepper from '@/shared/ui/stepper'
-import TextArea from '@/shared/ui/text-area'
+import Textarea from '@/shared/ui/textarea'
 
 import type { CreateRecipeStore } from '../store/create-recipe-store'
 import { type EditRecipeStore, emptyStep } from '../store/edit-recipe-store'
@@ -177,7 +177,7 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
           )}
         </div>
 
-        <TextArea
+        <Textarea
           value={inputStepDescription}
           onChange={value => setInputStepDescription(value)}
           label={`Рецепт (шаг ${currentStepIndex + 1})`}

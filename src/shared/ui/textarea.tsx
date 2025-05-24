@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+
 type ControlledInput = {
   value: string
   onChange: (value: string) => void
@@ -10,7 +12,7 @@ type UncontrolledInput = {
   name: string
 }
 
-type TextAreaProps = {
+type TextareaProps = {
   placeholder?: string
   label?: string
   helper?: string
@@ -20,7 +22,7 @@ type TextAreaProps = {
   defaultValue?: string
 } & (ControlledInput | UncontrolledInput)
 
-export default function TextArea({
+export default function Textarea({
   value,
   onChange,
   placeholder,
@@ -30,15 +32,25 @@ export default function TextArea({
   maxLength,
   className,
   ...rest
-}: TextAreaProps) {
+}: TextareaProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [inputLength, setInputLength] = useState(textareaRef.current?.value.length ?? 0)
+
+  function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+    const value = event.target.value
+    setInputLength(value.length)
+    if (onChange) onChange(value)
+  }
+
   return (
     <div className={className}>
       {label && <div className="input-label">{label}</div>}
       <textarea
+        ref={textareaRef}
         className="textarea"
         value={value}
         placeholder={placeholder}
-        onChange={onChange ? event => onChange(event.target.value) : undefined}
+        onChange={handleChange}
         maxLength={maxLength}
         rows={5}
         {...rest}
@@ -48,7 +60,7 @@ export default function TextArea({
           {helper && <div className="input-helper">{helper}</div>}
           {showCount && (
             <div className="input-right-helper">
-              {value?.length ?? 0} / {maxLength}
+              {inputLength} / {maxLength}
             </div>
           )}
         </div>

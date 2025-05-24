@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
-import { DASHBOARD_ROUTE } from '@/shared/routes'
+import { DASHBOARD_RECIPES_ROUTE, DASHBOARD_ROUTE } from '@/shared/routes'
 import Loader from '@/shared/ui/loader'
 
 export default function DashboardLayout() {
@@ -12,12 +12,15 @@ export default function DashboardLayout() {
 
         <ul className="mt-2 space-y-1">
           <li>
-            <Link to={DASHBOARD_ROUTE} className="text-primary hover:text-primary-active">
+            <Link to={DASHBOARD_ROUTE} className="link">
               Панель управления
             </Link>
           </li>
-          <li>Рецепты</li>
-          <li>Пользователи</li>
+          <li>
+            <Link to={DASHBOARD_RECIPES_ROUTE} className="link">
+              Рецепты
+            </Link>
+          </li>
         </ul>
       </nav>
 

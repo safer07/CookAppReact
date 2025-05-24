@@ -17,5 +17,6 @@ export const EDIT_RECIPE_ROUTE = '/edit-recipe'
 
 // Dashboard router
 export const DASHBOARD_ROUTE = '/dashboard'
+export const DASHBOARD_RECIPES_ROUTE = '/dashboard/recipes'
 
 export const MAIN_ROUTE = RECIPES_ROUTE

@@ -5,7 +5,7 @@ import { RECIPE_LIMITS, useCategories } from '@/entities/recipe'
 import Input from '@/shared/ui/input'
 import PhotoUpload from '@/shared/ui/photo-upload'
 import Select from '@/shared/ui/select'
-import TextArea from '@/shared/ui/text-area'
+import Textarea from '@/shared/ui/textarea'
 
 import type { CreateRecipeStore } from '../store/create-recipe-store'
 import type { EditRecipeStore } from '../store/edit-recipe-store'
@@ -49,7 +49,7 @@ export default function Step1({ setStepIsValid, store }: StepProps): React.JSX.E
         label="Категория"
       />
 
-      <TextArea
+      <Textarea
         value={description}
         onChange={value => setDescription(value)}
         label="Описание"
