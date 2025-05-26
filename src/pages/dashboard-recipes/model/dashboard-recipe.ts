@@ -7,4 +7,3 @@ export const dashboardRecipeSchema = recipeSchema.extend({
   moderationMessage: z.string().nullish(),
   author: z.object({ email: z.string().email() }),
 })
-export type DashboardRecipe = z.infer<typeof dashboardRecipeSchema>

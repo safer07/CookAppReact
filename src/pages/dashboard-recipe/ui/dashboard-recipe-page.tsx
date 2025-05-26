@@ -42,6 +42,7 @@ export default function DashboardRecipePage(): React.JSX.Element {
       try {
         await dashboardRecipeService.updateRecipe(id, result.data)
         queryClient.invalidateQueries({ queryKey: ['recipe', id, 'dashboard'] })
+        queryClient.invalidateQueries({ queryKey: ['recipes', 'dashboard'] })
         toast.success('Рецепт обновлён')
         setModerationStatus('')
         return emptyState

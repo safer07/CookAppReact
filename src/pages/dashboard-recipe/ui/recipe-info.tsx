@@ -18,6 +18,7 @@ export default function RecipeInfo({ recipe }: { recipe: DashboardFullRecipe }):
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe?.difficulty,
   )
+
   return (
     <div className="border-base-borders surface-default *:border-base-borders/50 grid grid-cols-[auto_1fr] rounded-lg border py-0.5 *:px-2 *:py-1 *:nth-last-[n+3]:border-b">
       <div>id</div>

@@ -29,7 +29,7 @@ export const API_PATHS = {
   },
   dashboard: {
     getDashboard: '/dashboard',
-    getPendingRecipes: '/dashboard/recipes-pending',
+    getRecipes: '/dashboard/recipes',
     recipes: {
       getOne: '/dashboard/recipes',
       update: '/dashboard/recipes',
