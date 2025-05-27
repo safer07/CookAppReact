@@ -25,6 +25,8 @@ export const recipeSchema = z.object({
   time: z.number().positive('Время должно быть больше 0'),
   difficulty: z.number(),
   hidden: z.boolean().optional(),
+  status: z.enum(['approved', 'rejected', 'pending']).optional(),
+  moderationMessage: z.string().nullish(),
 })
 export type Recipe = z.infer<typeof recipeSchema>
 

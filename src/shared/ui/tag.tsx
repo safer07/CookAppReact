@@ -12,7 +12,7 @@ type TagProps = {
 export default function Tag({ text, onClick, surface = 'surface-accent', className }: TagProps) {
   return (
     <span
-      className={cn('label-small rounded-full px-1.5 py-0.5', surface, className)}
+      className={cn('label-small w-fit rounded-full px-1.5 py-0.5', surface, className)}
       onClick={onClick}
     >
       {text}

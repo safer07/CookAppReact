@@ -3,7 +3,12 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
 import { LikeButton } from '@/entities/favorites'
-import { getRecipeDifficultyTextAndSurface, useCategories } from '@/entities/recipe'
+import {
+  getRecipeDifficultyTextAndSurface,
+  getRecipeStatusTagSurface,
+  getRecipeStatusText,
+  useCategories,
+} from '@/entities/recipe'
 import type { FullRecipe } from '@/entities/recipe'
 import { useUser } from '@/entities/user'
 
@@ -23,11 +28,11 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
   const { user } = useUser()
   const { deleteRecipe } = useDeleteRecipe({ recipeId: recipe.id })
   const isAuthor = user?.id === recipe.authorId
+  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe.difficulty,
   )
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
-  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
 
   function onDelete() {
     toast.promise(deleteRecipe(), {
@@ -67,8 +72,16 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
         ) : (
           <LikeButton itemId={recipe.id} className="absolute top-2 right-2" />
         )}
-        {recipe.hidden && (
-          <Tag className="absolute right-2 bottom-2" text="Рецепт скрыт" surface="surface-yellow" />
+        {isAuthor && (
+          <div className="absolute right-2 bottom-2 flex flex-col items-end gap-1">
+            {recipe.hidden && <Tag text="Рецепт скрыт" surface="surface-yellow" />}
+            {recipe.status && (
+              <Tag
+                text={getRecipeStatusText(recipe.status)}
+                surface={getRecipeStatusTagSurface(recipe.status)}
+              />
+            )}
+          </div>
         )}
       </div>
 
@@ -78,6 +91,9 @@ export default function RecipeInfo({ recipe }: { recipe: FullRecipe }): React.JS
           <p className="text-txt-secondary pt-0.5">{recipeCategory?.fullName}</p>
         </div>
         <p className="text-txt-secondary">{recipe.description}</p>
+        {isAuthor && recipe.moderationMessage && (
+          <p className="text-system-error">{recipe.moderationMessage}</p>
+        )}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">

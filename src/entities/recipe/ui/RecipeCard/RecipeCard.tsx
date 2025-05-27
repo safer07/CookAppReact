@@ -8,23 +8,22 @@ import Image from '@/shared/ui/image'
 import Tag from '@/shared/ui/tag'
 
 import { getRecipeDifficultyTextAndSurface } from '../../lib/get-recipe-difficulty-text-and-surface'
+import { getRecipeStatusTagSurface } from '../../lib/get-recipe-status-tag-surface'
+import { getRecipeStatusText } from '../../lib/get-recipe-status-text'
 import { useCategories } from '../../lib/use-categories'
 import type { Recipe } from '../../model/recipe'
 import RecipeCardSkeleton from './RecipeCardSkeleton'
 
-type RecipeCardProps = {
-  recipe: Recipe
-}
+type RecipeCardProps = { recipe: Recipe }
 
 export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Element {
   const { categories, isPending } = useCategories()
   const { user } = useUser()
   const isAuthor = user?.id === recipe.authorId
+  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
   const [difficultyText, tagDifficultySurface] = getRecipeDifficultyTextAndSurface(
     recipe?.difficulty,
   )
-
-  const recipeCategory = categories.find(category => category.id === recipe.categoryId)
 
   return (
     <Link
@@ -40,13 +39,15 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
           />
         </div>
         {!isAuthor && <LikeButton itemId={recipe.id} className="absolute top-1.5 right-1.5" />}
-        {recipe.hidden && (
-          <Tag
-            className="absolute right-1.5 bottom-1.5"
-            text="Рецепт скрыт"
-            surface="surface-yellow"
-          />
-        )}
+        <div className="absolute right-1.5 bottom-1.5 flex flex-col items-end gap-1">
+          {recipe.hidden && <Tag text="Рецепт скрыт" surface="surface-yellow" />}
+          {recipe.status && (
+            <Tag
+              text={getRecipeStatusText(recipe.status)}
+              surface={getRecipeStatusTagSurface(recipe.status)}
+            />
+          )}
+        </div>
         {isPending ? (
           <div className="surface-default absolute bottom-0 left-0 flex h-4 items-center rounded-tr-xl px-2 py-0.5">
             <span className="skeleton flex h-2.5 w-10 rounded" />
@@ -61,6 +62,9 @@ export default function RecipeCard({ recipe }: RecipeCardProps): React.JSX.Eleme
         <h3 className="headline-small group-hover:text-primary line-clamp-2 h-[calc(var(--headline-small-line-height)*2)] text-balance transition-colors duration-300">
           {recipe.name}
         </h3>
+        {recipe.moderationMessage && (
+          <p className="text-system-error">{recipe.moderationMessage}</p>
+        )}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <svg className="fill-primary size-2">
