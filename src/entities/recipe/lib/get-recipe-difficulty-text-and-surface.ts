@@ -8,7 +8,7 @@ export function getRecipeDifficultyTextAndSurface(
   const difficultyItem = RECIPE_DIFFICULTIES.find(item => item.value === recipeDifficulty)
 
   const difficultyText = difficultyItem?.text ?? '???'
-  const tagDifficultySurface = difficultyItem?.tagDifficultySurface ?? 'surface-red'
+  const tagDifficultySurface = difficultyItem?.tagSurface ?? 'surface-red'
 
   return [difficultyText, tagDifficultySurface]
 }

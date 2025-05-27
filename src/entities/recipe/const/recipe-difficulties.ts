@@ -4,7 +4,7 @@ type RecipeDifficultyItem = {
   value: number
   text: string
   description: string
-  tagDifficultySurface: TagSurface
+  tagSurface: TagSurface
 }
 
 export const RECIPE_DIFFICULTIES: RecipeDifficultyItem[] = [
@@ -12,18 +12,18 @@ export const RECIPE_DIFFICULTIES: RecipeDifficultyItem[] = [
     value: 1,
     text: 'Легко',
     description: 'Справится даже ребёнок',
-    tagDifficultySurface: 'surface-green',
+    tagSurface: 'surface-green',
   },
   {
     value: 2,
     text: 'Средне',
     description: 'Может не получиться с первого раза',
-    tagDifficultySurface: 'surface-yellow',
+    tagSurface: 'surface-yellow',
   },
   {
     value: 3,
     text: 'Трудно',
     description: 'Требуется большой кулинарный опыт',
-    tagDifficultySurface: 'surface-red',
+    tagSurface: 'surface-red',
   },
-]
+] as const

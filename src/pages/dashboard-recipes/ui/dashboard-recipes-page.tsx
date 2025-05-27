@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { RECIPE_STATUSES, useCategories } from '@/entities/recipe'
+import { getRecipeStatusTagSurface, getRecipeStatusText, useCategories } from '@/entities/recipe'
 
 import { catchHttpError } from '@/shared/lib'
 import ErrorComponent from '@/shared/ui/error-component'
 import SegmentedButton from '@/shared/ui/segmented-button'
+import Tag from '@/shared/ui/tag'
 
 import { useDashboardRecipes } from '../lib/use-dashboard-recipes'
 
@@ -45,7 +46,7 @@ export default function DashboardRecipesPage(): React.JSX.Element {
         {isPending ? (
           <p>Загрузка...</p>
         ) : recipes?.length !== 0 ? (
-          <table className="border-base-borders [&_td]:border-base-borders/50 surface-default [&_th]:border-base-600 min-w-full table-fixed border-separate border-spacing-0 overflow-hidden rounded-lg border [&_td]:px-2 [&_td]:py-1 [&_td]:align-baseline [&_th]:border-b-2 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:align-bottom [&_tr:not(:last-child)_td]:border-b">
+          <table className="border-base-borders [&_td]:border-base-borders/50 surface-default [&_th]:bg-base-bg [&_th]:border-base-borders min-w-full table-fixed border-separate border-spacing-0 overflow-hidden rounded-lg border [&_td]:px-2 [&_td]:py-1 [&_td]:align-baseline [&_th]:border-b [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:align-bottom [&_tr:not(:last-child)_td]:border-b">
             <thead>
               <tr>
                 <th style={{ width: '3.5rem' }}>№</th>
@@ -70,7 +71,12 @@ export default function DashboardRecipesPage(): React.JSX.Element {
                       'Категория не найдена'}
                   </td>
                   <td>{recipe.author.email}</td>
-                  <td>{RECIPE_STATUSES[recipe.status] ?? '???'}</td>
+                  <td>
+                    <Tag
+                      text={getRecipeStatusText(recipe.status)}
+                      surface={getRecipeStatusTagSurface(recipe.status)}
+                    />
+                  </td>
                   {status !== 'approved' && <td>{recipe.moderationMessage}</td>}
                 </tr>
               ))}

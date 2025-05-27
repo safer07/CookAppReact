@@ -1,7 +1,8 @@
 import {
-  RECIPE_STATUSES,
   getIngredientNameByUnitId,
   getRecipeDifficultyTextAndSurface,
+  getRecipeStatusTagSurface,
+  getRecipeStatusText,
   getUnitNameByUnitId,
   useCategories,
   useIngredients,
@@ -75,7 +76,13 @@ export default function RecipeInfo({ recipe }: { recipe: DashboardFullRecipe }):
       <div>Рецепт скрыт?</div>
       <div>{recipe.hidden === true ? 'да' : 'нет'}</div>
       <div>Статус</div>
-      <div>{RECIPE_STATUSES[recipe.status] ?? '???'}</div>
+      <div>
+        {' '}
+        <Tag
+          text={getRecipeStatusText(recipe.status) ?? '???'}
+          surface={getRecipeStatusTagSurface(recipe.status)}
+        />
+      </div>
       <div>Причина отказа</div>
       <div>{recipe.moderationMessage}</div>
     </div>
