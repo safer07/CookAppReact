@@ -15,7 +15,9 @@ import RightIcons from './right-icons'
 //   label,
 //   clearButton = true,
 //   multiple = false,
-//   optionSize = "small",
+//   className,
+//   search = false,
+//   optionSize = 'small',
 // }: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
 export default function Select(props: SelectSingleProps | SelectMultipleProps): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -60,9 +62,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
     valueLabel = options.find(option => option.value === value)?.label || null
   }
 
-  let disabled: boolean = false
-  const hasAvailableOptions = options.some((option): boolean => option.disabled !== true)
-  if (!hasAvailableOptions) disabled = true
+  const disabled: boolean = !options.some(option => option.disabled !== true)
 
   function onClick(): void {
     if (!disabled) setIsOpen(prev => !prev)
@@ -148,7 +148,7 @@ export default function Select(props: SelectSingleProps | SelectMultipleProps): 
         <Options
           // value={value}
           // onChange={onChange}
-          // options={options}
+          // options={filteredOptions}
           // multiple={multiple}
           optionSize={optionSize}
           setIsOpen={setIsOpen}

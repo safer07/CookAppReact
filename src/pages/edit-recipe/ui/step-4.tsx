@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import {
   RECIPE_LIMITS,
-  RecipeIngredient,
+  type RecipeIngredient,
   getIngredientNameByUnitId,
   getUnitNameByUnitId,
   useIngredients,
@@ -16,12 +16,13 @@ import Select, { type SelectOption } from '@/shared/ui/select'
 import Stepper from '@/shared/ui/stepper'
 import Textarea from '@/shared/ui/textarea'
 
+import { useStepDescription } from '../lib/use-step-description'
+import { useStepIngredients } from '../lib/use-step-ingredients'
 import type { CreateRecipeStore } from '../store/create-recipe-store'
 import { type EditRecipeStore, emptyStep } from '../store/edit-recipe-store'
+import { StepIngredientsList } from './step-ingredients-list'
 
-type StepProps = {
-  store: CreateRecipeStore | EditRecipeStore
-}
+type StepProps = { store: CreateRecipeStore | EditRecipeStore }
 
 const confirmDeleteProps = {
   okText: 'Удалить',
@@ -34,11 +35,21 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
   const { totalIngredients, steps, hidden } = recipe
   const { ingredients } = useIngredients()
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0)
-  const [currentStepUnitIds, setCurrentStepUnitIds] = useState<string[]>([])
-  const [inputStepDescription, setInputStepDescription] = useState<string>('')
   const [ConfirmDeleteStepModal, confirmDelete] = useConfirm(confirmDeleteProps)
-
   const currentStepIngredients: RecipeIngredient[] = steps[currentStepIndex]?.ingredients
+
+  const { inputStepDescription, setInputStepDescription } = useStepDescription(
+    currentStepIndex,
+    steps,
+    setStepValue,
+  )
+
+  const { currentStepUnitIds, setCurrentStepUnitIds } = useStepIngredients(
+    currentStepIndex,
+    steps,
+    totalIngredients,
+    setSteps,
+  )
 
   const ingredientsOptions: SelectOption[] = totalIngredients.map((ingredient): SelectOption => {
     const usedIngredient: boolean = stepsHasIngredient(ingredient.unitId)
@@ -76,50 +87,21 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
   }
 
   function stepIsEmpty(): boolean {
-    if (
+    return (
       !currentStepIngredients.length &&
       !steps[currentStepIndex].img &&
       !steps[currentStepIndex].description
-    ) {
-      return true
-    } else return false
+    )
   }
 
   async function onClickDeleteStep(): Promise<void> {
-    if (!stepIsEmpty()) {
-      const ok = await confirmDelete()
-      if (!ok) return
-    }
+    if (!stepIsEmpty() && !(await confirmDelete())) return
     deleteStep()
   }
 
   function deleteIngredient(deletedIngredientUnitId: number): void {
     setCurrentStepUnitIds(prev => prev.filter(i => i !== String(deletedIngredientUnitId)))
   }
-
-  useEffect(() => {
-    setStepValue(inputStepDescription, 'description')
-  }, [inputStepDescription])
-
-  useEffect(() => {
-    setInputStepDescription(steps[currentStepIndex].description)
-  }, [currentStepIndex, steps])
-
-  useEffect(() => {
-    const stepUnitIds: string[] = steps[currentStepIndex].ingredients.map(i => String(i.unitId))
-
-    setCurrentStepUnitIds(stepUnitIds)
-  }, [currentStepIndex, steps.length])
-
-  useEffect(() => {
-    // Нужно копировать массив и всё внутри него, так как нельзя использовать изначальные значения
-    const newSteps = structuredClone(steps)
-    const filteredIngredients = totalIngredients.filter(i =>
-      currentStepUnitIds.includes(String(i.unitId)),
-    )
-    newSteps[currentStepIndex].ingredients = filteredIngredients
-    setSteps(newSteps)
-  }, [currentStepUnitIds])
 
   return (
     <>
@@ -160,20 +142,11 @@ export default function Step4({ store }: StepProps): React.JSX.Element {
           />
 
           {currentStepIngredients.length > 0 && (
-            <ul className="layout-wide">
-              {currentStepIngredients.map(i => (
-                <ListItem
-                  key={i.unitId}
-                  text={getIngredientNameByUnitId(i.unitId, ingredients) ?? '???'}
-                  secondaryText={`${i.amount} ${getUnitNameByUnitId(i.unitId, ingredients) ?? '???'}`}
-                  size="medium"
-                  rightElement={{
-                    element: 'delete',
-                    onClick: () => deleteIngredient(i.unitId),
-                  }}
-                />
-              ))}
-            </ul>
+            <StepIngredientsList
+              ingredients={currentStepIngredients}
+              allIngredients={ingredients}
+              onDelete={deleteIngredient}
+            />
           )}
         </div>
 

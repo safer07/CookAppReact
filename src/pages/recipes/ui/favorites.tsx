@@ -47,7 +47,7 @@ export default function Favorites(): React.JSX.Element {
     }
 
     fetchRecipes()
-  }, [user])
+  }, [user, publicFavoriteRecipesIds])
 
   return (
     <div className="py-2">
